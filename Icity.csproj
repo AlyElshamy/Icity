@@ -1,0 +1,110 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>aspnet-Optics-08598207-6256-448E-B750-A46599A0C125</UserSecretsId>
+    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Areas\Admin\Pages\CollectionItems\**" />
+    <Compile Remove="Areas\Admin\Pages\SubCategories\**" />
+    <Compile Remove="Controller\**" />
+    <Content Remove="Areas\Admin\Pages\CollectionItems\**" />
+    <Content Remove="Areas\Admin\Pages\SubCategories\**" />
+    <Content Remove="Controller\**" />
+    <EmbeddedResource Remove="Areas\Admin\Pages\CollectionItems\**" />
+    <EmbeddedResource Remove="Areas\Admin\Pages\SubCategories\**" />
+    <EmbeddedResource Remove="Controller\**" />
+    <None Remove="Areas\Admin\Pages\CollectionItems\**" />
+    <None Remove="Areas\Admin\Pages\SubCategories\**" />
+    <None Remove="Controller\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Controllers\integration.cs" />
+    <Compile Remove="Controllers\IntegrationeController.cs" />
+    <Compile Remove="Controllers\PharmacyAPIs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Resources\SharedResource.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DevExtreme.AspNet.Data" Version="2.8.2" />
+    <PackageReference Include="DevExtreme.AspNet.Core" Version="21.2.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="NToastNotify" Version="7.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Resources\" />
+    <Folder Include="wwwroot\Images\Category\" />
+    <Folder Include="wwwroot\Images\Customer\" />
+    <Folder Include="wwwroot\Images\Brand\" />
+    <Folder Include="wwwroot\Images\Item\" />
+    <Folder Include="wwwroot\Images\Section\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\Images\Slider\p1.jpg" />
+    <None Include="wwwroot\Images\Slider\p2.jpg" />
+    <None Include="wwwroot\Images\Slider\p3.jpg" />
+    <None Include="wwwroot\Public\js\canvasjs.min.js" />
+    <None Include="wwwroot\Public\js\contact.js" />
+    <None Include="wwwroot\Public\js\countdown.js" />
+    <None Include="wwwroot\Public\js\main.js" />
+    <None Include="wwwroot\Public\js\map.js" />
+    <None Include="wwwroot\Public\js\minified.js" />
+    <None Include="wwwroot\Public\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\Public\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\Public\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\Public\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\Public\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\Public\webfonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\vendor\aos\aos.js" />
+    <None Include="wwwroot\vendor\bootstrap-icons\fonts\bootstrap-icons.woff2" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-grid.rtl.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-grid.rtl.min.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-reboot.rtl.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-reboot.rtl.min.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-utilities.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-utilities.min.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-utilities.rtl.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-utilities.rtl.min.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap.rtl.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap.rtl.min.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.esm.js" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.esm.js.map" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.esm.min.js" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.esm.min.js.map" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.js" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.js.map" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.min.js" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\vendor\boxicons\fonts\boxicons.svg" />
+    <None Include="wwwroot\vendor\boxicons\fonts\boxicons.woff2" />
+    <None Include="wwwroot\vendor\glightbox\js\glightbox.js" />
+    <None Include="wwwroot\vendor\glightbox\js\glightbox.min.js" />
+    <None Include="wwwroot\vendor\isotope-layout\isotope.pkgd.js" />
+    <None Include="wwwroot\vendor\isotope-layout\isotope.pkgd.min.js" />
+    <None Include="wwwroot\vendor\php-email-form\validate.js" />
+    <None Include="wwwroot\vendor\swiper\swiper-bundle.min.js" />
+  </ItemGroup>
+</Project>
