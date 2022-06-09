@@ -4,14 +4,16 @@ using Icity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Icity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220608115642_registermodel")]
+    partial class registermodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace Icity.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "109dcef3-1386-4bb3-9a3b-b50b3a0ae837",
-                            ConcurrencyStamp = "f44af818-005e-4f70-b6a8-7543b59c03fc",
+                            Id = "1856b1a0-9d9d-4b22-9c2e-bc19f1cec37c",
+                            ConcurrencyStamp = "18d759eb-ab47-45d5-bdaa-27183f02f020",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "3a94dcc5-3466-45d0-ba4d-af26ab63217b",
-                            ConcurrencyStamp = "185b4850-f757-463c-b333-47d353ccf90f",
+                            Id = "c0efa8e4-1234-42a7-83eb-ce9625cf38ee",
+                            ConcurrencyStamp = "c1141aa0-6a0e-409d-9381-96eb24158f8a",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -245,12 +247,6 @@ namespace Icity.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("Bio")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("EntityId")
                         .HasColumnType("int");
 
@@ -258,24 +254,6 @@ namespace Icity.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Job")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProfilePicture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Profilebanner")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Qualification")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");

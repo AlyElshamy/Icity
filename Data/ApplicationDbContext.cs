@@ -10,12 +10,17 @@ namespace Icity.Data
 {
     public class ApplicationUser : IdentityUser
     {
-      
         public int EntityId { get; set; }
-
         public int EntityName { get; set; }
-
-            
+        public string FullName { get; set; }
+        public string ProfilePicture { get; set; }
+        public string Profilebanner { get; set; }
+        public DateTime BirthDate { get; set; }
+        public string Bio { get; set; }
+        public string Location { get; set; }
+        public string Qualification { get; set; }
+        public string Job { get; set; }
+        public string Gender { get; set; }
     }
     public class ApplicationDbContext : IdentityDbContext
     {

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 namespace Icity.Controllers
 {
     [Route("api/[controller]/[action]")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     [ApiController]
     public class SettingController : Controller
     {
