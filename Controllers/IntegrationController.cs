@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -31,7 +32,7 @@ namespace Icity.Controllers
             _context = Context;
         }
         [HttpGet]
-        public async Task<ActionResult<ApplicationUser>> Login([FromQuery] string Email, [FromQuery] string Password)
+        public async Task<ActionResult<ApplicationUser>> Login(string Email, string Password)
         {
 
             var user = await _userManager.FindByEmailAsync(Email);
@@ -69,12 +70,12 @@ namespace Icity.Controllers
             return Ok(new { Status = "Success", Message = "User created successfully!", user });
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateUserProfile( IFormFile Profilepic, IFormFile bannerpic, UserProfile userProfile)
+        public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, UserProfile userProfile)
         {
             try
             {
                 var user = await _userManager.FindByEmailAsync(userProfile.Email);
-                if (user==null)
+                if (user == null)
                     return BadRequest("Email Not Found..");
                 user.Gender = userProfile.Gender;
                 user.Bio = userProfile.Bio;
@@ -120,21 +121,157 @@ namespace Icity.Controllers
         {
             try
             {
-            var user = await _userManager.FindByIdAsync(userid);
-            if (user!=null)
-            {
-                return Ok(user);
+                var user = await _userManager.FindByIdAsync(userid);
+                if (user != null)
+                {
+                    return Ok(user);
 
+                }
+                return BadRequest("User Not Found");
             }
-            return BadRequest("User Not Found");
-            }
-            catch (Exception e )
+            catch (Exception e)
             {
 
                 return BadRequest(e.Message);
             }
         }
-    }
+        [HttpGet]
+        public IActionResult GetCategories()
+        {
+            try
+            {
+                var categories = _context.Categories;
+                return Ok(categories);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetCategoryByID(int CategoryId)
+        {
+            if (CategoryId != 0)
+            {
+                try
+                {
+                    var categories = _context.Categories.Find(CategoryId);
+                    if (categories != null)
+                    {
+                        return Ok(categories);
+                    }
+                    return BadRequest("Category NotFound..");
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Valid ID..");
 
+        }
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public bool validateCategory(Category category)
+        {
+            if (category.CategoryTitleAr != null && category.CategoryTitleEn != null)
+            {
+                return true;
+            }
+            return false;
+        }
+        [HttpPost]
+        public IActionResult AddCategory(IFormFile categoryPic, Category category)
+        {
+            if (categoryPic == null)
+            {
+                return BadRequest("Enter Category Photo..");
+            }
+            if (validateCategory(category))
+            {
+                try
+                {
+                    string folder = "Images/Category/";
+                    category.CategoryPic = UploadImage(folder, categoryPic);
+                    _context.Categories.Add(category);
+                    _context.SaveChanges();
+                    return Created("Successfully Add Category..", category);
+                }
+                catch (Exception e)
+                {
+
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Arabic And English Category Title..");
+        }
+        [HttpPut]
+        public IActionResult EditCategory(Category category, IFormFile categoryPic)
+        {
+            var categoryobj = _context.Categories.Where(a=>a.CategoryId==category.CategoryId).FirstOrDefault();
+            if (categoryobj == null)
+            {
+                return BadRequest("Object NotFound..");
+            }
+            if (validateCategory(category))
+            {
+                try
+                {
+                    if (categoryPic != null)
+                    {
+                        var ImagePath = Path.Combine(_hostEnvironment.WebRootPath, category.CategoryPic);
+                        if (System.IO.File.Exists(ImagePath))
+                        {
+                            System.IO.File.Delete(ImagePath);
+                        }
+                        string folder = "Images/Category/";
+                        categoryobj.CategoryPic = UploadImage(folder, categoryPic);
+                    }
+                    
+                    categoryobj.Description = category.Description;
+                    categoryobj.CategoryTitleAr = category.CategoryTitleAr;
+                    categoryobj.CategoryTitleEn = category.CategoryTitleEn;
+                    
+                    _context.Attach(categoryobj).State = EntityState.Modified;
+                    // await TryUpdateModelAsync<Category>(categoryobj, "",a=>a.CategoryPic,a=>category.CategoryTitleAr,a=> category.CategoryTitleEn,a=> category.Description);
+                    //_context.Entry(category).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    _context.SaveChanges();
+                    return Ok("Successfully Edited Category..");
+                }
+                catch (Exception e)
+                {
+
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter All Required Data..");
+            }
+
+        [HttpDelete]
+        public IActionResult DeleteCategory(int CategoryId)
+        {
+            if (CategoryId != 0)
+            {
+                try
+                {
+                    var categories = _context.Categories.Find(CategoryId);
+                    if (categories != null)
+                    {
+                        _context.Categories.Remove(categories);
+                        _context.SaveChanges();
+                        return Ok("Category Deleted Successfully..");
+                    }
+                    return BadRequest("Category NotFound..");
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Valid ID..");
+
+        }
+
+
+    }
 }
 
