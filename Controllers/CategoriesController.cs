@@ -16,6 +16,7 @@ using Icity.Models;
 namespace Icity.Controllers
 {
     [Route("api/[controller]/[action]")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class CategoriesController : Controller
     {
         private IcityContext _context;

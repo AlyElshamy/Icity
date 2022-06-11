@@ -226,7 +226,6 @@ namespace Icity.Controllers
                         string folder = "Images/Category/";
                         categoryobj.CategoryPic = UploadImage(folder, categoryPic);
                     }
-                    
                     categoryobj.Description = category.Description;
                     categoryobj.CategoryTitleAr = category.CategoryTitleAr;
                     categoryobj.CategoryTitleEn = category.CategoryTitleEn;
