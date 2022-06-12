@@ -5,13 +5,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace Icity.Controllers
@@ -24,11 +28,14 @@ namespace Icity.Controllers
         private readonly IWebHostEnvironment _hostEnvironment;
 
         public IcityContext _context { get; set; }
-        public IntegrationController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IcityContext Context, IWebHostEnvironment hostEnvironment)
+        private readonly IEmailSender _emailSender; 
+
+        public IntegrationController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IcityContext Context, IWebHostEnvironment hostEnvironment, IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _hostEnvironment = hostEnvironment;
+            _emailSender = emailSender;
             _context = Context;
         }
         [HttpGet]
@@ -36,9 +43,13 @@ namespace Icity.Controllers
         {
 
             var user = await _userManager.FindByEmailAsync(Email);
-
+            
             if (user != null)
             {
+                if (!user.EmailConfirmed)
+                {
+                    return BadRequest("Email Not Confirmed");
+                }
                 var result = await _signInManager.CheckPasswordSignInAsync(user, Password, true);
                 if (result.Succeeded)
                 {
@@ -67,7 +78,35 @@ namespace Icity.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "User creation failed! Please check user details and try again." });
             }
+            string returnUrl = null;
+            returnUrl ??= Url.Content("~/");
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var callbackUrl = Url.Action("PostConfirmEmail", "Integration",new { userId=user.Id },Request.Scheme, "localhost:44354");
+            await _emailSender.SendEmailAsync(Model.Email, "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
             return Ok(new { Status = "Success", Message = "User created successfully!", user });
+        }
+        [HttpPost]
+        public async Task<IActionResult> PostConfirmEmail([FromQuery]string userId)
+        {
+            if (userId==null)
+            {
+                return BadRequest("Enter User Id..");
+            }
+            try
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                user.EmailConfirmed = true;
+                await _userManager.UpdateAsync(user);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+            
         }
         [HttpPut]
         public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, UserProfile userProfile)
