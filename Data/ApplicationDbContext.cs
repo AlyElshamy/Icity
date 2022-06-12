@@ -21,6 +21,12 @@ namespace Icity.Data
         public string Qualification { get; set; }
         public string Job { get; set; }
         public string Gender { get; set; }
+        public string TwitterLink { get; set; }
+        public string InstagramLink { get; set; }
+        public string LinkedInLink { get; set; }
+        public string YoutubeLink { get; set; }
+        public string FacebookLink { get; set; }
+
     }
     public class ApplicationDbContext : IdentityDbContext
     {

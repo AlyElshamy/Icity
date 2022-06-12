@@ -630,4 +630,25 @@
   <data name="Select Category" xml:space="preserve">
     <value>إختر فئة</value>
   </data>
+  <data name="Already have an account" xml:space="preserve">
+    <value>هل لديك حساب بالفعل</value>
+  </data>
+  <data name="Confirm Password" xml:space="preserve">
+    <value>تأكيد الرقم السري</value>
+  </data>
+  <data name="Enter Confirm Password" xml:space="preserve">
+    <value>أدخل الرقم السري مجدداً</value>
+  </data>
+  <data name="Get Started" xml:space="preserve">
+    <value>هيا نبدأ</value>
+  </data>
+  <data name="It's free to signup and only takes a minute" xml:space="preserve">
+    <value>التسجيل مجاني ولا يستغرق سوى دقيقة واحدة</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>إنشاء حساب</value>
+  </data>
+  <data name="Sign In" xml:space="preserve">
+    <value>تسجيل الدخول</value>
+  </data>
 </root>

@@ -47,9 +47,8 @@ namespace Icity.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [DataType(DataType.Text)]
-            [Display(Name = "User Name")]
-            public string UserName { get; set; }
+            [EmailAddress]
+            public string Email { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
@@ -81,7 +80,6 @@ namespace Icity.Areas.Identity.Pages.Account
 
 
             //}
-
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -102,38 +100,17 @@ namespace Icity.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        
+
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.UserName , Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    var userExists = await _userManager.FindByNameAsync(Input.UserName);
-                    
-                    var roleNames = await _userManager.GetRolesAsync(userExists);
                     _logger.LogInformation("User logged in.");
-
-                    if (roleNames.Count==0)
-                    {
-                        await _signInManager.SignOutAsync();
-                        _logger.LogInformation("User logged out.");
-
-                    }
-                    if (roleNames.FirstOrDefault()=="Customer")
-                    {
-                        return Redirect("~"+ returnUrl);
-                    }
-                    if (roleNames.FirstOrDefault() == "Admin")
-                    {
-                        return Redirect("~"+ returnUrl);
-                    }
-                    await _signInManager.SignOutAsync();
-                    _logger.LogInformation("User logged out.");
-                    return Redirect("~/");
-                        
-
+                    //return LocalRedirect(returnUrl);
+                    return RedirectToPage("/Index");
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -143,6 +120,12 @@ namespace Icity.Areas.Identity.Pages.Account
                 {
                     _logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
+
+                }
+                if (result.IsNotAllowed)
+                {
+                    ModelState.AddModelError(string.Empty, "Confirm your Email.");
+                    return Page();
                 }
                 else
                 {

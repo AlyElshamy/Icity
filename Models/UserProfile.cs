@@ -18,5 +18,10 @@ namespace Icity.Models
         public string Gender { get; set; }
         public string ProfilePicture { get; set; }
         public string Profilebanner { get; set; }
+        public string FacebookLink { get; set; }
+        public string TwitterLink { get; set; }
+        public string InstagramLink { get; set; }
+        public string LinkedInLink { get; set; }
+        public string YoutubeLink { get; set; }
     }
 }

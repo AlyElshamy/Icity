@@ -85,6 +85,11 @@ namespace Icity.Controllers
                 user.Location = userProfile.Location;
                 user.FullName = userProfile.FullName;
                 user.PhoneNumber = userProfile.Phone;
+                user.FacebookLink = userProfile.FacebookLink;
+                user.TwitterLink = userProfile.TwitterLink;
+                user.InstagramLink = userProfile.InstagramLink;
+                user.LinkedInLink = userProfile.LinkedInLink;
+                user.YoutubeLink = userProfile.YoutubeLink;
                 if (Profilepic != null)
                 {
                     string folder = "Images/ProfileImages/";

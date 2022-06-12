@@ -18,7 +18,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
-
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Email;
 
 namespace Icity
 {
@@ -39,13 +40,10 @@ namespace Icity
             services.AddDbContext<IcityContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
-            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                 //services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+           .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 
-             services.AddDefaultIdentity<ApplicationUser>()
-            .AddRoles<IdentityRole>() // <-- Add this line
-            .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
             services.AddRazorPages().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null).AddDataAnnotationsLocalization(
@@ -83,6 +81,8 @@ namespace Icity
 
 
                 );
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddRazorPages().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
             services.Configure<IdentityOptions>(setupAction =>
             {
                 setupAction.Password.RequireDigit =false;
