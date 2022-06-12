@@ -146,7 +146,11 @@ namespace Icity
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            //app.UseCors();
+            //app.UseCors(options =>
+            //options.AllowAnyOrigin()
+            //.AllowAnyMethod()
+            //.AllowAnyHeader());
             app.UseAuthentication();
             app.UseAuthorization();
 

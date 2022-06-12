@@ -82,13 +82,13 @@ namespace Icity.Controllers
             returnUrl ??= Url.Content("~/");
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var callbackUrl = Url.Action("PostConfirmEmail", "Integration",new { userId=user.Id },Request.Scheme, "localhost:44354");
+            var callbackUrl = Url.Action("GetConfirmEmail", "Integration",new { userId=user.Email },Request.Scheme, "localhost:44354");
             await _emailSender.SendEmailAsync(Model.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
             return Ok(new { Status = "Success", Message = "User created successfully!", user });
         }
-        [HttpPost]
-        public async Task<IActionResult> PostConfirmEmail([FromQuery]string userId)
+        [HttpGet]
+        public async Task<IActionResult> GetConfirmEmail(string userId)
         {
             if (userId==null)
             {
@@ -96,7 +96,7 @@ namespace Icity.Controllers
             }
             try
             {
-                var user = await _userManager.FindByIdAsync(userId);
+                var user = await _userManager.FindByEmailAsync(userId);
                 user.EmailConfirmed = true;
                 await _userManager.UpdateAsync(user);
                 return Ok();
