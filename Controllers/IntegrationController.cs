@@ -26,10 +26,8 @@ namespace Icity.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IWebHostEnvironment _hostEnvironment;
-
         public IcityContext _context { get; set; }
         private readonly IEmailSender _emailSender; 
-
         public IntegrationController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IcityContext Context, IWebHostEnvironment hostEnvironment, IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -41,25 +39,22 @@ namespace Icity.Controllers
         [HttpGet]
         public async Task<ActionResult<ApplicationUser>> Login(string Email, string Password)
         {
-
             var user = await _userManager.FindByEmailAsync(Email);
-            
             if (user != null)
             {
                 if (!user.EmailConfirmed)
                 {
-                    return BadRequest("Email Not Confirmed");
+                    return Ok(new { status = false, message="Email Not Confirmed" });
                 }
                 var result = await _signInManager.CheckPasswordSignInAsync(user, Password, true);
                 if (result.Succeeded)
                 {
-                    return Ok(new { Status = "Success", Message = "User Login successfully!", user });
+                    return Ok(new { Status = "Success", User=user });
                 }
             }
             var invalidResponse = new { status = false };
             return Ok(invalidResponse);
         }
-
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegistrationModel Model)
         {
@@ -82,21 +77,21 @@ namespace Icity.Controllers
             returnUrl ??= Url.Content("~/");
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var callbackUrl = Url.Action("GetConfirmEmail", "Integration",new { userId=user.Email },Request.Scheme, "localhost:44354");
+            var callbackUrl = Url.Action("GetConfirmEmail", "Integration",new { Email = user.Email },Request.Scheme, "codewarenet-001-site14.dtempurl.com");
             await _emailSender.SendEmailAsync(Model.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
             return Ok(new { Status = "Success", Message = "User created successfully!", user });
         }
         [HttpGet]
-        public async Task<IActionResult> GetConfirmEmail(string userId)
+        public async Task<IActionResult> GetConfirmEmail(string Email)
         {
-            if (userId==null)
+            if (Email==null)
             {
                 return BadRequest("Enter User Id..");
             }
             try
             {
-                var user = await _userManager.FindByEmailAsync(userId);
+                var user = await _userManager.FindByEmailAsync(Email);
                 user.EmailConfirmed = true;
                 await _userManager.UpdateAsync(user);
                 return Ok();
@@ -180,12 +175,17 @@ namespace Icity.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetCategories()
+        public async Task<IActionResult> GetCategories()
         {
             try
             {
-                var categories = _context.Categories;
-                return Ok(categories);
+                var categories =await _context.Categories.ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    Categories = categories
+                };
+                return Ok(model);
             }
             catch (Exception e)
             {

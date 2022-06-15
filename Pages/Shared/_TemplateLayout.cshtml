@@ -1,0 +1,292 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Icity.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE HTML>
+<html id="masterPageId" dir="ltr" lang="en">
+<head>
+    <!--=============== basic  ===============-->
+    <meta charset="UTF-8">
+    <title>Townhub - Directory Listing Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="robots" content="index, follow" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <!--=============== css  ===============-->
+        <link type="text/css" rel="stylesheet" href="~/Template/css/reset.css">
+        <link type="text/css" rel="stylesheet" href="~/Template/css/plugins.css">
+        <link id="styleen" type="text/css" rel="stylesheet" href="~/Template/css/style.css">
+        <link type="text/css" rel="stylesheet" href="~/Template/css/color.css">
+        <link id="stylear" type="text/css" rel="stylesheet" href="~/TemplateRTL/css/rtl-style.css">
+
+
+    @*<link type="text/css" rel="stylesheet" href="~/TemplateRTL/css/reset.css">
+    <link type="text/css" rel="stylesheet" href="~/TemplateRTL/css/plugins.css">
+    <link type="text/css" rel="stylesheet" href="~/TemplateRTL/css/style.css">
+    <link type="text/css" rel="stylesheet" href="~/TemplateRTL/css/rtl-style.css">
+    <link type="text/css" rel="stylesheet" href="~/TemplateRTL/css/color.css">*@
+
+    <!--=============== favicons ===============-->
+    <link rel="shortcut icon" href="~/Template/css/images/favicon.ico">
+</head>
+<body>
+    <!--loader-->
+    <div class="loader-wrap">
+        <div class="loader-inner">
+            <div class="loader-inner-cirle"></div>
+        </div>
+    </div>
+    <!--loader end-->
+    <!-- main start  -->
+    <div id="main">
+        <!-- header -->
+
+        <header class="main-header">
+            <!-- logo-->
+            <a href="index.html" class="logo-holder"><img src="~/Template/images/logo.png" alt=""></a>
+            <!-- logo end-->
+            <!-- header-search_btn-->
+            <div class="header-search_btn show-search-button"><i class="fal fa-search"></i><span>Search</span></div>
+            <!-- header-search_btn end-->
+            <!-- header opt -->
+            <a asp-area="TemplatePages" asp-page="DashBoardAddListing" class="add-list color-bg">Add Listing <span><i class="fal fa-layer-plus"></i></span></a>
+            <div class="cart-btn   show-header-modal" data-microtip-position="bottom" role="tooltip" aria-label="Your Wishlist"><i class="fal fa-heart"></i><span class="cart-counter green-bg"></span> </div>
+            <div class="show-reg-form modal-open avatar-img" data-srcav="images/avatar/3.jpg"><i class="fal fa-user"></i>Sign In</div>
+            <!-- header opt end-->
+            <!-- lang-wrap-->
+            <div class="lang-wrap">
+                <div class="show-lang"><span><i class="fal fa-globe-europe"></i><strong>En</strong></span><i class="fa fa-caret-down arrlan"></i></div>
+                <ul class="lang-tooltip lang-action no-list-style">
+                    <a onclick="ChangeLang('en')" id="ang1" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="en-US" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" class="current-lan" data-lantext="En">English</a>
+                    <a onclick="ChangeLang('ar')" id="ang2" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="ar-EG" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" data-lantext="Fr">arabic</a>
+                </ul>
+            </div>
+            <script>
+                function ChangeLang(lang) {
+                    document.getElementById("hello");
+                    var anch1 = document.getElementById("ang1");
+                    var anch2 = document.getElementById("ang2");
+                    if (lang == "en") {
+                        localStorage.setItem("lang", "en");
+                    }
+                    if (lang == "ar") {
+                        localStorage.setItem("lang", "ar");
+                    }
+                }
+                window.addEventListener('DOMContentLoaded', (event) => {
+                    var masterPage = document.getElementById("masterPageId");
+                    if (localStorage.getItem("lang") != "") {
+                        if (localStorage.getItem("lang") == "en") {
+                            masterPage.dir = "ltr";
+                            var stylesheet = document.getElementById("stylear");
+                            stylesheet.setAttribute('href', '/Template/css/style.css');
+                            var stylesheet1 = document.getElementById("stylear");
+                            stylesheet1.setAttribute('href', '');
+                        }
+                        else if (localStorage.getItem("lang") == "ar") {
+                            masterPage.dir = "rtl"
+                            var stylesheet1 = document.getElementById("stylear");
+                            stylesheet1.setAttribute('href', '/TemplateRTL/css/rtl-style.css');
+                        }
+                    }
+                });
+            </script>
+
+            <!-- lang-wrap end-->
+            <!-- nav-button-wrap-->
+            <div class="nav-button-wrap color-bg">
+                <div class="nav-button">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+            <!-- nav-button-wrap end-->
+            <!--  navigation -->
+            <div class="nav-holder main-menu">
+                <nav>
+                    <ul class="no-list-style">
+                        <li>
+                            <a href="#" class="act-link">Home <i class="fa fa-caret-down"></i></a>
+                            <!--second level -->
+                            <ul>
+                                <li><a href="index.html">Parallax Image</a></li>
+                                <li><a href="index2.html">Slider</a></li>
+                                <li><a href="index3.html">Slideshow</a></li>
+                                <li><a href="index4.html">Video</a></li>
+                                <li><a href="index5.html">Map</a></li>
+                            </ul>
+                            <!--second level end-->
+                        </li>
+                        <li>
+                            <a href="#">Listings <i class="fa fa-caret-down"></i></a>
+                            <!--second level -->
+                            <ul>
+                                <li><a href="listing.html">Column map</a></li>
+                                <li><a href="listing2.html">Column map 2</a></li>
+                                <li><a href="listing3.html">Fullwidth Map</a></li>
+                                <li><a href="listing4.html">Fullwidth Map 2</a></li>
+                                <li><a href="listing5.html">Without Map</a></li>
+                                <li><a href="listing6.html">Without Map 2</a></li>
+                                <li>
+                                    <a href="#">Single <i class="fa fa-caret-down"></i></a>
+                                    <!--third  level  -->
+                                    <ul>
+                                        <li><a href="listing-single.html">Style 1</a></li>
+                                        <li><a href="listing-single2.html">Style 2</a></li>
+                                        <li><a href="listing-single3.html">Style 3</a></li>
+                                        <li><a href="listing-single4.html">Style 4</a></li>
+                                    </ul>
+                                    <!--third  level end-->
+                                </li>
+                            </ul>
+                            <!--second level end-->
+                        </li>
+                        <li>
+                            <a href="blog.html">News</a>
+                        </li>
+                        <li>
+                            <a href="#">Pages <i class="fa fa-caret-down"></i></a>
+                            <!--second level -->
+                            <ul>
+                                <li>
+                                    <a href="#">Shop<i class="fa fa-caret-down"></i></a>
+                                    <!--third  level  -->
+                                    <ul>
+                                        <li><a href="shop.html">Products</a></li>
+                                        <li><a href="product-single.html">Product single</a></li>
+                                        <li><a href="cart.html">Cart</a></li>
+                                    </ul>
+                                    <!--third  level end-->
+                                </li>
+                                <li><a href="about.html">About</a></li>
+                                <li><a href="contacts.html">Contacts</a></li>
+                                <li><a href="author-single.html">User single</a></li>
+                                <li><a href="help.html">How it Works</a></li>
+                                <li><a href="booking.html">Booking</a></li>
+                                <li><a href="pricing-tables.html">Pricing</a></li>
+                                <li><a asp-area="TemplatePages" asp-page="DashBoard">User Dasboard</a></li>
+                                <li><a href="blog-single.html">Blog Single</a></li>
+                                <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing">Add Listing</a></li>
+                                <li><a href="invoice.html">Invoice</a></li>
+                                <li><a href="404.html">404</a></li>
+                            </ul>
+                            <!--second level end-->
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- navigation  end -->
+            <!-- header-search_container -->
+            <div class="header-search_container header-search vis-search">
+                <div class="container small-container">
+                    <div class="header-search-input-wrap fl-wrap">
+                        <!-- header-search-input -->
+                        <div class="header-search-input">
+                            <label><i class="fal fa-keyboard"></i></label>
+                            <input type="text" placeholder="What are you looking for ?" value="" />
+                        </div>
+                        <!-- header-search-input end -->
+                        <!-- header-search-input -->
+                        <div class="header-search-input location autocomplete-container">
+                            <label><i class="fal fa-map-marker"></i></label>
+                            <input type="text" placeholder="Location..." class="autocomplete-input" id="autocompleteid2" value="" />
+                            <a href="#"><i class="fal fa-dot-circle"></i></a>
+                        </div>
+                        <!-- header-search-input end -->
+                        <!-- header-search-input -->
+                        <div class="header-search-input header-search_selectinpt ">
+                            <select data-placeholder="Category" class="chosen-select no-radius">
+                                <option>All Categories</option>
+                                <option>All Categories</option>
+                                <option>Shops</option>
+                                <option>Hotels</option>
+                                <option>Restaurants</option>
+                                <option>Fitness</option>
+                                <option>Events</option>
+                            </select>
+                        </div>
+                        <!-- header-search-input end -->
+                        <button class="header-search-button green-bg" onclick="window.location.href='listing.html'"><i class="far fa-search"></i> Search </button>
+                    </div>
+                    <div class="header-search_close color-bg"><i class="fal fa-long-arrow-up"></i></div>
+                </div>
+            </div>
+            <!-- header-search_container  end -->
+            <!-- wishlist-wrap-->
+            <div class="header-modal novis_wishlist">
+                <!-- header-modal-container-->
+                <div class="header-modal-container scrollbar-inner fl-wrap" data-simplebar>
+                    <!--widget-posts-->
+                    <div class="widget-posts  fl-wrap">
+                        <ul class="no-list-style">
+                            <li>
+                                <div class="widget-posts-img">
+                                    <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
+                                </div>
+                                <div class="widget-posts-descr">
+                                    <h4><a href="listing-single.html">Iconic Cafe</a></h4>
+                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> 40 Journal Square Plaza, NJ, USA</a></div>
+                                    <div class="widget-posts-descr-link"><a href="listing.html">Restaurants </a>   <a href="listing.html">Cafe</a></div>
+                                    <div class="widget-posts-descr-score">4.1</div>
+                                    <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="widget-posts-img">
+                                    <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
+                                </div>
+                                <div class="widget-posts-descr">
+                                    <h4><a href="listing-single.html">MontePlaza Hotel</a></h4>
+                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> 70 Bright St New York, USA </a></div>
+                                    <div class="widget-posts-descr-link"><a href="listing.html">Hotels </a>  </div>
+                                    <div class="widget-posts-descr-score">5.0</div>
+                                    <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="widget-posts-img">
+                                    <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
+                                </div>
+                                <div class="widget-posts-descr">
+                                    <h4><a href="listing-single.html">Rocko Band in Marquee Club</a></h4>
+                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i>75 Prince St, NY, USA</a></div>
+                                    <div class="widget-posts-descr-link"><a href="listing.html">Events</a> </div>
+                                    <div class="widget-posts-descr-score">4.2</div>
+                                    <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="widget-posts-img">
+                                    <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
+                                </div>
+                                <div class="widget-posts-descr">
+                                    <h4><a href="listing-single.html">Premium Fitness Gym</a></h4>
+                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> W 85th St, New York, USA</a></div>
+                                    <div class="widget-posts-descr-link"><a href="listing.html">Fitness</a> <a href="listing.html">Gym</a> </div>
+                                    <div class="widget-posts-descr-score">5.0</div>
+                                    <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- widget-posts end-->
+                </div>
+                <!-- header-modal-container end-->
+                <div class="header-modal-top fl-wrap">
+                    <h4>Your Wishlist : <span><strong></strong> Locations</span></h4>
+                    <div class="close-header-modal"><i class="far fa-times"></i></div>
+                </div>
+            </div>
+            <!--wishlist-wrap end -->
+        </header>
+        <!-- header end-->
+        @RenderBody()
+    </div>
+    <!--=============== scripts  ===============-->
+    <script src="~/Template/js/jquery.min.js"></script>
+    <script src="~/Template/js/plugins.js"></script>
+    <script src="~/Template/js/scripts.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&language=ar&libraries=places&callback=initAutocomplete"></script>
+    <script src="~/Template/js/map-single.js"></script>
+</body>
+
+</html>
