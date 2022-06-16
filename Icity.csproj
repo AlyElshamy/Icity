@@ -46,6 +46,7 @@
     <Folder Include="wwwroot\Images\Brand\" />
     <Folder Include="wwwroot\Images\Item\" />
     <Folder Include="wwwroot\Images\BannerImages\" />
+    <Folder Include="wwwroot\Images\SubCategory\" />
     <Folder Include="wwwroot\Images\ProfileImages\" />
     <Folder Include="wwwroot\Images\Section\" />
     <Folder Include="wwwroot\Videos\ProfileVideos\" />

@@ -215,15 +215,15 @@ namespace Icity.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bcbe7a88-1312-48bd-bf90-bbe65223334d",
-                            ConcurrencyStamp = "05dd93ae-3eef-4771-8324-115e2e111995",
+                            Id = "e2ae6538-cf5b-4b74-b189-e3f5e87c0716",
+                            ConcurrencyStamp = "c02e1483-e8d2-479c-96f7-f48a21548865",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "7d63fd47-5c39-4975-8ce0-48ae6befc8cd",
-                            ConcurrencyStamp = "00513b81-c403-49a7-a11e-1abf507a445d",
+                            Id = "4bec5b7b-d815-4a05-958a-fd8ecade7533",
+                            ConcurrencyStamp = "3d6f8429-a39e-4be7-8ca1-60c7be3ddb7d",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

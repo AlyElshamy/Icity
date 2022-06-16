@@ -81,7 +81,7 @@ namespace Icity.Migrations.Icity
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("SubCategory");
+                    b.ToTable("SubCategories");
                 });
 
             modelBuilder.Entity("Icity.Models.SubCategory", b =>

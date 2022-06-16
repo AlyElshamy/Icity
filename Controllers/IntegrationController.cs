@@ -296,6 +296,15 @@ namespace Icity.Controllers
             }
             return false;
         }
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public bool validateSubCategory(SubCategory Subcategory)
+        {
+            if (Subcategory.SubCategoryTitleAr != null && Subcategory.SubCategoryTitleEn != null&& Subcategory.CategoryId!=0)
+            {
+                return true;
+            }
+            return false;
+        }
         [HttpPost]
         public IActionResult AddCategory(IFormFile categoryPic, Category category)
         {
@@ -390,7 +399,139 @@ namespace Icity.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetSubCategories(int CategoryId)
+        {
+            try
+            {
+                var subCategories = await _context.SubCategories.Where(a=>a.CategoryId==CategoryId).ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    SubCategories = subCategories
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetSubCategoryByID(int SubCategoryId)
+        {
+            if (SubCategoryId != 0)
+            {
+                try
+                {
+                    var categories = _context.SubCategories.Where(a => a.SubCategoryID == SubCategoryId).Include(a => a.Category).Select(a=>new {a.SubCategoryTitleAr,a.SubCategoryTitleEn,a.SortOrder,a.Tags,a.SubCategoryPic,a.Description,a.Category.CategoryTitleAr,a.Category.CategoryTitleEn,a.SubCategoryID });
+                    if (categories != null)
+                    {
+                        return Ok(categories);
+                    }
+                    return BadRequest("Sub Category NotFound..");
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Valid ID..");
 
+        }
+        [HttpPost]
+        public IActionResult AddSubCategory(IFormFile SubcategoryPic, SubCategory Subcategory)
+        {
+            if (Subcategory == null)
+            {
+                return BadRequest("Enter Subcategory Photo..");
+            }
+            if (validateSubCategory(Subcategory))
+            {
+                try
+                {
+                    string folder = "Images/SubCategory/";
+                    Subcategory.SubCategoryPic = UploadImage(folder, SubcategoryPic);
+                    _context.SubCategories.Add(Subcategory);
+                    _context.SaveChanges();
+                    return Created("Successfully Add Subcategory..", Subcategory);
+                }
+                catch (Exception e)
+                {
+
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Arabic And English Subcategory Title..");
+        }
+        [HttpPut]
+        public IActionResult EditSubCategory(SubCategory Subcategory, IFormFile SubcategoryPic)
+        {
+            var subcategoryobj = _context.SubCategories.Where(a => a.SubCategoryID == Subcategory.SubCategoryID).FirstOrDefault();
+            if (subcategoryobj == null)
+            {
+                return BadRequest("Object NotFound..");
+            }
+            if (validateSubCategory(Subcategory))
+            {
+                try
+                {
+                    if (SubcategoryPic != null)
+                    {
+                        var ImagePath = Path.Combine(_hostEnvironment.WebRootPath, Subcategory.SubCategoryPic);
+                        if (System.IO.File.Exists(ImagePath))
+                        {
+                            System.IO.File.Delete(ImagePath);
+                        }
+                        string folder = "Images/SubCategory/";
+                        subcategoryobj.SubCategoryPic = UploadImage(folder, SubcategoryPic);
+                    }
+                    subcategoryobj.Description = Subcategory.Description;
+                    subcategoryobj.SubCategoryTitleAr = Subcategory.SubCategoryTitleAr;
+                    subcategoryobj.SubCategoryTitleEn = Subcategory.SubCategoryTitleEn;
+                    subcategoryobj.Tags = Subcategory.Tags;
+                    subcategoryobj.SortOrder = Subcategory.SortOrder;
+
+
+                    _context.Attach(subcategoryobj).State = EntityState.Modified;
+                    // await TryUpdateModelAsync<Category>(categoryobj, "",a=>a.CategoryPic,a=>category.CategoryTitleAr,a=> category.CategoryTitleEn,a=> category.Description);
+                    //_context.Entry(category).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    _context.SaveChanges();
+                    return Ok("Successfully Edited Category..");
+                }
+                catch (Exception e)
+                {
+
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter All Required Data..");
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteSubCategory(int subCategoryId)
+        {
+            if (subCategoryId != 0)
+            {
+                try
+                {
+                    var subcategorie = _context.SubCategories.Where(a=>a.SubCategoryID==subCategoryId).FirstOrDefault();
+                    if (subcategorie != null)
+                    {
+                        _context.SubCategories.Remove(subcategorie);
+                        _context.SaveChanges();
+                        return Ok("Subcategory Deleted Successfully..");
+                    }
+                    return BadRequest("Subcategory NotFound..");
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Valid ID..");
+
+        }
     }
 }
 

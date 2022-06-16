@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Icity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220615183103_ProfileModelUpIden5")]
-    partial class ProfileModelUpIden5
+    [Migration("20220616140341_initialidentity")]
+    partial class initialidentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -213,22 +213,6 @@ namespace Icity.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "bcbe7a88-1312-48bd-bf90-bbe65223334d",
-                            ConcurrencyStamp = "05dd93ae-3eef-4771-8324-115e2e111995",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "7d63fd47-5c39-4975-8ce0-48ae6befc8cd",
-                            ConcurrencyStamp = "00513b81-c403-49a7-a11e-1abf507a445d",
-                            Name = "Customer",
-                            NormalizedName = "CUSTOMER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -450,7 +434,7 @@ namespace Icity.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NickName")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone2")
                         .HasColumnType("nvarchar(max)");
@@ -472,10 +456,6 @@ namespace Icity.Migrations
 
                     b.Property<string>("YoutubeLink")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("NickName")
-                        .IsUnique()
-                        .HasFilter("[NickName] IS NOT NULL");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });

@@ -2,24 +2,30 @@
 
 namespace Icity.Migrations.Icity
 {
-    public partial class SubCat : Migration
+    public partial class icityinitialmig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "SortOrder",
-                table: "Categories",
-                type: "int",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Tags",
-                table: "Categories",
-                type: "nvarchar(max)",
-                nullable: true);
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryTitleAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryTitleEn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryPic = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SortOrder = table.Column<int>(type: "int", nullable: true),
+                    Tags = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
+                });
 
             migrationBuilder.CreateTable(
-                name: "SubCategory",
+                name: "SubCategories",
                 columns: table => new
                 {
                     SubCategoryID = table.Column<int>(type: "int", nullable: false)
@@ -34,9 +40,9 @@ namespace Icity.Migrations.Icity
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SubCategory", x => x.SubCategoryID);
+                    table.PrimaryKey("PK_SubCategories", x => x.SubCategoryID);
                     table.ForeignKey(
-                        name: "FK_SubCategory_Categories_CategoryId",
+                        name: "FK_SubCategories_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "CategoryId",
@@ -44,23 +50,18 @@ namespace Icity.Migrations.Icity
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubCategory_CategoryId",
-                table: "SubCategory",
+                name: "IX_SubCategories_CategoryId",
+                table: "SubCategories",
                 column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SubCategory");
+                name: "SubCategories");
 
-            migrationBuilder.DropColumn(
-                name: "SortOrder",
-                table: "Categories");
-
-            migrationBuilder.DropColumn(
-                name: "Tags",
-                table: "Categories");
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Icity.Migrations.Icity
 {
     [DbContext(typeof(IcityContext))]
-    [Migration("20220616122744_SubCat")]
-    partial class SubCat
+    [Migration("20220616140509_icityinitialmig")]
+    partial class icityinitialmig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,7 +83,7 @@ namespace Icity.Migrations.Icity
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("SubCategory");
+                    b.ToTable("SubCategories");
                 });
 
             modelBuilder.Entity("Icity.Models.SubCategory", b =>
