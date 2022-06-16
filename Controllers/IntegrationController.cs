@@ -118,6 +118,7 @@ namespace Icity.Controllers
                     return BadRequest("Email Not Found..");
                 user.Gender = userProfile.Gender;
                 user.Bio = userProfile.Bio;
+                user.Nationality = userProfile.Nationality;
                 user.BirthDate = userProfile.BirthDate;
                 user.Job = userProfile.Job;
                 user.Qualification = userProfile.Qualification;

@@ -10,6 +10,7 @@ namespace Icity.Models
     {
         public string FullName { get; set; }
         public string Phone { get; set; }
+        public string Nationality { get; set; }
       
         public string Email { get; set; }
         public DateTime BirthDate { get; set; }
