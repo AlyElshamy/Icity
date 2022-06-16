@@ -7,16 +7,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Areas\Admin\Pages\CollectionItems\**" />
-    <Compile Remove="Areas\Admin\Pages\SubCategories\**" />
     <Compile Remove="Controller\**" />
     <Content Remove="Areas\Admin\Pages\CollectionItems\**" />
-    <Content Remove="Areas\Admin\Pages\SubCategories\**" />
     <Content Remove="Controller\**" />
     <EmbeddedResource Remove="Areas\Admin\Pages\CollectionItems\**" />
-    <EmbeddedResource Remove="Areas\Admin\Pages\SubCategories\**" />
     <EmbeddedResource Remove="Controller\**" />
     <None Remove="Areas\Admin\Pages\CollectionItems\**" />
-    <None Remove="Areas\Admin\Pages\SubCategories\**" />
     <None Remove="Controller\**" />
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +48,7 @@
     <Folder Include="wwwroot\Images\BannerImages\" />
     <Folder Include="wwwroot\Images\ProfileImages\" />
     <Folder Include="wwwroot\Images\Section\" />
+    <Folder Include="wwwroot\Videos\ProfileVideos\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Areas\Admin\Pages\Categories\Add.cshtml" />
