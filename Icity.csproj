@@ -44,15 +44,21 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Resources\" />
     <Folder Include="wwwroot\Images\Category\" />
     <Folder Include="wwwroot\Images\Customer\" />
     <Folder Include="wwwroot\Images\Brand\" />
     <Folder Include="wwwroot\Images\Item\" />
+    <Folder Include="wwwroot\Images\BannerImages\" />
+    <Folder Include="wwwroot\Images\ProfileImages\" />
     <Folder Include="wwwroot\Images\Section\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Areas\Admin\Pages\Categories\Add.cshtml" />
+    <None Include="Areas\Admin\Pages\Categories\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\Categories\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\Categories\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\Categories\Index.cshtml" />
     <None Include="wwwroot\Images\Slider\p1.jpg" />
     <None Include="wwwroot\Images\Slider\p2.jpg" />
     <None Include="wwwroot\Images\Slider\p3.jpg" />
@@ -68,6 +74,54 @@
     <None Include="wwwroot\Public\webfonts\fa-regular-400.woff2" />
     <None Include="wwwroot\Public\webfonts\fa-solid-900.svg" />
     <None Include="wwwroot\Public\webfonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\TemplateRTL\fonts\datedropper.svg" />
+    <None Include="wwwroot\TemplateRTL\fonts\fa-brands-400.svg" />
+    <None Include="wwwroot\TemplateRTL\fonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\TemplateRTL\fonts\fa-duotone-900.svg" />
+    <None Include="wwwroot\TemplateRTL\fonts\fa-duotone-900.woff2" />
+    <None Include="wwwroot\TemplateRTL\fonts\fa-light-300.svg" />
+    <None Include="wwwroot\TemplateRTL\fonts\fa-light-300.woff2" />
+    <None Include="wwwroot\TemplateRTL\fonts\fa-regular-400.svg" />
+    <None Include="wwwroot\TemplateRTL\fonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\TemplateRTL\fonts\fa-solid-900.svg" />
+    <None Include="wwwroot\TemplateRTL\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\TemplateRTL\fonts\lg.svg" />
+    <None Include="wwwroot\TemplateRTL\js\charts.js" />
+    <None Include="wwwroot\TemplateRTL\js\dashboard.js" />
+    <None Include="wwwroot\TemplateRTL\js\jquery.min.js" />
+    <None Include="wwwroot\TemplateRTL\js\map-add.js" />
+    <None Include="wwwroot\TemplateRTL\js\map-listing.js" />
+    <None Include="wwwroot\TemplateRTL\js\map-plugins.js" />
+    <None Include="wwwroot\TemplateRTL\js\map-single.js" />
+    <None Include="wwwroot\TemplateRTL\js\pjs.js" />
+    <None Include="wwwroot\TemplateRTL\js\plugins.js" />
+    <None Include="wwwroot\TemplateRTL\js\scripts.js" />
+    <None Include="wwwroot\TemplateRTL\js\shop.js" />
+    <None Include="wwwroot\TemplateRTL\php\contact.php" />
+    <None Include="wwwroot\Template\fonts\datedropper.svg" />
+    <None Include="wwwroot\Template\fonts\fa-brands-400.svg" />
+    <None Include="wwwroot\Template\fonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\Template\fonts\fa-duotone-900.svg" />
+    <None Include="wwwroot\Template\fonts\fa-duotone-900.woff2" />
+    <None Include="wwwroot\Template\fonts\fa-light-300.svg" />
+    <None Include="wwwroot\Template\fonts\fa-light-300.woff2" />
+    <None Include="wwwroot\Template\fonts\fa-regular-400.svg" />
+    <None Include="wwwroot\Template\fonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\Template\fonts\fa-solid-900.svg" />
+    <None Include="wwwroot\Template\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\Template\fonts\lg.svg" />
+    <None Include="wwwroot\Template\js\charts.js" />
+    <None Include="wwwroot\Template\js\dashboard.js" />
+    <None Include="wwwroot\Template\js\jquery.min.js" />
+    <None Include="wwwroot\Template\js\map-add.js" />
+    <None Include="wwwroot\Template\js\map-listing.js" />
+    <None Include="wwwroot\Template\js\map-plugins.js" />
+    <None Include="wwwroot\Template\js\map-single.js" />
+    <None Include="wwwroot\Template\js\pjs.js" />
+    <None Include="wwwroot\Template\js\plugins.js" />
+    <None Include="wwwroot\Template\js\scripts.js" />
+    <None Include="wwwroot\Template\js\shop.js" />
+    <None Include="wwwroot\Template\php\contact.php" />
     <None Include="wwwroot\vendor\aos\aos.js" />
     <None Include="wwwroot\vendor\bootstrap-icons\fonts\bootstrap-icons.woff2" />
     <None Include="wwwroot\vendor\bootstrap\css\bootstrap-grid.css.map" />
