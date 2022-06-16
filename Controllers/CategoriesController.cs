@@ -32,6 +32,8 @@ namespace Icity.Controllers
                 i.CategoryTitleAr,
                 i.CategoryTitleEn,
                 i.CategoryPic,
+                i.Tags,
+                i.SortOrder,
                 i.Description
             });
 
@@ -90,6 +92,8 @@ namespace Icity.Controllers
             string CATEGORY_TITLE_EN = nameof(Category.CategoryTitleEn);
             string CATEGORY_PIC = nameof(Category.CategoryPic);
             string DESCRIPTION = nameof(Category.Description);
+            string Tags = nameof(Category.Tags);
+            
 
             if(values.Contains(CATEGORY_ID)) {
                 model.CategoryId = Convert.ToInt32(values[CATEGORY_ID]);

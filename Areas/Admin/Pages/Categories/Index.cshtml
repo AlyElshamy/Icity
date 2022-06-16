@@ -43,6 +43,8 @@
             </text>).Caption(sharedResource["Picture"]);
                         columns.AddFor(m => m.CategoryTitleAr).Caption(sharedResource["TlAr"]);
                         columns.AddFor(m => m.CategoryTitleEn).Caption(sharedResource["TlEn"]);
+                        columns.AddFor(m => m.Tags).Caption(sharedResource["Tags"]);
+                        columns.AddFor(m => m.SortOrder).Caption(sharedResource["SortOrder"]);
                         columns.AddFor(m => m.Description).Caption(sharedResource["Description"]);
 
 
@@ -53,6 +55,8 @@
                                 <a class="btn btn-success btn-sm"  href="/Admin/Categories/Edit?id=<%- data.CategoryId %>">  <i class="fas fa-edit"></i> </a>
 
                                  <a class="btn btn-danger btn-sm" href="/Admin/Categories/Delete?id=<%- data.CategoryId %>">  <i class="fas fa-trash"></i> </a>
+                                 <a class="btn btn-warning btn-sm" href="/Admin/SubCategories/SubCategoryList?id=<%- data.CategoryId %>">  <i class="fas fa-plus"></i> </a>
+
                             </div>
                             </text>);
 

@@ -11,7 +11,10 @@ namespace Icity.Models
         public string CategoryTitleAr { get; set; }
         public string CategoryTitleEn { get; set; }
         public string CategoryPic { get; set; }
+        public int? SortOrder{ get; set; }
+        public string Tags { get; set; }
         public string Description { get; set; }
+        public ICollection<SubCategory> SubCategories { get; set; }
 
     }
 }

@@ -13,7 +13,7 @@ namespace Icity.Data
         public IcityContext()
         {
         }
-        
+       
 
         public IcityContext(DbContextOptions<IcityContext> options)
             : base(options)
@@ -21,10 +21,13 @@ namespace Icity.Data
         }
 
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<SubCategory> SubCategories { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-          
+            
+
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

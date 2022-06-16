@@ -19,6 +19,173 @@ namespace Icity.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Icity.Models.Education", b =>
+                {
+                    b.Property<int>("EducationID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Provider")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("EducationID");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Educations");
+                });
+
+            modelBuilder.Entity("Icity.Models.Interest", b =>
+                {
+                    b.Property<int>("InterestID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("InterestTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("InterestID");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Interests");
+                });
+
+            modelBuilder.Entity("Icity.Models.Language", b =>
+                {
+                    b.Property<int>("LanguageID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LanguageTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LanguageID");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Languages");
+                });
+
+            modelBuilder.Entity("Icity.Models.LifeEvent", b =>
+                {
+                    b.Property<int>("LifeEventID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Caption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EventType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Media")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LifeEventID");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("LifeEvents");
+                });
+
+            modelBuilder.Entity("Icity.Models.Photo", b =>
+                {
+                    b.Property<int>("PhotoID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Caption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("PhotoID");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Photos");
+                });
+
+            modelBuilder.Entity("Icity.Models.Skill", b =>
+                {
+                    b.Property<int>("SkillID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SkillTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SkillID");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Skills");
+                });
+
+            modelBuilder.Entity("Icity.Models.Video", b =>
+                {
+                    b.Property<int>("VideoID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Caption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("VideoT")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("VideoID");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Videos");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -48,15 +215,15 @@ namespace Icity.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c6dc442c-bba6-448c-adc4-0f5ffaa0efaf",
-                            ConcurrencyStamp = "940fe5a7-b3b0-4558-81f2-ba1373f8836c",
+                            Id = "bcbe7a88-1312-48bd-bf90-bbe65223334d",
+                            ConcurrencyStamp = "05dd93ae-3eef-4771-8324-115e2e111995",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "aa9205df-c09e-4a65-b5ed-4baa536f33f7",
-                            ConcurrencyStamp = "b365de81-7d55-48a6-b46a-0d349e6a42ff",
+                            Id = "7d63fd47-5c39-4975-8ce0-48ae6befc8cd",
+                            ConcurrencyStamp = "00513b81-c403-49a7-a11e-1abf507a445d",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -247,14 +414,17 @@ namespace Icity.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EntityId")
-                        .HasColumnType("int");
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EntityName")
-                        .HasColumnType("int");
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FacebookLink")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Folwers")
+                        .HasColumnType("int");
 
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
@@ -271,7 +441,16 @@ namespace Icity.Migrations
                     b.Property<string>("LinkedInLink")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Location")
+                    b.Property<string>("MapLocation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaritalStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NickName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Phone2")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilePicture")
@@ -286,10 +465,80 @@ namespace Icity.Migrations
                     b.Property<string>("TwitterLink")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Website")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("YoutubeLink")
                         .HasColumnType("nvarchar(max)");
 
+                    b.HasIndex("NickName")
+                        .IsUnique()
+                        .HasFilter("[NickName] IS NOT NULL");
+
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Icity.Models.Education", b =>
+                {
+                    b.HasOne("Icity.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany("Educations")
+                        .HasForeignKey("Id");
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Icity.Models.Interest", b =>
+                {
+                    b.HasOne("Icity.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany("Interests")
+                        .HasForeignKey("Id");
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Icity.Models.Language", b =>
+                {
+                    b.HasOne("Icity.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany("Languages")
+                        .HasForeignKey("Id");
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Icity.Models.LifeEvent", b =>
+                {
+                    b.HasOne("Icity.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany("LifeEvents")
+                        .HasForeignKey("Id");
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Icity.Models.Photo", b =>
+                {
+                    b.HasOne("Icity.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany("Photos")
+                        .HasForeignKey("Id");
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Icity.Models.Skill", b =>
+                {
+                    b.HasOne("Icity.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany("Skills")
+                        .HasForeignKey("Id");
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Icity.Models.Video", b =>
+                {
+                    b.HasOne("Icity.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany("Videos")
+                        .HasForeignKey("Id");
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -341,6 +590,23 @@ namespace Icity.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Icity.Data.ApplicationUser", b =>
+                {
+                    b.Navigation("Educations");
+
+                    b.Navigation("Interests");
+
+                    b.Navigation("Languages");
+
+                    b.Navigation("LifeEvents");
+
+                    b.Navigation("Photos");
+
+                    b.Navigation("Skills");
+
+                    b.Navigation("Videos");
                 });
 #pragma warning restore 612, 618
         }

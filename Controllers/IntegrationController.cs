@@ -1,6 +1,7 @@
 ﻿using Icity.Data;
 using Icity.Entities;
 using Icity.Models;
+using Icity.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,14 +28,16 @@ namespace Icity.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IWebHostEnvironment _hostEnvironment;
         public IcityContext _context { get; set; }
+        public ApplicationDbContext _applicationDbContext  { get; set; }
         private readonly IEmailSender _emailSender; 
-        public IntegrationController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IcityContext Context, IWebHostEnvironment hostEnvironment, IEmailSender emailSender)
+        public IntegrationController(ApplicationDbContext applicationDbContext ,UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IcityContext Context, IWebHostEnvironment hostEnvironment, IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _hostEnvironment = hostEnvironment;
             _emailSender = emailSender;
             _context = Context;
+            _applicationDbContext = applicationDbContext;
         }
         [HttpGet]
         public async Task<ActionResult<ApplicationUser>> Login(string Email, string Password)
@@ -104,8 +107,10 @@ namespace Icity.Controllers
             
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, UserProfile userProfile)
+        public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, IFormFileCollection Images, IFormFileCollection VideosFiels, UserProfile userProfile)
         {
+          
+
             try
             {
                 var user = await _userManager.FindByEmailAsync(userProfile.Email);
@@ -116,14 +121,73 @@ namespace Icity.Controllers
                 user.BirthDate = userProfile.BirthDate;
                 user.Job = userProfile.Job;
                 user.Qualification = userProfile.Qualification;
-                user.Location = userProfile.Location;
+                //user.Location = userProfile.Location;
                 user.FullName = userProfile.FullName;
                 user.PhoneNumber = userProfile.Phone;
                 user.FacebookLink = userProfile.FacebookLink;
                 user.TwitterLink = userProfile.TwitterLink;
                 user.InstagramLink = userProfile.InstagramLink;
                 user.LinkedInLink = userProfile.LinkedInLink;
-                user.YoutubeLink = userProfile.YoutubeLink;
+                user.LinkedInLink = userProfile.LinkedInLink;
+                user.NickName = userProfile.NickName;
+                user.MaritalStatus = userProfile.MaritalStatus;
+                user.City = userProfile.City;
+                user.MapLocation = userProfile.MapLocation;
+                user.Country = userProfile.Country;
+                user.Phone2 = userProfile.Phone2;
+                user.Folwers = userProfile.Folwers;
+                user.Website = userProfile.Website;
+                user.Photos = userProfile.Photos==null? new List<Photo>() : userProfile.Photos;
+                user.Videos = userProfile.Videos==null? new List<Video>() : userProfile.Videos;
+                user.Skills = userProfile.Skills==null? new List<Skill>() : userProfile.Skills;
+                user.Interests = userProfile.Interests == null ? new List<Interest>() : userProfile.Interests;
+                user.Educations = userProfile.Skills == null ? new List<Education>() : userProfile.Educations;
+                user.LifeEvents = userProfile.LifeEvents == null ? new List<LifeEvent>() : userProfile.LifeEvents; ;
+                user.Languages = userProfile.Languages == null ? new List<Language>() : userProfile.Languages; ;
+
+                if (Images.Count() > 0&& user.Photos.Count()==Images.Count())
+                {
+                    for (int i = 0; i < Images.Count(); i++)
+                    {
+                        Photo photo = new Photo();
+                        if (Images[i] != null)
+                        {
+                            string folder = "Images/ProfileImages/";
+                            photo.Image = UploadImage(folder, Images[i]);
+                            photo.PublishDate = userProfile.Photos[i].PublishDate;
+                            photo.Caption = userProfile.Photos[i].Caption;
+                            photo.Id = user.Id;
+
+
+                        }
+                        _applicationDbContext.Photos.Add(photo);
+
+
+                    }
+                }
+                if (VideosFiels.Count() > 0&& user.Videos.Count() == VideosFiels.Count())
+                {
+                    for (int i = 0; i < VideosFiels.Count(); i++)
+                    {
+                        Video video = new Video();
+                        if (VideosFiels[i] != null)
+                        {
+                            string folder = "Videos/ProfileVideos/";
+                            video.VideoT = UploadImage(folder, VideosFiels[i]);
+                            video.Caption = userProfile.Videos[i].Caption;
+                            video.PublishDate = userProfile.Videos[i].PublishDate;
+                            video.Id = user.Id;
+
+
+                        }
+                        _applicationDbContext.Videos.Add(video);
+
+
+                    }
+                }
+
+                _applicationDbContext.SaveChanges();
+
                 if (Profilepic != null)
                 {
                     string folder = "Images/ProfileImages/";
@@ -160,9 +224,18 @@ namespace Icity.Controllers
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(userid);
+                var user = await _userManager.FindByIdAsync(userid);   
+                
                 if (user != null)
                 {
+                    user.Photos = _applicationDbContext.Photos.Where(e => e.Id == userid).ToList(); 
+                    user.Videos = _applicationDbContext.Videos.Where(e => e.Id == userid).ToList(); 
+                    user.Languages = _applicationDbContext.Languages.Where(e => e.Id == userid).ToList();
+                    user.Interests = _applicationDbContext.Interests.Where(e => e.Id == userid).ToList() ;
+                    user.Skills = _applicationDbContext.Skills.Where(e => e.Id == userid).ToList(); 
+                    user.LifeEvents = _applicationDbContext.LifeEvents.Where(e => e.Id == userid).ToList(); 
+                    user.Educations = _applicationDbContext.Educations.Where(e => e.Id == userid).ToList(); 
+               
                     return Ok(user);
 
                 }
@@ -273,6 +346,9 @@ namespace Icity.Controllers
                     categoryobj.Description = category.Description;
                     categoryobj.CategoryTitleAr = category.CategoryTitleAr;
                     categoryobj.CategoryTitleEn = category.CategoryTitleEn;
+                    categoryobj.Tags = category.Tags;
+                    categoryobj.SortOrder = category.SortOrder;
+
                     
                     _context.Attach(categoryobj).State = EntityState.Modified;
                     // await TryUpdateModelAsync<Category>(categoryobj, "",a=>a.CategoryPic,a=>category.CategoryTitleAr,a=> category.CategoryTitleEn,a=> category.Description);
