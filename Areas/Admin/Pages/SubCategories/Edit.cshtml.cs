@@ -18,6 +18,8 @@ namespace Icity.Areas.Admin.Pages.SubCategories
         private IcityContext _context;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IToastNotification _toastNotification;
+        [BindProperty]
+        public int categoryprop { get; set; }
 
         public EditModel(IcityContext context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
         {
@@ -42,6 +44,7 @@ namespace Icity.Areas.Admin.Pages.SubCategories
                 {
                     return Redirect("../Error");
                 }
+                categoryprop = id;
             }
             catch (Exception)
             {

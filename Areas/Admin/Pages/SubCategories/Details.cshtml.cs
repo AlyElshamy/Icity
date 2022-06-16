@@ -14,7 +14,8 @@ namespace Icity.Areas.Admin.Pages.SubCategories
     public class DetailsModel : PageModel
     {
         private IcityContext _context;
-
+        [BindProperty]
+        public int categoryprop { get; set; }
 
         private readonly IToastNotification _toastNotification;
         public DetailsModel(IcityContext context, IToastNotification toastNotification)
@@ -37,6 +38,9 @@ namespace Icity.Areas.Admin.Pages.SubCategories
                 {
                     return Redirect("../Error");
                 }
+                categoryprop = id;
+
+
             }
             catch (Exception)
             {

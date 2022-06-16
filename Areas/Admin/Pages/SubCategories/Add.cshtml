@@ -10,7 +10,7 @@
                     <div class="card-header">
                         <h2 class="card-header d-flex justify-content-between align-items-center">
                             @sharedResource["Add"]  @sharedResource["Sub Category"]
-                            <a asp-page="Index" class="btn btn-primary"> @sharedResource["Back"]</a>
+                            <a asp-page="Index" asp-route-id="@Model.CategoryIdProp" class="btn btn-primary"> @sharedResource["Back"]</a>
                         </h2>
                     </div>
                     <div class="card-body">
@@ -23,7 +23,7 @@
             items.AddSimpleFor(m => m.SubCategoryTitleAr).IsRequired(true).Label(k => k.Text(sharedResource["TlAr"]));
             items.AddSimpleFor(m => m.SubCategoryTitleEn).IsRequired(true).Label(k => k.Text(sharedResource["TlEn"]));
             items.AddSimpleFor(m => m.Tags).IsRequired(true).Label(k => k.Text(sharedResource["Tags"]));
-            items.AddSimpleFor(m => m.SortOrder).IsRequired(true).Label(k => k.Text(sharedResource["SortOrder"])).ValidationRules(r => r.AddRange().Min(0));
+            items.AddSimpleFor(m => m.SortOrder).IsRequired(true).Label(k => k.Text(sharedResource["Sort Order"])).ValidationRules(r => r.AddRange().Min(0));
 ;
             items.AddSimpleFor(m => m.Description).IsRequired(true).Label(k => k.Text(sharedResource["Description"]));
             items.AddSimpleFor(m => m.SubCategoryPic).IsRequired(true).Label(k => k.Text(sharedResource["Picture"])).Template(@<text>

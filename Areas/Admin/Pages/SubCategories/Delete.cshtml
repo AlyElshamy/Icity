@@ -11,8 +11,8 @@
                 <div class="card">
                     <div class="card-header">
                         <h2 class="card-header d-flex justify-content-between align-items-center">
-                            @sharedResource["Delete"] @sharedResource["Category"]
-                            <a asp-page="Index" class="btn btn-primary"> @sharedResource["Back"]</a>
+                            @sharedResource["Delete"] @sharedResource["Sub Category"]
+                            <a asp-page="Index" asp-route-id="@Model.CategoryIdProp" class="btn btn-primary"> @sharedResource["Back"]</a>
                         </h2>
                     </div>
                     <div class="card-body">
@@ -36,7 +36,7 @@
                                         <div> @Model.Subcategory.Tags </div>
                                     </div>
                                     <div class="d-flex justify-content-between">
-                                        <div>@sharedResource["SortOrder"]  </div>
+                                        <div>@sharedResource["Sort Order"]  </div>
                                         <div> @Model.Subcategory.SortOrder </div>
                                     </div>
                                     <div class="d-flex justify-content-between">

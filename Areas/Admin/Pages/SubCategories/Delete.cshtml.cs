@@ -18,7 +18,8 @@ namespace Icity.Areas.Admin.Pages.SubCategories
         private IcityContext _context;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IToastNotification _toastNotification;
-
+        [BindProperty]
+        public int CategoryIdProp { get; set; }
         public DeleteModel(IcityContext context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
         {
             _context = context;
@@ -33,15 +34,15 @@ namespace Icity.Areas.Admin.Pages.SubCategories
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-
+            
             try
             {
                  Subcategory = await _context.SubCategories.FirstOrDefaultAsync(m => m.SubCategoryID == id);
-
                 if (Subcategory == null)
                 {
                     return Redirect("../Error");
                 }
+                CategoryIdProp = id;
             }
             catch (Exception)
             {

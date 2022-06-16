@@ -651,4 +651,13 @@
   <data name="Sign In" xml:space="preserve">
     <value>تسجيل الدخول</value>
   </data>
+  <data name="Sort Order" xml:space="preserve">
+    <value>الترتيب</value>
+  </data>
+  <data name="Sub Category" xml:space="preserve">
+    <value>فئة فرعية</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>علامات</value>
+  </data>
 </root>
