@@ -46,6 +46,10 @@
     <Folder Include="wwwroot\Images\Brand\" />
     <Folder Include="wwwroot\Images\Item\" />
     <Folder Include="wwwroot\Images\BannerImages\" />
+    <Folder Include="wwwroot\Images\ListingMedia\Logos\" />
+    <Folder Include="wwwroot\Images\ListingMedia\Banners\" />
+    <Folder Include="wwwroot\Images\ListingMedia\Videos\" />
+    <Folder Include="wwwroot\Images\ListingMedia\Photos\" />
     <Folder Include="wwwroot\Images\SubCategory\" />
     <Folder Include="wwwroot\Images\ProfileImages\" />
     <Folder Include="wwwroot\Images\Section\" />

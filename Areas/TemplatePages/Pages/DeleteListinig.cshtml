@@ -1,5 +1,5 @@
 ﻿@page
-@model Icity.Areas.TemplatePages.Pages.DashBoardAddListingModel
+@model Icity.Areas.TemplatePages.Pages.DeleteListinigModel
 @inject IcityContext _context
 @Html.AntiForgeryToken()
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
@@ -9,6 +9,7 @@
 }
 <div class="col-md-9">
     <form method="post" enctype="multipart/form-data">
+        <input asp-for="@Model.AddListing.AddListingId" hidden />
 
         <div class="dashboard-title   fl-wrap">
             <h3>Add Listing</h3>
@@ -16,104 +17,104 @@
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
-                <label>@sharedResource["Listing Title"] <i class="fal fa-briefcase"></i></label>
-                <input asp-for="AddListing.Title" type="text" placeholder="@sharedResource["Enter Title"]" value="" required />
+                <label>Listing Title <i class="fal fa-briefcase"></i></label>
+                <input asp-for="@Model.AddListing.Title" type="text" placeholder="Enter Title" readonly />
                 <div class="row">
                     <div class="col-md-6">
-                        <label>@sharedResource["Type / Category"]</label>
+                        <label>Type / Category</label>
                         <div class="listsearch-input-item">
-                            <select required asp-for="AddListing.CategoryId" data-placeholder="Apartments" class="chosen-select no-search-select">
-                                <option>@sharedResource["All Categories"]</option>
+                            <select disabled asp-for="@Model.AddListing.CategoryId" data-placeholder="Apartments" class="chosen-select no-search-select">
+                                <option>All Categories</option>
                                 @foreach (var item in Categories)
                                 {
-                                    <option value="@item.CategoryId">@item.CategoryTitleEn</option>
+                                    <option disabled value="@item.CategoryId">@item.CategoryTitleEn</option>
                                 }
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label>@sharedResource["Tags"] <i class="fal fa-key"></i></label>
-                        <input asp-for="AddListing.Tags" type="text" placeholder="@sharedResource["Enter Tags"]Enter Tags" value="" />
+                        <label>Tags <i class="fal fa-key"></i></label>
+                        <input asp-for="@Model.AddListing.Tags" type="text" placeholder="Enter Tags" readonly />
                     </div>
                 </div>
             </div>
         </div>
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>@sharedResource["Location / Contacts"]</h3>
+            <h3>Location / Contacts</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
                 <div class="row">
                     @*<div class="col-md-6">
-                            <label>Longitude (Drag marker on the map)<i class="fal fa-long-arrow-alt-right"></i>  </label>
-                            <input type="text" placeholder="Map Longitude" id="long" value="" />
-                        </div>
-                        <div class="col-md-6">
-                            <label>Latitude (Drag marker on the map) <i class="fal fa-long-arrow-alt-down"></i> </label>
-                            <input type="text" placeholder="Map Latitude" id="lat" value="" />
-                        </div>*@
+                        <label>Longitude (Drag marker on the map)<i class="fal fa-long-arrow-alt-right"></i>  </label>
+                        <input type="text" placeholder="Map Longitude" id="long" value="" />
+                    </div>
+                    <div class="col-md-6">
+                        <label>Latitude (Drag marker on the map) <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input type="text" placeholder="Map Latitude" id="lat" value="" />
+                    </div>*@
                     <div class="">
-                        <label>@sharedResource["Main Location"] <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="AddListing.MainLocataion" type="text" placeholder="@sharedResource["Enter Main Location"]" id="lat" value="" required />
+                        <label>MainLocation <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.MainLocataion" type="text" placeholder="Enter Main Location" id="lat" readonly />
                     </div>
 
                 </div>
                 @*<div class="map-container">
-                        <div id="singleMap" class="drag-map" data-latitude="40.7427837" data-longitude="-73.11445617675781"></div>
-                    </div>*@
+                    <div id="singleMap" class="drag-map" data-latitude="40.7427837" data-longitude="-73.11445617675781"></div>
+                </div>*@
                 @*<label>City / Location</label>
-                    <div class="listsearch-input-item">
-                        <select data-placeholder="City" class="chosen-select no-search-select">
-                            <option>All Cities</option>
-                            <option>New York</option>
-                            <option>London</option>
-                            <option>Paris</option>
-                            <option>Kiev</option>
-                            <option>Moscow</option>
-                            <option>Dubai</option>
-                            <option>Rome</option>
-                            <option>Beijing</option>
-                        </select>
-                    </div>*@
+                <div class="listsearch-input-item">
+                    <select data-placeholder="City" class="chosen-select no-search-select">
+                        <option>All Cities</option>
+                        <option>New York</option>
+                        <option>London</option>
+                        <option>Paris</option>
+                        <option>Kiev</option>
+                        <option>Moscow</option>
+                        <option>Dubai</option>
+                        <option>Rome</option>
+                        <option>Beijing</option>
+                    </select>
+                </div>*@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label>@sharedResource["City"] <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="AddListing.City" type="text" placeholder="@sharedResource["Enter City"]" id="lat" value="" required />
+                        <label>City <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.City" type="text" placeholder="Enter City" id="lat" readonly />
                     </div>
                     <div class="col-md-6">
-                        <label>@sharedResource["Country"] <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="AddListing.Country" type="text" placeholder="@sharedResource["Country"]Enter Country" id="lat" value="" required />
+                        <label>Country <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.Country" type="text" placeholder="Enter Country" id="lat" readonly />
                     </div>
                     <div class="col-md-6">
-                        <label>@sharedResource["Contact Person"] <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="AddListing.ContactPeroson" type="text" placeholder="@sharedResource["Enter Contact Person"]" id="lat" value="" required />
+                        <label>Contact Person <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.ContactPeroson" type="text" placeholder="Enter Contact Person" id="lat" readonly />
                     </div>
                     <div class="col-sm-6">
-                        <label>@sharedResource["Address"]<i class="fal fa-map-marker"></i></label>
-                        <input asp-for="AddListing.Address" type="text" placeholder="@sharedResource["Enter Address"]" value="" />
+                        <label>Address<i class="fal fa-map-marker"></i></label>
+                        <input asp-for="@Model.AddListing.Address" type="text" placeholder="Enter Address" readonly />
                     </div>
                     <div class="col-sm-6">
-                        <label>@sharedResource["Phone 1"]<i class="far fa-phone"></i>  </label>
-                        <input asp-for="AddListing.Phone1" type="text" placeholder="@sharedResource["Enter Phone"]" value="" />
+                        <label>Phone 1<i class="far fa-phone"></i>  </label>
+                        <input asp-for="@Model.AddListing.Phone1" type="text" placeholder="Enter Phone" readonly />
                     </div>
                     <div class="col-sm-6">
-                        <label>@sharedResource["Phone 2"]<i class="far fa-phone"></i>  </label>
-                        <input asp-for="AddListing.Phone2" type="text" placeholder="@sharedResource["Enter another Phone"]" value="" />
+                        <label>Phone 2<i class="far fa-phone"></i>  </label>
+                        <input asp-for="@Model.AddListing.Phone2" type="text" placeholder="Enter another Phone" readonly />
                     </div>
                     <div class="col-sm-6">
-                        <label> @sharedResource["Website"] <i class="far fa-globe"></i>  </label>
-                        <input asp-for="AddListing.Website" type="text" placeholder="@sharedResource["Enter Website"]" value="" />
+                        <label> Website <i class="far fa-globe"></i>  </label>
+                        <input asp-for="@Model.AddListing.Website" type="text" placeholder="Enter Website" readonly />
                     </div>
                     <div class="col-sm-6">
-                        <label> @sharedResource["Country"]Fax <i class="fa fa-fax"></i>  </label>
-                        <input asp-for="AddListing.Fax" type="text" placeholder="@sharedResource["Country"]Enter Fax" value="" />
+                        <label> Fax <i class="fa fa-fax"></i>  </label>
+                        <input asp-for="@Model.AddListing.Fax" type="text" placeholder="Enter Fax" readonly />
                     </div>
                     <div class="col-sm-12">
-                        <label>@sharedResource["Email Address"]<i class="far fa-envelope"></i>  </label>
-                        <input asp-for="AddListing.Email" type="text" placeholder="@sharedResource["Enter Email"]" value="" />
+                        <label>Email Address<i class="far fa-envelope"></i>  </label>
+                        <input asp-for="@Model.AddListing.Email" type="text" placeholder="Enter Email" readonly />
                     </div>
                 </div>
             </div>
@@ -127,121 +128,68 @@
             <div class="custom-form">
                 <div class="row">
                     <!--col -->
-                    <div class="col-md-2">
-                        @*<div class="add-list-media-header" style="margin-bottom:20px">
-                                <label class="radio inline">
-                                    <input type="radio" name="gender" checked>
-                                    <span>Background image</span>
-                                </label>
-                            </div>*@
+                    <div class="col-md-4">
+                        <div class="add-list-media-header" style="margin-bottom:20px">
+                            <label class="radio inline">
+                                <input type="radio" name="gender" checked>
+                                <span>Background image</span>
+                            </label>
+                        </div>
                         <div class="add-list-media-wrap">
                             <div class="add-list-media-wrap">
                                 <div class="listsearch-input-item fl-wrap">
                                     <div class="fuzone">
+                                        @*<form>
+                                            <div class="fu-text">
+                                                <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
+                                                <div class="photoUpload-files fl-wrap"></div>
+                                            </div>
+                                            <input type="file" class="upload" multiple>
+                                        </form>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--col end-->
+                    <!--col -->
+                    <div class="col-md-4">
+                        <div class="add-list-media-header" style="margin-bottom:20px">
+                            <label class="radio inline">
+                                <input type="radio" name="gender">
+                                <span>Carousel</span>
+                            </label>
+                        </div>
+                        <div class="add-list-media-wrap">
+                            <div class="listsearch-input-item fl-wrap">
+                                <div class="fuzone">
+                                    @*<form>
                                         <div class="fu-text">
-                                            <span><i class="fal fa-images"></i> Click here or drop Logo</span>
+                                            <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
                                             <div class="photoUpload-files fl-wrap"></div>
                                         </div>
-                                        <input type="file" accept="image/*" name="Listinglogo" class="upload">
-                                    </div>
+                                        <input type="file" class="upload" multiple>
+                                    </form>*@
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!--col end-->
                     <!--col -->
-                    <div class="col-md-2">
-                        @*<div class="add-list-media-header" style="margin-bottom:20px">
-                                <label class="radio inline">
-                                    <input type="radio" name="gender">
-                                    <span>Carousel</span>
-                                </label>
-                            </div>*@
+                    <div class="col-md-4">
+                        <div class="add-list-media-header" style="margin-bottom:20px">
+                            <label class="radio inline">
+                                <input type="radio" name="gender">
+                                <span>Video</span>
+                            </label>
+                        </div>
                         <div class="add-list-media-wrap">
-                            <div class="listsearch-input-item fl-wrap">
-                                <div class="fuzone">
-                                    <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> Click here or drop Banner</span>
-                                        <div class="photoUpload-files fl-wrap"></div>
-                                    </div>
-                                    <input type="file" accept="image/*" name="listingbanner" class="upload">
-                                </div>
-                            </div>
+                            <label>Youtube  <i class="fab fa-youtube"></i></label>
+                            <input type="text" placeholder="https://www.youtube.com/" value="" />
+                            <label>Vimeo <i class="fab fa-vimeo-v"></i></label>
+                            <input type="text" placeholder="https://vimeo.com/" value="" />
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        @*<div class="add-list-media-header" style="margin-bottom:20px">
-                                <label class="radio inline">
-                                    <input type="radio" name="gender">
-                                    <span>Carousel</span>
-                                </label>
-                            </div>*@
-                        <div class="add-list-media-wrap">
-                            <div class="listsearch-input-item fl-wrap">
-                                <div class="fuzone">
-                                    <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> Click here or drop Promo Video</span>
-                                        <div class="photoUpload-files fl-wrap"></div>
-                                    </div>
-                                    <input type="file" accept="video/*" name="PromoVideo" class="upload">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        @*<div class="add-list-media-header" style="margin-bottom:20px">
-                                <label class="radio inline">
-                                    <input type="radio" name="gender">
-                                    <span>Carousel</span>
-                                </label>
-                            </div>*@
-                        <div class="add-list-media-wrap">
-                            <div class="listsearch-input-item fl-wrap">
-                                <div class="fuzone">
-                                    <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> Click here or drop Photos</span>
-                                        <div class="photoUpload-files fl-wrap"></div>
-                                    </div>
-                                    <input type="file" accept="image/*" name="Photos" class="upload" multiple>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        @*<div class="add-list-media-header" style="margin-bottom:20px">
-                                <label class="radio inline">
-                                    <input type="radio" name="gender">
-                                    <span>Carousel</span>
-                                </label>
-                            </div>*@
-                        <div class="add-list-media-wrap">
-                            <div class="listsearch-input-item fl-wrap">
-                                <div class="fuzone">
-                                    <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> Click here or drop Videos</span>
-                                        <div class="photoUpload-files fl-wrap"></div>
-                                    </div>
-                                    <input type="file" accept="video/*" name="Videos" class="upload" multiple>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--col end-->
-                    <!--col -->
-                    @*<div class="col-md-4">
-                            <div class="add-list-media-header" style="margin-bottom:20px">
-                                <label class="radio inline">
-                                    <input type="radio" name="gender">
-                                    <span>Video</span>
-                                </label>
-                            </div>
-                            <div class="add-list-media-wrap">
-                                <label>Youtube  <i class="fab fa-youtube"></i></label>
-                                <input type="text" placeholder="https://www.youtube.com/" value="" />
-                                <label>Vimeo <i class="fab fa-vimeo-v"></i></label>
-                                <input type="text" placeholder="https://vimeo.com/" value="" />
-                            </div>
-                        </div>*@
                     <!--col end-->
                 </div>
             </div>
@@ -253,8 +201,8 @@
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
-                <label>@sharedResource["Description"]</label>
-                <textarea asp-for="AddListing.Discription" cols="40" rows="3" placeholder="@sharedResource["Enter Discription"]"></textarea>
+                <label>Description</label>
+                <textarea asp-for="@Model.AddListing.Discription" cols="40" rows="3" placeholder="Enter Discription" readonly></textarea>
             </div>
         </div>
         <!-- profile-edit-container end-->
@@ -270,69 +218,67 @@
         </div>
         <!-- profile-edit-container-->
         @*<div class="profile-edit-container fl-wrap  block_box">
-                <div class="custom-form add_room-item-wrap">
-                    <div class="add_room-container fl-wrap">
-                        <div class="add_room-item fl-wrap">
-                            <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label>Item Title <i class="fal fa-briefcase"></i></label>
-                                    <input type="text" placeholder="Title" value="" />
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Item Category<i class="fal fa-filter"></i></label>
-                                    <input type="text" placeholder="Category" value="" />
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Item Price<i class="fal fa-dollar-sign"></i></label>
-                                    <input type="text" placeholder="Price" value="" />
-                                </div>
-                                <div class="col-md-8">
-                                    <label>Item Details</label>
-                                    <textarea cols="40" rows="3" placeholder="Datails"></textarea>
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Item Image</label>
-                                    <div class="add-list-media-wrap">
-                                        <div class="listsearch-input-item fl-wrap">
-                                            <div class="fuzone">
-                                                <form>
-                                                    <div class="fu-text">
-                                                        <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
-                                                        <div class="photoUpload-files fl-wrap"></div>
-                                                    </div>
-                                                    <input type="file" class="upload">
-                                                </form>
-                                            </div>
+            <div class="custom-form add_room-item-wrap">
+                <div class="add_room-container fl-wrap">
+                    <div class="add_room-item fl-wrap">
+                        <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Item Title <i class="fal fa-briefcase"></i></label>
+                                <input type="text" placeholder="Title" value="" />
+                            </div>
+                            <div class="col-md-4">
+                                <label>Item Category<i class="fal fa-filter"></i></label>
+                                <input type="text" placeholder="Category" value="" />
+                            </div>
+                            <div class="col-md-4">
+                                <label>Item Price<i class="fal fa-dollar-sign"></i></label>
+                                <input type="text" placeholder="Price" value="" />
+                            </div>
+                            <div class="col-md-8">
+                                <label>Item Details</label>
+                                <textarea cols="40" rows="3" placeholder="Datails"></textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Item Image</label>
+                                <div class="add-list-media-wrap">
+                                    <div class="listsearch-input-item fl-wrap">
+                                        <div class="fuzone">
+                                            <form>
+                                                <div class="fu-text">
+                                                    <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
+                                                    <div class="photoUpload-files fl-wrap"></div>
+                                                </div>
+                                                <input type="file" class="upload">
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <a href="#" class="add-room-item">Add New <i class="fal fa-plus"></i> </a>
                 </div>
-            </div>*@
+                <a href="#" class="add-room-item">Add New <i class="fal fa-plus"></i> </a>
+            </div>
+        </div>*@
 
         <div class="profile-edit-container fl-wrap  block_box">
             <div class="custom-form add_room-item-wrap">
                 <div class="add_room-container fl-wrap">
-                    <div class="add_room-item fl-wrap">
-                        <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>Branch Title <i class="fal fa-briefcase"></i></label>
-                                <input class="titleinput" type="text" placeholder="Enter Branch Title" value="" />
+                    @foreach (var item in Model.BranchesList)
+                    {
+                        <div class="add_room-item fl-wrap">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Branch Title <i class="fal fa-briefcase"></i></label>
+                                    <input class="titleinput" type="text" placeholder="Enter Branch Title" readonly value="@item.Title" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <a class="add-room-item">Add New <i class="fal fa-plus"></i> </a>
-                @*<a class="btn btn-success" onclick="branchtitle()">Save All<i class="fal fa-plus"></i></a>*@
+                    }
 
-            </div>
-            <div class="row">
-                <a onclick="branchtitle()" href="#" class="btn  color2-bg  float-btn">Save All</a>
+                </div>
+
             </div>
         </div>
         <!-- profile-edit-container end-->
@@ -356,7 +302,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label>Item Title <i class="fal fa-briefcase"></i></label>
-                                <input type="text" placeholder="Title" value="" />
+                                <input type="text" placeholder="Title" readonly />
                             </div>
                             <div class="col-md-4">
                                 <label>Item Subtitle<i class="fal fa-filter"></i></label>
@@ -376,12 +322,12 @@
                                     <div class="listsearch-input-item fl-wrap">
                                         <div class="fuzone">
                                             @*<form>
-                                                    <div class="fu-text">
-                                                        <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
-                                                        <div class="photoUpload-files fl-wrap"></div>
-                                                    </div>
-                                                    <input type="file" class="upload">
-                                                </form>*@
+                                                <div class="fu-text">
+                                                    <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
+                                                    <div class="photoUpload-files fl-wrap"></div>
+                                                </div>
+                                                <input type="file" class="upload">
+                                            </form>*@
                                         </div>
                                     </div>
                                 </div>
@@ -475,12 +421,12 @@
                                 <div class="listsearch-input-item fl-wrap">
                                     <div class="fuzone">
                                         @*<form>
-                                                <div class="fu-text">
-                                                    <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
-                                                    <div class="photoUpload-files fl-wrap"></div>
-                                                </div>
-                                                <input type="file" class="upload" multiple>
-                                            </form>*@
+                                            <div class="fu-text">
+                                                <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
+                                                <div class="photoUpload-files fl-wrap"></div>
+                                            </div>
+                                            <input type="file" class="upload" multiple>
+                                        </form>*@
                                     </div>
                                 </div>
                             </div>
@@ -504,12 +450,12 @@
                                 <div class="listsearch-input-item fl-wrap">
                                     <div class="fuzone">
                                         @*<form>
-                                                <div class="fu-text">
-                                                    <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
-                                                    <div class="photoUpload-files fl-wrap"></div>
-                                                </div>
-                                                <input type="file" class="upload" multiple>
-                                            </form>*@
+                                            <div class="fu-text">
+                                                <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
+                                                <div class="photoUpload-files fl-wrap"></div>
+                                            </div>
+                                            <input type="file" class="upload" multiple>
+                                        </form>*@
                                     </div>
                                 </div>
                             </div>
@@ -628,7 +574,7 @@
                 <input type="text" placeholder="https://www.instagram.com/" value="" />
             </div>
         </div>
-        <button type="submit" class="btn  color2-bg  float-btn">@sharedResource["Add Listing"]<i class="fal fa-paper-plane"></i></button>
+        <button type="submit"  class="btn  color2-bg  float-btn">Delete Listining<i class="fal fa-paper-plane"></i></button>
 
     </form>
     <!-- profile-edit-container end-->
@@ -653,49 +599,5 @@
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places&callback=initAutocomplete"></script>
         <script src="~/Template/js/map-add.js"></script>
-
-
-
     }
 }
-<script>
-    var counter = 0;
-
-    function branchtitle() {
-        var myList = new Array();
-        var inputvalue = document.getElementsByClassName("titleinput");
-        for (var i = 0; i < inputvalue.length; i++) {
-            if (document.getElementsByClassName("titleinput")[i].value != "") {
-                myList.push(document.getElementsByClassName("titleinput")[i].value)
-            }
-        }
-        if (myList.length > 0) {
-            $.ajax({
-                type: "POST",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("XSRF-TOKEN",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                }
-                ,
-                url: "/TemplatePages/DashBoardAddListing?handler=FillBranchesList",
-                async: false,
-                data: JSON.stringify(myList),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-
-                success: function (response) {
-                    console.log("get selected rows successfully" + response)
-                    counter += 1;
-                },
-                failure: function (response) {
-                    alert(response);
-                }
-            });
-
-        }
-        else {
-            console.log("Nobody has been selected")
-        }
-    }
-
-</script>

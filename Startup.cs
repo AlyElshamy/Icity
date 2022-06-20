@@ -44,6 +44,7 @@ namespace Icity
            .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
 
             services.AddRazorPages().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null).AddDataAnnotationsLocalization(

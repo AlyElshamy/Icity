@@ -4,14 +4,16 @@ using Icity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Icity.Migrations.Icity
 {
     [DbContext(typeof(IcityContext))]
-    partial class IcityContextModelSnapshot : ModelSnapshot
+    [Migration("20220619145502_review")]
+    partial class review
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,12 +55,6 @@ namespace Icity.Migrations.Icity
                     b.Property<string>("Fax")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ListingBanner")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ListingLogo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("MainLocataion")
                         .HasColumnType("nvarchar(max)");
 
@@ -66,9 +62,6 @@ namespace Icity.Migrations.Icity
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PromoVideo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Rating")
@@ -222,46 +215,6 @@ namespace Icity.Migrations.Icity
                         });
                 });
 
-            modelBuilder.Entity("Icity.Models.ListingPhotos", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AddListingId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhotoUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddListingId");
-
-                    b.ToTable("ListingPhotos");
-                });
-
-            modelBuilder.Entity("Icity.Models.ListingVideos", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AddListingId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("VideoUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddListingId");
-
-                    b.ToTable("ListingVideos");
-                });
-
             modelBuilder.Entity("Icity.Models.Review", b =>
                 {
                     b.Property<int>("ReviewId")
@@ -277,12 +230,6 @@ namespace Icity.Migrations.Icity
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Rating")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("ReviewDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -1001,28 +948,6 @@ namespace Icity.Migrations.Icity
                     b.Navigation("AddListing");
                 });
 
-            modelBuilder.Entity("Icity.Models.ListingPhotos", b =>
-                {
-                    b.HasOne("Icity.Models.AddListing", "AddListing")
-                        .WithMany("ListingPhotos")
-                        .HasForeignKey("AddListingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AddListing");
-                });
-
-            modelBuilder.Entity("Icity.Models.ListingVideos", b =>
-                {
-                    b.HasOne("Icity.Models.AddListing", "AddListing")
-                        .WithMany("ListingVideos")
-                        .HasForeignKey("AddListingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AddListing");
-                });
-
             modelBuilder.Entity("Icity.Models.Review", b =>
                 {
                     b.HasOne("Icity.Models.AddListing", "AddListing")
@@ -1048,10 +973,6 @@ namespace Icity.Migrations.Icity
             modelBuilder.Entity("Icity.Models.AddListing", b =>
                 {
                     b.Navigation("Branches");
-
-                    b.Navigation("ListingPhotos");
-
-                    b.Navigation("ListingVideos");
 
                     b.Navigation("Reviews");
                 });

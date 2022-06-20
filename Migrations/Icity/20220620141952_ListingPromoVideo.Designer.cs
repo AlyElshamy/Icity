@@ -4,14 +4,16 @@ using Icity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Icity.Migrations.Icity
 {
     [DbContext(typeof(IcityContext))]
-    partial class IcityContextModelSnapshot : ModelSnapshot
+    [Migration("20220620141952_ListingPromoVideo")]
+    partial class ListingPromoVideo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

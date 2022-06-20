@@ -1,36 +1,42 @@
 ﻿@page
-@model Icity.Areas.TemplatePages.Pages.DashBoardListingTableModel
+@model Icity.Areas.TemplatePages.Pages.ListingReviewsModel
 @{
     Layout = "_DashBoard";
+
 }
 <div class="col-md-9">
     <div class="dashboard-title   fl-wrap">
-        <h3>Your Listings</h3>
+        <h3>Your Reviews </h3>
     </div>
-
-    <!-- dashboard-list-box-->
-    <div class="dashboard-list-box  fl-wrap">
-        <!-- dashboard-list -->
-        @foreach (var item in Model.Listings)
+    <!-- profile-edit-container-->
+    <div class="profile-edit-container fl-wrap block_box">
+        <!-- reviews-comments-item -->
+        @foreach (var item in Model.reviewlist)
         {
-        <div class="dashboard-list fl-wrap">
-            <div class="dashboard-message">
-                <div class="booking-list-contr">
-                    <a asp-page="EditListining" asp-area="TemplatePages" asp-route-id="@item.AddListingId"class="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i class="fal fa-edit"></i></a>
-                    <a asp-page="DeleteListinig" asp-area="TemplatePages" asp-route-id="@item.AddListingId" class="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i class="fal fa-trash"></i></a>
+
+            <div class="reviews-comments-item">
+                <div class="review-comments-avatar">
+                    <img src="images/avatar/1.jpg" alt="">
                 </div>
-                <div class="dashboard-message-text">
-                    <img src="/@item.ListingLogo" alt="">
-                    <h4><a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId">@item.Title</a></h4>
-                    <div class="geodir-category-location clearfix"><a href="#"> @item.Address</a></div>
+                <div class="reviews-comments-item-text fl-wrap">
+                    <div class="reviews-comments-header fl-wrap">
+                        <h4><a href="#">@item.Name</a></h4>
+                        <div class="review-score-user">
+                            <span class="review-score-user_item">@item.Rating</span>
+                            <div class="listing-rating card-popup-rainingvis" data-starrating2="@item.Rating"></div>
+                        </div>
+                    </div>
+                    <p>@item.Title</p>
+                    <div class="reviews-comments-item-footer fl-wrap">
+                        <div class="reviews-comments-item-date"><span><i class="far fa-calendar-check"></i>@item.ReviewDate.Date</span></div>
+                        @*<a href="#" class="rate-review"><i class="fal fa-reply"></i>  Reply </a>*@
+                    </div>
                 </div>
             </div>
-        </div>
         }
-        
-        
+
     </div>
-    <!-- dashboard-list-box end-->
+    <!-- profile-edit-container end-->
     <div class="pagination">
         <a href="#" class="prevposts-link"><i class="fas fa-caret-left"></i><span>Prev</span></a>
         <a href="#">1</a>
@@ -52,9 +58,7 @@
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/color.css")">
-        <script src="~/Template/js/jquery.min.js"></script>
-        <script src="~/Template/js/plugins.js"></script>
-        <script src="~/Template/js/scripts.js"></script>
+
 
     }
     //Arabic
@@ -68,8 +72,6 @@
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
 
-        <script src="~/TemplateRTL/js/jquery.min.js"></script>
-        <script src="~/TemplateRTL/js/plugins.js"></script>
-        <script src="~/TemplateRTL/js/scripts.js"></script>
+
     }
 }

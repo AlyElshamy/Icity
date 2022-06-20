@@ -1,16 +1,143 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Icity.Data;
+using Icity.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using NToastNotify;
 
 namespace Icity.Areas.TemplatePages.Pages
 {
     public class DashBoardAddListingModel : PageModel
     {
-        public void OnGet()
+        private IcityContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IToastNotification _toastNotification;
+        public static List<Branch> Branches;
+
+        [BindProperty]
+        public AddListing AddListing { get; set; }
+        public UserManager<ApplicationUser> UserManager { get; }
+
+        public DashBoardAddListingModel(UserManager<ApplicationUser> userManager, IcityContext context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
         {
+            UserManager = userManager;
+            _context = context;
+            _hostEnvironment = hostEnvironment;
+            _toastNotification = toastNotification;
+
+        }
+        private string UploadImage(string folderPath, IFormFile file)
+        {
+
+            folderPath += Guid.NewGuid().ToString() + "_" + file.FileName;
+
+            string serverFolder = Path.Combine(_hostEnvironment.WebRootPath, folderPath);
+
+            file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+            return folderPath;
+        }
+        public async Task<IActionResult> OnGet()
+        {
+            var user = await UserManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Redirect("/identity/account/login");
+            }
+            return Page();
+        }
+        public IActionResult OnPostFillBranchesList([FromBody] List<string> branchTitle)
+        {
+            Branches = new List<Branch>();
+            foreach (var item in branchTitle)
+            {
+                Branch branch = new Branch { Title = item };
+                Branches.Add(branch);
+            }
+            return new JsonResult(Branches);
+        }
+        public async Task<IActionResult> OnPost(IFormFile Listinglogo, IFormFile PromoVideo, IFormFile listingbanner, IFormFileCollection Videos, IFormFileCollection Photos)
+        {
+            var user = await UserManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Redirect("/identity/account/login");
+            }
+            
+
+            List<ListingPhotos> photolistings = new List<ListingPhotos>();
+            if (Photos.Count() > 0)
+            {
+                for (int i = 0; i < Photos.Count(); i++)
+                {
+                    ListingPhotos photoobj = new ListingPhotos();
+                    if (Photos[i] != null)
+                    {
+                        string folder = "Images/ListingMedia/Photos/";
+                        photoobj.PhotoUrl = UploadImage(folder, Photos[i]);
+                    }
+
+                    photolistings.Add(photoobj);
+                }
+                AddListing.ListingPhotos = photolistings;
+            }
+
+
+            List<ListingVideos> videoListing = new List<ListingVideos>();
+            if (Videos.Count() > 0)
+            {
+                for (int i = 0; i < Videos.Count(); i++)
+                {
+                    ListingVideos videoobj = new ListingVideos();
+                    if (Videos[i] != null)
+                    {
+                        string folder = "Images/ListingMedia/Videos/";
+                        videoobj.VideoUrl = UploadImage(folder, Videos[i]);
+                    }
+
+                    videoListing.Add(videoobj);
+                }
+                AddListing.ListingVideos = videoListing;
+            }
+
+            if (Listinglogo != null)
+            {
+                string folder = "Images/ListingMedia/Logos/";
+                AddListing.ListingLogo = UploadImage(folder, Listinglogo);
+            }
+            if (PromoVideo != null)
+            {
+                string folder = "Images/ListingMedia/Videos/";
+                AddListing.PromoVideo = UploadImage(folder, PromoVideo);
+            }
+            if (listingbanner != null)
+            {
+                string folder = "Images/ListingMedia/Banners/";
+                AddListing.ListingBanner = UploadImage(folder, listingbanner);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            AddListing.CreatedByUser = user.Email;
+            AddListing.Branches = Branches;
+            _context.AddListings.Add(AddListing);
+            _context.SaveChanges();
+            _toastNotification.AddSuccessToastMessage("Listing Added successfully");
+
+
+
+            return Redirect("/TemplatePages/DashBoardListingTable");
+
         }
     }
 }

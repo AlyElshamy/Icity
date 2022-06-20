@@ -660,4 +660,70 @@
   <data name="Tags" xml:space="preserve">
     <value>علامات</value>
   </data>
+  <data name="Add Listing" xml:space="preserve">
+    <value>إضافة مجموعة</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>المدينة</value>
+  </data>
+  <data name="Contact Person" xml:space="preserve">
+    <value>شخص يمكن الاتصال به</value>
+  </data>
+  <data name="Email Address" xml:space="preserve">
+    <value>البريد الإلكتروني</value>
+  </data>
+  <data name="Enter Address" xml:space="preserve">
+    <value>أدخل العنوان</value>
+  </data>
+  <data name="Enter another Phone" xml:space="preserve">
+    <value>أدخل تليفون آخر</value>
+  </data>
+  <data name="Enter City" xml:space="preserve">
+    <value>أدخل المدينة</value>
+  </data>
+  <data name="Enter Contact Person" xml:space="preserve">
+    <value>أدخل جهة اتصال</value>
+  </data>
+  <data name="Enter Discription" xml:space="preserve">
+    <value>أدخل الوصف</value>
+  </data>
+  <data name="Enter Email" xml:space="preserve">
+    <value>أدخل البريد الإلكتروني</value>
+  </data>
+  <data name="Enter Main Location" xml:space="preserve">
+    <value>أدخل العنوان الرئيسي</value>
+  </data>
+  <data name="Enter Phone" xml:space="preserve">
+    <value>أدخل الهاتف المحمول</value>
+  </data>
+  <data name="Enter Tags" xml:space="preserve">
+    <value>أدخل العلامات</value>
+  </data>
+  <data name="Enter Title" xml:space="preserve">
+    <value>أدخل العنوان</value>
+  </data>
+  <data name="Enter Website" xml:space="preserve">
+    <value>أدخل الموقع</value>
+  </data>
+  <data name="Listing Title" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="Location / Contacts" xml:space="preserve">
+    <value>العنوان / الإتصال</value>
+  </data>
+  <data name="Main Location" xml:space="preserve">
+    <value>العنوان الرئيسي</value>
+  </data>
+  <data name="Phone 1" xml:space="preserve">
+    <value>الهاتف 1</value>
+  </data>
+  <data name="Phone 2" xml:space="preserve">
+    <value>الهاتف 2</value>
+  </data>
+  <data name="Type / Category" xml:space="preserve">
+    <value>النوع /الفئه</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>الموقع</value>
+  </data>
 </root>

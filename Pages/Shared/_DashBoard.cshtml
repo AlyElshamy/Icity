@@ -5,6 +5,17 @@
 <!DOCTYPE HTML>
 <html id="masterPageId" dir="ltr" lang="en">
 <head>
+    <link href="~/css/devextreme/dx.common.css" rel="stylesheet" />
+    <link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
+
+    <script src="~/js/devextreme/jquery.js"></script>
+    <script src="~/js/devextreme/bootstrap.js"></script>
+    <script src="~/js/devextreme/dx.all.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
+
+
+
     <!--=============== basic  ===============-->
     <meta charset="UTF-8">
     <title>Townhub - Directory Listing Template</title>
@@ -57,7 +68,9 @@
             <div class="lang-wrap">
                 <div class="show-lang"><span><i class="fal fa-globe-europe"></i><strong>En</strong></span><i class="fa fa-caret-down arrlan"></i></div>
                 <ul class="lang-tooltip lang-action no-list-style">
-                     <a onclick="ChangeLang('en')" id="ang1" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="en-US" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" class="current-lan" data-lantext="En">English</a>  <br /><br />
+                    <a onclick="ChangeLang('en')" id="ang1" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="en-US" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" class="current-lan" data-lantext="En">English</a>
+                    <br />
+                    <br />
                     <a onclick="ChangeLang('ar')" id="ang2" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="ar-EG" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" data-lantext="Fr">arabic</a>
                 </ul>
             </div>
@@ -164,8 +177,8 @@
                                 <li><a href="booking.html">Booking</a></li>
                                 <li><a href="pricing-tables.html">Pricing</a></li>
                                 <li><a asp-area="TemplatePages" asp-page="DashBoard">User Dasboard</a></li>
-                                <li><a  href="blog-single.html">Blog Single</a></li>
-                                <li><a  asp-area="TemplatePages" asp-page="DashBoardAddListing">Add Listing</a></li>
+                                <li><a href="blog-single.html">Blog Single</a></li>
+                                <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing">Add Listing</a></li>
                                 <li><a href="invoice.html">Invoice</a></li>
                                 <li><a href="404.html">404</a></li>
                             </ul>
@@ -402,7 +415,7 @@
                                             <li><a href="dashboard-feed.html"><i class="fal fa-rss"></i>Your Feed <span>7</span></a></li>
                                             <li><a asp-area="TemplatePages" asp-page="Profile"><i class="fal fa-user-edit"></i> Edit profile</a></li>
                                             <li><a href="dashboard-messages.html"><i class="fal fa-envelope"></i> Messages <span>3</span></a></li>
-                                            <li><a href="dashboard-password.html"><i class="fal fa-key"></i>Change Password</a></li>
+                                            <li><a asp-area="TemplatePages" asp-page="DashboardChangePassword"><i class="fal fa-key"></i>Change Password</a></li>
                                             <li>
                                                 <a href="#" class="submenu-link"><i class="fal fa-plus"></i>Submenu</a>
                                                 <ul class="no-list-style">
@@ -421,8 +434,8 @@
                                         <h3>Listings</h3>
                                         <ul class="no-list-style">
                                             <li><a asp-area="TemplatePages" asp-page="DashBoardListingTable"><i class="fal fa-th-list"></i> My listigs  </a></li>
-                                            <li><a href="dashboard-bookings.html"> <i class="fal fa-calendar-check"></i> Bookings <span>2</span></a></li>
-                                            <li><a href="dashboard-review.html"><i class="fal fa-comments-alt"></i> Reviews </a></li>
+                                            <li><a href="dashboard-bookings.html"> <i class=" fal fa-calendar-check"></i> Bookings <span>2</span></a></li>
+                                            <li><a asp-area="TemplatePages" asp-page="ListingReviews"><i class="fal fa-comments-alt"></i> Reviews </a></li>
                                             <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing"><i class="fal fa-file-plus"></i> Add New</a></li>
                                             <li>
                                                 <a href="#" class="submenu-link"><i class="fal fa-plus"></i>Submenu</a>
@@ -673,6 +686,6 @@
     <script src="~/Template/js/scripts.js"></script>
     <script src="~/Template/js/charts.js"></script>
     <script src="~/Template/js/dashboard.js"></script>
-
+    @await Component.InvokeAsync("NToastNotify")
 </body>
 </html>

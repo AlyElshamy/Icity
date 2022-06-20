@@ -22,6 +22,11 @@ namespace Icity.Data
 
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<SubCategory> SubCategories { get; set; }
+        public virtual DbSet<Review> Reviews { get; set; }
+        public virtual DbSet<Branch> Branches { get; set; }
+        public virtual DbSet<AddListing> AddListings { get; set; }
+        public virtual DbSet<ListingPhotos> ListingPhotos { get; set; }
+        public virtual DbSet<ListingVideos> ListingVideos { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

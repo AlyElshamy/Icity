@@ -60,8 +60,6 @@ namespace Icity.Areas.Identity.Pages.Account
 
 
         public async Task OnGetAsync(string returnUrl = null)
-
-
         {
             //bool x = await _roleManager.RoleExistsAsync("Admin");
             //if (!x)   
@@ -94,7 +92,6 @@ namespace Icity.Areas.Identity.Pages.Account
 
             ReturnUrl = returnUrl;
         }
-
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");

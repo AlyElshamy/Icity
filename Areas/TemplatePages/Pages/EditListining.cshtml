@@ -1,29 +1,30 @@
 ﻿@page
-@model Icity.Areas.TemplatePages.Pages.DashBoardAddListingModel
+@model Icity.Areas.TemplatePages.Pages.EditListiningModel
 @inject IcityContext _context
 @Html.AntiForgeryToken()
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @{
     Layout = "_DashBoard";
     var Categories = _context.Categories.Select(e => new { e.CategoryId, e.CategoryTitleEn });
+
 }
 <div class="col-md-9">
     <form method="post" enctype="multipart/form-data">
-
+        <input asp-for="@Model.AddListing.AddListingId" hidden />
         <div class="dashboard-title   fl-wrap">
             <h3>Add Listing</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
-                <label>@sharedResource["Listing Title"] <i class="fal fa-briefcase"></i></label>
-                <input asp-for="AddListing.Title" type="text" placeholder="@sharedResource["Enter Title"]" value="" required />
+                <label>Listing Title <i class="fal fa-briefcase"></i></label>
+                <input asp-for="@Model.AddListing.Title" type="text" placeholder="Enter Title" required />
                 <div class="row">
                     <div class="col-md-6">
-                        <label>@sharedResource["Type / Category"]</label>
+                        <label>Type / Category</label>
                         <div class="listsearch-input-item">
                             <select required asp-for="AddListing.CategoryId" data-placeholder="Apartments" class="chosen-select no-search-select">
-                                <option>@sharedResource["All Categories"]</option>
+                                <option>All Categories</option>
                                 @foreach (var item in Categories)
                                 {
                                     <option value="@item.CategoryId">@item.CategoryTitleEn</option>
@@ -32,15 +33,15 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label>@sharedResource["Tags"] <i class="fal fa-key"></i></label>
-                        <input asp-for="AddListing.Tags" type="text" placeholder="@sharedResource["Enter Tags"]Enter Tags" value="" />
+                        <label>Tags <i class="fal fa-key"></i></label>
+                        <input asp-for="@Model.AddListing.Tags" type="text" placeholder="Enter Tags" />
                     </div>
                 </div>
             </div>
         </div>
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>@sharedResource["Location / Contacts"]</h3>
+            <h3>Location / Contacts</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
@@ -55,8 +56,8 @@
                             <input type="text" placeholder="Map Latitude" id="lat" value="" />
                         </div>*@
                     <div class="">
-                        <label>@sharedResource["Main Location"] <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="AddListing.MainLocataion" type="text" placeholder="@sharedResource["Enter Main Location"]" id="lat" value="" required />
+                        <label>MainLocation <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.MainLocataion" type="text" placeholder="Enter Main Location" id="lat" required />
                     </div>
 
                 </div>
@@ -80,40 +81,40 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label>@sharedResource["City"] <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="AddListing.City" type="text" placeholder="@sharedResource["Enter City"]" id="lat" value="" required />
+                        <label>City <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.City" type="text" placeholder="Enter City" id="lat" required />
                     </div>
                     <div class="col-md-6">
-                        <label>@sharedResource["Country"] <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="AddListing.Country" type="text" placeholder="@sharedResource["Country"]Enter Country" id="lat" value="" required />
+                        <label>Country <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.Country" type="text" placeholder="Enter Country" id="lat" required />
                     </div>
                     <div class="col-md-6">
-                        <label>@sharedResource["Contact Person"] <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="AddListing.ContactPeroson" type="text" placeholder="@sharedResource["Enter Contact Person"]" id="lat" value="" required />
+                        <label>Contact Person <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.ContactPeroson" type="text" placeholder="Enter Contact Person" id="lat" required />
                     </div>
                     <div class="col-sm-6">
-                        <label>@sharedResource["Address"]<i class="fal fa-map-marker"></i></label>
-                        <input asp-for="AddListing.Address" type="text" placeholder="@sharedResource["Enter Address"]" value="" />
+                        <label>Address<i class="fal fa-map-marker"></i></label>
+                        <input asp-for="@Model.AddListing.Address" type="text" placeholder="Enter Address" />
                     </div>
                     <div class="col-sm-6">
-                        <label>@sharedResource["Phone 1"]<i class="far fa-phone"></i>  </label>
-                        <input asp-for="AddListing.Phone1" type="text" placeholder="@sharedResource["Enter Phone"]" value="" />
+                        <label>Phone 1<i class="far fa-phone"></i>  </label>
+                        <input asp-for="@Model.AddListing.Phone1" type="text" placeholder="Enter Phone" />
                     </div>
                     <div class="col-sm-6">
-                        <label>@sharedResource["Phone 2"]<i class="far fa-phone"></i>  </label>
-                        <input asp-for="AddListing.Phone2" type="text" placeholder="@sharedResource["Enter another Phone"]" value="" />
+                        <label>Phone 2<i class="far fa-phone"></i>  </label>
+                        <input asp-for="@Model.AddListing.Phone2" type="text" placeholder="Enter another Phone" />
                     </div>
                     <div class="col-sm-6">
-                        <label> @sharedResource["Website"] <i class="far fa-globe"></i>  </label>
-                        <input asp-for="AddListing.Website" type="text" placeholder="@sharedResource["Enter Website"]" value="" />
+                        <label> Website <i class="far fa-globe"></i>  </label>
+                        <input asp-for="@Model.AddListing.Website" type="text" placeholder="Enter Website" />
                     </div>
                     <div class="col-sm-6">
-                        <label> @sharedResource["Country"]Fax <i class="fa fa-fax"></i>  </label>
-                        <input asp-for="AddListing.Fax" type="text" placeholder="@sharedResource["Country"]Enter Fax" value="" />
+                        <label> Fax <i class="fa fa-fax"></i>  </label>
+                        <input asp-for="@Model.AddListing.Fax" type="text" placeholder="Enter Fax" />
                     </div>
                     <div class="col-sm-12">
-                        <label>@sharedResource["Email Address"]<i class="far fa-envelope"></i>  </label>
-                        <input asp-for="AddListing.Email" type="text" placeholder="@sharedResource["Enter Email"]" value="" />
+                        <label>Email Address<i class="far fa-envelope"></i>  </label>
+                        <input asp-for="@Model.AddListing.Email" type="text" placeholder="Enter Email" />
                     </div>
                 </div>
             </div>
@@ -123,7 +124,52 @@
             <h3>Header Media</h3>
         </div>
         <!-- profile-edit-container-->
-        <div class="profile-edit-container fl-wrap block_box">
+        <div class="listing-item-grid_container fl-wrap">
+            <div class="row">
+                <!--  listing-item-grid  -->
+                <div class="col-sm-4">
+                    <div class="listing-item-grid">
+                        <div class="bg" data-bg="/@Model.AddListing.ListingLogo"></div>
+                        <div class="d-gr-sec"></div>
+                        <div class="listing-item-grid_title">
+                            <h3><a href="listing.html">Logo</a></h3>
+                        </div>
+                    </div>
+                </div>
+                <!--  listing-item-grid end  -->
+                <!--  listing-item-grid  -->
+                <div class="col-sm-4">
+                    <div class="listing-item-grid">
+                        <div class="bg" data-bg="/@Model.AddListing.ListingBanner"></div>
+                        <div class="d-gr-sec"></div>
+                        <div class="listing-item-grid_title">
+                            <h3><a href="listing.html">Banner</a></h3>
+                        </div>
+                    </div>
+                </div>
+                <!--  listing-item-grid end  -->
+                <!--  listing-item-grid  -->
+                <div class="col-sm-4">
+                    <div class="listing-item-grid">
+                        @if (Model.AddListing.PromoVideo == null)
+                        {
+                            <div class="bg" data-bg=""></div>
+                        }
+                        else
+                        {
+                            <div class="bg">
+                                <iframe src="@Url.Content("/"+Model.AddListing.PromoVideo)?autoplay=1&loop=1&autopause=1&mute=1" allow="autoplay;" width="200" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+                        }
+
+                        <div class="d-gr-sec"></div>
+                        <div class="listing-item-grid_title">
+                            <h3><a href="listing.html">Promo Video</a></h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             <div class="custom-form">
                 <div class="row">
                     <!--col -->
@@ -245,6 +291,48 @@
                     <!--col end-->
                 </div>
             </div>
+            <div class="dashboard-title  dt-inbox fl-wrap">
+                <h3>Listing Photos</h3>
+            </div>
+            <div class="listing-item-grid_container fl-wrap">
+                <div class="row">
+                    @foreach (var item in Model.AddListing.ListingPhotos)
+                    {
+
+                        <div class="col-sm-4">
+                            <div class="listing-item-grid">
+                                <div class="bg" data-bg="/@item.PhotoUrl"></div>
+                                <div class="d-gr-sec" id=""></div>
+                                <div class="listing-item-grid_title">
+                                    <h3><a onclick="deletePhoto(@item.Id)">Delete</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div class="dashboard-title  dt-inbox fl-wrap">
+                <h3>Listing Videos</h3>
+            </div>
+            @foreach (var item in Model.AddListing.ListingVideos)
+            {
+
+                <div class="col-sm-4">
+                    <div class="list-single-main-item_content fl-wrap">
+                        <div class="iframe-holder fl-wrap">
+                            <div class="resp-video">
+
+                                <iframe src="@Url.Content("/"+item.VideoUrl)?background=0" width="200" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+                            </div>
+                            <h3><a onclick="deleteVideo(@item.Id)">Delete</a></h3>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
         </div>
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
@@ -253,8 +341,8 @@
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
-                <label>@sharedResource["Description"]</label>
-                <textarea asp-for="AddListing.Discription" cols="40" rows="3" placeholder="@sharedResource["Enter Discription"]"></textarea>
+                <label>Description</label>
+                <textarea asp-for="@Model.AddListing.Discription" cols="40" rows="3" placeholder="Enter Discription"></textarea>
             </div>
         </div>
         <!-- profile-edit-container end-->
@@ -317,15 +405,19 @@
         <div class="profile-edit-container fl-wrap  block_box">
             <div class="custom-form add_room-item-wrap">
                 <div class="add_room-container fl-wrap">
-                    <div class="add_room-item fl-wrap">
-                        <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>Branch Title <i class="fal fa-briefcase"></i></label>
-                                <input class="titleinput" type="text" placeholder="Enter Branch Title" value="" />
+                    @foreach (var item in Model.BranchesList)
+                    {
+                        <div class="add_room-item fl-wrap">
+                            <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Branch Title <i class="fal fa-briefcase"></i></label>
+                                    <input class="titleinput" type="text" placeholder="Enter Branch Title" value="@item.Title" />
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
+
                 </div>
                 <a class="add-room-item">Add New <i class="fal fa-plus"></i> </a>
                 @*<a class="btn btn-success" onclick="branchtitle()">Save All<i class="fal fa-plus"></i></a>*@
@@ -628,7 +720,7 @@
                 <input type="text" placeholder="https://www.instagram.com/" value="" />
             </div>
         </div>
-        <button type="submit" class="btn  color2-bg  float-btn">@sharedResource["Add Listing"]<i class="fal fa-paper-plane"></i></button>
+        <button type="submit" class="btn  color2-bg  float-btn">Send Listing<i class="fal fa-paper-plane"></i></button>
 
     </form>
     <!-- profile-edit-container end-->
@@ -677,7 +769,7 @@
                         $('input:hidden[name="__RequestVerificationToken"]').val());
                 }
                 ,
-                url: "/TemplatePages/DashBoardAddListing?handler=FillBranchesList",
+                url: "/TemplatePages/EditListining?handler=FillBranchesList",
                 async: false,
                 data: JSON.stringify(myList),
                 dataType: "json",
@@ -686,6 +778,70 @@
                 success: function (response) {
                     console.log("get selected rows successfully" + response)
                     counter += 1;
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+
+        }
+        else {
+            console.log("Nobody has been selected")
+        }
+    }
+
+
+    function deletePhoto(id) {
+        //console.log(typeof(id))
+        //var List = new Array();
+        //List.push(id);
+        if (id != 0) {
+            $.ajax({
+                type: "POST",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                }
+                ,
+                url: "/TemplatePages/EditListining?handler=DeletePhotoById",
+                async: false,
+                data: JSON.stringify(id),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+
+                success: function (response) {
+                    console.log("get selected rows successfully" + response)
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+
+        }
+        else {
+            console.log("Nobody has been selected")
+        }
+    }
+        function deleteVideo(id) {
+        //console.log(typeof(id))
+        //var List = new Array();
+        //List.push(id);
+        if (id != 0) {
+            $.ajax({
+                type: "POST",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                }
+                ,
+                url: "/TemplatePages/EditListining?handler=DeleteVideoById",
+                async: false,
+                data: JSON.stringify(id),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+
+                success: function (response) {
+                    console.log("get selected rows successfully" + response)
                 },
                 failure: function (response) {
                     alert(response);

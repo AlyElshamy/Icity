@@ -28,9 +28,9 @@ namespace Icity.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IWebHostEnvironment _hostEnvironment;
         public IcityContext _context { get; set; }
-        public ApplicationDbContext _applicationDbContext  { get; set; }
-        private readonly IEmailSender _emailSender; 
-        public IntegrationController(ApplicationDbContext applicationDbContext ,UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IcityContext Context, IWebHostEnvironment hostEnvironment, IEmailSender emailSender)
+        public ApplicationDbContext _applicationDbContext { get; set; }
+        private readonly IEmailSender _emailSender;
+        public IntegrationController(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IcityContext Context, IWebHostEnvironment hostEnvironment, IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -47,12 +47,12 @@ namespace Icity.Controllers
             {
                 if (!user.EmailConfirmed)
                 {
-                    return Ok(new { status = false, message="Email Not Confirmed" });
+                    return Ok(new { status = false, message = "Email Not Confirmed" });
                 }
                 var result = await _signInManager.CheckPasswordSignInAsync(user, Password, true);
                 if (result.Succeeded)
                 {
-                    return Ok(new { Status = "Success", User=user });
+                    return Ok(new { Status = "Success", User = user });
                 }
             }
             var invalidResponse = new { status = false };
@@ -80,7 +80,7 @@ namespace Icity.Controllers
             returnUrl ??= Url.Content("~/");
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var callbackUrl = Url.Action("GetConfirmEmail", "Integration",new { Email = user.Email },Request.Scheme, "codewarenet-001-site14.dtempurl.com");
+            var callbackUrl = Url.Action("GetConfirmEmail", "Integration", new { Email = user.Email }, Request.Scheme, "codewarenet-001-site14.dtempurl.com");
             await _emailSender.SendEmailAsync(Model.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
             return Ok(new { Status = "Success", Message = "User created successfully!", user });
@@ -88,7 +88,7 @@ namespace Icity.Controllers
         [HttpGet]
         public async Task<IActionResult> GetConfirmEmail(string Email)
         {
-            if (Email==null)
+            if (Email == null)
             {
                 return BadRequest("Enter User Id..");
             }
@@ -104,12 +104,12 @@ namespace Icity.Controllers
 
                 return BadRequest(e.Message);
             }
-            
+
         }
         [HttpPut]
         public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, IFormFileCollection Images, IFormFileCollection VideosFiels, UserProfile userProfile)
         {
-          
+
 
             try
             {
@@ -138,15 +138,15 @@ namespace Icity.Controllers
                 user.Phone2 = userProfile.Phone2;
                 user.Folwers = userProfile.Folwers;
                 user.Website = userProfile.Website;
-                user.Photos = userProfile.Photos==null? new List<Photo>() : userProfile.Photos;
-                user.Videos = userProfile.Videos==null? new List<Video>() : userProfile.Videos;
-                user.Skills = userProfile.Skills==null? new List<Skill>() : userProfile.Skills;
+                user.Photos = userProfile.Photos == null ? new List<Photo>() : userProfile.Photos;
+                user.Videos = userProfile.Videos == null ? new List<Video>() : userProfile.Videos;
+                user.Skills = userProfile.Skills == null ? new List<Skill>() : userProfile.Skills;
                 user.Interests = userProfile.Interests == null ? new List<Interest>() : userProfile.Interests;
                 user.Educations = userProfile.Skills == null ? new List<Education>() : userProfile.Educations;
                 user.LifeEvents = userProfile.LifeEvents == null ? new List<LifeEvent>() : userProfile.LifeEvents; ;
                 user.Languages = userProfile.Languages == null ? new List<Language>() : userProfile.Languages; ;
 
-                if (Images.Count() > 0&& user.Photos.Count()==Images.Count())
+                if (Images.Count() > 0 && user.Photos.Count() == Images.Count())
                 {
                     for (int i = 0; i < Images.Count(); i++)
                     {
@@ -166,7 +166,7 @@ namespace Icity.Controllers
 
                     }
                 }
-                if (VideosFiels.Count() > 0&& user.Videos.Count() == VideosFiels.Count())
+                if (VideosFiels.Count() > 0 && user.Videos.Count() == VideosFiels.Count())
                 {
                     for (int i = 0; i < VideosFiels.Count(); i++)
                     {
@@ -225,18 +225,18 @@ namespace Icity.Controllers
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(userid);   
-                
+                var user = await _userManager.FindByIdAsync(userid);
+
                 if (user != null)
                 {
-                    user.Photos = _applicationDbContext.Photos.Where(e => e.Id == userid).ToList(); 
-                    user.Videos = _applicationDbContext.Videos.Where(e => e.Id == userid).ToList(); 
+                    user.Photos = _applicationDbContext.Photos.Where(e => e.Id == userid).ToList();
+                    user.Videos = _applicationDbContext.Videos.Where(e => e.Id == userid).ToList();
                     user.Languages = _applicationDbContext.Languages.Where(e => e.Id == userid).ToList();
-                    user.Interests = _applicationDbContext.Interests.Where(e => e.Id == userid).ToList() ;
-                    user.Skills = _applicationDbContext.Skills.Where(e => e.Id == userid).ToList(); 
-                    user.LifeEvents = _applicationDbContext.LifeEvents.Where(e => e.Id == userid).ToList(); 
-                    user.Educations = _applicationDbContext.Educations.Where(e => e.Id == userid).ToList(); 
-               
+                    user.Interests = _applicationDbContext.Interests.Where(e => e.Id == userid).ToList();
+                    user.Skills = _applicationDbContext.Skills.Where(e => e.Id == userid).ToList();
+                    user.LifeEvents = _applicationDbContext.LifeEvents.Where(e => e.Id == userid).ToList();
+                    user.Educations = _applicationDbContext.Educations.Where(e => e.Id == userid).ToList();
+
                     return Ok(user);
 
                 }
@@ -253,7 +253,7 @@ namespace Icity.Controllers
         {
             try
             {
-                var categories =await _context.Categories.ToListAsync();
+                var categories = await _context.Categories.ToListAsync();
                 var model = new
                 {
                     status = true,
@@ -300,7 +300,7 @@ namespace Icity.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public bool validateSubCategory(SubCategory Subcategory)
         {
-            if (Subcategory.SubCategoryTitleAr != null && Subcategory.SubCategoryTitleEn != null&& Subcategory.CategoryId!=0)
+            if (Subcategory.SubCategoryTitleAr != null && Subcategory.SubCategoryTitleEn != null && Subcategory.CategoryId != 0)
             {
                 return true;
             }
@@ -334,7 +334,7 @@ namespace Icity.Controllers
         [HttpPut]
         public IActionResult EditCategory(Category category, IFormFile categoryPic)
         {
-            var categoryobj = _context.Categories.Where(a=>a.CategoryId==category.CategoryId).FirstOrDefault();
+            var categoryobj = _context.Categories.Where(a => a.CategoryId == category.CategoryId).FirstOrDefault();
             if (categoryobj == null)
             {
                 return BadRequest("Object NotFound..");
@@ -359,7 +359,7 @@ namespace Icity.Controllers
                     categoryobj.Tags = category.Tags;
                     categoryobj.SortOrder = category.SortOrder;
 
-                    
+
                     _context.Attach(categoryobj).State = EntityState.Modified;
                     // await TryUpdateModelAsync<Category>(categoryobj, "",a=>a.CategoryPic,a=>category.CategoryTitleAr,a=> category.CategoryTitleEn,a=> category.Description);
                     //_context.Entry(category).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
@@ -373,7 +373,7 @@ namespace Icity.Controllers
                 }
             }
             return BadRequest("Enter All Required Data..");
-            }
+        }
 
         [HttpDelete]
         public IActionResult DeleteCategory(int CategoryId)
@@ -405,7 +405,7 @@ namespace Icity.Controllers
         {
             try
             {
-                var subCategories = await _context.SubCategories.Where(a=>a.CategoryId==CategoryId).ToListAsync();
+                var subCategories = await _context.SubCategories.Where(a => a.CategoryId == CategoryId).ToListAsync();
                 var model = new
                 {
                     status = true,
@@ -425,7 +425,7 @@ namespace Icity.Controllers
             {
                 try
                 {
-                    var categories = _context.SubCategories.Where(a => a.SubCategoryID == SubCategoryId).Include(a => a.Category).Select(a=>new {a.SubCategoryTitleAr,a.SubCategoryTitleEn,a.SortOrder,a.Tags,a.SubCategoryPic,a.Description,a.Category.CategoryTitleAr,a.Category.CategoryTitleEn,a.SubCategoryID });
+                    var categories = _context.SubCategories.Where(a => a.SubCategoryID == SubCategoryId).Include(a => a.Category).Select(a => new { a.SubCategoryTitleAr, a.SubCategoryTitleEn, a.SortOrder, a.Tags, a.SubCategoryPic, a.Description, a.Category.CategoryTitleAr, a.Category.CategoryTitleEn, a.SubCategoryID });
                     if (categories != null)
                     {
                         return Ok(categories);
@@ -516,7 +516,7 @@ namespace Icity.Controllers
             {
                 try
                 {
-                    var subcategorie = _context.SubCategories.Where(a=>a.SubCategoryID==subCategoryId).FirstOrDefault();
+                    var subcategorie = _context.SubCategories.Where(a => a.SubCategoryID == subCategoryId).FirstOrDefault();
                     if (subcategorie != null)
                     {
                         _context.SubCategories.Remove(subcategorie);
@@ -531,6 +531,293 @@ namespace Icity.Controllers
                 }
             }
             return BadRequest("Enter Valid ID..");
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddListing(IFormFile Listinglogo, IFormFile PromoVideo, IFormFile listingbanner, IFormFileCollection Videos, IFormFileCollection Photos, AddListing addListing)
+        {
+            var user = await _userManager.FindByEmailAsync(addListing.CreatedByUser);
+            if (user == null)
+            {
+                return Ok(new { status = "faild" });
+            }
+
+
+            List<ListingPhotos> photolistings = new List<ListingPhotos>();
+            if (Photos.Count() > 0)
+            {
+                for (int i = 0; i < Photos.Count(); i++)
+                {
+                    ListingPhotos photoobj = new ListingPhotos();
+                    if (Photos[i] != null)
+                    {
+                        string folder = "Images/ListingMedia/Photos/";
+                        photoobj.PhotoUrl = UploadImage(folder, Photos[i]);
+                    }
+
+                    photolistings.Add(photoobj);
+                }
+                addListing.ListingPhotos = photolistings;
+            }
+
+
+            List<ListingVideos> videoListing = new List<ListingVideos>();
+            if (Videos.Count() > 0)
+            {
+                for (int i = 0; i < Videos.Count(); i++)
+                {
+                    ListingVideos videoobj = new ListingVideos();
+                    if (Videos[i] != null)
+                    {
+                        string folder = "Images/ListingMedia/Videos/";
+                        videoobj.VideoUrl = UploadImage(folder, Videos[i]);
+                    }
+
+                    videoListing.Add(videoobj);
+                }
+                addListing.ListingVideos = videoListing;
+            }
+
+            if (Listinglogo != null)
+            {
+                string folder = "Images/ListingMedia/Logos/";
+                addListing.ListingLogo = UploadImage(folder, Listinglogo);
+            }
+            if (PromoVideo != null)
+            {
+                string folder = "Images/ListingMedia/Videos/";
+                addListing.PromoVideo = UploadImage(folder, PromoVideo);
+            }
+            if (listingbanner != null)
+            {
+                string folder = "Images/ListingMedia/Banners/";
+                addListing.ListingBanner = UploadImage(folder, listingbanner);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Ok(new { status = "false" });
+            }
+
+
+            _context.AddListings.Add(addListing);
+            _context.SaveChanges();
+            return Ok(new { status = "success", addListing });
+
+        }
+
+
+
+        [HttpPut]
+        public async Task<IActionResult> EditListing(IFormFile Listinglogo, IFormFile PromoVideo, IFormFile listingbanner, IFormFileCollection Videos, IFormFileCollection Photos, AddListing addListing)
+        {
+            var model = _context.AddListings.Where(c => c.AddListingId == addListing.AddListingId).FirstOrDefault();
+            if (Listinglogo != null)
+            {
+                string folder = "Images/ListingMedia/Logos/";
+                addListing.ListingLogo = UploadImage(folder, Listinglogo);
+                model.ListingLogo = addListing.ListingLogo;
+            }
+            if (PromoVideo != null)
+            {
+                string folder = "Images/ListingMedia/Videos/";
+                addListing.PromoVideo = UploadImage(folder, PromoVideo);
+                model.PromoVideo = addListing.PromoVideo;
+            }
+            if (listingbanner != null)
+            {
+                string folder = "Images/ListingMedia/Banners/";
+                addListing.ListingBanner = UploadImage(folder, listingbanner);
+                model.ListingBanner = addListing.ListingBanner;
+            }
+            List<ListingPhotos> photolistings = new List<ListingPhotos>();
+            if (Photos.Count() > 0)
+            {
+                for (int i = 0; i < Photos.Count(); i++)
+                {
+                    ListingPhotos photoobj = new ListingPhotos();
+                    if (Photos[i] != null)
+                    {
+                        string folder = "Images/ListingMedia/Photos/";
+                        photoobj.PhotoUrl = UploadImage(folder, Photos[i]);
+                    }
+
+                    photolistings.Add(photoobj);
+                }
+                addListing.ListingPhotos = photolistings;
+                model.ListingPhotos = photolistings;
+            }
+
+
+            List<ListingVideos> videoListing = new List<ListingVideos>();
+            if (Videos.Count() > 0)
+            {
+                for (int i = 0; i < Videos.Count(); i++)
+                {
+                    ListingVideos videoobj = new ListingVideos();
+                    if (Videos[i] != null)
+                    {
+                        string folder = "Images/ListingMedia/Videos/";
+                        videoobj.VideoUrl = UploadImage(folder, Videos[i]);
+                    }
+
+                    videoListing.Add(videoobj);
+                }
+                addListing.ListingVideos = videoListing;
+                model.ListingVideos = videoListing;
+
+            }
+            if (!ModelState.IsValid)
+            {
+                return Ok(new { status = "false" });
+
+            }
+            try
+            {
+                if (model == null)
+                {
+                    return Ok(new { status = "false" });
+
+                }
+                var branchesid = _context.Branches.Where(a => a.AddListingId == addListing.AddListingId);
+                _context.Branches.RemoveRange(branchesid);
+                model.Address = addListing.Address;
+                model.Title = addListing.Title;
+                model.Phone1 = addListing.Phone1;
+                model.Phone2 = addListing.Phone2;
+                model.Tags = addListing.Tags;
+                model.Reviews = addListing.Reviews;
+                model.Rating = addListing.Rating;
+                model.MainLocataion = addListing.MainLocataion;
+                model.City = addListing.City;
+                model.ContactPeroson = addListing.ContactPeroson;
+                model.Country = addListing.Country;
+                model.Branches = addListing.Branches;
+                model.CategoryId = addListing.CategoryId;
+                model.Discription = addListing.Discription;
+                model.Email = addListing.Email;
+                model.Fax = addListing.Fax;
+                model.Website = addListing.Website;
+
+                _context.Attach(model).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return Ok(new { status = "success", model });
+
+            }
+            catch (Exception)
+            {
+                return Ok(new { status = "failed" });
+
+            }
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteListing(int ListingId)
+        {
+            if (ListingId != 0)
+            {
+                try
+                {
+                    var Listing = _context.AddListings.Find(ListingId);
+                    if (Listing != null)
+                    {
+                        _context.AddListings.Remove(Listing);
+                        _context.SaveChanges();
+                        return Ok("Listing Deleted Successfully..");
+                    }
+                    return BadRequest("Listing Not Found..");
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Valid ID..");
+
+        }
+        [HttpGet]
+        public IActionResult GetListingbyId(int ListingId)
+        {
+            if (ListingId != 0)
+            {
+                try
+                {
+                    var Listing = _context.AddListings.Include(a => a.Branches).Include(a=>a.ListingPhotos).Include(a=>a.ListingVideos).Where(a => a.AddListingId == ListingId).FirstOrDefault();
+                    if (Listing != null)
+                    {
+                        return Ok(Listing);
+                    }
+                    return BadRequest("Listing  NotFound..");
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Valid ID..");
+        }
+        [HttpGet]
+        public IActionResult GetListingbyUserId(string Email)
+        {
+            if (Email != null)
+            {
+                try
+                {
+                    var Listing = _context.AddListings.Include(a => a.Branches).Include(a => a.ListingPhotos).Include(a => a.ListingVideos).Where(a => a.CreatedByUser == Email).ToList();
+                    if (Listing != null)
+                    {
+                        return Ok(Listing);
+                    }
+                    return BadRequest("Listing  NotFound..");
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Valid userid..");
+
+        }
+        [HttpPost]
+        public IActionResult PostListingReview(Review review)
+        {
+            if (review.AddListingId != 0)
+            {
+                try
+                {
+                    _context.Reviews.Add(review);
+                    _context.SaveChanges();
+                    return Ok(new { status = "success", review });
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Valid AssetListing id..");
+        }
+        [HttpGet]
+        public IActionResult GetAllReviews(int listingid)
+        {
+            if (listingid != 0)
+            {
+                try
+                {
+                    var reviews = _context.Reviews.Where(a => a.AddListingId == listingid).ToList();
+                    if (reviews == null)
+                    {
+                        return Ok(new { status = "false" });
+                    }
+                    return Ok(new { status = "success", reviews });
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Valid ListingId..");
 
         }
     }

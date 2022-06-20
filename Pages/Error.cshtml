@@ -8,7 +8,7 @@
 <h2 class="text-danger">An error occurred while processing your request.</h2>
 
 @if (Model.ShowRequestId)
-{
+{   
     <p>
         <strong>Request ID:</strong> <code>@Model.RequestId</code>
     </p>
@@ -24,3 +24,29 @@
     For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
     and restarting the app.
 </p>
+
+
+@*<div id="wrapper">
+    <div class="content">
+        <section class="parallax-section small-par" data-scrollax-parent="true">
+            <div class="bg" data-bg="images/bg/hero/1.jpg" data-scrollax="properties: { translateY: '30%' }"></div>
+            <div class="overlay op7"></div>
+            <div class="container">
+                <div class="error-wrap">
+                    <div class="bubbles">
+                        <h2>404</h2>
+                    </div>
+                    <p>We're sorry, but the Page you were looking for, couldn't be found.</p>
+                    <div class="clearfix"></div>
+                    <form action="#">
+                        <input name="se" id="se" type="text" class="search" placeholder="Search.." value="Search...">
+                        <button class="search-submit color-bg" id="submit_btn"><i class="fal fa-search"></i> </button>
+                    </form>
+                    <div class="clearfix"></div>
+                    <p>Or</p>
+                    <a href="index.html" class="btn   color2-bg">Back to Home Page<i class="far fa-home-alt"></i></a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>*@

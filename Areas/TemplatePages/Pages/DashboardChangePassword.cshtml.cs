@@ -49,7 +49,7 @@ namespace Icity.Areas.TemplatePages.Pages
             }
             await _signInManager.RefreshSignInAsync(user);
             _toastNotification.AddSuccessToastMessage("Password Updated Successfully");
-            return RedirectToPage("/index");
+            return RedirectToPage("/DashBoard");
 
         }
     }
