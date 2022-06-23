@@ -7,18 +7,27 @@
     Layout = "_DashBoard";
     var Categories = _context.Categories.Select(e => new { e.CategoryId, e.CategoryTitleEn });
 }
+
 <div class="col-md-9">
     <form method="post" enctype="multipart/form-data">
-
+        <div asp-validation-summary="ModelOnly" style="color:red;"></div>
         <div class="dashboard-title   fl-wrap">
             <h3>Add Listing</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
-                <label>@sharedResource["Listing Title"] <i class="fal fa-briefcase"></i></label>
-                <input asp-for="AddListing.Title" type="text" placeholder="@sharedResource["Enter Title"]" value="" required />
                 <div class="row">
+                <label>@sharedResource["Listing Title"] <i class="fal fa-briefcase"></i></label>
+                <input asp-for="AddListing.Title" type="text" placeholder="@sharedResource["Enter Title"]" value=""  />
+                <span asp-validation-for="AddListing.Title" style="color:red;"></span>
+                 </div>
+                 <div >
+                     
+                 </div>
+
+                <div class="row">
+                   
                     <div class="col-md-6">
                         <label>@sharedResource["Type / Category"]</label>
                         <div class="listsearch-input-item">
@@ -31,10 +40,16 @@
                             </select>
                         </div>
                     </div>
+                    <div >
+                     <span asp-validation-for="AddListing.CategoryId" style="color:red;"></span>
+                    </div>
                     <div class="col-md-6">
                         <label>@sharedResource["Tags"] <i class="fal fa-key"></i></label>
-                        <input asp-for="AddListing.Tags" type="text" placeholder="@sharedResource["Enter Tags"]Enter Tags" value="" />
+                        <input asp-for="AddListing.Tags" type="text" placeholder="@sharedResource["Enter Tags"]" value="" />
+                        <span asp-validation-for="AddListing.Tags" style="color:red;"></span>
+
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -57,6 +72,8 @@
                     <div class="">
                         <label>@sharedResource["Main Location"] <i class="fal fa-long-arrow-alt-down"></i> </label>
                         <input asp-for="AddListing.MainLocataion" type="text" placeholder="@sharedResource["Enter Main Location"]" id="lat" value="" required />
+                     <span asp-validation-for="AddListing.MainLocataion" style="color:red;"></span>
+                        
                     </div>
 
                 </div>
@@ -82,38 +99,63 @@
                     <div class="col-md-6">
                         <label>@sharedResource["City"] <i class="fal fa-long-arrow-alt-down"></i> </label>
                         <input asp-for="AddListing.City" type="text" placeholder="@sharedResource["Enter City"]" id="lat" value="" required />
+                        <span asp-validation-for="AddListing.City" style="color:red;"></span>
+
                     </div>
                     <div class="col-md-6">
                         <label>@sharedResource["Country"] <i class="fal fa-long-arrow-alt-down"></i> </label>
                         <input asp-for="AddListing.Country" type="text" placeholder="@sharedResource["Country"]Enter Country" id="lat" value="" required />
+                     <span asp-validation-for="AddListing.Country" style="color:red;"></span>
+                        
                     </div>
                     <div class="col-md-6">
                         <label>@sharedResource["Contact Person"] <i class="fal fa-long-arrow-alt-down"></i> </label>
                         <input asp-for="AddListing.ContactPeroson" type="text" placeholder="@sharedResource["Enter Contact Person"]" id="lat" value="" required />
+                     
+                    <div class="row">
+                    <span asp-validation-for="AddListing.ContactPeroson" style="color:red;"></span>
+                    </div>
                     </div>
                     <div class="col-sm-6">
                         <label>@sharedResource["Address"]<i class="fal fa-map-marker"></i></label>
                         <input asp-for="AddListing.Address" type="text" placeholder="@sharedResource["Enter Address"]" value="" />
+                        <div class="row">
+                             <span asp-validation-for="AddListing.Address" style="color:red;"></span>
+                        </div>
                     </div>
                     <div class="col-sm-6">
                         <label>@sharedResource["Phone 1"]<i class="far fa-phone"></i>  </label>
                         <input asp-for="AddListing.Phone1" type="text" placeholder="@sharedResource["Enter Phone"]" value="" />
+                        <div class="row">
+                            <span asp-validation-for="AddListing.Phone1" style="color:red;"></span>
+                        </div>
+                    
                     </div>
                     <div class="col-sm-6">
                         <label>@sharedResource["Phone 2"]<i class="far fa-phone"></i>  </label>
                         <input asp-for="AddListing.Phone2" type="text" placeholder="@sharedResource["Enter another Phone"]" value="" />
+                         <span asp-validation-for="AddListing.Phone2" style="color:red;"></span>
                     </div>
                     <div class="col-sm-6">
                         <label> @sharedResource["Website"] <i class="far fa-globe"></i>  </label>
                         <input asp-for="AddListing.Website" type="text" placeholder="@sharedResource["Enter Website"]" value="" />
+                      <div class="row">
+                          <span asp-validation-for="AddListing.Website" style="color:red;"></span>
+                      </div>
+                        
+                    
                     </div>
                     <div class="col-sm-6">
                         <label> @sharedResource["Country"]Fax <i class="fa fa-fax"></i>  </label>
                         <input asp-for="AddListing.Fax" type="text" placeholder="@sharedResource["Country"]Enter Fax" value="" />
+                     <span asp-validation-for="AddListing.Fax" style="color:red;"></span>
+                    
                     </div>
                     <div class="col-sm-12">
                         <label>@sharedResource["Email Address"]<i class="far fa-envelope"></i>  </label>
                         <input asp-for="AddListing.Email" type="text" placeholder="@sharedResource["Enter Email"]" value="" />
+                     <span asp-validation-for="AddListing.Email" style="color:red;"></span>
+                    
                     </div>
                 </div>
             </div>
@@ -322,7 +364,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label>Branch Title <i class="fal fa-briefcase"></i></label>
-                                <input class="titleinput" type="text" placeholder="Enter Branch Title" value="" />
+                                <input class="titleinput" type="text" placeholder="Enter Branch Title" required value="" />
                             </div>
                         </div>
                     </div>
@@ -658,7 +700,9 @@
 
     }
 }
+
 <script>
+    
     var counter = 0;
 
     function branchtitle() {
@@ -699,3 +743,6 @@
     }
 
 </script>
+   @section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+   }

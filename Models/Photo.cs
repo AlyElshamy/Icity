@@ -11,6 +11,7 @@ namespace Icity.Models
         [Key]
         public int PhotoID { get; set; }
         public string Image { get; set; }
+        [Required(ErrorMessage = "Reequired")]
         public string Caption { get; set; }
         public DateTime PublishDate { get; set; }
         [JsonIgnore]

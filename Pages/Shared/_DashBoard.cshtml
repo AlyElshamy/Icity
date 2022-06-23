@@ -724,7 +724,9 @@
     <script src="~/Template/js/plugins.js"></script>
     <script src="~/Template/js/scripts.js"></script>
     <script src="~/Template/js/charts.js"></script>
-    <script src="~/Template/js/dashboard.js"></script>
-    @await Component.InvokeAsync("NToastNotify")
+   
+   <script src="~/Template/js/dashboard.js"></script>
+   @await RenderSectionAsync("Scripts", required: false)
+   @await Component.InvokeAsync("NToastNotify")
 </body>
 </html>

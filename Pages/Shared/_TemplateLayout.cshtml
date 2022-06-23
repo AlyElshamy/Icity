@@ -320,7 +320,8 @@
     <script src="~/Template/js/scripts.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&language=ar&libraries=places&callback=initAutocomplete"></script>
     <script src="~/Template/js/map-single.js"></script>
-    @await Component.InvokeAsync("NToastNotify")
+     @await RenderSectionAsync("Scripts", required: false)
+   @await Component.InvokeAsync("NToastNotify")
 
 </body>
 
