@@ -52,7 +52,7 @@ namespace Icity.Areas.Identity.Pages.Account
             else
             {
                 //return RedirectToPage();
-                return RedirectToPage("/Index");
+                return RedirectToPage("Login");
             }
         }
     }

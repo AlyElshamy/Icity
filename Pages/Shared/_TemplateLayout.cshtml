@@ -2,6 +2,10 @@
 @using Icity.Data
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@{
+    var currentuser = await UserManager.GetUserAsync(User);
+    var nickname = "User";
+}
 <!DOCTYPE HTML>
 <html id="masterPageId" dir="ltr" lang="en">
 <head>
@@ -13,18 +17,18 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <!--=============== css  ===============-->
-        <link type="text/css" rel="stylesheet" href="~/Template/css/reset.css">
-        <link type="text/css" rel="stylesheet" href="~/Template/css/plugins.css">
-        <link id="styleen" type="text/css" rel="stylesheet" href="~/Template/css/style.css">
-        <link type="text/css" rel="stylesheet" href="~/Template/css/color.css">
-        <link id="stylear" type="text/css" rel="stylesheet" href="~/TemplateRTL/css/rtl-style.css">
+    <link type="text/css" rel="stylesheet" href="~/Template/css/reset.css">
+    <link type="text/css" rel="stylesheet" href="~/Template/css/plugins.css">
+    <link id="styleen" type="text/css" rel="stylesheet" href="~/Template/css/style.css">
+    <link type="text/css" rel="stylesheet" href="~/Template/css/color.css">
+    <link id="stylear" type="text/css" rel="stylesheet" href="~/TemplateRTL/css/rtl-style.css">
 
 
     @*<link type="text/css" rel="stylesheet" href="~/TemplateRTL/css/reset.css">
-    <link type="text/css" rel="stylesheet" href="~/TemplateRTL/css/plugins.css">
-    <link type="text/css" rel="stylesheet" href="~/TemplateRTL/css/style.css">
-    <link type="text/css" rel="stylesheet" href="~/TemplateRTL/css/rtl-style.css">
-    <link type="text/css" rel="stylesheet" href="~/TemplateRTL/css/color.css">*@
+        <link type="text/css" rel="stylesheet" href="~/TemplateRTL/css/plugins.css">
+        <link type="text/css" rel="stylesheet" href="~/TemplateRTL/css/style.css">
+        <link type="text/css" rel="stylesheet" href="~/TemplateRTL/css/rtl-style.css">
+        <link type="text/css" rel="stylesheet" href="~/TemplateRTL/css/color.css">*@
 
     <!--=============== favicons ===============-->
     <link rel="shortcut icon" href="~/Template/css/images/favicon.ico">
@@ -51,8 +55,37 @@
             <!-- header opt -->
             <a asp-area="TemplatePages" asp-page="DashBoardAddListing" class="add-list color-bg">Add Listing <span><i class="fal fa-layer-plus"></i></span></a>
             <div class="cart-btn   show-header-modal" data-microtip-position="bottom" role="tooltip" aria-label="Your Wishlist"><i class="fal fa-heart"></i><span class="cart-counter green-bg"></span> </div>
-            <div class="show-reg-form modal-open avatar-img" data-srcav="images/avatar/3.jpg"><i class="fal fa-user"></i>Sign In</div>
-            <!-- header opt end-->
+            @if (currentuser == null)
+            {
+                <div class="show-reg-form modal-open avatar-img"  data-srcav="images/avatar/3.jpg"><i class="fal fa-user"></i>Sign In</div>
+            }
+            else
+            {
+                <form id="form1" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                    <div class="show-reg-form modal-open avatar-img" onclick="document.getElementById('form1').submit();" data-srcav="/@currentuser.ProfilePicture"><i class="fal fa-user"></i>Log Out</div>
+                </form>
+
+                <div class="header-user-menu">
+                    <div class="header-user-name">
+                        <span><img src="/@currentuser.ProfilePicture" alt=""></span>
+                        @if (currentuser.NickName != null)
+                        {
+                            @currentuser.NickName;
+                        }
+                        else
+                        {
+                            @nickname
+                        }
+
+                    </div>
+                    <ul>
+                        <li><a asp-area="TemplatePages" asp-page="Profile"> Edit profile</a></li>
+                        <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing"> Add Listing</a></li>
+                        <li><a href="dashboard-bookings.html">  Bookings  </a></li>
+                        <li><a asp-area="TemplatePages" asp-page="ListingReviews"> Reviews </a></li>
+                    </ul>
+                </div>
+            }            <!-- header opt end-->
             <!-- lang-wrap-->
             <div class="lang-wrap">
                 <div class="show-lang"><span><i class="fal fa-globe-europe"></i><strong>En</strong></span><i class="fa fa-caret-down arrlan"></i></div>

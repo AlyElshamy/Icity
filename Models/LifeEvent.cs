@@ -10,9 +10,13 @@ namespace Icity.Models
     {
         [Key]
         public int LifeEventID { get; set; }
+        [Required]
         public string EventType { get; set; }
+        [Required]
         public string Caption { get; set; }
+        [Required]
         public string Details { get; set; }
+        [Required]
         public string Media { get; set; }
         [JsonIgnore]
         public virtual ApplicationUser ApplicationUser { get; set; }

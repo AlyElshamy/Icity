@@ -30,6 +30,7 @@ namespace Icity.Areas.TemplatePages.Pages
         }
         [BindProperty]
         public Review Review { get; set; }
+       
         public ApplicationUser curruntuser { get; set; }
 
 
@@ -41,6 +42,7 @@ namespace Icity.Areas.TemplatePages.Pages
                 listid = id;
                  var Listing = await _context.AddListings.Include(e=>e.Category).Include(a=>a.ListingPhotos).Include(a=>a.ListingVideos).FirstOrDefaultAsync(m => m.AddListingId == id);
                 curruntuser = await userManager.FindByEmailAsync(Listing.CreatedByUser);
+
                 ViewData["listings"] = Listing;
                 if (Listing == null)
                 {
@@ -61,6 +63,7 @@ namespace Icity.Areas.TemplatePages.Pages
                 Review.ReviewDate = DateTime.Now;
                 _context.Reviews.Add(Review);
                 _context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Thanks For Your Review..");
             }
             catch (Exception)
             {

@@ -56,9 +56,6 @@ namespace Icity.Areas.TemplatePages.Pages
             _context.ListingVideos.Remove(Videoobj);
             _context.SaveChanges();
             return Redirect($"/Templatepages/EditListining?id={listobjid}");
-
-
-
         }
 
         public async Task<IActionResult> OnGetAsync(int id)

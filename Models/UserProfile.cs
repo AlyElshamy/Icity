@@ -13,7 +13,7 @@ namespace Icity.Models
         public string Nationality { get; set; }
       
         public string Email { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         public string Bio { get; set; }
         
         public string Qualification { get; set; }

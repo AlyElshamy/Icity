@@ -17,7 +17,8 @@ namespace Icity.Data
         public string ProfilePicture { get; set; }
         public string Profilebanner { get; set; }
         public string Nationality { get; set; }
-        public DateTime BirthDate { get; set; }
+
+        public DateTime? BirthDate { get; set; }
         public string Bio { get; set; }
         public string Qualification { get; set; }
         public string Job { get; set; }
