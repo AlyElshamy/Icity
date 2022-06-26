@@ -81,7 +81,7 @@
                 <div class="header-user-menu">
                     <div class="header-user-name">
                         <span><img src="/@currentuser.ProfilePicture" alt=""></span>
-                        @if (currentuser.NickName != null )
+                        @if (currentuser.NickName != null)
                         {
                             @currentuser.NickName;
                         }
@@ -348,7 +348,7 @@
                         </div>
                         <!--Tariff Plan menu end-->
                         <div class="dashboard-header_conatiner fl-wrap dashboard-header_title">
-                            <h1>Welcome  : <span>Alisa Noory</span></h1>
+                            <h1>Welcome  : <span>@currentuser.NickName</span></h1>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -356,7 +356,14 @@
                         <div class="container">
                             <div class="dashboard-header_conatiner fl-wrap">
                                 <div class="dashboard-header-avatar">
-                                    <img src="~/Template/images/avatar/1.jpg" alt="">
+                                    @if (currentuser.ProfilePicture == null)
+                                    {
+                                        <img src="~/Images/default user.png" alt="">
+                                    }
+                                    else
+                                    {
+                                        <img src="/@currentuser.ProfilePicture" alt="">
+                                    }
                                     <a href="dashboard-myprofile.html" class="color-bg edit-prof_btn"><i class="fal fa-edit"></i></a>
                                 </div>
                                 <div class="dashboard-header-stats-wrap">
@@ -724,9 +731,9 @@
     <script src="~/Template/js/plugins.js"></script>
     <script src="~/Template/js/scripts.js"></script>
     <script src="~/Template/js/charts.js"></script>
-   
-   <script src="~/Template/js/dashboard.js"></script>
-   @await RenderSectionAsync("Scripts", required: false)
-   @await Component.InvokeAsync("NToastNotify")
+
+    <script src="~/Template/js/dashboard.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
 </body>
 </html>

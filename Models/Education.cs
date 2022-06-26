@@ -10,7 +10,9 @@ namespace Icity.Models
     {
         [Key]
         public int EducationID { get; set; }
+        //[Required(ErrorMessage = "Is Required"),MinLength(4,ErrorMessage ="Min Length Is 4")]
         public int Year { get; set; }
+        //[Required(ErrorMessage = "Is Required")]
         public string Provider { get; set; }
         public string Description { get; set; }
         [JsonIgnore]

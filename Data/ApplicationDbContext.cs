@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
@@ -13,6 +14,7 @@ namespace Icity.Data
     {
         //public int EntityId { get; set; }
         //public int EntityName { get; set; }
+        [Required(ErrorMessage = "Is Required")]
         public string FullName { get; set; }
         public string ProfilePicture { get; set; }
         public string Profilebanner { get; set; }

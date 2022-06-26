@@ -30,7 +30,7 @@ namespace Icity.Areas.TemplatePages.Pages
         [BindProperty]
         public AddListing AddListing { get; set; }
         public static List<Branch> Branches;
-        public  List<Branch> BranchesList=new List<Branch>();
+        public List<Branch> BranchesList = new List<Branch>();
         public static int listobjid { get; set; }
         public IActionResult OnPostFillBranchesList([FromBody] List<string> branchTitle)
         {
@@ -44,18 +44,42 @@ namespace Icity.Areas.TemplatePages.Pages
         }
         public IActionResult OnPostDeletePhotoById([FromBody] int PhotoId)
         {
-           var photoobj= _context.ListingPhotos.Where(a=>a.Id== PhotoId).FirstOrDefault();
-            _context.ListingPhotos.Remove(photoobj);
-            _context.SaveChanges();
-            return Redirect($"/Templatepages/EditListining?id={listobjid}");
+            try
+            {
+                var photoobj = _context.ListingPhotos.Where(a => a.Id == PhotoId).FirstOrDefault();
+                if (photoobj == null)
+                {
+                    return Page();
+                }
+                _context.ListingPhotos.Remove(photoobj);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                _toastNotification.AddErrorToastMessage("Somthing Went Error..");
+                return Page();
+            }
+            return new JsonResult(PhotoId);
 
         }
         public IActionResult OnPostDeleteVideoById([FromBody] int Videoid)
         {
-           var Videoobj= _context.ListingVideos.Where(a=>a.Id== Videoid).FirstOrDefault();
-            _context.ListingVideos.Remove(Videoobj);
-            _context.SaveChanges();
-            return Redirect($"/Templatepages/EditListining?id={listobjid}");
+            try
+            {
+                var Videoobj = _context.ListingVideos.Where(a => a.Id == Videoid).FirstOrDefault();
+                if (Videoobj == null)
+                {
+                    return Page();
+                }
+                _context.ListingVideos.Remove(Videoobj);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                _toastNotification.AddErrorToastMessage("Somthing Went Error..");
+                return Page();
+            }
+            return new JsonResult(Videoid);
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
@@ -64,7 +88,7 @@ namespace Icity.Areas.TemplatePages.Pages
             try
             {
                 listobjid = id;
-                AddListing = await _context.AddListings.Include(a=>a.Branches).Include(a=>a.ListingPhotos).Include(a=>a.ListingVideos).FirstOrDefaultAsync(m => m.AddListingId == id);
+                AddListing = await _context.AddListings.Include(a => a.Branches).Include(a => a.ListingPhotos).Include(a => a.ListingVideos).FirstOrDefaultAsync(m => m.AddListingId == id);
                 if (AddListing == null)
                 {
                     return Redirect("../Error");
@@ -160,7 +184,7 @@ namespace Icity.Areas.TemplatePages.Pages
                 {
                     return Page();
                 }
-                var branchesid = _context.Branches.Where(a=>a.AddListingId== AddListing.AddListingId);
+                var branchesid = _context.Branches.Where(a => a.AddListingId == AddListing.AddListingId);
                 _context.Branches.RemoveRange(branchesid);
                 model.Address = AddListing.Address;
                 model.Title = AddListing.Title;

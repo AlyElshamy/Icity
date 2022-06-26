@@ -4,14 +4,16 @@ using Icity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Icity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220623203344_photoandvideo")]
+    partial class photoandvideo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,6 +124,7 @@ namespace Icity.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Caption")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Id")
@@ -168,6 +171,7 @@ namespace Icity.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Caption")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Id")
@@ -215,15 +219,15 @@ namespace Icity.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "66c06a57-9b3e-4926-88c6-873807a13e1a",
-                            ConcurrencyStamp = "87a7b7d9-fa06-4188-bd25-e988f551be05",
+                            Id = "6c079852-1f04-4535-8c33-ceb40f6f3ee2",
+                            ConcurrencyStamp = "d8cbe7d8-974a-41e9-81bc-6a84088359f4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "6021352a-a844-4669-bd45-e4763225ceb4",
-                            ConcurrencyStamp = "5e0777f1-d51e-46ac-ba0d-d409b5c1484f",
+                            Id = "a1a0fe88-94f4-44ad-8aa0-00bb6f623179",
+                            ConcurrencyStamp = "6df26b8e-b0d8-4a74-9d18-bfabfddec58d",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

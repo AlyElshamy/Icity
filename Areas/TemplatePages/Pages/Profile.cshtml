@@ -18,40 +18,42 @@
             <div class="custom-form">
                 <div class="row">
                     <div class="col-sm-6">
-                        <label>First Name <i class="fal fa-user"></i></label>
-                        <input asp-for="@Model.userProfile.FullName" type="text" placeholder="Jessie" value="" />
+                        <label>Full Name <i class="fal fa-user"></i></label>
+                        <input asp-for="@Model.userProfile.FullName" type="text" placeholder="Enter Full Name"  />
+                        <span asp-validation-for="userProfile.FullName" style="color:red;"></span>
+
                     </div>
                     <div class="col-sm-6">
                         <label>Nick Name <i class="fal fa-user"></i></label>
-                        <input asp-for="@Model.userProfile.NickName" type="text" placeholder="Manrty" value="" />
+                        <input asp-for="@Model.userProfile.NickName" type="text" placeholder="Enter Nick Name"  />
                     </div>
                     <div class="col-sm-6">
                         <label> Nationality  <i class="fas fa-map-marker"></i>  </label>
-                        <input asp-for="@Model.userProfile.Nationality" type="text" placeholder="USA 27TH Brooklyn NY" value="" />
+                        <input asp-for="@Model.userProfile.Nationality" type="text" placeholder="Enter Nationality"  />
                     </div>
                     <div class="col-sm-6">
                         <label>Phone<i class="far fa-envelope"></i>  </label>
-                        <input asp-for="@Model.userProfile.PhoneNumber" type="text" placeholder="JessieManrty@domain.com" value="" />
+                        <input asp-for="@Model.userProfile.PhoneNumber" type="text" placeholder="Enter Phone"  />
                     </div>
                     <div class="col-sm-6">
                         <label>Phone 2<i class="far fa-phone"></i>  </label>
-                        <input asp-for="@Model.userProfile.Phone2" type="text" placeholder="+7(123)987654" value="" />
+                        <input asp-for="@Model.userProfile.Phone2" type="text" placeholder="Enter Anothr phone"  />
                     </div>
                     <div class="col-sm-6">
                         <label> job <i class="fas fa-map-marker"></i>  </label>
-                        <input asp-for="@Model.userProfile.Job" type="text" placeholder="USA 27TH Brooklyn NY" value="" />
+                        <input asp-for="@Model.userProfile.Job" type="text" placeholder="Enter Your job"  />
                     </div>
                     <div class="col-sm-6">
                         <label> Location <i class="fas fa-map-marker"></i>  </label>
-                        <input asp-for="@Model.userProfile.MapLocation" type="text" placeholder="USA 27TH Brooklyn NY" value="" />
+                        <input asp-for="@Model.userProfile.MapLocation" type="text" placeholder="Enter Your Location"  />
                     </div>
                     <div class="col-sm-6">
                         <label> Website <i class="far fa-globe"></i>  </label>
-                        <input asp-for="@Model.userProfile.MapLocation" type="text" placeholder="themeforest.net" value="" />
+                        <input asp-for="@Model.userProfile.MapLocation" type="text" placeholder="Enter your Website"  />
                     </div>
                 </div>
                 <label> Bio</label>
-                <textarea asp-for="@Model.userProfile.Bio" cols="40" rows="3" placeholder="About Me" style="margin-bottom:20px;"></textarea>
+                <textarea asp-for="@Model.userProfile.Bio" cols="40" rows="3" placeholder="Enter Bio" style="margin-bottom:20px;"></textarea>
                 <div class="clearfix"></div>
 
             </div>
@@ -80,7 +82,7 @@
                         }
                         <div class="d-gr-sec"></div>
                         <div class="listing-item-grid_title">
-                            <h3><a href="listing.html">Logo</a></h3>
+                            <h3><a href="listing.html">Profile Picture</a></h3>
                         </div>
                     </div>
                 </div>
@@ -114,11 +116,11 @@
                 <!--col -->
                 <div class="col-md-6">
                     @*<div class="add-list-media-header" style="margin-bottom:20px">
-                        <label class="radio inline">
-                            <input type="radio" name="gender" checked>
-                            <span>Background image</span>
-                        </label>
-                    </div>*@
+                            <label class="radio inline">
+                                <input type="radio" name="gender" checked>
+                                <span>Background image</span>
+                            </label>
+                        </div>*@
                     <div class="add-list-media-wrap">
                         <div class="add-list-media-wrap">
                             <div class="listsearch-input-item fl-wrap">
@@ -127,7 +129,7 @@
                                         <span><i class="fal fa-images"></i> Click here To Drop Profile Photo</span>
                                         <div class="photoUpload-files fl-wrap"></div>
                                     </div>
-                                    <input type="file" accept="image/*" name="Listinglogo" class="upload">
+                                    <input type="file" accept="image/*" name="Profilepic" class="upload">
                                 </div>
                             </div>
                         </div>
@@ -137,11 +139,11 @@
                 <!--col -->
                 <div class="col-md-6">
                     @*<div class="add-list-media-header" style="margin-bottom:20px">
-                        <label class="radio inline">
-                            <input type="radio" name="gender">
-                            <span>Carousel</span>
-                        </label>
-                    </div>*@
+                            <label class="radio inline">
+                                <input type="radio" name="gender">
+                                <span>Carousel</span>
+                            </label>
+                        </div>*@
                     <div class="add-list-media-wrap">
                         <div class="listsearch-input-item fl-wrap">
                             <div class="fuzone">
@@ -149,7 +151,7 @@
                                     <span><i class="fal fa-images"></i> Click here To Drop Profile Banner</span>
                                     <div class="photoUpload-files fl-wrap"></div>
                                 </div>
-                                <input type="file" accept="image/*" name="listingbanner" class="upload">
+                                <input type="file" accept="image/*" name="bannerpic" class="upload">
                             </div>
                         </div>
                     </div>
@@ -163,11 +165,11 @@
             <div class="row">
                 <div class="col-md-12">
                     @*<div class="add-list-media-header" style="margin-bottom:20px">
-                        <label class="radio inline">
-                            <input type="radio" name="gender">
-                            <span>Carousel</span>
-                        </label>
-                    </div>*@
+                            <label class="radio inline">
+                                <input type="radio" name="gender">
+                                <span>Carousel</span>
+                            </label>
+                        </div>*@
                     <div class="add-list-media-wrap">
                         <div class="listsearch-input-item fl-wrap">
                             <div class="fuzone">
@@ -175,7 +177,7 @@
                                     <span><i class="fal fa-images"></i> Click here To Edit Photos</span>
                                     <div class="photoUpload-files fl-wrap"></div>
                                 </div>
-                                <input type="file" accept="image/*" name="Photos" class="upload" multiple>
+                                <input type="file" accept="image/*" name="Images" class="upload" multiple>
                             </div>
                         </div>
                     </div>
@@ -183,36 +185,35 @@
 
             </div>
         </div>
-        @if (Model.userProfile.Photos!=null)
-        {
-            <div class="listing-item-grid_container fl-wrap">
-                <div class="row">
-                    @foreach (var item in Model.userProfile.Photos)
-                    {
-                        <div class="col-sm-4">
-                            <div class="listing-item-grid">
-                                <div class="bg" data-bg="/@item.Image"></div>
-                                <div class="d-gr-sec" id=""></div>
-                                <div class="listing-item-grid_title">
-                                    <h3><a onclick="deletePhoto(@item.Id)">Delete</a></h3>
-                                </div>
+
+        <div class="listing-item-grid_container fl-wrap">
+            <div class="row">
+                @foreach (var item in Model.userPhotos)
+                {
+                    <div id="@item.PhotoID" class="col-sm-4">
+                        <div class="listing-item-grid">
+                            <div class="bg" data-bg="/@item.Image"></div>
+                            <div class="d-gr-sec" id=""></div>
+                            <div class="listing-item-grid_title">
+                                <h3><a onclick="deletePhoto(@item.PhotoID)">Delete</a></h3>
                             </div>
                         </div>
-                    }
+                    </div>
+                }
 
-                </div>
             </div>
-        }
+        </div>
+
 
         <div class="custom-form">
             <div class="row">
                 <div class="col-md-12">
                     @*<div class="add-list-media-header" style="margin-bottom:20px">
-                        <label class="radio inline">
-                            <input type="radio" name="gender">
-                            <span>Carousel</span>
-                        </label>
-                    </div>*@
+                            <label class="radio inline">
+                                <input type="radio" name="gender">
+                                <span>Carousel</span>
+                            </label>
+                        </div>*@
                     <div class="add-list-media-wrap">
                         <div class="listsearch-input-item fl-wrap">
                             <div class="fuzone">
@@ -220,7 +221,7 @@
                                     <span><i class="fal fa-images"></i> Click here or Edit Videos</span>
                                     <div class="photoUpload-files fl-wrap"></div>
                                 </div>
-                                <input type="file" accept="video/*" name="Videos" class="upload" multiple>
+                                <input type="file" accept="video/*" name="VideosFiels" class="upload" multiple>
                             </div>
                         </div>
                     </div>
@@ -228,30 +229,29 @@
 
             </div>
         </div>
-        @if (Model.userProfile.Videos!=null)
+
+
+        <div class="dashboard-title  dt-inbox fl-wrap">
+            <h3>Listing Videos</h3>
+        </div>
+        @foreach (var item in Model.userVideos)
         {
 
-            <div class="dashboard-title  dt-inbox fl-wrap">
-                <h3>Listing Videos</h3>
-            </div>
-            @foreach (var item in Model.userProfile.Videos)
-            {
+            <div id="@item.VideoID" class="col-sm-4">
+                <div class="list-single-main-item_content fl-wrap">
+                    <div class="iframe-holder fl-wrap">
+                        <div class="resp-video">
 
-                <div class="col-sm-4">
-                    <div class="list-single-main-item_content fl-wrap">
-                        <div class="iframe-holder fl-wrap">
-                            <div class="resp-video">
-
-                                <iframe src="@Url.Content("/"+item.VideoT)?background=0" width="200" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-
-                            </div>
-                            <h3><a onclick="deleteVideo(@item.Id)">Delete</a></h3>
+                            <iframe src="@Url.Content("/"+item.VideoT)?background=0" width="200" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
                         </div>
+                        <h3><a class="btn" style="background-color: #c03434" onclick="deleteVideo(@item.VideoID)">Delete</a></h3>
+
                     </div>
                 </div>
-            }
+            </div>
         }
+
 
         <div class="dashboard-title  dt-inbox fl-wrap">
             <h3>Skills</h3>
@@ -308,8 +308,8 @@
                             <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Interrist Title <i class="fal fa-briefcase"></i></label>
-                                    <input class="InterrestInput" type="text" placeholder="Enter Interrist Title" />
+                                    <label>Interest Title <i class="fal fa-briefcase"></i></label>
+                                    <input class="InterrestInput" type="text" placeholder="Enter Interest Title" />
                                 </div>
                             </div>
                         </div>
@@ -322,8 +322,8 @@
                                 <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label>Interrist Title <i class="fal fa-briefcase"></i></label>
-                                        <input class="InterrestInput" type="text" placeholder="Enter Interrist Title" value="@item.InterestTitle" />
+                                        <label>Interest Title <i class="fal fa-briefcase"></i></label>
+                                        <input class="InterrestInput" type="text" placeholder="Enter Interest Title" value="@item.InterestTitle" />
                                     </div>
                                 </div>
                             </div>
@@ -376,7 +376,7 @@
                     }
 
                 </div>
-                <a class="add-room-item" onclick="changeStylebutton('languagesavebtn')" >Add New <i class="fal fa-plus"></i> </a>
+                <a class="add-room-item" onclick="changeStylebutton('languagesavebtn')">Add New <i class="fal fa-plus"></i> </a>
 
 
             </div>
@@ -400,16 +400,20 @@
                             <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label>discription <i class="fal fa-briefcase"></i></label>
-                                    <input asp-for="@Model.education.Description" name="Description" class="educationdes" type="text" placeholder="Enter Language Title" />
+                                    <label>Education Discription <i class="fal fa-briefcase"></i></label>
+                                    <input asp-for="@Model.education.Description" name="Description" class="educationdes" type="text" placeholder="Enter Education Discription" />
                                 </div>
                                 <div class="col-md-4">
-                                    <label>Language Title <i class="fal fa-briefcase"></i></label>
-                                    <input asp-for="@Model.education.Year" name="Year" class="educationyear" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" minlength="4" maxlength="4" placeholder="Enter Language Title"  />
+                                    <label>Education Year <i class="fal fa-briefcase"></i></label>
+                                    <input asp-for="@Model.education.Year" name="Year" class="educationyear" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="Enter Education Year" />
+                                    <span asp-validation-for="education.Year" style="color:red;"></span>
+
                                 </div>
                                 <div class="col-md-4">
-                                    <label>Language Title <i class="fal fa-briefcase"></i></label>
-                                    <input asp-for="@Model.education.Provider" name="Provider" class="educationprov" type="text" placeholder="Enter Language Title" />
+                                    <label>Education Provider <i class="fal fa-briefcase"></i></label>
+                                    <input asp-for="@Model.education.Provider" name="Provider" class="educationprov" type="text" placeholder="Enter Education Provider" />
+                                    <span style="color:red;">@Model.educationvalidation</span>
+
                                 </div>
                             </div>
                         </div>
@@ -428,10 +432,15 @@
                                     <div class="col-md-4">
                                         <label>Education Year <i class="fal fa-briefcase"></i></label>
                                         <input asp-for="@item.Year" name="Year" class="educationyear" type="text" placeholder="Enter Education Year" />
+                                        <span asp-validation-for="education.Year" style="color:red;"></span>
+
                                     </div>
                                     <div class="col-md-4">
                                         <label>Education Provider  <i class="fal fa-briefcase"></i></label>
                                         <input asp-for="@item.Provider" name="Provider" class="educationprov" type="text" placeholder="Enter Education Provider" />
+                                        <span style="color:red;">@Model.educationvalidation</span>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -462,15 +471,19 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <label> LifeEvent Type <i class="fal fa-briefcase"></i></label>
-                                    <input asp-for="@Model.LifeEvent.EventType" name="EventType" class="LifeEventType" type="text" placeholder="Enter Language Title" />
+                                    <input asp-for="@Model.LifeEvent.EventType" name="EventType" class="LifeEventType" type="text" placeholder="Enter LifeEvent Type" />
+                                    <span asp-validation-for="LifeEvent.EventType" style="color:red;"></span>
                                 </div>
                                 <div class="col-md-3">
                                     <label>LifeEvent Details <i class="fal fa-briefcase"></i></label>
-                                    <input asp-for="@Model.LifeEvent.Details" name="Details" class="LifeEventDetails" type="text" placeholder="Enter Language Title" />
+                                    <input asp-for="@Model.LifeEvent.Details" name="Details" class="LifeEventDetails" type="text" placeholder="Enter LifeEvent Details" />
+                                    <span asp-validation-for="LifeEvent.Details" style="color:red;"></span>
+
                                 </div>
                                 <div class="col-md-3">
                                     <label>LifeEvent Caption <i class="fal fa-briefcase"></i></label>
-                                    <input asp-for="@Model.LifeEvent.Caption" name="Caption" class="LifeEventcaption" type="text" placeholder="Enter Language Title" />
+                                    <input asp-for="@Model.LifeEvent.Caption" name="Caption" class="LifeEventcaption" type="text" placeholder="Enter LifeEvent Caption" />
+                                    <span asp-validation-for="LifeEvent.Caption" style="color:red;"></span>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="add-list-media-wrap">
@@ -478,7 +491,7 @@
                                             <div class="listsearch-input-item fl-wrap">
                                                 <div class="fuzone">
                                                     <div class="fu-text">
-                                                        <span><i class="fal fa-images"></i> Click here To Drop Profile Photo</span>
+                                                        <span><i class="fal fa-images"></i> Click here To Drop LifeEvent Media</span>
                                                         <div class="photoUpload-files fl-wrap"></div>
                                                     </div>
                                                     <input asp-for="@Model.LifeEvent.Media" type="file" accept="video/*,image/*" name="LifeeventMedia" class="upload">
@@ -492,23 +505,65 @@
                     }
                     else
                     {
-                        foreach (var item in Model.EducationsList)
+                        foreach (var item in Model.LifeEventsList)
                         {
                             <div class="add_room-item fl-wrap">
                                 <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <label>Education Description <i class="fal fa-briefcase"></i></label>
-                                        <input asp-for="@item.Description" name="Description" class="educationdes" type="text" placeholder="Enter Education Description" />
+                                    <div class="col-md-3">
+                                        <label> LifeEvent Type <i class="fal fa-briefcase"></i></label>
+                                        <input asp-for="@item.EventType" name="EventType" class="LifeEventType" type="text" placeholder="Enter Event Type" />
+                                        <span asp-validation-for="LifeEvent.EventType" style="color:red;"></span>
                                     </div>
-                                    <div class="col-md-4">
-                                        <label>Education Year <i class="fal fa-briefcase"></i></label>
-                                        <input asp-for="@item.Year" name="Year" class="educationyear" type="text" placeholder="Enter Education Year" />
+                                    <div class="col-md-3">
+                                        <label>LifeEvent Details <i class="fal fa-briefcase"></i></label>
+                                        <input asp-for="@item.Details" name="Details" class="LifeEventDetails" type="text" placeholder="Enter LifeEvent Details" />
+                                        <span asp-validation-for="LifeEvent.Details" style="color:red;"></span>
+
                                     </div>
-                                    <div class="col-md-4">
-                                        <label>Education Provider <i class="fal fa-briefcase"></i></label>
-                                        <input asp-for="@item.Provider" name="Provider" class="educationprov" type="text" placeholder="Enter Education Provider" />
+                                    <div class="col-md-3">
+                                        <label>LifeEvent Caption <i class="fal fa-briefcase"></i></label>
+                                        <input asp-for="@item.Caption" name="Caption" class="LifeEventcaption" type="text" placeholder="Enter LifeEvent Caption" />
+                                        <span asp-validation-for="LifeEvent.Caption" style="color:red;"></span>
                                     </div>
+                                    @{
+                                        string stid = item.LifeEventID.ToString() + "id";
+                                        string hiddenid = item.LifeEventID.ToString() + "hid";
+                                    }
+                                    <input hidden id="@hiddenid" asp-for="@item.Media" name="Media" type="text" class="LifeEventhiddenMedia" />
+                                    <input hidden asp-for="@item.LifeEventID" name="LifeEventID" type="text" class="LifeEventhiddenID" />
+
+                                    <div  id="@stid" style="display:none" class="col-md-3 mediainput">
+                                        <div class="add-list-media-wrap">
+                                            <div class="add-list-media-wrap">
+                                                <div class="listsearch-input-item fl-wrap">
+                                                    <div class="fuzone">
+                                                        <div class="fu-text">
+                                                            <span><i class="fal fa-images"></i> Click here To Drop LifeEvent Media</span>
+                                                            <div class="photoUpload-files fl-wrap"></div>
+                                                        </div>
+                                                        <input asp-for="@Model.LifeEvent.Media" type="file" accept="video/*,image/*" name="LifeeventMedia" class="upload">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div id="@item.LifeEventID" class="col-md-3 mediashow">
+                                        <div class="list-single-main-item_content fl-wrap">
+                                            <div class="iframe-holder fl-wrap">
+                                                <div class="resp-video">
+
+                                                    <iframe src="@Url.Content("/"+item.Media)?background=0" width="200" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+                                                </div>
+                                                <h3><a class="btn" style="background-color: #c03434" onclick="deleteMedia(@item.LifeEventID)">Delete</a></h3>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         }
@@ -535,20 +590,20 @@
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
                 <label>Facebook <i class="fab fa-facebook"></i></label>
-                <input asp-for="@Model.userProfile.FacebookLink" type="text" placeholder="https://www.facebook.com/" value="" />
+                <input asp-for="@Model.userProfile.FacebookLink" type="text" placeholder="Enter Facebook Link"  />
                 <label>Twitter<i class="fab fa-twitter"></i>  </label>
-                <input asp-for="@Model.userProfile.TwitterLink" type="text" placeholder="https://twitter.com/" value="" />
+                <input asp-for="@Model.userProfile.TwitterLink" type="text" placeholder="Enter Twitter Link"  />
                 <label>YouTube<i class="fab fa-vk"></i>  </label>
-                <input asp-for="@Model.userProfile.YoutubeLink" type="text" placeholder="https://vk.com" value="" />
+                <input asp-for="@Model.userProfile.YoutubeLink" type="text" placeholder="Enter Youtube Link"  />
                 <label>LinkedIn<i class="fab fa-vk"></i>  </label>
-                <input asp-for="@Model.userProfile.LinkedInLink" type="text" placeholder="https://vk.com" value="" />
+                <input asp-for="@Model.userProfile.LinkedInLink" type="text" placeholder="Enter LinkedIn Link"  />
                 <label> Instagram <i class="fab fa-instagram"></i>  </label>
-                <input asp-for="@Model.userProfile.InstagramLink" type="text" placeholder="https://www.instagram.com/" value="" />
+                <input asp-for="@Model.userProfile.InstagramLink" type="text" placeholder="Enter Instagram Link" />
                 <button class="btn    color2-bg  float-btn">Save Changes<i class="fal fa-save"></i></button>
             </div>
         </div>
     </form>
-        <!-- profile-edit-container end-->
+    <!-- profile-edit-container end-->
 </div>
 
 @{
@@ -579,7 +634,7 @@
 
     }
 
-   
+
 
 }
 <script>
@@ -609,13 +664,13 @@
                     console.log("get selected rows successfully" + response)
                     document.getElementById("skillsavebtn").textContent = "Saved";
                     document.getElementById("skillsavebtn").style.backgroundColor = "#257260";
-                    
+
                 },
                 failure: function (response) {
                     alert(response);
                 }
             });
-           
+
         }
         else {
             console.log("Nobody has been selected")
@@ -625,6 +680,8 @@
 
         document.getElementById(id).textContent = "Save All";
         document.getElementById(id).style.backgroundColor = "#384f95";
+        //document.getElementsByClassName('mediainput')[0].style.display = 'flex';
+        //document.getElementsByClassName('mediashow')[0].style.display = 'none';
     }
 
     function InterristTitle() {
@@ -664,7 +721,7 @@
             console.log("Nobody has been selected")
         }
     }
-    
+
 
     function LanguageTitle() {
         var LanguagesList = new Array();
@@ -706,7 +763,7 @@
 
 
     function EducationTitle() {
-        var LifeEvList = new Array();
+        var EducationList = new Array();
         var desvalue = document.getElementsByClassName("educationdes");
         var yearvalue = document.getElementsByClassName("educationyear");
         var provvalue = document.getElementsByClassName("educationprov");
@@ -714,13 +771,13 @@
             var education = { Description: desvalue[i].value, Year: yearvalue[i].value, Provider: provvalue[i].value };
             console.log(education)
             //if (document.getElementsByClassName("educationobj")[i].value != "") {
-                LifeEvList.push(education)
+            EducationList.push(education)
             //}
         }
-        console.log(LifeEvList)
-        console.log(LifeEvList.length)
+        console.log(EducationList)
+        console.log(EducationList.length)
 
-        if (LifeEvList.length > 0) {
+        if (EducationList.length > 0) {
             $.ajax({
                 type: "POST",
                 beforeSend: function (xhr) {
@@ -730,7 +787,7 @@
                 ,
                 url: "/TemplatePages/Profile?handler=FillEducationsList",
                 async: false,
-                data: JSON.stringify(LifeEvList),
+                data: JSON.stringify(EducationList),
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
 
@@ -752,14 +809,17 @@
 
 
 
-    
+
     function LifeEvent() {
+        console.log("string")
         var LifeEvList = new Array();
         var desvalue = document.getElementsByClassName("LifeEventType");
         var detailsvalue = document.getElementsByClassName("LifeEventDetails");
         var captionvalue = document.getElementsByClassName("LifeEventcaption");
+        var hiddenMedia = document.getElementsByClassName("LifeEventhiddenMedia");
+        var hiddenid = document.getElementsByClassName("LifeEventhiddenID");
         for (var i = 0; i < desvalue.length; i++) {
-            var LifeEvent = { EventType: desvalue[i].value, Details: detailsvalue[i].value, Caption: captionvalue[i].value };
+            var LifeEvent = { EventType: desvalue[i].value, Details: detailsvalue[i].value, Caption: captionvalue[i].value, Media: hiddenMedia[i].value, LifeEventID: hiddenid[i].value };
             console.log(LifeEvent)
             LifeEvList.push(LifeEvent)
         }
@@ -829,7 +889,7 @@
                         $('input:hidden[name="__RequestVerificationToken"]').val());
                 }
                 ,
-                url: "/TemplatePages/EditListining?handler=DeletePhotoById",
+                url: "/TemplatePages/Profile?handler=DeletePhotoById",
                 async: false,
                 data: JSON.stringify(id),
                 dataType: "json",
@@ -837,6 +897,8 @@
 
                 success: function (response) {
                     console.log("get selected rows successfully" + response)
+                    document.getElementById(id).style.display = 'none';
+
                 },
                 failure: function (response) {
                     alert(response);
@@ -859,7 +921,7 @@
                         $('input:hidden[name="__RequestVerificationToken"]').val());
                 }
                 ,
-                url: "/TemplatePages/EditListining?handler=DeleteVideoById",
+                url: "/TemplatePages/Profile?handler=DeleteVideoById",
                 async: false,
                 data: JSON.stringify(id),
                 dataType: "json",
@@ -867,6 +929,54 @@
 
                 success: function (response) {
                     console.log("get selected rows successfully" + response)
+                    console.log(id);
+                    document.getElementById(id).style.display = 'none';
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        }
+        else {
+            console.log("Nobody has been selected")
+        }
+    }
+
+
+
+
+
+    function deleteMedia(id) {
+        //console.log(typeof(id))
+        //var List = new Array();
+        //List.push(id);
+        if (id != 0) {
+            $.ajax({
+                type: "POST",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                }
+                ,
+                url: "/TemplatePages/Profile?handler=DeleteMediaById",
+                async: false,
+                data: JSON.stringify(id),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+
+                success: function (response) {
+                    console.log("get selected rows successfully" + response)
+                    console.log(id);
+                    document.getElementById(id).style.display = 'none';
+                    console.log(document.getElementById(id + 'id'))
+                    document.getElementById(id + 'id').style.display = 'flex';
+                    console.log(document.getElementById(id + 'hid').value)
+                    document.getElementById(id + 'hid').value = "";
+                    console.log(document.getElementById(id + 'hid').value)
+                    document.getElementById("lifeeventstylebtn").textContent = "Save All";
+                    document.getElementById("lifeeventstylebtn").style.backgroundColor = "#384f95";
+
+
                 },
                 failure: function (response) {
                     alert(response);
@@ -878,3 +988,7 @@
         }
     }
 </script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

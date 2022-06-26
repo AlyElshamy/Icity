@@ -30,6 +30,7 @@ namespace Icity.Areas.TemplatePages
         public List<Interest> InterestsList = new List<Interest>();
         public static List<Language> Languages;
         public List<Language> LanguagesList = new List<Language>();
+        //[BindProperty]
         public Education education { get; set; }
         public static List<Education> Educations;
         public List<Education> EducationsList = new List<Education>();
@@ -37,6 +38,10 @@ namespace Icity.Areas.TemplatePages
         public static ApplicationUser user { set; get; }
         public static List<LifeEvent> LifeEvents;
         public List<LifeEvent> LifeEventsList = new List<LifeEvent>();
+        public List<Video> userVideos = new List<Video>();
+        public List<Photo> userPhotos = new List<Photo>();
+        [ViewData]
+        public string educationvalidation { get; set; }
         public ProfileModel(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IcityContext Context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
         {
             _userManager = userManager;
@@ -71,7 +76,7 @@ namespace Icity.Areas.TemplatePages
             Interests = new List<Interest>();
             foreach (var item in InterestsTitle)
             {
-                Interest Interrist = new Interest { InterestTitle = item};
+                Interest Interrist = new Interest { InterestTitle = item };
                 Interests.Add(Interrist);
             }
             return new JsonResult(Interests);
@@ -86,7 +91,8 @@ namespace Icity.Areas.TemplatePages
             Languages = new List<Language>();
             foreach (var item in LanguagesTitle)
             {
-                Language language = new Language { LanguageTitle = item};
+
+                Language language = new Language { LanguageTitle = item };
                 Languages.Add(language);
             }
             return new JsonResult(Languages);
@@ -97,40 +103,99 @@ namespace Icity.Areas.TemplatePages
             var Educationsid = _applicationDbContext.Educations.Where(a => a.Id == user.Id);
             _applicationDbContext.Educations.RemoveRange(Educationsid);
             _applicationDbContext.SaveChanges();
+            foreach (var item in Educationslist)
+            {
+                if (item.Provider == "")
+                {
+                    educationvalidation = "Is Required";
+                }
+            }
             Educations = Educationslist;
             return new JsonResult(Educations);
         }
         public IActionResult OnPostFillLifeEventsList([FromBody] List<LifeEvent> lifeEventsList)
         {
+            var eventlist = _applicationDbContext.LifeEvents.ToList();
+            _applicationDbContext.LifeEvents.RemoveRange(eventlist);
+            _applicationDbContext.LifeEvents.AddRange(lifeEventsList);
+            _applicationDbContext.SaveChanges();
+
             LifeEvents = lifeEventsList;
             return new JsonResult(LifeEventsList);
         }
         public IActionResult OnPostDeletePhotoById([FromBody] int PhotoId)
         {
-            var photoobj = _context.ListingPhotos.Where(a => a.Id == PhotoId).FirstOrDefault();
-            _context.ListingPhotos.Remove(photoobj);
-            _context.SaveChanges();
-            return Page();
+            try
+            {
+                var photoobj = _applicationDbContext.Photos.Where(a => a.PhotoID == PhotoId).FirstOrDefault();
+                if (photoobj == null)
+                {
+                    return Page();
+                }
+                _applicationDbContext.Photos.Remove(photoobj);
+                _applicationDbContext.SaveChanges();
+                return new JsonResult(PhotoId);
+            }
+            catch (Exception)
+            {
+                ToastNotification.AddErrorToastMessage("Somthing Went Error..");
+                return Page();
+            }
         }
         public IActionResult OnPostDeleteVideoById([FromBody] int Videoid)
         {
-            var Videoobj = _context.ListingVideos.Where(a => a.Id == Videoid).FirstOrDefault();
-            _context.ListingVideos.Remove(Videoobj);
-            _context.SaveChanges();
-            return Page();
+            try
+            {
+                var Videoobj = _applicationDbContext.Videos.Where(a => a.VideoID == Videoid).FirstOrDefault();
+                if (Videoobj == null)
+                {
+                    return Page();
+                }
+                _applicationDbContext.Videos.Remove(Videoobj);
+                _applicationDbContext.SaveChanges();
+                return new JsonResult(Videoid);
+            }
+            catch (Exception)
+            {
+                ToastNotification.AddErrorToastMessage("Somthing Went Error..");
+                return Page();
+            }
+        }
+        
+        
+        
+        public IActionResult OnPostDeleteMediaById([FromBody] int Mediaid)
+        {
+            try
+            {
+                var Videoobj = _applicationDbContext.LifeEvents.Where(a => a.LifeEventID == Mediaid).FirstOrDefault();
+                if (Videoobj == null)
+                {
+                    return Page();
+                }
+                //Videoobj.Media = null;
+                _applicationDbContext.SaveChanges();
+                LifeEventsList = LifeEvents = _applicationDbContext.LifeEvents.Where(a => a.Id == user.Id).ToList();
 
-
-
+                return new JsonResult(Mediaid);
+            }
+            catch (Exception)
+            {
+                ToastNotification.AddErrorToastMessage("Somthing Went Error..");
+                return Page();
+            }
         }
         public async Task<IActionResult> OnGet()
         {
             user = await _userManager.GetUserAsync(User);
-            SkillsList=Skills = _applicationDbContext.Skills.Where(a => a.Id == user.Id).ToList();
-            InterestsList =Interests= _applicationDbContext.Interests.Where(a => a.Id == user.Id).ToList();
-            LanguagesList=Languages = _applicationDbContext.Languages.Where(a => a.Id == user.Id).ToList();
-            EducationsList=Educations = _applicationDbContext.Educations.Where(a => a.Id == user.Id).ToList();
-            LifeEvents =LifeEvents= _applicationDbContext.LifeEvents.Where(a => a.Id == user.Id).ToList();
-            
+            userProfile = user;
+            SkillsList = Skills = _applicationDbContext.Skills.Where(a => a.Id == user.Id).ToList();
+            InterestsList = Interests = _applicationDbContext.Interests.Where(a => a.Id == user.Id).ToList();
+            LanguagesList = Languages = _applicationDbContext.Languages.Where(a => a.Id == user.Id).ToList();
+            EducationsList = Educations = _applicationDbContext.Educations.Where(a => a.Id == user.Id).ToList();
+            LifeEventsList = LifeEvents = _applicationDbContext.LifeEvents.Where(a => a.Id == user.Id).ToList();
+            userPhotos = _applicationDbContext.Photos.Where(a => a.Id == user.Id).ToList();
+            userVideos = _applicationDbContext.Videos.Where(a => a.Id == user.Id).ToList();
             return Page();
         }
 
@@ -140,7 +205,6 @@ namespace Icity.Areas.TemplatePages
             try
             {
                 var user = await _userManager.GetUserAsync(User);
-
 
                 user.Gender = userProfile.Gender;
                 user.Bio = userProfile.Bio;
@@ -163,28 +227,31 @@ namespace Icity.Areas.TemplatePages
                 user.Phone2 = userProfile.Phone2;
                 user.Folwers = userProfile.Folwers;
                 user.Website = userProfile.Website;
-                user.Photos = userProfile.Photos == null ? new List<Photo>() : userProfile.Photos;
-                user.Videos = userProfile.Videos == null ? new List<Video>() : userProfile.Videos;
                 user.Skills = Skills == null ? new List<Skill>() : Skills;
                 user.Interests = Interests == null ? new List<Interest>() : Interests;
                 user.Educations = Educations == null ? new List<Education>() : Educations;
                 user.Languages = Languages == null ? new List<Language>() : Languages;
 
-                for (int i = 0; i < LifeeventMedia.Count(); i++)
+                //if (LifeEvents.Count() == LifeeventMedia.Count())
+                //{
+                int n = 0;
+                for (int i = 0; i < LifeEvents.Count(); i++)
                 {
-                    if (LifeeventMedia[i] != null)
+                    if (LifeEvents[i].Media == "")
                     {
                         string folder = "Images/ProfileImages/";
-                        LifeEvents[i].Media = UploadImage(folder, LifeeventMedia[i]);
-                        LifeEvents[i].Id = user.Id;
+                        LifeEvents[i].Media = UploadImage(folder, LifeeventMedia[n]);
+                        n++;
                     }
-                    _applicationDbContext.LifeEvents.Add(LifeEvents[i]);
-                }
-                userProfile.LifeEvents = LifeEvents;
-                user.LifeEvents = userProfile.LifeEvents == null ? new List<LifeEvent>() : userProfile.LifeEvents;
 
-                if (Images.Count() > 0 && user.Photos.Count() == Images.Count())
+                }
+               // _applicationDbContext.LifeEvents.RemoveRange(user.LifeEvents);
+                
+                user.LifeEvents = LifeEvents;
+                //}
+                if (Images.Count() > 0)
                 {
+                    List<Photo> userpho = new List<Photo>();
                     for (int i = 0; i < Images.Count(); i++)
                     {
                         Photo photo = new Photo();
@@ -196,11 +263,13 @@ namespace Icity.Areas.TemplatePages
                             //photo.Caption = userProfile.Photos[i].Caption;
                             photo.Id = user.Id;
                         }
-                        _applicationDbContext.Photos.Add(photo);
+                        userpho.Add(photo);
                     }
+                    user.Photos = userpho;
                 }
-                if (VideosFiels.Count() > 0 && user.Videos.Count() == VideosFiels.Count())
+                if (VideosFiels.Count() > 0)
                 {
+                    List<Video> uservid = new List<Video>();
                     for (int i = 0; i < VideosFiels.Count(); i++)
                     {
                         Video video = new Video();
@@ -212,8 +281,9 @@ namespace Icity.Areas.TemplatePages
                             video.PublishDate = DateTime.Now;
                             video.Id = user.Id;
                         }
-                        _applicationDbContext.Videos.Add(video);
+                        uservid.Add(video);
                     }
+                    user.Videos = uservid;
                 }
                 _applicationDbContext.SaveChanges();
 

@@ -11,7 +11,7 @@ namespace Icity.Models
         [Key]
         public int VideoID { get; set; }
         public string VideoT { get; set; }
-        [Required(ErrorMessage = "Reequired")]
+        //[Required(ErrorMessage = "Reequired")]
         public string Caption { get; set; }
         public DateTime PublishDate { get; set; }
         [JsonIgnore]

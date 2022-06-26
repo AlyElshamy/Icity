@@ -288,7 +288,7 @@
                     @foreach (var item in Model.AddListing.ListingPhotos)
                     {
 
-                        <div class="col-sm-4">
+                        <div id="@item.Id" class="col-sm-4">
                             <div class="listing-item-grid">
                                 <div class="bg" data-bg="/@item.PhotoUrl"></div>
                                 <div class="d-gr-sec" id=""></div>
@@ -336,7 +336,7 @@
             @foreach (var item in Model.AddListing.ListingVideos)
             {
 
-                <div class="col-sm-4">
+                <div id="@item.Id" class="col-sm-4">
                     <div class="list-single-main-item_content fl-wrap">
                         <div class="iframe-holder fl-wrap">
                             <div class="resp-video">
@@ -344,7 +344,7 @@
                                 <iframe src="@Url.Content("/"+item.VideoUrl)?background=0" width="200" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
                             </div>
-                            <h3><a onclick="deleteVideo(@item.Id)">Delete</a></h3>
+                            <h3><a class="btn" style="background-color: #c03434" onclick="deleteVideo(@item.Id)">Delete</a></h3>
 
                         </div>
                     </div>
@@ -844,6 +844,7 @@
 
                 success: function (response) {
                     console.log("get selected rows successfully" + response)
+                    document.getElementById(id).style.display = 'none';
                 },
                 failure: function (response) {
                     alert(response);
@@ -875,6 +876,8 @@
 
                 success: function (response) {
                     console.log("get selected rows successfully" + response)
+                    document.getElementById(id).style.display = 'none';
+
                 },
                 failure: function (response) {
                     alert(response);
