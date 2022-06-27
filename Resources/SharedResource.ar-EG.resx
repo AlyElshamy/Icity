@@ -726,4 +726,178 @@
   <data name="Website" xml:space="preserve">
     <value>الموقع</value>
   </data>
+  <data name="Add New" xml:space="preserve">
+    <value>أضف جديد</value>
+  </data>
+  <data name="Click here To Drop LifeEvent Media" xml:space="preserve">
+    <value>انقر هنا لإدخال وسائط المناسبة الشخصية</value>
+  </data>
+  <data name="Education Discription" xml:space="preserve">
+    <value>تفاصيل التعليم</value>
+  </data>
+  <data name="Education Provider" xml:space="preserve">
+    <value>مقدم خدمة التعليم</value>
+  </data>
+  <data name="Education Year" xml:space="preserve">
+    <value>سنة التخرج</value>
+  </data>
+  <data name="Enter Education Discription" xml:space="preserve">
+    <value>أدخل تفاصيل التعليم</value>
+  </data>
+  <data name="Enter Education Provider" xml:space="preserve">
+    <value>أدخل مقدم الخدمة التعليمية</value>
+  </data>
+  <data name="Enter Education Year" xml:space="preserve">
+    <value>أدخل سنة التخرج</value>
+  </data>
+  <data name="Enter LifeEvent Type" xml:space="preserve">
+    <value>أدخل نوع المناسبة الشخصية</value>
+  </data>
+  <data name="Enter Facebook Link" xml:space="preserve">
+    <value>أدخل رابط فيسبوك</value>
+  </data>
+  <data name="Enter Instagram Link" xml:space="preserve">
+    <value>أدخل رابط الإنستجرام</value>
+  </data>
+  <data name="Enter LifeEvent Caption" xml:space="preserve">
+    <value>أدخل عنوان المناسبة الشخصية</value>
+  </data>
+  <data name="Enter LinkedIn Link" xml:space="preserve">
+    <value>أدخل رابط لينكد إن</value>
+  </data>
+  <data name="Enter Twitter Link" xml:space="preserve">
+    <value>أدخل رابط تويتر</value>
+  </data>
+  <data name="Enter Youtube Link" xml:space="preserve">
+    <value>أدخل رابط يوتيوب</value>
+  </data>
+  <data name="Instagram" xml:space="preserve">
+    <value>إنستجرام</value>
+  </data>
+  <data name="Life Events" xml:space="preserve">
+    <value>المناسبات الشخصية</value>
+  </data>
+  <data name="LifeEvent Caption" xml:space="preserve">
+    <value>عنوان المناسبة الشخصية</value>
+  </data>
+  <data name="LifeEvent Details" xml:space="preserve">
+    <value>تفاصيل المناسبة الشخصية</value>
+  </data>
+  <data name="LifeEvent Type" xml:space="preserve">
+    <value>نوع المناسبة الشخصية</value>
+  </data>
+  <data name="Save All" xml:space="preserve">
+    <value>حفظ الكل</value>
+  </data>
+  <data name="Save Changes" xml:space="preserve">
+    <value>حفظ التغيرات</value>
+  </data>
+  <data name="Your  Socials" xml:space="preserve">
+    <value>وسائل التواصل الاجتماعي الخاصة بك</value>
+  </data>
+  <data name="YouTube" xml:space="preserve">
+    <value>يوتيوب</value>
+  </data>
+  <data name="Bio" xml:space="preserve">
+    <value>السيرة الذاتية</value>
+  </data>
+  <data name="Click here or Edit Videos" xml:space="preserve">
+    <value>أنقر هنا لتعديل مقاطع الفيديوهات</value>
+  </data>
+  <data name="Click here To Drop Profile Banner" xml:space="preserve">
+    <value>أنقر هنا لإضافة لافتة الملف الشخصي</value>
+  </data>
+  <data name="Click here To Drop Profile Photo" xml:space="preserve">
+    <value>أنقر هنا لإضافة صورة الملف الشخصي</value>
+  </data>
+  <data name="Click here To Edit Photos" xml:space="preserve">
+    <value>أنقر هنا لتعديل الصور</value>
+  </data>
+  <data name="Education" xml:space="preserve">
+    <value>التعليم</value>
+  </data>
+  <data name="Enter Anothr phone" xml:space="preserve">
+    <value>أدخل هاتف آخر</value>
+  </data>
+  <data name="Enter Bio" xml:space="preserve">
+    <value>أدخل السيرة الذاتية</value>
+  </data>
+  <data name="Enter Full Name" xml:space="preserve">
+    <value>أدخل الأسم بالكامل</value>
+  </data>
+  <data name="Enter Interest Title" xml:space="preserve">
+    <value>أدخل الإهتمام</value>
+  </data>
+  <data name="Enter Language Title" xml:space="preserve">
+    <value>أدخل إسم اللغة</value>
+  </data>
+  <data name="Enter Nationality" xml:space="preserve">
+    <value>أدخل الجنسية</value>
+  </data>
+  <data name="Enter Nick Name" xml:space="preserve">
+    <value>أدخل الإسم المستعار</value>
+  </data>
+  <data name="Enter Skill Title" xml:space="preserve">
+    <value>أدخل إسم المهارة</value>
+  </data>
+  <data name="Enter Your job" xml:space="preserve">
+    <value>أدخل العمل</value>
+  </data>
+  <data name="Enter Your Location" xml:space="preserve">
+    <value>أدخل موقعك</value>
+  </data>
+  <data name="Enter your Website" xml:space="preserve">
+    <value>أدخل موقع الويب الخاص بك</value>
+  </data>
+  <data name="Full Name" xml:space="preserve">
+    <value>الإسم بالكامل</value>
+  </data>
+  <data name="Interest Title" xml:space="preserve">
+    <value>الإهتمام</value>
+  </data>
+  <data name="Interests" xml:space="preserve">
+    <value>الإهتمامات</value>
+  </data>
+  <data name="job" xml:space="preserve">
+    <value>العمل</value>
+  </data>
+  <data name="Language Title" xml:space="preserve">
+    <value>إسم اللغة</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>اللغات</value>
+  </data>
+  <data name="Listing Photos" xml:space="preserve">
+    <value>الصور</value>
+  </data>
+  <data name="Listing Videos" xml:space="preserve">
+    <value>مقاطع الفيديو</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>الموقع</value>
+  </data>
+  <data name="Nationality" xml:space="preserve">
+    <value>الجنسية</value>
+  </data>
+  <data name="Nick Name" xml:space="preserve">
+    <value>الإسم المستعار</value>
+  </data>
+  <data name="Profile Media" xml:space="preserve">
+    <value>وسائط الملف الشخصي</value>
+  </data>
+  <data name="Profile Picture" xml:space="preserve">
+    <value>صورة الملف الشخصي</value>
+  </data>
+  <data name="Skills" xml:space="preserve">
+    <value>المهارات</value>
+  </data>
+  <data name="Skills Title" xml:space="preserve">
+    <value>إسم المهارة</value>
+  </data>
+  <data name="Your Profile" xml:space="preserve">
+    <value>الملف الشخصي</value>
+  </data>
+  <data name="Enter LifeEvent Details" xml:space="preserve">
+    <value>أدخل تفاصيل المناسبة الشخصية</value>
+  </data>
 </root>

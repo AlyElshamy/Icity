@@ -11,55 +11,55 @@
     <form method="post" enctype="multipart/form-data">
 
         <div class="dashboard-title fl-wrap">
-            <h3>Your Profile</h3>
+            <h3>@sharedResource["Your Profile"]</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
                 <div class="row">
                     <div class="col-sm-6">
-                        <label>Full Name <i class="fal fa-user"></i></label>
-                        <input asp-for="@Model.userProfile.FullName" type="text" placeholder="Enter Full Name"  />
+                        <label>@sharedResource["Full Name"] <i class="fal fa-user"></i></label>
+                        <input asp-for="@Model.userProfile.FullName" type="text" placeholder="@sharedResource["Enter Full Name"]" />
                         <span asp-validation-for="userProfile.FullName" style="color:red;"></span>
 
                     </div>
                     <div class="col-sm-6">
-                        <label>Nick Name <i class="fal fa-user"></i></label>
-                        <input asp-for="@Model.userProfile.NickName" type="text" placeholder="Enter Nick Name"  />
+                        <label>@sharedResource["Nick Name"] <i class="fal fa-user"></i></label>
+                        <input asp-for="@Model.userProfile.NickName" type="text" placeholder="@sharedResource["Enter Nick Name"]" />
                     </div>
                     <div class="col-sm-6">
-                        <label> Nationality  <i class="fas fa-map-marker"></i>  </label>
-                        <input asp-for="@Model.userProfile.Nationality" type="text" placeholder="Enter Nationality"  />
+                        <label> @sharedResource["Nationality"]  <i class="fas fa-flag"></i>  </label>
+                        <input asp-for="@Model.userProfile.Nationality" type="text" placeholder="@sharedResource["Enter Nationality"]" />
                     </div>
                     <div class="col-sm-6">
-                        <label>Phone<i class="far fa-envelope"></i>  </label>
-                        <input asp-for="@Model.userProfile.PhoneNumber" type="text" placeholder="Enter Phone"  />
+                        <label>@sharedResource["Phone"]<i class="far fa-phone"></i>  </label>
+                        <input asp-for="@Model.userProfile.PhoneNumber" type="text" placeholder="@sharedResource["Enter Phone"]" />
                     </div>
                     <div class="col-sm-6">
-                        <label>Phone 2<i class="far fa-phone"></i>  </label>
-                        <input asp-for="@Model.userProfile.Phone2" type="text" placeholder="Enter Anothr phone"  />
+                        <label>@sharedResource["Phone 2"]<i class="far fa-phone"></i>  </label>
+                        <input asp-for="@Model.userProfile.Phone2" type="text" placeholder="@sharedResource["Enter Anothr phone"]" />
                     </div>
                     <div class="col-sm-6">
-                        <label> job <i class="fas fa-map-marker"></i>  </label>
-                        <input asp-for="@Model.userProfile.Job" type="text" placeholder="Enter Your job"  />
+                        <label>@sharedResource["job"]  <i class="fas fa-briefcase"></i>  </label>
+                        <input asp-for="@Model.userProfile.Job" type="text" placeholder="@sharedResource["Enter Your job"]" />
                     </div>
                     <div class="col-sm-6">
-                        <label> Location <i class="fas fa-map-marker"></i>  </label>
-                        <input asp-for="@Model.userProfile.MapLocation" type="text" placeholder="Enter Your Location"  />
+                        <label> @sharedResource["Location"] <i class="fas fa-map-marker"></i>  </label>
+                        <input asp-for="@Model.userProfile.MapLocation" type="text" placeholder="@sharedResource["Enter Your Location"]" />
                     </div>
                     <div class="col-sm-6">
-                        <label> Website <i class="far fa-globe"></i>  </label>
-                        <input asp-for="@Model.userProfile.MapLocation" type="text" placeholder="Enter your Website"  />
+                        <label> @sharedResource["Website"] <i class="far fa-globe"></i>  </label>
+                        <input asp-for="@Model.userProfile.MapLocation" type="text" placeholder="@sharedResource["Enter your Website"]" />
                     </div>
                 </div>
-                <label> Bio</label>
-                <textarea asp-for="@Model.userProfile.Bio" cols="40" rows="3" placeholder="Enter Bio" style="margin-bottom:20px;"></textarea>
+                <label>@sharedResource["Bio"] </label>
+                <textarea asp-for="@Model.userProfile.Bio" cols="40" rows="3" placeholder="@sharedResource["Enter Bio"]" style="margin-bottom:20px;"></textarea>
                 <div class="clearfix"></div>
 
             </div>
         </div>
         <div class="dashboard-title dt-inbox fl-wrap">
-            <h3>Profile Media</h3>
+            <h3>@sharedResource["Profile Media"]</h3>
         </div>
 
         <div class="listing-item-grid_container fl-wrap">
@@ -82,7 +82,7 @@
                         }
                         <div class="d-gr-sec"></div>
                         <div class="listing-item-grid_title">
-                            <h3><a href="listing.html">Profile Picture</a></h3>
+                            <h3><a href="listing.html">@sharedResource["Profile Picture"]</a></h3>
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                         {
 
 
-                            <div class="bg" data-bg="/Images/default user.png"></div>
+                            <div class="bg" data-bg="~/Images/default user.png"></div>
 
                         }
                         else
@@ -105,7 +105,7 @@
                         }
                         <div class="d-gr-sec"></div>
                         <div class="listing-item-grid_title">
-                            <h3><a href="listing.html">Banner</a></h3>
+                            <h3><a href="listing.html">@sharedResource["Banner"]</a></h3>
                         </div>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
                                     <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> Click here To Drop Profile Photo</span>
+                                        <span><i class="fal fa-images"></i>@sharedResource["Click here To Drop Profile Photo"] </span>
                                         <div class="photoUpload-files fl-wrap"></div>
                                     </div>
                                     <input type="file" accept="image/*" name="Profilepic" class="upload">
@@ -148,7 +148,7 @@
                         <div class="listsearch-input-item fl-wrap">
                             <div class="fuzone">
                                 <div class="fu-text">
-                                    <span><i class="fal fa-images"></i> Click here To Drop Profile Banner</span>
+                                    <span><i class="fal fa-images"></i>@sharedResource["Click here To Drop Profile Banner"] </span>
                                     <div class="photoUpload-files fl-wrap"></div>
                                 </div>
                                 <input type="file" accept="image/*" name="bannerpic" class="upload">
@@ -159,7 +159,7 @@
             </div>
         </div>
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Listing Photos</h3>
+            <h3>@sharedResource["Listing Photos"]</h3>
         </div>
         <div class="custom-form">
             <div class="row">
@@ -174,7 +174,7 @@
                         <div class="listsearch-input-item fl-wrap">
                             <div class="fuzone">
                                 <div class="fu-text">
-                                    <span><i class="fal fa-images"></i> Click here To Edit Photos</span>
+                                    <span><i class="fal fa-images"></i>@sharedResource["Click here To Edit Photos"] </span>
                                     <div class="photoUpload-files fl-wrap"></div>
                                 </div>
                                 <input type="file" accept="image/*" name="Images" class="upload" multiple>
@@ -195,7 +195,7 @@
                             <div class="bg" data-bg="/@item.Image"></div>
                             <div class="d-gr-sec" id=""></div>
                             <div class="listing-item-grid_title">
-                                <h3><a onclick="deletePhoto(@item.PhotoID)">Delete</a></h3>
+                                <h3><a onclick="deletePhoto(@item.PhotoID)">@sharedResource["Delete"]</a></h3>
                             </div>
                         </div>
                     </div>
@@ -218,7 +218,7 @@
                         <div class="listsearch-input-item fl-wrap">
                             <div class="fuzone">
                                 <div class="fu-text">
-                                    <span><i class="fal fa-images"></i> Click here or Edit Videos</span>
+                                    <span><i class="fal fa-images"></i>@sharedResource["Click here or Edit Videos"] </span>
                                     <div class="photoUpload-files fl-wrap"></div>
                                 </div>
                                 <input type="file" accept="video/*" name="VideosFiels" class="upload" multiple>
@@ -232,7 +232,7 @@
 
 
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Listing Videos</h3>
+            <h3>@sharedResource["Listing Videos"]</h3>
         </div>
         @foreach (var item in Model.userVideos)
         {
@@ -245,7 +245,7 @@
                             <iframe src="@Url.Content("/"+item.VideoT)?background=0" width="200" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
                         </div>
-                        <h3><a class="btn" style="background-color: #c03434" onclick="deleteVideo(@item.VideoID)">Delete</a></h3>
+                        <h3><a class="btn" style="background-color: #c03434" onclick="deleteVideo(@item.VideoID)">@sharedResource["Delete"]</a></h3>
 
                     </div>
                 </div>
@@ -254,7 +254,7 @@
 
 
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Skills</h3>
+            <h3>@sharedResource["Skills"]</h3>
         </div>
         <div class="profile-edit-container fl-wrap  block_box">
             <div class="custom-form add_room-item-wrap">
@@ -262,11 +262,11 @@
                     @if (Model.SkillsList.Count() == 0)
                     {
                         <div class="add_room-item fl-wrap">
-                            <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                            <span class="remove-rp " data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Skills Title <i class="fal fa-briefcase"></i></label>
-                                    <input class="SkillInput" type="text" placeholder="Enter Skill Title" />
+                                    <label>@sharedResource["Skills Title"] <i class="fal fa-briefcase"></i></label>
+                                    <input class="SkillInput" type="text" placeholder="@sharedResource["Enter Skill Title"]" />
                                 </div>
                             </div>
                         </div>
@@ -276,11 +276,11 @@
                         foreach (var item in Model.SkillsList)
                         {
                             <div class="add_room-item fl-wrap">
-                                <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                                <span class="remove-rp " data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label>Skills Title  <i class="fal fa-briefcase"></i></label>
-                                        <input class="SkillInput" type="text" placeholder="Enter Skill Title" value="@item.SkillTitle" />
+                                        <label>@sharedResource["Skills Title"]  <i class="fal fa-briefcase"></i></label>
+                                        <input class="SkillInput" type="text" placeholder="@sharedResource["Enter Skill Title"]" value="@item.SkillTitle" />
                                     </div>
                                 </div>
                             </div>
@@ -288,16 +288,16 @@
                     }
 
                 </div>
-                <a class="add-room-item" onclick="changeStylebutton('skillsavebtn')">Add New <i class="fal fa-plus"></i> </a>
+                <a class="add-room-item" onclick="changeStylebutton('skillsavebtn')">@sharedResource["Add New"] <i class="fal fa-plus"></i> </a>
 
 
             </div>
             <div class="row">
-                <a onclick="SkillTitle()" id="skillsavebtn" class="btn  color2-bg  float-btn">Save All</a>
+                <a onclick="SkillTitle()" id="skillsavebtn" class="btn  color2-bg  float-btn">@sharedResource["Save All"]</a>
             </div>
         </div>
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Interests</h3>
+            <h3>@sharedResource["Interests"]</h3>
         </div>
         <div class="profile-edit-container fl-wrap  block_box">
             <div class="custom-form add_room-item-wrap">
@@ -305,11 +305,11 @@
                     @if (Model.InterestsList.Count() == 0)
                     {
                         <div class="add_room-item fl-wrap">
-                            <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                            <span class="remove-rp " data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Interest Title <i class="fal fa-briefcase"></i></label>
-                                    <input class="InterrestInput" type="text" placeholder="Enter Interest Title" />
+                                    <label>@sharedResource["Interest Title"] <i class="fal fa-briefcase"></i></label>
+                                    <input class="InterrestInput" type="text" placeholder="@sharedResource["Enter Interest Title"]" />
                                 </div>
                             </div>
                         </div>
@@ -319,11 +319,11 @@
                         foreach (var item in Model.InterestsList)
                         {
                             <div class="add_room-item fl-wrap">
-                                <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                                <span class="remove-rp " data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label>Interest Title <i class="fal fa-briefcase"></i></label>
-                                        <input class="InterrestInput" type="text" placeholder="Enter Interest Title" value="@item.InterestTitle" />
+                                        <label>@sharedResource["Interest Title"] <i class="fal fa-briefcase"></i></label>
+                                        <input class="InterrestInput" type="text" placeholder="@sharedResource["Enter Interest Title"]" value="@item.InterestTitle" />
                                     </div>
                                 </div>
                             </div>
@@ -331,18 +331,18 @@
                     }
 
                 </div>
-                <a class="add-room-item" onclick="changeStylebutton('Interresavetbtn')">Add New <i class="fal fa-plus"></i> </a>
+                <a class="add-room-item" onclick="changeStylebutton('Interresavetbtn')">@sharedResource["Add New"] <i class="fal fa-plus"></i> </a>
 
 
             </div>
             <div class="row">
-                <a onclick="InterristTitle()" id="Interresavetbtn" class="btn  color2-bg  float-btn">Save All</a>
+                <a onclick="InterristTitle()" id="Interresavetbtn" class="btn  color2-bg  float-btn">@sharedResource["Save All"]</a>
             </div>
         </div>
 
 
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Languages</h3>
+            <h3>@sharedResource["Languages"]</h3>
         </div>
         <div class="profile-edit-container fl-wrap  block_box">
             <div class="custom-form add_room-item-wrap">
@@ -350,11 +350,11 @@
                     @if (Model.LanguagesList.Count() == 0)
                     {
                         <div class="add_room-item fl-wrap">
-                            <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                            <span class="remove-rp" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Language Title <i class="fal fa-briefcase"></i></label>
-                                    <input class="LanguageInput" type="text" placeholder="Enter Language Title" />
+                                    <label>@sharedResource["Language Title"] <i class="fal fa-briefcase"></i></label>
+                                    <input class="LanguageInput" type="text" placeholder="@sharedResource["Enter Language Title"]" />
                                 </div>
                             </div>
                         </div>
@@ -364,11 +364,11 @@
                         foreach (var item in Model.LanguagesList)
                         {
                             <div class="add_room-item fl-wrap">
-                                <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                                <span class="remove-rp" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label>Language Title <i class="fal fa-briefcase"></i></label>
-                                        <input class="LanguageInput" type="text" placeholder="Enter Language Title" value="@item.LanguageTitle" />
+                                        <label>@sharedResource["Language Title"] <i class="fal fa-briefcase"></i></label>
+                                        <input class="LanguageInput" type="text" placeholder="@sharedResource["Enter Language Title"]" value="@item.LanguageTitle" />
                                     </div>
                                 </div>
                             </div>
@@ -376,12 +376,12 @@
                     }
 
                 </div>
-                <a class="add-room-item" onclick="changeStylebutton('languagesavebtn')">Add New <i class="fal fa-plus"></i> </a>
+                <a class="add-room-item" onclick="changeStylebutton('languagesavebtn')">@sharedResource["Add New"] <i class="fal fa-plus"></i> </a>
 
 
             </div>
             <div class="row">
-                <a onclick="LanguageTitle()" id="languagesavebtn" class="btn  color2-bg  float-btn">Save All</a>
+                <a onclick="LanguageTitle()" id="languagesavebtn" class="btn  color2-bg  float-btn">@sharedResource["Save All"]</a>
             </div>
         </div>
         <!-- profile-edit-container end-->
@@ -389,7 +389,7 @@
 
 
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Education</h3>
+            <h3>@sharedResource["Education"]</h3>
         </div>
         <div class="profile-edit-container fl-wrap  block_box">
             <div class="custom-form add_room-item-wrap">
@@ -397,21 +397,21 @@
                     @if (Model.EducationsList.Count() == 0)
                     {
                         <div class="add_room-item fl-wrap">
-                            <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                            <span class="remove-rp " data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label>Education Discription <i class="fal fa-briefcase"></i></label>
-                                    <input asp-for="@Model.education.Description" name="Description" class="educationdes" type="text" placeholder="Enter Education Discription" />
+                                    <label>@sharedResource["Education Discription"] <i class="fal fa-briefcase"></i></label>
+                                    <input asp-for="@Model.education.Description" name="Description" class="educationdes" type="text" placeholder="@sharedResource["Enter Education Discription"]" />
                                 </div>
                                 <div class="col-md-4">
-                                    <label>Education Year <i class="fal fa-briefcase"></i></label>
-                                    <input asp-for="@Model.education.Year" name="Year" class="educationyear" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="Enter Education Year" />
+                                    <label>@sharedResource["Education Year"] <i class="fal fa-briefcase"></i></label>
+                                    <input asp-for="@Model.education.Year" name="Year" class="educationyear" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="@sharedResource["Enter Education Year"]" />
                                     <span asp-validation-for="education.Year" style="color:red;"></span>
 
                                 </div>
                                 <div class="col-md-4">
-                                    <label>Education Provider <i class="fal fa-briefcase"></i></label>
-                                    <input asp-for="@Model.education.Provider" name="Provider" class="educationprov" type="text" placeholder="Enter Education Provider" />
+                                    <label>@sharedResource["Education Provider"] <i class="fal fa-briefcase"></i></label>
+                                    <input asp-for="@Model.education.Provider" name="Provider" class="educationprov" type="text" placeholder="@sharedResource["Enter Education Provider"]" />
                                     <span style="color:red;">@Model.educationvalidation</span>
 
                                 </div>
@@ -423,21 +423,21 @@
                         foreach (var item in Model.EducationsList)
                         {
                             <div class="add_room-item fl-wrap">
-                                <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                                <span class="remove-rp" data-microtip-position="left" @*data-tooltip="Remove"*@><i class="fal fa-times-circle"></i></span>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label>Education Discription <i class="fal fa-briefcase"></i></label>
-                                        <input asp-for="@item.Description" name="Description" class="educationdes" type="text" placeholder="Enter Education Discription" />
+                                        <label>@sharedResource["Education Discription"] <i class="fal fa-briefcase"></i></label>
+                                        <input asp-for="@item.Description" name="Description" class="educationdes" type="text" placeholder="@sharedResource["Enter Education Discription"]" />
                                     </div>
                                     <div class="col-md-4">
-                                        <label>Education Year <i class="fal fa-briefcase"></i></label>
-                                        <input asp-for="@item.Year" name="Year" class="educationyear" type="text" placeholder="Enter Education Year" />
+                                        <label>@sharedResource["Education Year"] <i class="fal fa-briefcase"></i></label>
+                                        <input asp-for="@item.Year" name="Year" class="educationyear" type="text" placeholder="@sharedResource["Enter Education Year"]" />
                                         <span asp-validation-for="education.Year" style="color:red;"></span>
 
                                     </div>
                                     <div class="col-md-4">
-                                        <label>Education Provider  <i class="fal fa-briefcase"></i></label>
-                                        <input asp-for="@item.Provider" name="Provider" class="educationprov" type="text" placeholder="Enter Education Provider" />
+                                        <label>@sharedResource["Education Provider"]  <i class="fal fa-briefcase"></i></label>
+                                        <input asp-for="@item.Provider" name="Provider" class="educationprov" type="text" placeholder="@sharedResource["Enter Education Provider"]" />
                                         <span style="color:red;">@Model.educationvalidation</span>
 
 
@@ -448,82 +448,46 @@
                     }
 
                 </div>
-                <a class="add-room-item" onclick="changeStylebutton('Educationsavebtn')">Add New <i class="fal fa-plus"></i> </a>
+                <a class="add-room-item" onclick="changeStylebutton('Educationsavebtn')">@sharedResource["Add New"] <i class="fal fa-plus"></i> </a>
 
 
             </div>
             <div class="row">
-                <a onclick="EducationTitle()" id="Educationsavebtn" class="btn  color2-bg  float-btn">Save All</a>
+                <a onclick="EducationTitle()" id="Educationsavebtn" class="btn  color2-bg  float-btn">@sharedResource["Save All"]</a>
             </div>
         </div>
         <!-- profile-edit-container end-->
 
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Life Events</h3>
+            <h3>@sharedResource["Life Events"]</h3>
         </div>
         <div class="profile-edit-container fl-wrap  block_box">
             <div class="custom-form add_room-item-wrap">
                 <div class="add_room-container fl-wrap">
-                    @if (Model.LifeEventsList.Count() == 0)
-                    {
-                        <div class="add_room-item fl-wrap">
-                            <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label> LifeEvent Type <i class="fal fa-briefcase"></i></label>
-                                    <input asp-for="@Model.LifeEvent.EventType" name="EventType" class="LifeEventType" type="text" placeholder="Enter LifeEvent Type" />
-                                    <span asp-validation-for="LifeEvent.EventType" style="color:red;"></span>
-                                </div>
-                                <div class="col-md-3">
-                                    <label>LifeEvent Details <i class="fal fa-briefcase"></i></label>
-                                    <input asp-for="@Model.LifeEvent.Details" name="Details" class="LifeEventDetails" type="text" placeholder="Enter LifeEvent Details" />
-                                    <span asp-validation-for="LifeEvent.Details" style="color:red;"></span>
+                    @*@if (Model.LifeEventsList.Count() == 0)
+                        {*@
 
-                                </div>
-                                <div class="col-md-3">
-                                    <label>LifeEvent Caption <i class="fal fa-briefcase"></i></label>
-                                    <input asp-for="@Model.LifeEvent.Caption" name="Caption" class="LifeEventcaption" type="text" placeholder="Enter LifeEvent Caption" />
-                                    <span asp-validation-for="LifeEvent.Caption" style="color:red;"></span>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="add-list-media-wrap">
-                                        <div class="add-list-media-wrap">
-                                            <div class="listsearch-input-item fl-wrap">
-                                                <div class="fuzone">
-                                                    <div class="fu-text">
-                                                        <span><i class="fal fa-images"></i> Click here To Drop LifeEvent Media</span>
-                                                        <div class="photoUpload-files fl-wrap"></div>
-                                                    </div>
-                                                    <input asp-for="@Model.LifeEvent.Media" type="file" accept="video/*,image/*" name="LifeeventMedia" class="upload">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        foreach (var item in Model.LifeEventsList)
+                    @*}
+                        else
+                        {*@
+                    @{ foreach (var item in Model.LifeEventsList)
                         {
                             <div class="add_room-item fl-wrap">
-                                <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
-                                <div class="row">
+                                <span class="remove-rp " data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>                        <div class="row">
                                     <div class="col-md-3">
-                                        <label> LifeEvent Type <i class="fal fa-briefcase"></i></label>
-                                        <input asp-for="@item.EventType" name="EventType" class="LifeEventType" type="text" placeholder="Enter Event Type" />
+                                        <label>@sharedResource["LifeEvent Type"]  <i class="fal fa-briefcase"></i></label>
+                                        <input asp-for="@item.EventType" name="EventType" class="LifeEventType" type="text" placeholder="@sharedResource["Enter LifeEvent Type"]" />
                                         <span asp-validation-for="LifeEvent.EventType" style="color:red;"></span>
                                     </div>
                                     <div class="col-md-3">
-                                        <label>LifeEvent Details <i class="fal fa-briefcase"></i></label>
-                                        <input asp-for="@item.Details" name="Details" class="LifeEventDetails" type="text" placeholder="Enter LifeEvent Details" />
+                                        <label>@sharedResource["LifeEvent Details"] <i class="fal fa-briefcase"></i></label>
+                                        <input asp-for="@item.Details" name="Details" class="LifeEventDetails" type="text" placeholder="@sharedResource["Enter LifeEvent Details"]" />
                                         <span asp-validation-for="LifeEvent.Details" style="color:red;"></span>
 
                                     </div>
                                     <div class="col-md-3">
-                                        <label>LifeEvent Caption <i class="fal fa-briefcase"></i></label>
-                                        <input asp-for="@item.Caption" name="Caption" class="LifeEventcaption" type="text" placeholder="Enter LifeEvent Caption" />
+                                        <label>@sharedResource["LifeEvent Caption"] <i class="fal fa-briefcase"></i></label>
+                                        <input asp-for="@item.Caption" name="Caption" class="LifeEventcaption" type="text" placeholder="@sharedResource["Enter LifeEvent Caption"]" />
                                         <span asp-validation-for="LifeEvent.Caption" style="color:red;"></span>
                                     </div>
                                     @{
@@ -533,13 +497,13 @@
                                     <input hidden id="@hiddenid" asp-for="@item.Media" name="Media" type="text" class="LifeEventhiddenMedia" />
                                     <input hidden asp-for="@item.LifeEventID" name="LifeEventID" type="text" class="LifeEventhiddenID" />
 
-                                    <div  id="@stid" style="display:none" class="col-md-3 mediainput">
+                                    <div id="@stid" style="display:none" class="col-md-3 mediainput">
                                         <div class="add-list-media-wrap">
                                             <div class="add-list-media-wrap">
                                                 <div class="listsearch-input-item fl-wrap">
                                                     <div class="fuzone">
                                                         <div class="fu-text">
-                                                            <span><i class="fal fa-images"></i> Click here To Drop LifeEvent Media</span>
+                                                            <span><i class="fal fa-images"></i>@sharedResource["Click here To Drop LifeEvent Media"] </span>
                                                             <div class="photoUpload-files fl-wrap"></div>
                                                         </div>
                                                         <input asp-for="@Model.LifeEvent.Media" type="file" accept="video/*,image/*" name="LifeeventMedia" class="upload">
@@ -558,7 +522,7 @@
                                                     <iframe src="@Url.Content("/"+item.Media)?background=0" width="200" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
                                                 </div>
-                                                <h3><a class="btn" style="background-color: #c03434" onclick="deleteMedia(@item.LifeEventID)">Delete</a></h3>
+                                                <h3><a class="btn" style="background-color: #c03434" onclick="deleteMedia(@item.LifeEventID)">@sharedResource["Delete"]</a></h3>
 
                                             </div>
                                         </div>
@@ -569,13 +533,55 @@
                         }
                     }
 
-                </div>
-                <a class="add-room-item" onclick="changeStylebutton('lifeeventstylebtn')">Add New <i class="fal fa-plus"></i> </a>
 
+
+
+                    <div id="hiddendiv" style="display:none" class="add_room-item fl-wrap">
+                        <span class="remove-rp " data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label> @sharedResource["LifeEvent Type"] <i class="fal fa-briefcase"></i></label>
+                                <input asp-for="@Model.LifeEvent.EventType" name="EventType" class="LifeEventType" type="text" placeholder="@sharedResource["Enter LifeEvent Type"]" />
+                                <span asp-validation-for="LifeEvent.EventType" style="color:red;"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <label>@sharedResource["LifeEvent Details"] <i class="fal fa-briefcase"></i></label>
+                                <input asp-for="@Model.LifeEvent.Details" name="Details" class="LifeEventDetails" type="text" placeholder="@sharedResource["Enter LifeEvent Details"]" />
+                                <span asp-validation-for="LifeEvent.Details" style="color:red;"></span>
+
+                            </div>
+                            <div class="col-md-3">
+                                <label>@sharedResource["LifeEvent Caption"] <i class="fal fa-briefcase"></i></label>
+                                <input asp-for="@Model.LifeEvent.Caption" name="Caption" class="LifeEventcaption" type="text" placeholder="@sharedResource["Enter LifeEvent Caption"]" />
+                                <span asp-validation-for="LifeEvent.Caption" style="color:red;"></span>
+                            </div>
+                            <input hidden name="Media" type="text" class="LifeEventhiddenMedia" />
+                            <input hidden name="LifeEventID" type="text" class="LifeEventhiddenID" />
+                            <div class="col-md-3">
+                                <div class="add-list-media-wrap">
+                                    <div class="add-list-media-wrap">
+                                        <div class="listsearch-input-item fl-wrap">
+                                            <div class="fuzone">
+                                                <div class="fu-text">
+                                                    <span><i class="fal fa-images"></i>@sharedResource["Click here To Drop LifeEvent Media"] </span>
+                                                    <div class="photoUpload-files fl-wrap"></div>
+                                                </div>
+                                                <input asp-for="@Model.LifeEvent.Media" type="file" accept="video/*,image/*" name="LifeeventMedia" class="upload">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <a class="add-room-item" style="display:none" id="hiddenanchor" onclick="changeStylebutton('lifeeventstylebtn')">@sharedResource["Add New"] <i class="fal fa-plus"></i> </a>
+                <a id="anotheranchor" style="color: #566985; background: #f9f9f9; border: 1px solid #eee; font-weight:600;" onclick="showdivandanchor()">Add New<i class="fal fa-plus"></i></a>
 
             </div>
             <div class="row">
-                <a onclick="LifeEvent()" id="lifeeventstylebtn" class="btn  color2-bg  float-btn">Save All</a>
+                <a onclick="LifeEvent()" id="lifeeventstylebtn" class="btn  color2-bg  float-btn">@sharedResource["Save All"]</a>
             </div>
         </div>
         <!-- profile-edit-container end-->
@@ -584,22 +590,22 @@
 
 
         <div class="dashboard-title dt-inbox fl-wrap">
-            <h3>Your  Socials</h3>
+            <h3>@sharedResource["Your  Socials"]</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
-                <label>Facebook <i class="fab fa-facebook"></i></label>
-                <input asp-for="@Model.userProfile.FacebookLink" type="text" placeholder="Enter Facebook Link"  />
-                <label>Twitter<i class="fab fa-twitter"></i>  </label>
-                <input asp-for="@Model.userProfile.TwitterLink" type="text" placeholder="Enter Twitter Link"  />
-                <label>YouTube<i class="fab fa-vk"></i>  </label>
-                <input asp-for="@Model.userProfile.YoutubeLink" type="text" placeholder="Enter Youtube Link"  />
-                <label>LinkedIn<i class="fab fa-vk"></i>  </label>
-                <input asp-for="@Model.userProfile.LinkedInLink" type="text" placeholder="Enter LinkedIn Link"  />
-                <label> Instagram <i class="fab fa-instagram"></i>  </label>
-                <input asp-for="@Model.userProfile.InstagramLink" type="text" placeholder="Enter Instagram Link" />
-                <button class="btn    color2-bg  float-btn">Save Changes<i class="fal fa-save"></i></button>
+                <label>@sharedResource["Facebook"] <i class="fab fa-facebook"></i></label>
+                <input asp-for="@Model.userProfile.FacebookLink" type="text" placeholder="@sharedResource["Enter Facebook Link"]" />
+                <label>@sharedResource["Twitter"]<i class="fab fa-twitter"></i>  </label>
+                <input asp-for="@Model.userProfile.TwitterLink" type="text" placeholder="@sharedResource["Enter Twitter Link"]" />
+                <label>@sharedResource["YouTube"]<i class="fab fa-youtube"></i>  </label>
+                <input asp-for="@Model.userProfile.YoutubeLink" type="text" placeholder="@sharedResource["Enter Youtube Link"]" />
+                <label>@sharedResource["LinkedIn"]<i class="fab fa-linkedin"></i>  </label>
+                <input asp-for="@Model.userProfile.LinkedInLink" type="text" placeholder="@sharedResource["Enter LinkedIn Link"]" />
+                <label> @sharedResource["Instagram"] <i class="fab fa-instagram"></i>  </label>
+                <input asp-for="@Model.userProfile.InstagramLink" type="text" placeholder="@sharedResource["Enter Instagram Link"]" />
+                <button class="btn    color2-bg  float-btn">@sharedResource["Save Changes"]<i class="fal fa-save"></i></button>
             </div>
         </div>
     </form>
@@ -627,7 +633,9 @@
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
-        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        @*<link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">*@
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
 
@@ -638,6 +646,12 @@
 
 }
 <script>
+    function showdivandanchor() {
+        document.getElementById('hiddendiv').style.display = 'flex';
+        document.getElementById('hiddenanchor').style.display = 'flex';
+        document.getElementById('anotheranchor').style.display = 'none';
+    }
+
     function SkillTitle() {
         var SkillList = new Array();
         var inputvalue = document.getElementsByClassName("SkillInput");
@@ -662,7 +676,11 @@
 
                 success: function (response) {
                     console.log("get selected rows successfully" + response)
-                    document.getElementById("skillsavebtn").textContent = "Saved";
+                    if (localStorage.getItem("lang") == "en") {
+                        document.getElementById("skillsavebtn").textContent = "Saved";
+                    } else {
+                        document.getElementById("skillsavebtn").textContent = "تم الحفظ";
+                    }
                     document.getElementById("skillsavebtn").style.backgroundColor = "#257260";
 
                 },
@@ -678,7 +696,12 @@
     }
     function changeStylebutton(id) {
 
-        document.getElementById(id).textContent = "Save All";
+        if (localStorage.getItem("lang") == "en") {
+            document.getElementById(id).textContent = "Save All";
+        } else {
+            document.getElementById(id).textContent = "حفظ الكل";
+        }
+
         document.getElementById(id).style.backgroundColor = "#384f95";
         //document.getElementsByClassName('mediainput')[0].style.display = 'flex';
         //document.getElementsByClassName('mediashow')[0].style.display = 'none';
@@ -708,7 +731,11 @@
 
                 success: function (response) {
                     console.log("get selected rows successfully" + response)
-                    document.getElementById("Interresavetbtn").textContent = "Saved";
+                    if (localStorage.getItem("lang") == "en") {
+                        document.getElementById("Interresavetbtn").textContent = "Saved";
+                    } else {
+                        document.getElementById("Interresavetbtn").textContent = "تم الحفظ";
+                    }
                     document.getElementById("Interresavetbtn").style.backgroundColor = "#257260";
                 },
                 failure: function (response) {
@@ -747,7 +774,11 @@
 
                 success: function (response) {
                     console.log("get selected rows successfully" + response)
-                    document.getElementById("languagesavebtn").textContent = "Saved";
+                    if (localStorage.getItem("lang") == "en") {
+                        document.getElementById("languagesavebtn").textContent = "Saved";
+                    } else {
+                        document.getElementById("languagesavebtn").textContent = "تم الحفظ";
+                    }
                     document.getElementById("languagesavebtn").style.backgroundColor = "#257260";
                 },
                 failure: function (response) {
@@ -770,9 +801,9 @@
         for (var i = 0; i < desvalue.length; i++) {
             var education = { Description: desvalue[i].value, Year: yearvalue[i].value, Provider: provvalue[i].value };
             console.log(education)
-            //if (document.getElementsByClassName("educationobj")[i].value != "") {
-            EducationList.push(education)
-            //}
+            if (desvalue[i].value != "" && yearvalue[i].value != "" && provvalue[i].value != "") {
+                EducationList.push(education)
+            }
         }
         console.log(EducationList)
         console.log(EducationList.length)
@@ -793,7 +824,11 @@
 
                 success: function (response) {
                     console.log("get selected rows successfully" + response)
-                    document.getElementById("Educationsavebtn").textContent = "Saved";
+                    if (localStorage.getItem("lang") == "en") {
+                        document.getElementById("Educationsavebtn").textContent = "Saved";
+                    } else {
+                        document.getElementById("Educationsavebtn").textContent = "تم الحفظ";
+                    }
                     document.getElementById("Educationsavebtn").style.backgroundColor = "#257260";
                 },
                 failure: function (response) {
@@ -816,9 +851,14 @@
         var desvalue = document.getElementsByClassName("LifeEventType");
         var detailsvalue = document.getElementsByClassName("LifeEventDetails");
         var captionvalue = document.getElementsByClassName("LifeEventcaption");
+        console.log(captionvalue)
         var hiddenMedia = document.getElementsByClassName("LifeEventhiddenMedia");
+        console.log(hiddenMedia)
         var hiddenid = document.getElementsByClassName("LifeEventhiddenID");
         for (var i = 0; i < desvalue.length; i++) {
+            if (hiddenid[i].value == "") {
+                hiddenid[i].value = 0
+            }
             var LifeEvent = { EventType: desvalue[i].value, Details: detailsvalue[i].value, Caption: captionvalue[i].value, Media: hiddenMedia[i].value, LifeEventID: hiddenid[i].value };
             console.log(LifeEvent)
             LifeEvList.push(LifeEvent)
@@ -842,8 +882,14 @@
 
                 success: function (response) {
                     console.log("get selected rows successfully" + response)
-                    document.getElementById("lifeeventstylebtn").textContent = "Saved";
+                    if (localStorage.getItem("lang") == "en") {
+                        document.getElementById("lifeeventstylebtn").textContent = "Saved";
+                    } else {
+                        document.getElementById("lifeeventstylebtn").textContent = "تم الحفظ";
+                    }
                     document.getElementById("lifeeventstylebtn").style.backgroundColor = "#257260";
+
+
                 },
                 failure: function (response) {
                     alert(response);

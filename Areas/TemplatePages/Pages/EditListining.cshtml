@@ -437,27 +437,27 @@
                     }
                     else
                     {
-                    foreach (var item in Model.BranchesList)
-                    {
-                        <div class="add_room-item fl-wrap">
-                            <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label>Branch Title <i class="fal fa-briefcase"></i></label>
-                                    <input class="titleinput" type="text" placeholder="Enter Branch Title" value="@item.Title" />
+                        foreach (var item in Model.BranchesList)
+                        {
+                            <div class="add_room-item fl-wrap">
+                                <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Branch Title <i class="fal fa-briefcase"></i></label>
+                                        <input class="titleinput" type="text" placeholder="Enter Branch Title" value="@item.Title" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
                     }
 
                 </div>
-                <a class="add-room-item">Add New <i class="fal fa-plus"></i> </a>
+                <a class="add-room-item" onclick="changeStylebutton('Branchbtnstyle')">Add New <i class="fal fa-plus"></i> </a>
                 @*<a class="btn btn-success" onclick="branchtitle()">Save All<i class="fal fa-plus"></i></a>*@
 
             </div>
             <div class="row">
-                <a onclick="branchtitle()" href="#" class="btn  color2-bg  float-btn">Save All</a>
+                <a onclick="branchtitle()" id="Branchbtnstyle" class="btn  color2-bg  float-btn">Save All</a>
             </div>
         </div>
         <!-- profile-edit-container end-->
@@ -776,6 +776,7 @@
 
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places&callback=initAutocomplete"></script>
         <script src="~/Template/js/map-add.js"></script>
 
@@ -784,6 +785,19 @@
     }
 }
 <script>
+    function changeStylebutton(id) {
+
+        if (localStorage.getItem("lang") == "en") {
+            document.getElementById(id).textContent = "Save All";
+        } else {
+            document.getElementById(id).textContent = "حفظ الكل";
+        }
+
+        document.getElementById(id).style.backgroundColor = "#384f95";
+        //document.getElementsByClassName('mediainput')[0].style.display = 'flex';
+        //document.getElementsByClassName('mediashow')[0].style.display = 'none';
+    }
+
     var counter = 0;
 
     function branchtitle() {
@@ -844,6 +858,12 @@
 
                 success: function (response) {
                     console.log("get selected rows successfully" + response)
+                    if (localStorage.getItem("lang") == "en") {
+                        document.getElementById("Branchbtnstyle").textContent = "Saved";
+                    } else {
+                        document.getElementById("Branchbtnstyle").textContent = "تم الحفظ";
+                    }
+                    document.getElementById("Branchbtnstyle").style.backgroundColor = "#257260";
                     document.getElementById(id).style.display = 'none';
                 },
                 failure: function (response) {

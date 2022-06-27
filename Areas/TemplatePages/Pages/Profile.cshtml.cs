@@ -100,6 +100,10 @@ namespace Icity.Areas.TemplatePages
 
         public IActionResult OnPostFillEducationsList([FromBody] List<Education> Educationslist)
         {
+            if (Educationslist==null)
+            {
+                return Page();
+            }
             var Educationsid = _applicationDbContext.Educations.Where(a => a.Id == user.Id);
             _applicationDbContext.Educations.RemoveRange(Educationsid);
             _applicationDbContext.SaveChanges();
@@ -115,6 +119,10 @@ namespace Icity.Areas.TemplatePages
         }
         public IActionResult OnPostFillLifeEventsList([FromBody] List<LifeEvent> lifeEventsList)
         {
+            if (lifeEventsList==null)
+            {
+                return Page();
+            }
             var eventlist = _applicationDbContext.LifeEvents.ToList();
             _applicationDbContext.LifeEvents.RemoveRange(eventlist);
             _applicationDbContext.LifeEvents.AddRange(lifeEventsList);
