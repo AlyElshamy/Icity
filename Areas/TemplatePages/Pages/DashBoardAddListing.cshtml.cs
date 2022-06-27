@@ -70,8 +70,12 @@ namespace Icity.Areas.TemplatePages.Pages
             {
                 return Redirect("/identity/account/login");
             }
-            
 
+            if (AddListing.CategoryId == 0)
+            {
+                _toastNotification.AddErrorToastMessage("Select Category");
+                return Page();
+            }
             List<ListingPhotos> photolistings = new List<ListingPhotos>();
             if (Photos.Count() > 0)
             {

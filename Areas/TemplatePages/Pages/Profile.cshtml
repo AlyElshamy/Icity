@@ -159,7 +159,10 @@
             </div>
         </div>
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Listing Photos</h3>
+           @{ if(Model.userPhotos.Count()>0){
+            <h3>Profile Listing Photos</h3>
+           }
+           }
         </div>
         <div class="custom-form">
             <div class="row">
@@ -229,11 +232,15 @@
 
             </div>
         </div>
-
-
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Listing Videos</h3>
+        @{
+            if(Model.userVideos.Count()>0){
+            <h3> Profile Listing Videos</h3>
+        
+            }
+        }
         </div>
+        
         @foreach (var item in Model.userVideos)
         {
 

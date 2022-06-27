@@ -2,10 +2,11 @@
 @using Icity.Data
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IcityContext _context
 @{
     var currentuser = await UserManager.GetUserAsync(User);
     var nickname = "User";
-
+        var  TotalReview = _context.Reviews.Where(e => e.AddListing.CreatedByUser == currentuser.Email).ToList().Count();
 }
 <!DOCTYPE HTML>
 <html id="masterPageId" dir="ltr" lang="en">
@@ -59,7 +60,7 @@
 
         <header class="main-header">
             <!-- logo-->
-            <a href="index.html" class="logo-holder"><img src="~/Template/images/logo.png" alt=""></a>
+            <a asp-page="index" class="logo-holder"><img src="~/Template/images/logo.png" alt=""></a>
             <!-- logo end-->
             <!-- header-search_btn-->
             <div class="header-search_btn show-search-button"><i class="fal fa-search"></i><span>Search</span></div>
@@ -103,12 +104,12 @@
             <!-- header opt end-->
             <!-- lang-wrap-->
             <div class="lang-wrap">
-                <div class="show-lang"><span><i class="fal fa-globe-europe"></i><strong>En</strong></span><i class="fa fa-caret-down arrlan"></i></div>
+                <div  class="show-lang"><span><i class="fal fa-globe-europe"></i><strong id="LangSelec"></strong></span><i class="fa fa-caret-down arrlan"></i></div>
                 <ul class="lang-tooltip lang-action no-list-style">
                     <a onclick="ChangeLang('en')" id="ang1" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="en-US" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" class="current-lan" data-lantext="En">English</a>
                     <br />
                     <br />
-                    <a onclick="ChangeLang('ar')" id="ang2" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="ar-EG" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" data-lantext="Fr">arabic</a>
+                    <a onclick="ChangeLang('ar')"  id="ang2" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="ar-EG" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" data-lantext="Fr">arabic</a>
                 </ul>
             </div>
             <script>
@@ -124,10 +125,17 @@
                     }
                 }
                 window.addEventListener('DOMContentLoaded', (event) => {
+                    var LangSelec = document.getElementById("LangSelec");
+                    console.log(LangSelec);
+                    console.log(LangSelec.value);
                     var masterPage = document.getElementById("masterPageId");
                     if (localStorage.getItem("lang") != "") {
                         if (localStorage.getItem("lang") == "en") {
+                            console.log(LangSelec.value);
+                            LangSelec.innerHTML ="En";
+
                             masterPage.dir = "ltr";
+
                             var stylesheet = document.getElementById("stylear");
                             stylesheet.setAttribute('href', '/Template/css/style.css');
                             var stylesheet1 = document.getElementById("stylear");
@@ -135,6 +143,8 @@
                         }
                         else if (localStorage.getItem("lang") == "ar") {
                             masterPage.dir = "rtl"
+                            LangSelec.innerHTML ="AR";
+
                             var stylesheet1 = document.getElementById("stylear");
                             stylesheet1.setAttribute('href', '/TemplateRTL/css/rtl-style.css');
                         }
@@ -393,7 +403,7 @@
                                                     <div class="dashboard-header-stats-item">
                                                         <i class="fal fa-comments-alt"></i>
                                                         Total Reviews
-                                                        <span>79</span>
+                                                        <span>@TotalReview</span>
                                                     </div>
                                                 </div>
                                                 <!--  dashboard-header-stats-item end -->
@@ -416,7 +426,7 @@
                                     </div>
                                 </div>
                                 <!--  dashboard-header-stats-wrap end -->
-                                <a class="add_new-dashboard">Add Listing <i class="fal fa-layer-plus"></i></a>
+                                <a asp-area="TemplatePages" asp-page="DashBoardAddListing" class="add_new-dashboard">Add Listing <i class="fal fa-layer-plus"></i></a>
                             </div>
                         </div>
                     </div>

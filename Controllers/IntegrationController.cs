@@ -820,6 +820,33 @@ namespace Icity.Controllers
             return BadRequest("Enter Valid ListingId..");
 
         }
+        [HttpPost]
+        public async Task<IActionResult >ChangePassword(string userEmail,string currentPassword,string newPassword)
+        {
+            if (currentPassword == newPassword)
+            {
+
+                return BadRequest("Current Password Is The Same New Password ");
+            }
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return BadRequest("User Not Found ");
+                }
+                var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+                if (!result.Succeeded)
+                {
+                    return BadRequest("Can Not Update User Password ");
+                }
+                await _signInManager.RefreshSignInAsync(user);
+                return Ok(new { status = "success" });
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
 
