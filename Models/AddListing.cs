@@ -40,9 +40,9 @@ namespace Icity.Models
         [Required(ErrorMessage = "Reequired")]
         public string Tags { get; set; }
         public double Rating { get; set; }
-        [Required(ErrorMessage = "Reequired")]
+        //[Required(ErrorMessage = "Reequired")]
         public string ListingBanner { get; set; }
-        [Required(ErrorMessage = "Reequired")]
+        //[Required(ErrorMessage = "Reequired")]
         public string ListingLogo { get; set; }
         public string PromoVideo { get; set; }
         public ICollection<Branch> Branches { get; set; }

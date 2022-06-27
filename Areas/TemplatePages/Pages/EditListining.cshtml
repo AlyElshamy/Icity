@@ -9,7 +9,7 @@
 
 }
 <div class="col-md-9">
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" onsubmit="return validateMyForm();">
         <input asp-for="@Model.AddListing.AddListingId" hidden />
         <div class="dashboard-title   fl-wrap">
             <h3>Add Listing</h3>
@@ -18,12 +18,13 @@
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
                 <label>Listing Title <i class="fal fa-briefcase"></i></label>
-                <input asp-for="@Model.AddListing.Title" type="text" placeholder="Enter Title" required />
+                <input asp-for="@Model.AddListing.Title" type="text" placeholder="Enter Title"  />
+                 <span asp-validation-for="@Model.AddListing.Title" style="color:red;"></span>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="HrefCat">
                         <label>Type / Category</label>
                         <div class="listsearch-input-item">
-                            <select required asp-for="AddListing.CategoryId" data-placeholder="Apartments" class="chosen-select no-search-select">
+                            <select id="CatId" asp-for="AddListing.CategoryId" data-placeholder="Apartments" class="chosen-select no-search-select">
                                 <option>All Categories</option>
                                 @foreach (var item in Categories)
                                 {
@@ -31,10 +32,16 @@
                                 }
                             </select>
                         </div>
+                        <div class="row">
+                       <div class="col-md-12">
+                            <span id="SpanCatId"  style="color:red;display:none">Select Category</span>
+                           </div>
+                   </div>
                     </div>
                     <div class="col-md-6">
                         <label>Tags <i class="fal fa-key"></i></label>
                         <input asp-for="@Model.AddListing.Tags" type="text" placeholder="Enter Tags" />
+                        <span asp-validation-for="@Model.AddListing.Tags" style="color:red;"></span>
                     </div>
                 </div>
             </div>
@@ -58,6 +65,7 @@
                     <div class="">
                         <label>MainLocation <i class="fal fa-long-arrow-alt-down"></i> </label>
                         <input asp-for="@Model.AddListing.MainLocataion" type="text" placeholder="Enter Main Location" id="lat" required />
+                    <span asp-validation-for="@Model.AddListing.MainLocataion" style="color:red;"></span>
                     </div>
 
                 </div>
@@ -82,35 +90,51 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label>City <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="@Model.AddListing.City" type="text" placeholder="Enter City" id="lat" required />
+                        <input asp-for="@Model.AddListing.City" type="text" placeholder="Enter City" id="lat"  />
+                        <span asp-validation-for="@Model.AddListing.City" style="color:red;"></span>
                     </div>
                     <div class="col-md-6">
                         <label>Country <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="@Model.AddListing.Country" type="text" placeholder="Enter Country" id="lat" required />
+                        <input asp-for="@Model.AddListing.Country" type="text" placeholder="Enter Country" id="lat"  />
+                     <span asp-validation-for="@Model.AddListing.Country" style="color:red;"></span>
+                        
                     </div>
                     <div class="col-md-6">
                         <label>Contact Person <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="@Model.AddListing.ContactPeroson" type="text" placeholder="Enter Contact Person" id="lat" required />
+                        <input asp-for="@Model.AddListing.ContactPeroson" type="text" placeholder="Enter Contact Person" id="lat"  />
+                        <span asp-validation-for="AddListing.ContactPeroson" style="color:red;"></span>
+                   
                     </div>
                     <div class="col-sm-6">
                         <label>Address<i class="fal fa-map-marker"></i></label>
                         <input asp-for="@Model.AddListing.Address" type="text" placeholder="Enter Address" />
+                        <span asp-validation-for="AddListing.Address" style="color:red;"></span>
+
+                        
                     </div>
                     <div class="col-sm-6">
                         <label>Phone 1<i class="far fa-phone"></i>  </label>
                         <input asp-for="@Model.AddListing.Phone1" type="text" placeholder="Enter Phone" />
+                            <span asp-validation-for="AddListing.Phone1" style="color:red;"></span>
+                        
                     </div>
                     <div class="col-sm-6">
                         <label>Phone 2<i class="far fa-phone"></i>  </label>
                         <input asp-for="@Model.AddListing.Phone2" type="text" placeholder="Enter another Phone" />
+                         <span asp-validation-for="AddListing.Phone2" style="color:red;"></span>
+                    
                     </div>
                     <div class="col-sm-6">
                         <label> Website <i class="far fa-globe"></i>  </label>
                         <input asp-for="@Model.AddListing.Website" type="text" placeholder="Enter Website" />
+                          <span asp-validation-for="AddListing.Website" style="color:red;"></span>
+                        
                     </div>
                     <div class="col-sm-6">
                         <label> Fax <i class="fa fa-fax"></i>  </label>
                         <input asp-for="@Model.AddListing.Fax" type="text" placeholder="Enter Fax" />
+                     <span asp-validation-for="AddListing.Email" style="color:red;"></span>
+                    
                     </div>
                     <div class="col-sm-12">
                         <label>Email Address<i class="far fa-envelope"></i>  </label>
@@ -909,5 +933,30 @@
             console.log("Nobody has been selected")
         }
     }
+    function validateMyForm()
+    {
+        var CatId = document.getElementById("CatId");
+        console.log(CatId.value);
+        var SpanCatId = document.getElementById("SpanCatId")
+        console.log(SpanCatId);
+        if(CatId.value=="All Categories")
+        {
+             console.log("entered");
+             SpanCatId.style.display="flex";
+            window.location.href = "#HrefCat";
+
+            return false;
+        }
+        else{
+             console.log("Not entered");
+            SpanCatId.style.display="none";
+            return true;
+        }
+
+    }
+
 
 </script>
+ @section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+   }
