@@ -133,7 +133,7 @@
 
                                 <div class="list-single-main-item fl-wrap block_box" id="sec3">
                                     <div class="list-single-main-item-title">
-                                        <h3>Gallery / Photos</h3>
+                                        <h3>@sharedResource["Gallery / Photos"]</h3>
                                     </div>
                                     <div class="list-single-main-item_content fl-wrap">
                                         <div class="single-carousel-wrap fl-wrap lightgallery">
@@ -194,7 +194,7 @@
                             {
                                 <div class="list-single-main-item fl-wrap block_box" id="sec3">
                                     <div class="list-single-main-item-title">
-                                        <h3>Promo Video</h3>
+                                        <h3>@sharedResource["Promo Video"]</h3>
                                     </div>
                                     <div class="list-single-main-item_content fl-wrap">
                                         <div class="iframe-holder fl-wrap">
@@ -217,7 +217,7 @@
                             @if (list.ListingVideos.Count() != 0)
                             {
                                 <div class="dashboard-title  dt-inbox fl-wrap">
-                                    <h3>Listing Videos</h3>
+                                    <h3>@sharedResource["Listing Videos"]</h3>
                                 </div>
                                 @foreach (var item in list.ListingVideos)
                                 {
@@ -539,7 +539,7 @@
                                                 <div class="review-range-container">
                                                     <!-- review-range-item-->
                                                     <div class="review-range-item">
-                                                        <div class="range-slider-title">Cleanliness</div>
+                                                        <div class="range-slider-title">@sharedResource["Cleanliness"]</div>
                                                         <div class="range-slider-wrap ">
                                                             <input type="text" class="rate-range" data-min="0" data-max="5" name="rgcl" data-step="1" value="4">
                                                         </div>
@@ -547,7 +547,7 @@
                                                     <!-- review-range-item end -->
                                                     <!-- review-range-item-->
                                                     <div class="review-range-item">
-                                                        <div class="range-slider-title">Comfort</div>
+                                                        <div class="range-slider-title">@sharedResource["Comfort"]</div>
                                                         <div class="range-slider-wrap ">
                                                             <input type="text" class="rate-range" data-min="0" data-max="5" name="rgcl" data-step="1" value="1">
                                                         </div>
@@ -555,7 +555,7 @@
                                                     <!-- review-range-item end -->
                                                     <!-- review-range-item-->
                                                     <div class="review-range-item">
-                                                        <div class="range-slider-title">Staf</div>
+                                                        <div class="range-slider-title">@sharedResource["Staf"]</div>
                                                         <div class="range-slider-wrap ">
                                                             <input type="text" class="rate-range" data-min="0" data-max="5" name="rgcl" data-step="1" value="5">
                                                         </div>
@@ -563,7 +563,7 @@
                                                     <!-- review-range-item end -->
                                                     <!-- review-range-item-->
                                                     <div class="review-range-item">
-                                                        <div class="range-slider-title">Facilities</div>
+                                                        <div class="range-slider-title">@sharedResource["Facilities"]</div>
                                                         <div class="range-slider-wrap">
                                                             <input type="text" class="rate-range" data-min="0" data-max="5" name="rgcl" data-step="1" value="3">
                                                         </div>
@@ -582,14 +582,14 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <label><i class="fal fa-user"></i></label>
-                                                        <input asp-for="@Model.Review.Name" type="text" placeholder="Your Name *" value="" />
+                                                        <input asp-for="@Model.Review.Name" type="text" placeholder="@sharedResource["Your Name *"]" value="" />
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label><i class="fal fa-envelope"></i>  </label>
-                                                        <input asp-for="@Model.Review.Email" type="text" placeholder="Email Address*" value="" />
+                                                        <input asp-for="@Model.Review.Email" type="text" placeholder="@sharedResource["Email Address*"]" value="" />
                                                     </div>
                                                 </div>
-                                                <textarea asp-for="@Model.Review.Title" cols="40" rows="3" placeholder="Your Review:"></textarea>
+                                                <textarea asp-for="@Model.Review.Title" cols="40" rows="3" placeholder="@sharedResource["Your Review:"]"></textarea>
                                                 <div class="clearfix"></div>
                                                 @*<div class="listsearch-input-item fl-wrap">
                                                         <div class="fuzone">
@@ -603,7 +603,7 @@
                                                         </div>
                                                     </div>*@
                                                 <div class="clearfix"></div>
-                                                <button class="btn  color2-bg  float-btn">Submit Review <i class="fal fa-paper-plane"></i></button>
+                                                <button class="btn  color2-bg  float-btn">@sharedResource["Submit Review"] <i class="fal fa-paper-plane"></i></button>
                                             </div>
                                         </fieldset>
                                     </form>
@@ -683,14 +683,14 @@
                                 <div class="box-widget-content bwc-nopad">
                                     <div class="list-author-widget-contacts list-item-widget-contacts bwc-padside">
                                         <ul class="no-list-style">
-                                            <li><span><i class="fal fa-map-marker"></i> Adress :</span> <a href="#">@list.Address</a></li>
-                                            <li><span><i class="fal fa-phone"></i> Phone :</span> <a href="#">@list.Phone1</a></li>
-                                            <li><span><i class="fal fa-envelope"></i> Mail :</span> <a href="#">@list.Email</a></li>
-                                            <li><span><i class="fal fa-browser"></i> Website :</span> <a href="#">@list.Website</a></li>
-                                            <li><span><i class="fal fa-location"></i> Main location :</span> <a href="#">@list.MainLocataion</a></li>
-                                            <li><span><i class="fal fa-city"></i> City :</span> <a href="#">@list.City</a></li>
-                                            <li><span><i class="fal fa-globe"></i> Country :</span> <a href="#">@list.Country</a></li>
-                                            <li><span><i class="fal fa-fax"></i> Fax :</span> <a href="#">@list.Fax</a></li>
+                                            <li><span><i class="fal fa-map-marker"></i> @sharedResource["Adress"]  :</span> <a href="#">@list.Address</a></li>
+                                            <li><span><i class="fal fa-phone"></i> @sharedResource["Phone"] :</span> <a href="#">@list.Phone1</a></li>
+                                            <li><span><i class="fal fa-envelope"></i>@sharedResource["Mail"]  :</span> <a href="#">@list.Email</a></li>
+                                            <li><span><i class="fal fa-browser"></i>@sharedResource["Website"]  :</span> <a href="#">@list.Website</a></li>
+                                            <li><span><i class="fal fa-location"></i>@sharedResource["Mainlocation"]  :</span> <a href="#">@list.MainLocataion</a></li>
+                                            <li><span><i class="fal fa-city"></i>@sharedResource["City"]  :</span> <a href="#">@list.City</a></li>
+                                            <li><span><i class="fal fa-globe"></i> @sharedResource["Country"] :</span> <a href="#">@list.Country</a></li>
+                                            <li><span><i class="fal fa-fax"></i>@sharedResource["Fax"]  :</span> <a href="#">@list.Fax</a></li>
                                         </ul>
                                     </div>
                                     <div class="list-widget-social bottom-bcw-box  fl-wrap">

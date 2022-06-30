@@ -116,11 +116,11 @@
                 <!--col -->
                 <div class="col-md-6">
                     @*<div class="add-list-media-header" style="margin-bottom:20px">
-                            <label class="radio inline">
-                                <input type="radio" name="gender" checked>
-                                <span>Background image</span>
-                            </label>
-                        </div>*@
+                        <label class="radio inline">
+                            <input type="radio" name="gender" checked>
+                            <span>Background image</span>
+                        </label>
+                    </div>*@
                     <div class="add-list-media-wrap">
                         <div class="add-list-media-wrap">
                             <div class="listsearch-input-item fl-wrap">
@@ -139,11 +139,11 @@
                 <!--col -->
                 <div class="col-md-6">
                     @*<div class="add-list-media-header" style="margin-bottom:20px">
-                            <label class="radio inline">
-                                <input type="radio" name="gender">
-                                <span>Carousel</span>
-                            </label>
-                        </div>*@
+                        <label class="radio inline">
+                            <input type="radio" name="gender">
+                            <span>Carousel</span>
+                        </label>
+                    </div>*@
                     <div class="add-list-media-wrap">
                         <div class="listsearch-input-item fl-wrap">
                             <div class="fuzone">
@@ -159,20 +159,21 @@
             </div>
         </div>
         <div class="dashboard-title  dt-inbox fl-wrap">
-           @{ if(Model.userPhotos.Count()>0){
-            <h3>Profile Listing Photos</h3>
-           }
-           }
+            @{ if (Model.userPhotos.Count() > 0)
+                {
+                    <h3>Profile Listing Photos</h3>
+                }
+            }
         </div>
         <div class="custom-form">
             <div class="row">
                 <div class="col-md-12">
                     @*<div class="add-list-media-header" style="margin-bottom:20px">
-                            <label class="radio inline">
-                                <input type="radio" name="gender">
-                                <span>Carousel</span>
-                            </label>
-                        </div>*@
+                        <label class="radio inline">
+                            <input type="radio" name="gender">
+                            <span>Carousel</span>
+                        </label>
+                    </div>*@
                     <div class="add-list-media-wrap">
                         <div class="listsearch-input-item fl-wrap">
                             <div class="fuzone">
@@ -212,11 +213,11 @@
             <div class="row">
                 <div class="col-md-12">
                     @*<div class="add-list-media-header" style="margin-bottom:20px">
-                            <label class="radio inline">
-                                <input type="radio" name="gender">
-                                <span>Carousel</span>
-                            </label>
-                        </div>*@
+                        <label class="radio inline">
+                            <input type="radio" name="gender">
+                            <span>Carousel</span>
+                        </label>
+                    </div>*@
                     <div class="add-list-media-wrap">
                         <div class="listsearch-input-item fl-wrap">
                             <div class="fuzone">
@@ -233,14 +234,15 @@
             </div>
         </div>
         <div class="dashboard-title  dt-inbox fl-wrap">
-        @{
-            if(Model.userVideos.Count()>0){
-            <h3> Profile Listing Videos</h3>
-        
+            @{
+                if (Model.userVideos.Count() > 0)
+                {
+                    <h3> Profile Listing Videos</h3>
+
+                }
             }
-        }
         </div>
-        
+
         @foreach (var item in Model.userVideos)
         {
 
@@ -269,7 +271,7 @@
                     @if (Model.SkillsList.Count() == 0)
                     {
                         <div class="add_room-item fl-wrap">
-                            <span class="remove-rp " data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                            <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
                             <div class="row">
                                 <div class="col-md-12">
                                     <label>@sharedResource["Skills Title"] <i class="fal fa-briefcase"></i></label>
@@ -283,7 +285,7 @@
                         foreach (var item in Model.SkillsList)
                         {
                             <div class="add_room-item fl-wrap">
-                                <span class="remove-rp " data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                                <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label>@sharedResource["Skills Title"]  <i class="fal fa-briefcase"></i></label>
@@ -312,7 +314,7 @@
                     @if (Model.InterestsList.Count() == 0)
                     {
                         <div class="add_room-item fl-wrap">
-                            <span class="remove-rp " data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                            <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
                             <div class="row">
                                 <div class="col-md-12">
                                     <label>@sharedResource["Interest Title"] <i class="fal fa-briefcase"></i></label>
@@ -326,7 +328,7 @@
                         foreach (var item in Model.InterestsList)
                         {
                             <div class="add_room-item fl-wrap">
-                                <span class="remove-rp " data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                                <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label>@sharedResource["Interest Title"] <i class="fal fa-briefcase"></i></label>
@@ -357,7 +359,7 @@
                     @if (Model.LanguagesList.Count() == 0)
                     {
                         <div class="add_room-item fl-wrap">
-                            <span class="remove-rp" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                            <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
                             <div class="row">
                                 <div class="col-md-12">
                                     <label>@sharedResource["Language Title"] <i class="fal fa-briefcase"></i></label>
@@ -371,7 +373,7 @@
                         foreach (var item in Model.LanguagesList)
                         {
                             <div class="add_room-item fl-wrap">
-                                <span class="remove-rp" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                                <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label>@sharedResource["Language Title"] <i class="fal fa-briefcase"></i></label>
@@ -404,7 +406,7 @@
                     @if (Model.EducationsList.Count() == 0)
                     {
                         <div class="add_room-item fl-wrap">
-                            <span class="remove-rp " data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                            <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
                             <div class="row">
                                 <div class="col-md-4">
                                     <label>@sharedResource["Education Discription"] <i class="fal fa-briefcase"></i></label>
@@ -430,7 +432,7 @@
                         foreach (var item in Model.EducationsList)
                         {
                             <div class="add_room-item fl-wrap">
-                                <span class="remove-rp" data-microtip-position="left" @*data-tooltip="Remove"*@><i class="fal fa-times-circle"></i></span>
+                                <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label>@sharedResource["Education Discription"] <i class="fal fa-briefcase"></i></label>
@@ -472,29 +474,33 @@
             <div class="custom-form add_room-item-wrap">
                 <div class="add_room-container fl-wrap">
                     @*@if (Model.LifeEventsList.Count() == 0)
-                        {*@
+                    {*@
 
                     @*}
-                        else
-                        {*@
+                    else
+                    {*@
                     @{ foreach (var item in Model.LifeEventsList)
                         {
-                            <div class="add_room-item fl-wrap">
-                                <span class="remove-rp " data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>                        <div class="row">
+                            var divid = item.LifeEventID.ToString() + "divid";
+                            var input1 = item.LifeEventID.ToString() + "in1";
+                            var input2 = item.LifeEventID.ToString() + "in2";
+                            var input3 = item.LifeEventID.ToString() + "in3";
+                            <div id="@divid" class="fl-wrap">
+                                <span class="remove-rp tolt" onclick="hidelifeeventdiv(@item.LifeEventID)" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>                        <div class="row">
                                     <div class="col-md-3">
                                         <label>@sharedResource["LifeEvent Type"]  <i class="fal fa-briefcase"></i></label>
-                                        <input asp-for="@item.EventType" name="EventType" class="LifeEventType" type="text" placeholder="@sharedResource["Enter LifeEvent Type"]" />
+                                        <input id="@input1" asp-for="@item.EventType" name="EventType" class="LifeEventType" type="text" placeholder="@sharedResource["Enter LifeEvent Type"]" />
                                         <span asp-validation-for="LifeEvent.EventType" style="color:red;"></span>
                                     </div>
                                     <div class="col-md-3">
                                         <label>@sharedResource["LifeEvent Details"] <i class="fal fa-briefcase"></i></label>
-                                        <input asp-for="@item.Details" name="Details" class="LifeEventDetails" type="text" placeholder="@sharedResource["Enter LifeEvent Details"]" />
+                                        <input id="@input2" asp-for="@item.Details" name="Details" class="LifeEventDetails" type="text" placeholder="@sharedResource["Enter LifeEvent Details"]" />
                                         <span asp-validation-for="LifeEvent.Details" style="color:red;"></span>
 
                                     </div>
                                     <div class="col-md-3">
                                         <label>@sharedResource["LifeEvent Caption"] <i class="fal fa-briefcase"></i></label>
-                                        <input asp-for="@item.Caption" name="Caption" class="LifeEventcaption" type="text" placeholder="@sharedResource["Enter LifeEvent Caption"]" />
+                                        <input id="@input3" asp-for="@item.Caption" name="Caption" class="LifeEventcaption" type="text" placeholder="@sharedResource["Enter LifeEvent Caption"]" />
                                         <span asp-validation-for="LifeEvent.Caption" style="color:red;"></span>
                                     </div>
                                     @{
@@ -544,7 +550,7 @@
 
 
                     <div id="hiddendiv" style="display:none" class="add_room-item fl-wrap">
-                        <span class="remove-rp " data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                        <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
                         <div class="row">
                             <div class="col-md-3">
                                 <label> @sharedResource["LifeEvent Type"] <i class="fal fa-briefcase"></i></label>
@@ -583,8 +589,9 @@
                     </div>
 
                 </div>
+
                 <a class="add-room-item" style="display:none" id="hiddenanchor" onclick="changeStylebutton('lifeeventstylebtn')">@sharedResource["Add New"] <i class="fal fa-plus"></i> </a>
-                <a id="anotheranchor" style="color: #566985; background: #f9f9f9; border: 1px solid #eee; font-weight:600;" onclick="showdivandanchor()">Add New<i class="fal fa-plus"></i></a>
+                <a id="anotheranchor" style="float:left;padding:10px 20px;text-transform:uppercase;font-size:10px;color: #566985; background: #f9f9f9; border: 1px solid #eee; font-weight:600;" onclick="showdivandanchor()">Add New<i class="fal fa-plus"></i></a>
 
             </div>
             <div class="row">
@@ -593,7 +600,10 @@
         </div>
         <!-- profile-edit-container end-->
 
-
+        @{
+            var countlist = Model.LifeEventsList.Count();
+        }
+        <input id="countvalue" value="@countlist" hidden />
 
 
         <div class="dashboard-title dt-inbox fl-wrap">
@@ -653,12 +663,40 @@
 
 }
 <script>
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        console.log(document.getElementById('countvalue').value)
+        if (document.getElementById('countvalue').value==0) {
+            document.getElementById('hiddendiv').style.display = 'flex';
+            document.getElementById('hiddenanchor').style.display = 'flex';
+            document.getElementById('anotheranchor').style.display = 'none';
+        }
+        
+    })
+
+    //function showlifeeventdiv(listcount) {
+    //    console.log(listcount)
+    //    if (listcount==0) {
+    //        document.getElementById('hiddendiv').style.display = 'flex';
+    //        document.getElementById('hiddenanchor').style.display = 'flex';
+    //        document.getElementById('anotheranchor').style.display = 'none';
+    //    }
+    //}
+
     function showdivandanchor() {
         document.getElementById('hiddendiv').style.display = 'flex';
         document.getElementById('hiddenanchor').style.display = 'flex';
         document.getElementById('anotheranchor').style.display = 'none';
     }
 
+    function hidelifeeventdiv(id) {
+        document.getElementById(id + 'divid').style.display = 'none';
+        document.getElementById(id + 'in1').value = '';
+        document.getElementById(id + 'in2').value = '';
+        document.getElementById(id + 'in3').value = '';
+
+
+    }
     function SkillTitle() {
         var SkillList = new Array();
         var inputvalue = document.getElementsByClassName("SkillInput");
@@ -868,7 +906,10 @@
             }
             var LifeEvent = { EventType: desvalue[i].value, Details: detailsvalue[i].value, Caption: captionvalue[i].value, Media: hiddenMedia[i].value, LifeEventID: hiddenid[i].value };
             console.log(LifeEvent)
-            LifeEvList.push(LifeEvent)
+            if (desvalue[i].value != "" && detailsvalue[i].value != "" && captionvalue[i].value != "" || hiddenid[i].value!=0) {
+                LifeEvList.push(LifeEvent)
+            }
+            
         }
         console.log(LifeEvList)
         console.log(LifeEvList.length)

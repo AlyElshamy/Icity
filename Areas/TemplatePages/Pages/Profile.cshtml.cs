@@ -100,7 +100,7 @@ namespace Icity.Areas.TemplatePages
 
         public IActionResult OnPostFillEducationsList([FromBody] List<Education> Educationslist)
         {
-            if (Educationslist==null)
+            if (Educationslist == null)
             {
                 return Page();
             }
@@ -119,12 +119,26 @@ namespace Icity.Areas.TemplatePages
         }
         public IActionResult OnPostFillLifeEventsList([FromBody] List<LifeEvent> lifeEventsList)
         {
-            if (lifeEventsList==null)
+            if (lifeEventsList == null)
             {
                 return Page();
             }
             var eventlist = _applicationDbContext.LifeEvents.ToList();
             _applicationDbContext.LifeEvents.RemoveRange(eventlist);
+            int counter = lifeEventsList.Count();
+
+            for (int i = 0; i < counter; i++)
+            {
+                if (lifeEventsList.Count()!=0)
+                {
+                    if (lifeEventsList[i].Caption == "" && lifeEventsList[i].Details == "" && lifeEventsList[i].EventType == "")
+                    {
+                        lifeEventsList.RemoveAt(i);
+                        --i;
+                    }
+                }
+            }
+
             _applicationDbContext.LifeEvents.AddRange(lifeEventsList);
             _applicationDbContext.SaveChanges();
 
@@ -169,9 +183,9 @@ namespace Icity.Areas.TemplatePages
                 return Page();
             }
         }
-        
-        
-        
+
+
+
         public IActionResult OnPostDeleteMediaById([FromBody] int Mediaid)
         {
             try
@@ -253,8 +267,8 @@ namespace Icity.Areas.TemplatePages
                     }
 
                 }
-               // _applicationDbContext.LifeEvents.RemoveRange(user.LifeEvents);
-                
+                // _applicationDbContext.LifeEvents.RemoveRange(user.LifeEvents);
+
                 user.LifeEvents = LifeEvents;
                 //}
                 if (Images.Count() > 0)

@@ -17,15 +17,15 @@
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
-                <label>Listing Title <i class="fal fa-briefcase"></i></label>
-                <input asp-for="@Model.AddListing.Title" type="text" placeholder="Enter Title"  />
+                <label>@sharedResource["Listing Title "]<i class="fal fa-briefcase"></i></label>
+                <input asp-for="@Model.AddListing.Title" type="text" placeholder="@sharedResource["Enter Title"]"  />
                  <span asp-validation-for="@Model.AddListing.Title" style="color:red;"></span>
                 <div class="row">
                     <div class="col-md-6" id="HrefCat">
-                        <label>Type / Category</label>
+                        <label>@sharedResource["Type / Category"]</label>
                         <div class="listsearch-input-item">
-                            <select id="CatId" asp-for="AddListing.CategoryId" data-placeholder="Apartments" class="chosen-select no-search-select">
-                                <option>All Categories</option>
+                            <select id="CatId" asp-for="AddListing.CategoryId" data-placeholder="@sharedResource["Select Category"]" class="chosen-select no-search-select">
+                                <option>@sharedResource["All Categories"]</option>
                                 @foreach (var item in Categories)
                                 {
                                     <option value="@item.CategoryId">@item.CategoryTitleEn</option>
@@ -34,7 +34,7 @@
                         </div>
                         <div class="row">
                        <div class="col-md-12">
-                            <span id="SpanCatId"  style="color:red;display:none">Select Category</span>
+                           <span id="SpanCatId" style="color:red;display:none">@sharedResource["Select Category"]</span>
                            </div>
                    </div>
                     </div>
@@ -63,8 +63,8 @@
                             <input type="text" placeholder="Map Latitude" id="lat" value="" />
                         </div>*@
                     <div class="">
-                        <label>MainLocation <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="@Model.AddListing.MainLocataion" type="text" placeholder="Enter Main Location" id="lat" required />
+                        <label>@sharedResource["MainLocation"]<i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.MainLocataion" type="text" placeholder="@sharedResource["Enter Main Location"]" id="lat" required />
                     <span asp-validation-for="@Model.AddListing.MainLocataion" style="color:red;"></span>
                     </div>
 
@@ -89,63 +89,63 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label>City <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="@Model.AddListing.City" type="text" placeholder="Enter City" id="lat"  />
+                        <label>@sharedResource["City"] <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.City" type="text" placeholder="@sharedResource["Enter City"]" id="lat"  />
                         <span asp-validation-for="@Model.AddListing.City" style="color:red;"></span>
                     </div>
                     <div class="col-md-6">
-                        <label>Country <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="@Model.AddListing.Country" type="text" placeholder="Enter Country" id="lat"  />
+                        <label>@sharedResource["Country"] <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.Country" type="text" placeholder="@sharedResource["Enter Country"]" id="lat"  />
                      <span asp-validation-for="@Model.AddListing.Country" style="color:red;"></span>
                         
                     </div>
                     <div class="col-md-6">
-                        <label>Contact Person <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="@Model.AddListing.ContactPeroson" type="text" placeholder="Enter Contact Person" id="lat"  />
+                        <label>@sharedResource["Contact Person"] <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.ContactPeroson" type="text" placeholder="@sharedResource["Enter Contact Person"]" id="lat"  />
                         <span asp-validation-for="AddListing.ContactPeroson" style="color:red;"></span>
                    
                     </div>
                     <div class="col-sm-6">
-                        <label>Address<i class="fal fa-map-marker"></i></label>
-                        <input asp-for="@Model.AddListing.Address" type="text" placeholder="Enter Address" />
+                        <label>@sharedResource["Address"]<i class="fal fa-map-marker"></i></label>
+                        <input asp-for="@Model.AddListing.Address" type="text" placeholder="@sharedResource["Enter Address"]" />
                         <span asp-validation-for="AddListing.Address" style="color:red;"></span>
 
                         
                     </div>
                     <div class="col-sm-6">
-                        <label>Phone 1<i class="far fa-phone"></i>  </label>
-                        <input asp-for="@Model.AddListing.Phone1" type="text" placeholder="Enter Phone" />
+                        <label>@sharedResource["Phone 1"]<i class="far fa-phone"></i>  </label>
+                        <input asp-for="@Model.AddListing.Phone1" type="text" placeholder="@sharedResource["Enter Phone"]" />
                             <span asp-validation-for="AddListing.Phone1" style="color:red;"></span>
                         
                     </div>
                     <div class="col-sm-6">
-                        <label>Phone 2<i class="far fa-phone"></i>  </label>
-                        <input asp-for="@Model.AddListing.Phone2" type="text" placeholder="Enter another Phone" />
+                        <label>@sharedResource["Phone 2"]<i class="far fa-phone"></i>  </label>
+                        <input asp-for="@Model.AddListing.Phone2" type="text" placeholder="@sharedResource["Enter another Phone"]" />
                          <span asp-validation-for="AddListing.Phone2" style="color:red;"></span>
                     
                     </div>
                     <div class="col-sm-6">
-                        <label> Website <i class="far fa-globe"></i>  </label>
-                        <input asp-for="@Model.AddListing.Website" type="text" placeholder="Enter Website" />
+                        <label>@sharedResource["Website"]  <i class="far fa-globe"></i>  </label>
+                        <input asp-for="@Model.AddListing.Website" type="text" placeholder="@sharedResource["Enter Website"]" />
                           <span asp-validation-for="AddListing.Website" style="color:red;"></span>
                         
                     </div>
                     <div class="col-sm-6">
-                        <label> Fax <i class="fa fa-fax"></i>  </label>
-                        <input asp-for="@Model.AddListing.Fax" type="text" placeholder="Enter Fax" />
+                        <label> @sharedResource["Fax"] <i class="fa fa-fax"></i>  </label>
+                        <input asp-for="@Model.AddListing.Fax" type="text" placeholder="@sharedResource["Enter Fax"]" />
                      <span asp-validation-for="AddListing.Email" style="color:red;"></span>
                     
                     </div>
                     <div class="col-sm-12">
-                        <label>Email Address<i class="far fa-envelope"></i>  </label>
-                        <input asp-for="@Model.AddListing.Email" type="text" placeholder="Enter Email" />
+                        <label>@sharedResource["Email Address"]<i class="far fa-envelope"></i>  </label>
+                        <input asp-for="@Model.AddListing.Email" type="text" placeholder="@sharedResource["Enter Email"]" />
                     </div>
                 </div>
             </div>
         </div>
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Header Media</h3>
+            <h3>@sharedResource["Header Media"]</h3>
         </div>
         <div class="custom-form">
             <div class="row">
@@ -162,7 +162,7 @@
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
                                     <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> Click here To Edits Logo</span>
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here To Edits Logo"]</span>
                                         <div class="photoUpload-files fl-wrap"></div>
                                     </div>
                                     <input type="file" accept="image/*" name="Listinglogo" class="upload">
@@ -184,7 +184,7 @@
                         <div class="listsearch-input-item fl-wrap">
                             <div class="fuzone">
                                 <div class="fu-text">
-                                    <span><i class="fal fa-images"></i> Click here To Edit Banner</span>
+                                    <span><i class="fal fa-images"></i> @sharedResource["Click here To Edit Banner"] </span>
                                     <div class="photoUpload-files fl-wrap"></div>
                                 </div>
                                 <input type="file" accept="image/*" name="listingbanner" class="upload">
@@ -203,7 +203,7 @@
                         <div class="listsearch-input-item fl-wrap">
                             <div class="fuzone">
                                 <div class="fu-text">
-                                    <span><i class="fal fa-images"></i> Click here To Edit Promo Video</span>
+                                    <span><i class="fal fa-images"></i> @sharedResource["Click here To Edit Promo Video"] </span>
                                     <div class="photoUpload-files fl-wrap"></div>
                                 </div>
                                 <input type="file" accept="video/*" name="PromoVideo" class="upload">
@@ -241,7 +241,7 @@
                         <div class="bg" data-bg="/@Model.AddListing.ListingLogo"></div>
                         <div class="d-gr-sec"></div>
                         <div class="listing-item-grid_title">
-                            <h3><a href="listing.html">Logo</a></h3>
+                            <h3><a href="listing.html">@sharedResource["Logo"]</a></h3>
                         </div>
                     </div>
                 </div>
@@ -252,7 +252,7 @@
                         <div class="bg" data-bg="/@Model.AddListing.ListingBanner"></div>
                         <div class="d-gr-sec"></div>
                         <div class="listing-item-grid_title">
-                            <h3><a href="listing.html">Banner</a></h3>
+                            <h3><a href="listing.html">@sharedResource["Banner"]</a></h3>
                         </div>
                     </div>
                 </div>
@@ -273,7 +273,7 @@
 
                         <div class="d-gr-sec"></div>
                         <div class="listing-item-grid_title">
-                            <h3><a href="listing.html">Promo Video</a></h3>
+                            <h3><a href="listing.html">@sharedResource["Promo Video"]</a></h3>
                         </div>
                     </div>
                 </div>
@@ -281,7 +281,7 @@
             </div>
 
             <div class="dashboard-title  dt-inbox fl-wrap">
-                <h3>Listing Photos</h3>
+                <h3>@sharedResource["Listing Photos"]</h3>
             </div>
             <div class="custom-form">
                 <div class="row">
@@ -296,7 +296,7 @@
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
                                     <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> Click here To Edit Photos</span>
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here To Edit Photos"] </span>
                                         <div class="photoUpload-files fl-wrap"></div>
                                     </div>
                                     <input type="file" accept="image/*" name="Photos" class="upload" multiple>
@@ -317,7 +317,7 @@
                                 <div class="bg" data-bg="/@item.PhotoUrl"></div>
                                 <div class="d-gr-sec" id=""></div>
                                 <div class="listing-item-grid_title">
-                                    <h3><a onclick="deletePhoto(@item.Id)">Delete</a></h3>
+                                    <h3><a onclick="deletePhoto(@item.Id)">@sharedResource["Delete"]</a></h3>
                                 </div>
                             </div>
                         </div>
@@ -342,7 +342,7 @@
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
                                     <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> Click here or Edit Videos</span>
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here or Edit Videos"] </span>
                                         <div class="photoUpload-files fl-wrap"></div>
                                     </div>
                                     <input type="file" accept="video/*" name="Videos" class="upload" multiple>
@@ -355,7 +355,7 @@
             </div>
 
             <div class="dashboard-title  dt-inbox fl-wrap">
-                <h3>Listing Videos</h3>
+                <h3>@sharedResource["Listing Videos"]</h3>
             </div>
             @foreach (var item in Model.AddListing.ListingVideos)
             {
@@ -368,7 +368,7 @@
                                 <iframe src="@Url.Content("/"+item.VideoUrl)?background=0" width="200" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
                             </div>
-                            <h3><a class="btn" style="background-color: #c03434" onclick="deleteVideo(@item.Id)">Delete</a></h3>
+                            <h3><a class="btn" style="background-color: #c03434" onclick="deleteVideo(@item.Id)">@sharedResource["Delete"]</a></h3>
 
                         </div>
                     </div>
@@ -378,18 +378,18 @@
         </div>
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Details</h3>
+            <h3>@sharedResource["Details"]</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
-                <label>Description</label>
-                <textarea asp-for="@Model.AddListing.Discription" cols="40" rows="3" placeholder="Enter Discription"></textarea>
+                <label>@sharedResource["Description"]</label>
+                <textarea asp-for="@Model.AddListing.Discription" cols="40" rows="3" placeholder="@sharedResource["Enter Discription"]"></textarea>
             </div>
         </div>
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Branches</h3>
+            <h3>@sharedResource["Branches"]</h3>
             <div class="onoffswitch">
                 <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch11" checked>
                 <label class="onoffswitch-label" for="myonoffswitch11">
@@ -450,10 +450,10 @@
                     @if (Model.BranchesList.Count() == 0)
                     {
                         <div class="add_room-item fl-wrap">
-                            <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                            <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Branch Title <i class="fal fa-briefcase"></i></label>
+                                    <label>@sharedResource["Branch Title"] <i class="fal fa-briefcase"></i></label>
                                     <input class="titleinput" type="text" placeholder="Enter Branch Title" />
                                 </div>
                             </div>
@@ -464,10 +464,10 @@
                         foreach (var item in Model.BranchesList)
                         {
                             <div class="add_room-item fl-wrap">
-                                <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                                <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label>Branch Title <i class="fal fa-briefcase"></i></label>
+                                        <label>@sharedResource["Branch Title"] <i class="fal fa-briefcase"></i></label>
                                         <input class="titleinput" type="text" placeholder="Enter Branch Title" value="@item.Title" />
                                     </div>
                                 </div>
@@ -476,12 +476,12 @@
                     }
 
                 </div>
-                <a class="add-room-item" onclick="changeStylebutton('Branchbtnstyle')">Add New <i class="fal fa-plus"></i> </a>
+                <a class="add-room-item" onclick="changeStylebutton('Branchbtnstyle')">@sharedResource["Add New"] <i class="fal fa-plus"></i> </a>
                 @*<a class="btn btn-success" onclick="branchtitle()">Save All<i class="fal fa-plus"></i></a>*@
 
             </div>
             <div class="row">
-                <a onclick="branchtitle()" id="Branchbtnstyle" class="btn  color2-bg  float-btn">Save All</a>
+                <a onclick="branchtitle()" id="Branchbtnstyle" class="btn  color2-bg  float-btn">@sharedResource["Save All"]</a>
             </div>
         </div>
         <!-- profile-edit-container end-->
@@ -501,7 +501,7 @@
                 <div class="add_room-container fl-wrap">
                     <!--add_room-item end  -->
                     <div class="add_room-item fl-wrap">
-                        <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                        <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
                         <div class="row">
                             <div class="col-md-4">
                                 <label>Item Title <i class="fal fa-briefcase"></i></label>
@@ -777,7 +777,7 @@
                 <input type="text" placeholder="https://www.instagram.com/" value="" />
             </div>
         </div>
-        <button type="submit" class="btn  color2-bg  float-btn">Send Listing<i class="fal fa-paper-plane"></i></button>
+        <button type="submit" class="btn  color2-bg  float-btn">@sharedResource["Save Listing"]<i class="fal fa-paper-plane"></i></button>
 
     </form>
     <!-- profile-edit-container end-->

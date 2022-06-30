@@ -21,10 +21,10 @@
                 <input asp-for="@Model.AddListing.Title" type="text" placeholder="Enter Title" readonly />
                 <div class="row">
                     <div class="col-md-6">
-                        <label>Type / Category</label>
+                        <label>@sharedResource["Type / Category"]</label>
                         <div class="listsearch-input-item">
-                            <select disabled asp-for="@Model.AddListing.CategoryId" data-placeholder="Apartments" class="chosen-select no-search-select">
-                                <option>All Categories</option>
+                            <select disabled asp-for="@Model.AddListing.CategoryId" data-placeholder="@sharedResource["Select Category"]" class="chosen-select no-search-select">
+                                <option>@sharedResource["All Categories"]</option>
                                 @foreach (var item in Categories)
                                 {
                                     <option disabled value="@item.CategoryId">@item.CategoryTitleEn</option>

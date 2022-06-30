@@ -900,4 +900,88 @@
   <data name="Enter LifeEvent Details" xml:space="preserve">
     <value>أدخل تفاصيل المناسبة الشخصية</value>
   </data>
+  <data name="Remove" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="Branch Title" xml:space="preserve">
+    <value>إسم الفرع</value>
+  </data>
+  <data name="Click here or drop Banner" xml:space="preserve">
+    <value>أنقر هنا لإضافة لافتة </value>
+  </data>
+  <data name="Click here or drop Logo" xml:space="preserve">
+    <value>أنقر هنا لإضافة شعار</value>
+  </data>
+  <data name="Click here or drop Photos" xml:space="preserve">
+    <value>أنقر هنا لإضافة صور</value>
+  </data>
+  <data name="Click here or drop Promo Video" xml:space="preserve">
+    <value>أنقر هنا لإضافة فيديو ترويجي </value>
+  </data>
+  <data name="Click here or drop Videos" xml:space="preserve">
+    <value>أنقر لإضافة فيديوهات</value>
+  </data>
+  <data name="All Categories" xml:space="preserve">
+    <value>جميع الفئات</value>
+  </data>
+  <data name="Cleanliness" xml:space="preserve">
+    <value>النظافة</value>
+  </data>
+  <data name="Click here To Edit Banner" xml:space="preserve">
+    <value>أنقر هنا لتعديل اللافتة</value>
+  </data>
+  <data name="Click here To Edit Promo Video" xml:space="preserve">
+    <value>أنقر هنا لتعديل الفيديو الترويجي</value>
+  </data>
+  <data name="Click here To Edits Logo" xml:space="preserve">
+    <value>أنقر هنا لتعديل الشعار</value>
+  </data>
+  <data name="Comfort" xml:space="preserve">
+    <value>الراحة</value>
+  </data>
+  <data name="Email Address*" xml:space="preserve">
+    <value>عنوان البريد الالكترونى*</value>
+  </data>
+  <data name="Facilities" xml:space="preserve">
+    <value>المَرافق</value>
+  </data>
+  <data name="Gallery / Photos" xml:space="preserve">
+    <value>معرض / صور</value>
+  </data>
+  <data name="Header Media" xml:space="preserve">
+    <value>الوسائط</value>
+  </data>
+  <data name="Logo" xml:space="preserve">
+    <value>الشعار</value>
+  </data>
+  <data name="MainLocation" xml:space="preserve">
+    <value>العنوان الرئيسي</value>
+  </data>
+  <data name="Promo Video" xml:space="preserve">
+    <value>الفيديو الترويجي</value>
+  </data>
+  <data name="Save Listing" xml:space="preserve">
+    <value>حفظ المجموعة</value>
+  </data>
+  <data name="Staf" xml:space="preserve">
+    <value>طاقم العمل</value>
+  </data>
+  <data name="Submit Review" xml:space="preserve">
+    <value>إرسال المراجعة</value>
+  </data>
+  <data name="Your Listings" xml:space="preserve">
+    <value>مجموعاتك</value>
+  </data>
+  <data name="Your Name *" xml:space="preserve">
+    <value>الاسم *</value>
+  </data>
+  <data name="Your Review:" xml:space="preserve">
+    <value>مراجعتك:</value>
+  </data>
+  <data name="Your Reviews" xml:space="preserve">
+    <value>تعليقاتك</value>
+  </data>
+  <data name="Your Score" xml:space="preserve">
+    <value>درجاتك</value>
+  </data>
 </root>

@@ -12,7 +12,7 @@
     <form method="post" enctype="multipart/form-data" onsubmit="return validateMyForm();">
         <div asp-validation-summary="ModelOnly" style="color:red;"></div>
         <div class="dashboard-title   fl-wrap">
-            <h3>Add Listing</h3>
+            <h3>@sharedResource["Add Listing"]</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
@@ -27,11 +27,11 @@
                 </div>
 
                 <div class="row">
-                   
+
                     <div class="col-md-6" id="HrefCat">
                         <label>@sharedResource["Type / Category"]</label>
                         <div class="listsearch-input-item">
-                            <select   id="CatId"  asp-for="AddListing.CategoryId" data-placeholder="Apartments" class="chosen-select no-search-select">
+                            <select id="CatId" asp-for="AddListing.CategoryId" data-placeholder="@sharedResource["Select Category"]" class="chosen-select no-search-select">
                                 <option>@sharedResource["All Categories"]</option>
                                 @foreach (var item in Categories)
                                 {
@@ -39,13 +39,13 @@
                                 }
                             </select>
                         </div>
-                       <div class="row">
-                       <div class="col-md-12">
-                            <span id="SpanCatId"  style="color:red;display:none">Select Category</span>
-                           </div>
-                   </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span id="SpanCatId" style="color:red;display:none">@sharedResource["Select Category"]</span>
+                            </div>
+                        </div>
                     </div>
-                   
+
                     <div class="col-md-6">
                         <label>@sharedResource["Tags"] <i class="fal fa-key"></i></label>
                         <input asp-for="AddListing.Tags" type="text" placeholder="@sharedResource["Enter Tags"]" value="" />
@@ -80,10 +80,10 @@
                     </div>
 
                 </div>
-                @*<div class="map-container">
+                <div class="map-container">
                         <div id="singleMap" class="drag-map" data-latitude="40.7427837" data-longitude="-73.11445617675781"></div>
-                    </div>*@
-                @*<label>City / Location</label>
+                    </div>
+                <label>City / Location</label>
                     <div class="listsearch-input-item">
                         <select data-placeholder="City" class="chosen-select no-search-select">
                             <option>All Cities</option>
@@ -96,7 +96,7 @@
                             <option>Rome</option>
                             <option>Beijing</option>
                         </select>
-                    </div>*@
+                    </div>
 
                 <div class="row">
                     <div class="col-md-6">
@@ -184,7 +184,7 @@
                                 <div class="listsearch-input-item fl-wrap">
                                     <div class="fuzone">
                                         <div class="fu-text">
-                                            <span><i class="fal fa-images"></i> Click here or drop Logo</span>
+                                            <span><i class="fal fa-images"></i> @sharedResource["Click here or drop Logo"]</span>
                                             <div class="photoUpload-files fl-wrap"></div>
                                         </div>
                                         <input type="file" accept="image/*" name="Listinglogo" class="upload">
@@ -206,7 +206,7 @@
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
                                     <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> Click here or drop Banner</span>
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here or drop Banner"]</span>
                                         <div class="photoUpload-files fl-wrap"></div>
                                     </div>
                                     <input type="file" accept="image/*" name="listingbanner" class="upload">
@@ -225,7 +225,7 @@
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
                                     <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> Click here or drop Promo Video</span>
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here or drop Promo Video"]</span>
                                         <div class="photoUpload-files fl-wrap"></div>
                                     </div>
                                     <input type="file" accept="video/*" name="PromoVideo" class="upload">
@@ -244,7 +244,7 @@
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
                                     <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> Click here or drop Photos</span>
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here or drop Photos"]</span>
                                         <div class="photoUpload-files fl-wrap"></div>
                                     </div>
                                     <input type="file" accept="image/*" name="Photos" class="upload" multiple>
@@ -263,7 +263,7 @@
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
                                     <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> Click here or drop Videos</span>
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here or drop Videos"]</span>
                                         <div class="photoUpload-files fl-wrap"></div>
                                     </div>
                                     <input type="file" accept="video/*" name="Videos" class="upload" multiple>
@@ -357,21 +357,21 @@
             <div class="custom-form add_room-item-wrap">
                 <div class="add_room-container fl-wrap">
                     <div class="add_room-item fl-wrap">
-                        <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                        <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
                         <div class="row">
                             <div class="col-md-12">
-                                <label>Branch Title <i class="fal fa-briefcase"></i></label>
+                                <label>@sharedResource["Branch Title"]<i class="fal fa-briefcase"></i></label>
                                 <input class="titleinput" type="text" placeholder="Enter Branch Title" required value="" />
                             </div>
                         </div>
                     </div>
                 </div>
-                <a class="add-room-item" onclick="changeStylebutton('Branchbtnstyle')">Add New <i class="fal fa-plus"></i> </a>
+                <a class="add-room-item" onclick="changeStylebutton('Branchbtnstyle')">@sharedResource["Add New"] <i class="fal fa-plus"></i> </a>
                 @*<a class="btn btn-success" onclick="branchtitle()">Save All<i class="fal fa-plus"></i></a>*@
 
             </div>
             <div class="row">
-                <a onclick="branchtitle()" id="Branchbtnstyle" class="btn  color2-bg  float-btn">Save All</a>
+                <a onclick="branchtitle()" id="Branchbtnstyle" class="btn  color2-bg  float-btn">@sharedResource["Save All"]</a>
             </div>
         </div>
         <!-- profile-edit-container end-->
@@ -667,7 +667,7 @@
                 <input type="text" placeholder="https://www.instagram.com/" value="" />
             </div>
         </div>
-        <button type="submit"  class="btn  color2-bg  float-btn">@sharedResource["Add Listing"]<i class="fal fa-paper-plane"></i></button>
+        <button type="submit" class="btn  color2-bg  float-btn">@sharedResource["Add Listing"]<i class="fal fa-paper-plane"></i></button>
 
     </form>
     <!-- profile-edit-container end-->
@@ -679,7 +679,7 @@
     if (BrowserCulture == "en-US")
     {
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places&callback=initAutocomplete"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
         <script src="~/Template/js/map-add.js"></script>
 
 
@@ -687,10 +687,16 @@
     //Arabic
     else
     {
+        @*<link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+            <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+            <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">*@
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
-        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
-
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places&callback=initAutocomplete"></script>
         <script src="~/Template/js/map-add.js"></script>
 
@@ -700,6 +706,11 @@
 }
 
 <script>
+    google.maps.event.addListener(singleMap, 'click', function (event) {        alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());        var myLatlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());        var marker = new google.maps.Marker({            position: myLatlng,            map: map,            title: 'Hello World!'        });    });
+
+
+
+
     function changeStylebutton(id) {
 
         if (localStorage.getItem("lang") == "en") {
@@ -755,30 +766,27 @@
             console.log("Nobody has been selected")
         }
     }
-    function validateMyForm()
-    {
+    function validateMyForm() {
         var CatId = document.getElementById("CatId");
         console.log(CatId.value);
         var SpanCatId = document.getElementById("SpanCatId")
         console.log(SpanCatId);
-        if(CatId.value=="All Categories")
-        {
-             console.log("entered");
-             SpanCatId.style.display="flex";
+        if (CatId.value == "All Categories") {
+            console.log("entered");
+            SpanCatId.style.display = "flex";
             window.location.href = "#HrefCat";
 
             return false;
         }
-        else{
-             console.log("Not entered");
-            SpanCatId.style.display="none";
+        else {
+            console.log("Not entered");
+            SpanCatId.style.display = "none";
             return true;
         }
 
     }
 
 </script>
-   @section Scripts {
-            <partial name="_ValidationScriptsPartial" />
-   }
-   
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

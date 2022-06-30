@@ -107,10 +107,8 @@ namespace Icity.Controllers
 
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, IFormFileCollection Images, IFormFileCollection VideosFiels, UserProfile userProfile)
+        public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, IFormFileCollection Images, IFormFileCollection VideosFiels, List<IFormFile> EventsMedia, UserProfile userProfile)
         {
-
-
             try
             {
                 var user = await _userManager.FindByEmailAsync(userProfile.Email);
@@ -140,13 +138,42 @@ namespace Icity.Controllers
                 user.Website = userProfile.Website;
                 user.Photos = userProfile.Photos == null ? new List<Photo>() : userProfile.Photos;
                 user.Videos = userProfile.Videos == null ? new List<Video>() : userProfile.Videos;
+                var skillslist = _applicationDbContext.Skills.Where(a => a.Id == user.Id).ToList();
+                _applicationDbContext.Skills.RemoveRange(skillslist);
+                var Interistslist = _applicationDbContext.Interests.Where(a => a.Id == user.Id).ToList();
+                _applicationDbContext.Interests.RemoveRange(Interistslist);
+                var educationslist = _applicationDbContext.Educations.Where(a => a.Id == user.Id).ToList();
+                _applicationDbContext.Educations.RemoveRange(educationslist);
+                var languageslist = _applicationDbContext.Languages.Where(a => a.Id == user.Id).ToList();
+                _applicationDbContext.Languages.RemoveRange(languageslist);
+
                 user.Skills = userProfile.Skills == null ? new List<Skill>() : userProfile.Skills;
                 user.Interests = userProfile.Interests == null ? new List<Interest>() : userProfile.Interests;
                 user.Educations = userProfile.Skills == null ? new List<Education>() : userProfile.Educations;
-                user.LifeEvents = userProfile.LifeEvents == null ? new List<LifeEvent>() : userProfile.LifeEvents; ;
-                user.Languages = userProfile.Languages == null ? new List<Language>() : userProfile.Languages; ;
+                user.Languages = userProfile.Languages == null ? new List<Language>() : userProfile.Languages;
 
-                if (Images.Count() > 0 && user.Photos.Count() == Images.Count())
+
+
+                int n = 0;
+                var eventlist = _applicationDbContext.LifeEvents.Where(a => a.Id == user.Id).ToList();
+                _applicationDbContext.RemoveRange(eventlist);
+
+                if (userProfile.LifeEvents != null)
+                {
+
+                    for (int i = 0; i < userProfile.LifeEvents.Count(); i++)
+                    {
+                        if (userProfile.LifeEvents[i].Media == null)
+                        {
+                            string folder = "Images/ProfileImages/";
+                            userProfile.LifeEvents[i].Media = UploadImage(folder, EventsMedia[n]);
+                            n++;
+                        }
+                    }
+                    user.LifeEvents = userProfile.LifeEvents == null ? new List<LifeEvent>() : userProfile.LifeEvents;
+                }
+
+                if (Images.Count() > 0)
                 {
                     for (int i = 0; i < Images.Count(); i++)
                     {
@@ -155,18 +182,14 @@ namespace Icity.Controllers
                         {
                             string folder = "Images/ProfileImages/";
                             photo.Image = UploadImage(folder, Images[i]);
-                            photo.PublishDate = userProfile.Photos[i].PublishDate;
-                            photo.Caption = userProfile.Photos[i].Caption;
+                            photo.PublishDate = DateTime.Now;
+                            //photo.Caption = userProfile.Photos[i].Caption;
                             photo.Id = user.Id;
-
-
                         }
                         _applicationDbContext.Photos.Add(photo);
-
-
                     }
                 }
-                if (VideosFiels.Count() > 0 && user.Videos.Count() == VideosFiels.Count())
+                if (VideosFiels.Count() > 0)
                 {
                     for (int i = 0; i < VideosFiels.Count(); i++)
                     {
@@ -175,18 +198,13 @@ namespace Icity.Controllers
                         {
                             string folder = "Videos/ProfileVideos/";
                             video.VideoT = UploadImage(folder, VideosFiels[i]);
-                            video.Caption = userProfile.Videos[i].Caption;
-                            video.PublishDate = userProfile.Videos[i].PublishDate;
+                            //video.Caption = userProfile.Videos[i].Caption;
+                            video.PublishDate = DateTime.Now;
                             video.Id = user.Id;
-
-
                         }
                         _applicationDbContext.Videos.Add(video);
-
-
                     }
                 }
-
                 _applicationDbContext.SaveChanges();
 
                 if (Profilepic != null)
@@ -218,6 +236,35 @@ namespace Icity.Controllers
             file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
 
             return folderPath;
+        }
+
+        [HttpDelete]
+        public IActionResult DeletePhoto(int PhotoId)
+        {
+            try
+            {
+                var Photo = _applicationDbContext.Photos.Where(a => a.PhotoID == PhotoId).FirstOrDefault();
+                _applicationDbContext.Photos.Remove(Photo);
+                return Ok(new { status = "success", message = "Photo suuccesfully deleted" });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpDelete]
+        public IActionResult DeleteVideo(int VideoId)
+        {
+            try
+            {
+                var Video = _applicationDbContext.Videos.Where(a => a.VideoID == VideoId).FirstOrDefault();
+                _applicationDbContext.Videos.Remove(Video);
+                return Ok(new { status = "success", message = "Video suuccesfully deleted" });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet]
@@ -744,7 +791,7 @@ namespace Icity.Controllers
             {
                 try
                 {
-                    var Listing = _context.AddListings.Include(a => a.Branches).Include(a=>a.ListingPhotos).Include(a=>a.ListingVideos).Where(a => a.AddListingId == ListingId).FirstOrDefault();
+                    var Listing = _context.AddListings.Include(a => a.Branches).Include(a => a.ListingPhotos).Include(a => a.ListingVideos).Where(a => a.AddListingId == ListingId).FirstOrDefault();
                     if (Listing != null)
                     {
                         return Ok(Listing);
@@ -821,7 +868,7 @@ namespace Icity.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult >ChangePassword(string userEmail,string currentPassword,string newPassword)
+        public async Task<IActionResult> ChangePassword(string userEmail, string currentPassword, string newPassword)
         {
             if (currentPassword == newPassword)
             {
@@ -842,7 +889,8 @@ namespace Icity.Controllers
                 }
                 await _signInManager.RefreshSignInAsync(user);
                 return Ok(new { status = "success" });
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
