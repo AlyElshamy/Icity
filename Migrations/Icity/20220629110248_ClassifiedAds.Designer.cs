@@ -4,14 +4,16 @@ using Icity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Icity.Migrations.Icity
 {
     [DbContext(typeof(IcityContext))]
-    partial class IcityContextModelSnapshot : ModelSnapshot
+    [Migration("20220629110248_ClassifiedAds")]
+    partial class ClassifiedAds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,169 +238,6 @@ namespace Icity.Migrations.Icity
                         });
                 });
 
-            modelBuilder.Entity("Icity.Models.ClassifiedAds", b =>
-                {
-                    b.Property<int>("ClassifiedAdsID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AddedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("AddedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ClassifiedAdsLocation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ClassifiedAdsTypeID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Details")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MainPhoto")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("PayedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("ProductStatusID")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ClassifiedAdsID");
-
-                    b.HasIndex("ClassifiedAdsTypeID");
-
-                    b.HasIndex("ProductStatusID");
-
-                    b.ToTable("ClassifiedAds");
-                });
-
-            modelBuilder.Entity("Icity.Models.ClassifiedAdsType", b =>
-                {
-                    b.Property<int>("ClassifiedAdsTypeID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("SortOrder")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TypePic")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TypeTitleAr")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TypeTitleEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ClassifiedAdsTypeID");
-
-                    b.ToTable("ClassifiedAdsTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            ClassifiedAdsTypeID = 1,
-                            TypeTitleEn = "Vehicles"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 2,
-                            TypeTitleEn = "Property"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 3,
-                            TypeTitleEn = "Electronics"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 4,
-                            TypeTitleEn = "Home&&Office Furniture – Decorations"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 5,
-                            TypeTitleEn = "Fashion"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 6,
-                            TypeTitleEn = "Pets"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 7,
-                            TypeTitleEn = "Kids"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 8,
-                            TypeTitleEn = "Books"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 9,
-                            TypeTitleEn = "Sports"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 10,
-                            TypeTitleEn = "Supermarket"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 11,
-                            TypeTitleEn = "Health&&Beauty"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 12,
-                            TypeTitleEn = "Gamming"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 13,
-                            TypeTitleEn = "Accessories"
-                        });
-                });
-
-            modelBuilder.Entity("Icity.Models.ClassifiedAsdMedia", b =>
-                {
-                    b.Property<int>("MediaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ClassifiedAdsID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("MediaDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MediaUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MediaId");
-
-                    b.HasIndex("ClassifiedAdsID");
-
-                    b.ToTable("ClassifiedAsdMedias");
-                });
-
             modelBuilder.Entity("Icity.Models.ListingPhotos", b =>
                 {
                     b.Property<int>("Id")
@@ -437,33 +276,6 @@ namespace Icity.Migrations.Icity
                     b.HasIndex("AddListingId");
 
                     b.ToTable("ListingVideos");
-                });
-
-            modelBuilder.Entity("Icity.Models.ProductStatus", b =>
-                {
-                    b.Property<int>("ProductStatusID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("StatusTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ProductStatusID");
-
-                    b.ToTable("ProductStatuses");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductStatusID = 1,
-                            StatusTitle = "New"
-                        },
-                        new
-                        {
-                            ProductStatusID = 2,
-                            StatusTitle = "Used"
-                        });
                 });
 
             modelBuilder.Entity("Icity.Models.Review", b =>
@@ -1183,6 +995,58 @@ namespace Icity.Migrations.Icity
                         });
                 });
 
+            modelBuilder.Entity("Icity.Models.Vehicles", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AddedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Engine")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Make")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PayedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Speed")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VehiclesID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vehicles");
+                });
+
             modelBuilder.Entity("Icity.Models.AddListing", b =>
                 {
                     b.HasOne("Icity.Models.Category", "Category")
@@ -1203,36 +1067,6 @@ namespace Icity.Migrations.Icity
                         .IsRequired();
 
                     b.Navigation("AddListing");
-                });
-
-            modelBuilder.Entity("Icity.Models.ClassifiedAds", b =>
-                {
-                    b.HasOne("Icity.Models.ClassifiedAdsType", "ClassifiedAdsType")
-                        .WithMany()
-                        .HasForeignKey("ClassifiedAdsTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Icity.Models.ProductStatus", "ProductStatus")
-                        .WithMany()
-                        .HasForeignKey("ProductStatusID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ClassifiedAdsType");
-
-                    b.Navigation("ProductStatus");
-                });
-
-            modelBuilder.Entity("Icity.Models.ClassifiedAsdMedia", b =>
-                {
-                    b.HasOne("Icity.Models.ClassifiedAds", "ClassifiedAds")
-                        .WithMany("ClassifiedAsdMedias")
-                        .HasForeignKey("ClassifiedAdsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ClassifiedAds");
                 });
 
             modelBuilder.Entity("Icity.Models.ListingPhotos", b =>
@@ -1293,11 +1127,6 @@ namespace Icity.Migrations.Icity
             modelBuilder.Entity("Icity.Models.Category", b =>
                 {
                     b.Navigation("SubCategories");
-                });
-
-            modelBuilder.Entity("Icity.Models.ClassifiedAds", b =>
-                {
-                    b.Navigation("ClassifiedAsdMedias");
                 });
 #pragma warning restore 612, 618
         }

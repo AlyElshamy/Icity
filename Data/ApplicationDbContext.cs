@@ -45,6 +45,7 @@ namespace Icity.Data
         public virtual ICollection<Language> Languages { get; set; }
         public virtual ICollection<Education> Educations { get; set; }
         public virtual ICollection<LifeEvent> LifeEvents { get; set; }
+        //public virtual ICollection<Vehicles> Vehicles { get; set; }
 
     }
     public class ApplicationDbContext : IdentityDbContext

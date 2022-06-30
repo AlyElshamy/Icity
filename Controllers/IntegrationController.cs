@@ -226,6 +226,7 @@ namespace Icity.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [ApiExplorerSettings(IgnoreApi = true)]
         private string UploadImage(string folderPath, IFormFile file)
         {
 
@@ -580,8 +581,6 @@ namespace Icity.Controllers
             return BadRequest("Enter Valid ID..");
 
         }
-
-
         [HttpPost]
         public async Task<IActionResult> AddListing(IFormFile Listinglogo, IFormFile PromoVideo, IFormFile listingbanner, IFormFileCollection Videos, IFormFileCollection Photos, AddListing addListing)
         {
@@ -654,9 +653,6 @@ namespace Icity.Controllers
             return Ok(new { status = "success", addListing });
 
         }
-
-
-
         [HttpPut]
         public async Task<IActionResult> EditListing(IFormFile Listinglogo, IFormFile PromoVideo, IFormFile listingbanner, IFormFileCollection Videos, IFormFileCollection Photos, AddListing addListing)
         {
@@ -714,11 +710,6 @@ namespace Icity.Controllers
                 }
                 addListing.ListingVideos = videoListing;
                 model.ListingVideos = videoListing;
-
-            }
-            if (!ModelState.IsValid)
-            {
-                return Ok(new { status = "false" });
 
             }
             try
@@ -895,6 +886,253 @@ namespace Icity.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> GetClassifiedAdsTypes()
+        {
+            try
+            {
+                var ClassifiedTypes = await _context.ClassifiedAdsTypes.ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    ClassifiedTypes = ClassifiedTypes
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetProductStatus()
+        {
+            try
+            {
+                var productStatus = await _context.ProductStatuses.ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    productStatus = productStatus
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetProductStatusById(int productStatusId)
+        {
+            try
+            {
+                var productStatus = await _context.ProductStatuses.Where(e=>e.ProductStatusID==productStatusId).FirstOrDefaultAsync();
+                var model = new
+                {
+                    status = true,
+                    StatusTitle = productStatus.StatusTitle
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddClassifiedAds(IFormFile MainPhoto, IFormFileCollection Medias, ClassifiedAds classifiedAds)
+        {
+            var user = await _userManager.FindByEmailAsync(classifiedAds.AddedBy);
+            if (user == null)
+            {
+                return BadRequest("User Not Found");
+            }
+            if (MainPhoto != null)
+            {
+                string folder = "Images/ClassifiedAdsMedia/Media/";
+                classifiedAds.MainPhoto = UploadImage(folder, MainPhoto);
+            }
+
+            List<ClassifiedAsdMedia> classifiedAsdMedias = new List<ClassifiedAsdMedia>();
+            if (Medias.Count() > 0)
+            {
+                for (int i = 0; i < Medias.Count(); i++)
+                {
+                    ClassifiedAsdMedia classifiedAsdMediaObj = new ClassifiedAsdMedia();
+                    if (Medias[i] != null)
+                    {
+                        string folder = "Images/ClassifiedAdsMedia/Media/";
+                        classifiedAsdMediaObj.MediaUrl = UploadImage(folder, Medias[i]);
+                        classifiedAsdMediaObj.MediaDate = DateTime.Now;
+                    }
+
+                    classifiedAsdMedias.Add(classifiedAsdMediaObj);
+                }
+                classifiedAds.ClassifiedAsdMedias = classifiedAsdMedias;
+            }
+
+            classifiedAds.Status = false;
+            classifiedAds.AddedDate = DateTime.Now;
+            classifiedAds.PayedDate = null;
+            
+            
+            _context.ClassifiedAds.Add(classifiedAds);
+            _context.SaveChanges();
+            return Ok(new { status = "success", classifiedAds });
+
+
+        }
+        [HttpPut]
+        public async Task<IActionResult> EditClassifiedAds(IFormFile MainPhoto, IFormFileCollection Medias, ClassifiedAds classifiedAds)
+        {
+            var model = await _context.ClassifiedAds.Where(c => c.ClassifiedAdsID == classifiedAds.ClassifiedAdsID).FirstOrDefaultAsync();
+            if (model == null)
+            {
+                return BadRequest("Classified Ads Object Not Found");
+            }
+            if (MainPhoto != null)
+            {
+                string folder = "Images/ClassifiedAdsMedia/Media/";
+                classifiedAds.MainPhoto = UploadImage(folder, MainPhoto);
+            }
+
+            List<ClassifiedAsdMedia> classifiedAsdMedias = new List<ClassifiedAsdMedia>();
+            if (Medias.Count() > 0)
+            {
+                for (int i = 0; i < Medias.Count(); i++)
+                {
+                    ClassifiedAsdMedia classifiedAsdMediaObj = new ClassifiedAsdMedia();
+                    if (Medias[i] != null)
+                    {
+                        string folder = "Images/ClassifiedAdsMedia/Media/";
+                        classifiedAsdMediaObj.MediaUrl = UploadImage(folder, Medias[i]);
+                        classifiedAsdMediaObj.MediaDate = DateTime.Now;
+                    }
+
+                    classifiedAsdMedias.Add(classifiedAsdMediaObj);
+                }
+                classifiedAds.ClassifiedAsdMedias = classifiedAsdMedias;
+            }
+
+            model.ClassifiedAdsLocation = classifiedAds.ClassifiedAdsLocation;
+            model.Title = classifiedAds.Title;
+            model.Details = classifiedAds.Details;
+            model.Price = classifiedAds.Price;
+            model.ProductStatusID = classifiedAds.ProductStatusID;
+            model.ClassifiedAdsTypeID = classifiedAds.ClassifiedAdsTypeID;
+            model.Status = classifiedAds.Status;
+            model.AddedDate = classifiedAds.AddedDate;
+            model.PayedDate = classifiedAds.PayedDate;
+            _context.Attach(model).State = EntityState.Modified;
+            _context.SaveChanges();
+            return Ok(new { status = "success", classifiedAds });
+        }
+        [HttpDelete]
+        public IActionResult DeleteClassifiedAds(int classifiedAdsId)
+        {
+            if (classifiedAdsId != 0)
+            {
+                try
+                {
+                    var classifiedAds = _context.ClassifiedAds.Find(classifiedAdsId);
+                    if (classifiedAds != null)
+                    {
+                        _context.ClassifiedAds.Remove(classifiedAds);
+                        _context.SaveChanges();
+                        return Ok(new {status="Deleted", classifiedAds });
+                    }
+                    return BadRequest("classified Ads Not Found..");
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Valid Classified Ads ID..");
+
+        }
+        [HttpDelete]
+        public IActionResult DeleteClassifiedAdsMedia(int MediaId)
+        {
+            if (MediaId != 0)
+            {
+                try
+                {
+                    var classifiedAdsMedia = _context.ClassifiedAsdMedias.Find(MediaId);
+                    if (classifiedAdsMedia != null)
+                    {
+                        _context.ClassifiedAsdMedias.Remove(classifiedAdsMedia);
+                        _context.SaveChanges();
+                        return Ok(new { status = "Deleted", classifiedAdsMedia });
+                    }
+                    return BadRequest("classified Ads Media Not Found..");
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Valid Classified Ads Media ID..");
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllClassifiedAdsByTypeId(int ClassifiedAdsTypeId)
+        {
+            try
+            {
+                var classifiedAds = await _context.ClassifiedAds.Where(e=>e.ClassifiedAdsTypeID== ClassifiedAdsTypeId).ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    classifiedAds = classifiedAds
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllClassifiedAdsByType_Status(int ClassifiedAdsTypeId,int productStatustId)
+        {
+            try
+            {
+                var classifiedAds = await _context.ClassifiedAds.Where(e => e.ClassifiedAdsTypeID == ClassifiedAdsTypeId&&e.ProductStatusID==productStatustId).ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    classifiedAds = classifiedAds
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllClassifiedAdsByUser(string UserEmail)
+        {
+            try
+            {
+               
+                var classifiedAds = await _context.ClassifiedAds.Where(e => e.AddedBy == UserEmail).ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    classifiedAds = classifiedAds
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
+
+
 }
 
