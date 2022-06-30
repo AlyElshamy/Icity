@@ -4,14 +4,16 @@ using Icity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Icity.Migrations.Icity
 {
     [DbContext(typeof(IcityContext))]
-    partial class IcityContextModelSnapshot : ModelSnapshot
+    [Migration("20220630101436_SeedingClassified")]
+    partial class SeedingClassified
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,7 +263,7 @@ namespace Icity.Migrations.Icity
                     b.Property<string>("MainPhoto")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("PayedDate")
+                    b.Property<DateTime>("PayedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<double>("Price")

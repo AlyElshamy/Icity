@@ -107,10 +107,8 @@ namespace Icity.Controllers
 
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, IFormFileCollection Images, IFormFileCollection VideosFiels, UserProfile userProfile)
+        public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, IFormFileCollection Images, IFormFileCollection VideosFiels, List<IFormFile> EventsMedia, UserProfile userProfile)
         {
-
-
             try
             {
                 var user = await _userManager.FindByEmailAsync(userProfile.Email);
@@ -140,13 +138,42 @@ namespace Icity.Controllers
                 user.Website = userProfile.Website;
                 user.Photos = userProfile.Photos == null ? new List<Photo>() : userProfile.Photos;
                 user.Videos = userProfile.Videos == null ? new List<Video>() : userProfile.Videos;
+                var skillslist = _applicationDbContext.Skills.Where(a => a.Id == user.Id).ToList();
+                _applicationDbContext.Skills.RemoveRange(skillslist);
+                var Interistslist = _applicationDbContext.Interests.Where(a => a.Id == user.Id).ToList();
+                _applicationDbContext.Interests.RemoveRange(Interistslist);
+                var educationslist = _applicationDbContext.Educations.Where(a => a.Id == user.Id).ToList();
+                _applicationDbContext.Educations.RemoveRange(educationslist);
+                var languageslist = _applicationDbContext.Languages.Where(a => a.Id == user.Id).ToList();
+                _applicationDbContext.Languages.RemoveRange(languageslist);
+
                 user.Skills = userProfile.Skills == null ? new List<Skill>() : userProfile.Skills;
                 user.Interests = userProfile.Interests == null ? new List<Interest>() : userProfile.Interests;
                 user.Educations = userProfile.Skills == null ? new List<Education>() : userProfile.Educations;
-                user.LifeEvents = userProfile.LifeEvents == null ? new List<LifeEvent>() : userProfile.LifeEvents; ;
-                user.Languages = userProfile.Languages == null ? new List<Language>() : userProfile.Languages; ;
+                user.Languages = userProfile.Languages == null ? new List<Language>() : userProfile.Languages;
 
-                if (Images.Count() > 0 && user.Photos.Count() == Images.Count())
+
+
+                int n = 0;
+                var eventlist = _applicationDbContext.LifeEvents.Where(a => a.Id == user.Id).ToList();
+                _applicationDbContext.RemoveRange(eventlist);
+
+                if (userProfile.LifeEvents != null)
+                {
+
+                    for (int i = 0; i < userProfile.LifeEvents.Count(); i++)
+                    {
+                        if (userProfile.LifeEvents[i].Media == null)
+                        {
+                            string folder = "Images/ProfileImages/";
+                            userProfile.LifeEvents[i].Media = UploadImage(folder, EventsMedia[n]);
+                            n++;
+                        }
+                    }
+                    user.LifeEvents = userProfile.LifeEvents == null ? new List<LifeEvent>() : userProfile.LifeEvents;
+                }
+
+                if (Images.Count() > 0)
                 {
                     for (int i = 0; i < Images.Count(); i++)
                     {
@@ -155,18 +182,14 @@ namespace Icity.Controllers
                         {
                             string folder = "Images/ProfileImages/";
                             photo.Image = UploadImage(folder, Images[i]);
-                            photo.PublishDate = userProfile.Photos[i].PublishDate;
-                            photo.Caption = userProfile.Photos[i].Caption;
+                            photo.PublishDate = DateTime.Now;
+                            //photo.Caption = userProfile.Photos[i].Caption;
                             photo.Id = user.Id;
-
-
                         }
                         _applicationDbContext.Photos.Add(photo);
-
-
                     }
                 }
-                if (VideosFiels.Count() > 0 && user.Videos.Count() == VideosFiels.Count())
+                if (VideosFiels.Count() > 0)
                 {
                     for (int i = 0; i < VideosFiels.Count(); i++)
                     {
@@ -175,18 +198,13 @@ namespace Icity.Controllers
                         {
                             string folder = "Videos/ProfileVideos/";
                             video.VideoT = UploadImage(folder, VideosFiels[i]);
-                            video.Caption = userProfile.Videos[i].Caption;
-                            video.PublishDate = userProfile.Videos[i].PublishDate;
+                            //video.Caption = userProfile.Videos[i].Caption;
+                            video.PublishDate = DateTime.Now;
                             video.Id = user.Id;
-
-
                         }
                         _applicationDbContext.Videos.Add(video);
-
-
                     }
                 }
-
                 _applicationDbContext.SaveChanges();
 
                 if (Profilepic != null)
@@ -208,6 +226,7 @@ namespace Icity.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [ApiExplorerSettings(IgnoreApi = true)]
         private string UploadImage(string folderPath, IFormFile file)
         {
 
@@ -533,8 +552,6 @@ namespace Icity.Controllers
             return BadRequest("Enter Valid ID..");
 
         }
-
-
         [HttpPost]
         public async Task<IActionResult> AddListing(IFormFile Listinglogo, IFormFile PromoVideo, IFormFile listingbanner, IFormFileCollection Videos, IFormFileCollection Photos, AddListing addListing)
         {
@@ -607,9 +624,6 @@ namespace Icity.Controllers
             return Ok(new { status = "success", addListing });
 
         }
-
-
-
         [HttpPut]
         public async Task<IActionResult> EditListing(IFormFile Listinglogo, IFormFile PromoVideo, IFormFile listingbanner, IFormFileCollection Videos, IFormFileCollection Photos, AddListing addListing)
         {
@@ -667,11 +681,6 @@ namespace Icity.Controllers
                 }
                 addListing.ListingVideos = videoListing;
                 model.ListingVideos = videoListing;
-
-            }
-            if (!ModelState.IsValid)
-            {
-                return Ok(new { status = "false" });
 
             }
             try
@@ -744,7 +753,7 @@ namespace Icity.Controllers
             {
                 try
                 {
-                    var Listing = _context.AddListings.Include(a => a.Branches).Include(a=>a.ListingPhotos).Include(a=>a.ListingVideos).Where(a => a.AddListingId == ListingId).FirstOrDefault();
+                    var Listing = _context.AddListings.Include(a => a.Branches).Include(a => a.ListingPhotos).Include(a => a.ListingVideos).Where(a => a.AddListingId == ListingId).FirstOrDefault();
                     if (Listing != null)
                     {
                         return Ok(Listing);
@@ -821,7 +830,7 @@ namespace Icity.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult >ChangePassword(string userEmail,string currentPassword,string newPassword)
+        public async Task<IActionResult> ChangePassword(string userEmail, string currentPassword, string newPassword)
         {
             if (currentPassword == newPassword)
             {
@@ -842,11 +851,259 @@ namespace Icity.Controllers
                 }
                 await _signInManager.RefreshSignInAsync(user);
                 return Ok(new { status = "success" });
-            }catch(Exception e)
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetClassifiedAdsTypes()
+        {
+            try
+            {
+                var ClassifiedTypes = await _context.ClassifiedAdsTypes.ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    ClassifiedTypes = ClassifiedTypes
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetProductStatus()
+        {
+            try
+            {
+                var productStatus = await _context.ProductStatuses.ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    productStatus = productStatus
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetProductStatusById(int productStatusId)
+        {
+            try
+            {
+                var productStatus = await _context.ProductStatuses.Where(e=>e.ProductStatusID==productStatusId).FirstOrDefaultAsync();
+                var model = new
+                {
+                    status = true,
+                    StatusTitle = productStatus.StatusTitle
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddClassifiedAds(IFormFile MainPhoto, IFormFileCollection Medias, ClassifiedAds classifiedAds)
+        {
+            var user = await _userManager.FindByEmailAsync(classifiedAds.AddedBy);
+            if (user == null)
+            {
+                return BadRequest("User Not Found");
+            }
+            if (MainPhoto != null)
+            {
+                string folder = "Images/ClassifiedAdsMedia/Media/";
+                classifiedAds.MainPhoto = UploadImage(folder, MainPhoto);
+            }
+
+            List<ClassifiedAsdMedia> classifiedAsdMedias = new List<ClassifiedAsdMedia>();
+            if (Medias.Count() > 0)
+            {
+                for (int i = 0; i < Medias.Count(); i++)
+                {
+                    ClassifiedAsdMedia classifiedAsdMediaObj = new ClassifiedAsdMedia();
+                    if (Medias[i] != null)
+                    {
+                        string folder = "Images/ClassifiedAdsMedia/Media/";
+                        classifiedAsdMediaObj.MediaUrl = UploadImage(folder, Medias[i]);
+                        classifiedAsdMediaObj.MediaDate = DateTime.Now;
+                    }
+
+                    classifiedAsdMedias.Add(classifiedAsdMediaObj);
+                }
+                classifiedAds.ClassifiedAsdMedias = classifiedAsdMedias;
+            }
+
+            classifiedAds.Status = false;
+            classifiedAds.AddedDate = DateTime.Now;
+            classifiedAds.PayedDate = null;
+            
+            
+            _context.ClassifiedAds.Add(classifiedAds);
+            _context.SaveChanges();
+            return Ok(new { status = "success", classifiedAds });
+
+
+        }
+        [HttpPut]
+        public async Task<IActionResult> EditClassifiedAds(IFormFile MainPhoto, IFormFileCollection Medias, ClassifiedAds classifiedAds)
+        {
+            var model = await _context.ClassifiedAds.Where(c => c.ClassifiedAdsID == classifiedAds.ClassifiedAdsID).FirstOrDefaultAsync();
+            if (model == null)
+            {
+                return BadRequest("Classified Ads Object Not Found");
+            }
+            if (MainPhoto != null)
+            {
+                string folder = "Images/ClassifiedAdsMedia/Media/";
+                classifiedAds.MainPhoto = UploadImage(folder, MainPhoto);
+            }
+
+            List<ClassifiedAsdMedia> classifiedAsdMedias = new List<ClassifiedAsdMedia>();
+            if (Medias.Count() > 0)
+            {
+                for (int i = 0; i < Medias.Count(); i++)
+                {
+                    ClassifiedAsdMedia classifiedAsdMediaObj = new ClassifiedAsdMedia();
+                    if (Medias[i] != null)
+                    {
+                        string folder = "Images/ClassifiedAdsMedia/Media/";
+                        classifiedAsdMediaObj.MediaUrl = UploadImage(folder, Medias[i]);
+                        classifiedAsdMediaObj.MediaDate = DateTime.Now;
+                    }
+
+                    classifiedAsdMedias.Add(classifiedAsdMediaObj);
+                }
+                classifiedAds.ClassifiedAsdMedias = classifiedAsdMedias;
+            }
+
+            model.ClassifiedAdsLocation = classifiedAds.ClassifiedAdsLocation;
+            model.Title = classifiedAds.Title;
+            model.Details = classifiedAds.Details;
+            model.Price = classifiedAds.Price;
+            model.ProductStatusID = classifiedAds.ProductStatusID;
+            model.ClassifiedAdsTypeID = classifiedAds.ClassifiedAdsTypeID;
+            model.Status = classifiedAds.Status;
+            model.AddedDate = classifiedAds.AddedDate;
+            model.PayedDate = classifiedAds.PayedDate;
+            _context.Attach(model).State = EntityState.Modified;
+            _context.SaveChanges();
+            return Ok(new { status = "success", classifiedAds });
+        }
+        [HttpDelete]
+        public IActionResult DeleteClassifiedAds(int classifiedAdsId)
+        {
+            if (classifiedAdsId != 0)
+            {
+                try
+                {
+                    var classifiedAds = _context.ClassifiedAds.Find(classifiedAdsId);
+                    if (classifiedAds != null)
+                    {
+                        _context.ClassifiedAds.Remove(classifiedAds);
+                        _context.SaveChanges();
+                        return Ok(new {status="Deleted", classifiedAds });
+                    }
+                    return BadRequest("classified Ads Not Found..");
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Valid Classified Ads ID..");
+
+        }
+        [HttpDelete]
+        public IActionResult DeleteClassifiedAdsMedia(int MediaId)
+        {
+            if (MediaId != 0)
+            {
+                try
+                {
+                    var classifiedAdsMedia = _context.ClassifiedAsdMedias.Find(MediaId);
+                    if (classifiedAdsMedia != null)
+                    {
+                        _context.ClassifiedAsdMedias.Remove(classifiedAdsMedia);
+                        _context.SaveChanges();
+                        return Ok(new { status = "Deleted", classifiedAdsMedia });
+                    }
+                    return BadRequest("classified Ads Media Not Found..");
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Valid Classified Ads Media ID..");
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllClassifiedAdsByTypeId(int ClassifiedAdsTypeId)
+        {
+            try
+            {
+                var classifiedAds = await _context.ClassifiedAds.Where(e=>e.ClassifiedAdsTypeID== ClassifiedAdsTypeId).ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    classifiedAds = classifiedAds
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllClassifiedAdsByType_Status(int ClassifiedAdsTypeId,int productStatustId)
+        {
+            try
+            {
+                var classifiedAds = await _context.ClassifiedAds.Where(e => e.ClassifiedAdsTypeID == ClassifiedAdsTypeId&&e.ProductStatusID==productStatustId).ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    classifiedAds = classifiedAds
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllClassifiedAdsByUser(string UserEmail)
+        {
+            try
+            {
+               
+                var classifiedAds = await _context.ClassifiedAds.Where(e => e.AddedBy == UserEmail).ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    classifiedAds = classifiedAds
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
         }
     }
+
+
 }
 

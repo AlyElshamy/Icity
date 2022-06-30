@@ -27,6 +27,10 @@ namespace Icity.Data
         public virtual DbSet<AddListing> AddListings { get; set; }
         public virtual DbSet<ListingPhotos> ListingPhotos { get; set; }
         public virtual DbSet<ListingVideos> ListingVideos { get; set; }
+        public virtual DbSet<ClassifiedAdsType> ClassifiedAdsTypes { get; set; }
+        public virtual DbSet<ProductStatus> ProductStatuses { get; set; }
+        public virtual DbSet<ClassifiedAsdMedia> ClassifiedAsdMedias { get; set; }
+        public virtual DbSet<ClassifiedAds> ClassifiedAds { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -155,7 +159,21 @@ namespace Icity.Data
             modelBuilder.Entity<SubCategory>().HasData(new SubCategory {SubCategoryID=107,SubCategoryTitleEn = "Packaging & Shipping", CategoryId = 16 });
             modelBuilder.Entity<SubCategory>().HasData(new SubCategory {SubCategoryID=108,SubCategoryTitleEn = "Transportation", CategoryId = 16 });
             modelBuilder.Entity<SubCategory>().HasData(new SubCategory { SubCategoryID =109, SubCategoryTitleEn = "Travel & Tourism", CategoryId = 16 });
-
+            modelBuilder.Entity<ClassifiedAdsType>().HasData(new ClassifiedAdsType { ClassifiedAdsTypeID = 1, TypeTitleEn = "Vehicles"});
+            modelBuilder.Entity<ClassifiedAdsType>().HasData(new ClassifiedAdsType { ClassifiedAdsTypeID = 2, TypeTitleEn = "Property"});
+            modelBuilder.Entity<ClassifiedAdsType>().HasData(new ClassifiedAdsType { ClassifiedAdsTypeID = 3, TypeTitleEn = "Electronics"});
+            modelBuilder.Entity<ClassifiedAdsType>().HasData(new ClassifiedAdsType { ClassifiedAdsTypeID = 4, TypeTitleEn = "Home&&Office Furniture – Decorations" });
+            modelBuilder.Entity<ClassifiedAdsType>().HasData(new ClassifiedAdsType { ClassifiedAdsTypeID = 5, TypeTitleEn = "Fashion"});
+            modelBuilder.Entity<ClassifiedAdsType>().HasData(new ClassifiedAdsType { ClassifiedAdsTypeID = 6, TypeTitleEn = "Pets"});
+            modelBuilder.Entity<ClassifiedAdsType>().HasData(new ClassifiedAdsType { ClassifiedAdsTypeID = 7, TypeTitleEn = "Kids"});
+            modelBuilder.Entity<ClassifiedAdsType>().HasData(new ClassifiedAdsType { ClassifiedAdsTypeID = 8, TypeTitleEn = "Books"});
+            modelBuilder.Entity<ClassifiedAdsType>().HasData(new ClassifiedAdsType { ClassifiedAdsTypeID = 9, TypeTitleEn = "Sports"});
+            modelBuilder.Entity<ClassifiedAdsType>().HasData(new ClassifiedAdsType { ClassifiedAdsTypeID = 10, TypeTitleEn = "Supermarket"});
+            modelBuilder.Entity<ClassifiedAdsType>().HasData(new ClassifiedAdsType { ClassifiedAdsTypeID = 11, TypeTitleEn = "Health&&Beauty" });
+            modelBuilder.Entity<ClassifiedAdsType>().HasData(new ClassifiedAdsType { ClassifiedAdsTypeID = 12, TypeTitleEn = "Gamming"});
+            modelBuilder.Entity<ClassifiedAdsType>().HasData(new ClassifiedAdsType { ClassifiedAdsTypeID = 13, TypeTitleEn = "Accessories"});
+            modelBuilder.Entity<ProductStatus>().HasData(new ProductStatus { ProductStatusID = 1, StatusTitle = "New"});
+            modelBuilder.Entity<ProductStatus>().HasData(new ProductStatus { ProductStatusID = 2, StatusTitle = "Used"});
 
 
 

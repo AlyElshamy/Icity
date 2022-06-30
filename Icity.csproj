@@ -42,6 +42,7 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="wwwroot\Images\Category\" />
+    <Folder Include="wwwroot\Images\ClassifiedAdsMedia\Media\" />
     <Folder Include="wwwroot\Images\Customer\" />
     <Folder Include="wwwroot\Images\Brand\" />
     <Folder Include="wwwroot\Images\Item\" />

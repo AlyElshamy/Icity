@@ -4,14 +4,16 @@ using Icity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Icity.Migrations.Icity
 {
     [DbContext(typeof(IcityContext))]
-    partial class IcityContextModelSnapshot : ModelSnapshot
+    [Migration("20220629141020_ClassifiedAdsModelsMainPh")]
+    partial class ClassifiedAdsModelsMainPh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,7 +263,7 @@ namespace Icity.Migrations.Icity
                     b.Property<string>("MainPhoto")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("PayedDate")
+                    b.Property<DateTime>("PayedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<double>("Price")
@@ -307,73 +309,6 @@ namespace Icity.Migrations.Icity
                     b.HasKey("ClassifiedAdsTypeID");
 
                     b.ToTable("ClassifiedAdsTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            ClassifiedAdsTypeID = 1,
-                            TypeTitleEn = "Vehicles"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 2,
-                            TypeTitleEn = "Property"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 3,
-                            TypeTitleEn = "Electronics"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 4,
-                            TypeTitleEn = "Home&&Office Furniture – Decorations"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 5,
-                            TypeTitleEn = "Fashion"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 6,
-                            TypeTitleEn = "Pets"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 7,
-                            TypeTitleEn = "Kids"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 8,
-                            TypeTitleEn = "Books"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 9,
-                            TypeTitleEn = "Sports"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 10,
-                            TypeTitleEn = "Supermarket"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 11,
-                            TypeTitleEn = "Health&&Beauty"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 12,
-                            TypeTitleEn = "Gamming"
-                        },
-                        new
-                        {
-                            ClassifiedAdsTypeID = 13,
-                            TypeTitleEn = "Accessories"
-                        });
                 });
 
             modelBuilder.Entity("Icity.Models.ClassifiedAsdMedia", b =>
@@ -452,18 +387,6 @@ namespace Icity.Migrations.Icity
                     b.HasKey("ProductStatusID");
 
                     b.ToTable("ProductStatuses");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductStatusID = 1,
-                            StatusTitle = "New"
-                        },
-                        new
-                        {
-                            ProductStatusID = 2,
-                            StatusTitle = "Used"
-                        });
                 });
 
             modelBuilder.Entity("Icity.Models.Review", b =>
