@@ -106,6 +106,548 @@ namespace Icity.Controllers
             }
 
         }
+        
+            [HttpGet]
+        public async Task<IActionResult> GetAllEducation( string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+
+                var educationList = _applicationDbContext.Educations.Where(e => e.Id == user.Id);
+                return Ok(new { Status = "Success", EducationList = educationList });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
+            [ApiExplorerSettings(IgnoreApi =true)]
+        private bool ValidateEducationModel(Education education)
+        {
+            if (education.Year == 0 || education.Provider == null)
+            {
+                return false;
+            }
+            return true;
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddEducation( Education education,string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new {Status="false",Reason="User Not Found"});
+                }
+                if(!ValidateEducationModel(education))
+                {
+                    return Ok(new { Status = "false", Reason = "Enter All Required Faild" });
+                }
+                    education.Id = user.Id;
+                    _applicationDbContext.Educations.Add(education);
+                    _applicationDbContext.SaveChanges();
+                    return Ok(new { Status = "Success", Education = education });
+               
+            }
+            catch(Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message }); 
+            }
+            
+        }
+        [HttpDelete]
+        public IActionResult DeleteEducation(int educationId)
+        {
+            if (educationId == 0)
+            {
+                return Ok(new { Status = "false", Reason = "Invalid Education Id" });
+            }
+            try
+            {
+                var educationObj = _applicationDbContext.Educations.Where(e => e.EducationID == educationId).FirstOrDefault();
+                if (educationObj == null)
+                {
+                    return Ok(new { Status = "false", Reason = "Object Not Found" });
+                }
+
+                _applicationDbContext.Educations.Remove(educationObj);
+                return Ok(new { Status = "Success", DeletedObj = educationObj });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
+        [ApiExplorerSettings(IgnoreApi = true)]
+        private bool ValidateSkillModel(Skill skill)
+        {
+            if (skill.SkillTitle == null)
+            {
+                return false;
+            }
+            return true;
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddSkill(Skill skill, string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+                if (!ValidateSkillModel(skill))
+                {
+                    return Ok(new { Status = "false", Reason = "Enter Skill Title" });
+                }
+                skill.Id = user.Id;
+                _applicationDbContext.Skills.Add(skill);
+                _applicationDbContext.SaveChanges();
+                return Ok(new { Status = "Success", Skill = skill });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllSkills(string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+
+                var skillList = _applicationDbContext.Skills.Where(e => e.Id == user.Id);
+                return Ok(new { Status = "Success", SkillList = skillList });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
+        [HttpDelete]
+        public IActionResult DeleteSkill(int skillId)
+        {
+            if (skillId == 0)
+            {
+                return Ok(new { Status = "false", Reason = "Invalid Skill Id" });
+            }
+            try
+            {
+                var skillObj = _applicationDbContext.Skills.Where(e => e.SkillID == skillId).FirstOrDefault();
+                if (skillObj == null)
+                {
+                    return Ok(new { Status = "false", Reason = "Object Not Found" });
+                }
+
+                _applicationDbContext.Skills.Remove(skillObj);
+                return Ok(new { Status = "Success", DeletedObj = skillObj });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
+        [ApiExplorerSettings(IgnoreApi =true)]
+        private bool ValidateLanguageModel(Language language)
+        {
+            if (language.LanguageTitle == null)
+            {
+                return false;
+            }
+            return true;
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddLanguage(Language language, string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+                if (!ValidateLanguageModel(language))
+                {
+                    return Ok(new { Status = "false", Reason = "Enter Language Title" });
+                }
+                language.Id = user.Id;
+                _applicationDbContext.Languages.Add(language);
+                _applicationDbContext.SaveChanges();
+                return Ok(new { Status = "Success", Language = language });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllLanguages(string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+
+                var languagesList = _applicationDbContext.Languages.Where(e => e.Id == user.Id);
+                return Ok(new { Status = "Success", LanguagesList = languagesList });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
+        [ApiExplorerSettings(IgnoreApi = true)]
+        private bool ValidateLifeEventModel(LifeEvent lifeEvent)
+        {
+            if (lifeEvent.Caption==null||lifeEvent.EventType == null)
+            {
+                return false;
+            }
+            return true;
+        }
+        [HttpDelete]
+        public IActionResult DeleteLanguage(int languageId)
+        {
+            if (languageId == 0)
+            {
+                return Ok(new { Status = "false", Reason = "Invalid Language Id" });
+            }
+            try
+            {
+                var languageObj = _applicationDbContext.Languages.Where(e => e.LanguageID == languageId).FirstOrDefault();
+                if (languageObj == null)
+                {
+                    return Ok(new { Status = "false", Reason = "Object Not Found" });
+                }
+
+                _applicationDbContext.Languages.Remove(languageObj);
+                return Ok(new { Status = "Success", DeletedObj = languageObj });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddLifeEvent(LifeEvent lifeEvent,FormFile media, string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+                if (!ValidateLifeEventModel(lifeEvent))
+                {
+                    return Ok(new { Status = "false", Reason = "Enter All Required Fields" });
+                }
+                if (media == null)
+                {
+                    return Ok(new { Status = "false", Reason = "Enter Life Event Media" });
+                }
+                if (media != null)
+                {
+                    string folder = "Images/ProfileImages/";
+                    lifeEvent.Media = UploadImage(folder, media);
+                }
+                
+                lifeEvent.Id = user.Id;
+                _applicationDbContext.LifeEvents.Add(lifeEvent);
+                _applicationDbContext.SaveChanges();
+                return Ok(new { Status = "Success", LifeEvent = lifeEvent });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllLifeEvents(string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+
+                var lifeEventsList = _applicationDbContext.LifeEvents.Where(e => e.Id == user.Id);
+                return Ok(new { Status = "Success", LifeEventsList = lifeEventsList });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
+        [HttpDelete]
+        public IActionResult DeleteLifeEvent(int lifeEventId)
+        {
+            if (lifeEventId == 0)
+            {
+                return Ok(new { Status = "false", Reason = "Invalid LifeEvent Id" });
+            }
+            try
+            {
+                var lifeEventObj = _applicationDbContext.LifeEvents.Where(e => e.LifeEventID == lifeEventId).FirstOrDefault();
+                if (lifeEventObj == null)
+                {
+                    return Ok(new { Status = "false", Reason = "Object Not Found" });
+                }
+
+                _applicationDbContext.LifeEvents.Remove(lifeEventObj);
+                return Ok(new { Status = "Success", DeletedObj = lifeEventObj });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
+        [ApiExplorerSettings(IgnoreApi = true)]
+        private bool ValidateInterestModel(Interest interest)
+        {
+            if (interest.InterestTitle == null)
+            {
+                return false;
+            }
+            return true;
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddInterest(Interest interest, string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+                if (!ValidateInterestModel(interest))
+                {
+                    return Ok(new { Status = "false", Reason = "Enter Interest Title" });
+                }
+               
+
+                interest.Id = user.Id;
+                _applicationDbContext.Interests.Add(interest);
+                _applicationDbContext.SaveChanges();
+                return Ok(new { Status = "Success", Interest = interest });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllInterest(string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+
+                var interestsList = _applicationDbContext.Interests.Where(e => e.Id == user.Id);
+                return Ok(new { Status = "Success", InterestsList = interestsList });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
+        [HttpDelete]
+        public IActionResult DeleteInterest(int interestId)
+        {
+            if (interestId == 0)
+            {
+                return Ok(new { Status = "false", Reason = "Invalid interest Id" });
+            }
+            try
+            {
+                var interestObj = _applicationDbContext.Interests.Where(e => e.InterestID == interestId).FirstOrDefault();
+                if (interestObj == null)
+                {
+                    return Ok(new { Status = "false", Reason = "Object Not Found" });
+                }
+
+                _applicationDbContext.Interests.Remove(interestObj);
+                return Ok(new { Status = "Success", DeletedObj = interestObj });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
+        [ApiExplorerSettings(IgnoreApi = true)]
+
+        private bool ValidatePhotoModel(Photo photo)
+        {
+            if (photo.Caption == null)
+            {
+                return false;
+            }
+            return true;
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> AddPhoto(Photo photo, IFormFile image,string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+                if (!ValidatePhotoModel(photo))
+                {
+                    return Ok(new { Status = "false", Reason = "Enter Photo Caption" });
+                }
+                if (image == null)
+                {
+                    return Ok(new { Status = "false", Reason = "Plz Upload Image File" });
+                }
+                if (image != null)
+                {
+                    string folder = "Images/ProfileImages/";
+                    photo.Image = UploadImage(folder, image);
+                }
+
+                photo.Id = user.Id;
+                _applicationDbContext.Photos.Add(photo);
+                _applicationDbContext.SaveChanges();
+                return Ok(new { Status = "Success", Photo = photo });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllPhotos(string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+
+                var photosList = _applicationDbContext.Photos.Where(e => e.Id == user.Id);
+                return Ok(new { Status = "Success", PhotosList = photosList });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
+        [ApiExplorerSettings(IgnoreApi = true)]
+        private bool ValidatevideoModel(Video video)
+        {
+            if (video.Caption == null)
+            {
+                return false;
+            }
+            return true;
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddVideo(Video video, IFormFile VideoFile, string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+                if (!ValidatevideoModel(video))
+                {
+                    return Ok(new { Status = "false", Reason = "Enter Photo Caption" });
+                }
+                if (VideoFile == null)
+                {
+                    return Ok(new { Status = "false", Reason = "Plz Upload Video File" });
+                }
+                if (VideoFile != null)
+                {
+                    string folder = "Images/ProfileImages/";
+                    video.VideoT = UploadImage(folder, VideoFile);
+                }
+
+                video.Id = user.Id;
+                
+                _applicationDbContext.Videos.Add(video);
+                _applicationDbContext.SaveChanges();
+                return Ok(new { Status = "Success", Video = video });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllVideos(string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+
+                var videosList = _applicationDbContext.Videos.Where(e => e.Id == user.Id);
+                return Ok(new { Status = "Success", VideosList = videosList });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
+
         [HttpPut]
         public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, IFormFileCollection Images, IFormFileCollection VideosFiels, List<IFormFile> EventsMedia, UserProfile userProfile)
         {

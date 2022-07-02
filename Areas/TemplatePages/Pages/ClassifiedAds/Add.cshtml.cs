@@ -20,7 +20,6 @@ namespace Icity.Areas.TemplatePages.Pages.ClassifiedAds
         private IcityContext _context;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IToastNotification _toastNotification;
-        public static List<Branch> Branches;
 
         [BindProperty]
         public Icity.Models.ClassifiedAds classifiedAds { get; set; }

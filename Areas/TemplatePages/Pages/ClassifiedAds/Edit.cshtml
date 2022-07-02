@@ -1,5 +1,5 @@
 ﻿@page
-@model Icity.Areas.TemplatePages.Pages.ClassifiedAds.AddModel
+@model Icity.Areas.TemplatePages.Pages.ClassifiedAds.EditModel
 @{
 }
 @inject IcityContext _context
@@ -15,21 +15,28 @@
     <form method="post" enctype="multipart/form-data" onsubmit="return validateMyForm();">
         <div asp-validation-summary="ModelOnly" style="color:red;"></div>
         <div class="dashboard-title   fl-wrap">
-            <h3>Add Classified Ads</h3>
+            <h3>Edit Classified Ads</h3>
         </div>
+        <input asp-for="classifiedAds.ClassifiedAdsID"  hidden />
+        <input asp-for="classifiedAds.AddedBy"  hidden />
+        <input asp-for="classifiedAds.AddedDate"  hidden />
+        <input asp-for="classifiedAds.PayedDate"  hidden />
+        <input asp-for="classifiedAds.Status"  hidden />
+
+
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
                 <div class="row">
                      <div class="col-md-6">
                     <label>@sharedResource["Title"] <i class="fal fa-briefcase"></i></label>
-                    <input asp-for="classifiedAds.Title" type="text" placeholder="@sharedResource["Enter Title"]" value="" />
+                    <input asp-for="classifiedAds.Title" type="text" placeholder="@sharedResource["Enter Title"]" />
                     <span asp-validation-for="classifiedAds.Title" style="color:red;"></span>
                 </div>
                
                <div class="col-md-6">
                     <label>@sharedResource["Price"] <i class="fal fa-briefcase"></i></label>
-                    <input asp-for="classifiedAds.Price" type="text" placeholder="@sharedResource["Enter Price"]" value="" />
+                    <input asp-for="classifiedAds.Price" type="text" placeholder="@sharedResource["Enter Price"]"  />
                     <span asp-validation-for="classifiedAds.Price" style="color:red;"></span>
                 </div>
                  </div>
@@ -86,7 +93,7 @@
                     
                     <div class="">
                         <label>@sharedResource["Location"] <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="classifiedAds.ClassifiedAdsLocation" type="text" placeholder="@sharedResource["Enter Location"]" id="lat" value="" required />
+                        <input asp-for="classifiedAds.ClassifiedAdsLocation" type="text" placeholder="@sharedResource["Enter Location"]" id="lat"  />
                         <span asp-validation-for="classifiedAds.ClassifiedAdsLocation" style="color:red;"></span>
 
                     </div>
@@ -122,12 +129,36 @@
                     </div>
                     <!--col end-->
                     <!--col -->
-                    <div class="col-md-6">
+                   <div class="col-md-6">
+                    <div class="listing-item-grid">
+                        <div class="bg" data-bg="/@Model.classifiedAds.MainPhoto"></div>
+                        <div class="d-gr-sec"></div>
+                        <div class="listing-item-grid_title">
+                            <h3><a href="listing.html">@sharedResource["MainPhoto"]</a></h3>
+                        </div>
+                    </div>
+                </div>
+                   
+                </div>
+            </div>
+        </div>
+         <div class="dashboard-title  dt-inbox fl-wrap">
+                <h3>@sharedResource["Media"]</h3>
+            </div>
+            <div class="custom-form">
+                <div class="row">
+                    <div class="col-md-12">
+                        @*<div class="add-list-media-header" style="margin-bottom:20px">
+                                <label class="radio inline">
+                                    <input type="radio" name="gender">
+                                    <span>Carousel</span>
+                                </label>
+                            </div>*@
                         <div class="add-list-media-wrap">
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
                                     <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> Click here or drop More Media</span>
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here To Add More Media"] </span>
                                         <div class="photoUpload-files fl-wrap"></div>
                                     </div>
                                     <input type="file" accept="image/*,video/*" name="Medias" class="upload" multiple>
@@ -135,10 +166,33 @@
                             </div>
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
-        </div>
+            <div class="listing-item-grid_container fl-wrap">
+                <div class="row">
+                    @foreach (var item in Model.classifiedAds.ClassifiedAsdMedias)
+                    {
+                        <div id="@item.MediaId" class="col-sm-4">
+                    <div class="list-single-main-item_content fl-wrap">
+                        <div class="iframe-holder fl-wrap">
+                            <div class="resp-video">
+
+                                <iframe src="@Url.Content("/"+item.MediaUrl)?background=0" width="200" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+                            </div>
+                             <div class="listing-item-grid_title">
+                                    <h3><a onclick="deletePhoto(@item.MediaId)">@sharedResource["Delete"]</a></h3>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                     
+                    }
+
+                </div>
+            </div>
+
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
             <h3>Details</h3>
@@ -152,7 +206,7 @@
         </div>
     
       
-        <button type="submit"  class="btn  color2-bg  float-btn">@sharedResource["Create"]<i class="fal fa-paper-plane"></i></button>
+        <button type="submit"  class="btn  color2-bg  float-btn">@sharedResource["Save"]<i class="fal fa-paper-plane"></i></button>
 
     </form>
     <!-- profile-edit-container end-->
@@ -230,9 +284,37 @@
 
     }
     
+ function deletePhoto(id) {
+       
+        if (id != 0) {
+            $.ajax({
+                type: "POST",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                }
+                ,
+                url: "/TemplatePages/ClassifiedAds/Edit?handler=DeletePhotoById",
+                async: false,
+                data: JSON.stringify(id),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
 
+                success: function (response) {
+                    console.log("get selected rows successfully" + response)
+                    document.getElementById(id).style.display = 'none';
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+
+        }
+        else {
+            console.log("Photo No Found")
+        }
+    }
 </script>
    @section Scripts {
             <partial name="_ValidationScriptsPartial" />
    }
-   

@@ -10,31 +10,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
 
-namespace Icity.Areas.TemplatePages.Pages
+namespace Icity.Areas.TemplatePages.Pages.ClassifiedAds
 {
-    
-    public class DashBoardListingTableModel : PageModel
+    public class IndexModel : PageModel
     {
         private IcityContext _context;
-        public List<AddListing> Listings =new List<AddListing>();
+        public List<Icity.Models.ClassifiedAds> ClassifiedAds = new List<Icity.Models.ClassifiedAds>();
 
-        public UserManager<ApplicationUser> UserManager { get; }
+        private UserManager<ApplicationUser> _userManager { get; }
 
-        public DashBoardListingTableModel(UserManager<ApplicationUser> userManager, IcityContext Context)
+        public IndexModel(UserManager<ApplicationUser> userManager, IcityContext Context)
         {
-            UserManager = userManager;
+            _userManager = userManager;
             _context = Context;
         }
         public async Task<IActionResult> OnGet()
         {
-            var user = await UserManager.GetUserAsync(User);
-            if (user==null)
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
             {
                 return Redirect("/identity/account/login");
 
             }
-            Listings = _context.AddListings.Where(a=>a.CreatedByUser==user.Email).ToList();
+            ClassifiedAds = _context.ClassifiedAds.Where(a => a.AddedBy == user.Email).ToList();
             return Page();
         }
     }
 }
+

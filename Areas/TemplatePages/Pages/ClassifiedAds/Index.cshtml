@@ -1,0 +1,79 @@
+﻿@page
+@model Icity.Areas.TemplatePages.Pages.ClassifiedAds.IndexModel
+@{
+    Layout = "_DashBoard";
+}
+<div class="col-md-9">
+    <div class="dashboard-title   fl-wrap">
+        <h3>@sharedResource["Your Classified Ads"]</h3>
+    </div>
+
+    <!-- dashboard-list-box-->
+    <div class="dashboard-list-box  fl-wrap">
+        <!-- dashboard-list -->
+        @foreach (var item in Model.ClassifiedAds)
+        {
+            string dateFormat = item.AddedDate.ToString("MM/dd/yyyy");
+            <div class="dashboard-list fl-wrap">
+            <div class="dashboard-message">
+                <div class="booking-list-contr">
+                    <a asp-page="Edit" asp-area="ClassifiedAds" asp-route-id="@item.ClassifiedAdsID"class="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i class="fal fa-edit"></i></a>
+                    <a asp-page="Delete" asp-area="ClassifiedAds" asp-route-id="@item.ClassifiedAdsID" class="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i class="fal fa-trash"></i></a>
+                </div>
+                <div class="dashboard-message-text">
+                    <img src="/@item.MainPhoto" alt="">
+                    <h4><a asp-page="Details" asp-area="ClassifiedAds" asp-route-id="@item.ClassifiedAdsID">@item.Title</a></h4>
+                    <div class="geodir-category-location clearfix">
+                        <a> @item.Price</a>
+                        </div>
+                    <div class="geodir-category-location clearfix"><a> @dateFormat</a></div>
+                </div>
+            </div>
+        </div>
+        }
+        
+        
+    </div>
+    <!-- dashboard-list-box end-->
+    <div class="pagination">
+        <a href="#" class="prevposts-link"><i class="fas fa-caret-left"></i><span>Prev</span></a>
+        <a href="#">1</a>
+        <a href="#" class="current-page">2</a>
+        <a href="#">3</a>
+        <a href="#">...</a>
+        <a href="#">7</a>
+        <a href="#" class="nextposts-link"><span>Next</span><i class="fas fa-caret-right"></i></a>
+    </div>
+</div>
+@{
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+    //English
+    if (BrowserCulture == "en-US")
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/color.css")">
+        <script src="~/Template/js/jquery.min.js"></script>
+        <script src="~/Template/js/plugins.js"></script>
+        <script src="~/Template/js/scripts.js"></script>
+
+    }
+    //Arabic
+    else
+    {
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+
+        <script src="~/TemplateRTL/js/jquery.min.js"></script>
+        <script src="~/TemplateRTL/js/plugins.js"></script>
+        <script src="~/TemplateRTL/js/scripts.js"></script>
+    }
+}
