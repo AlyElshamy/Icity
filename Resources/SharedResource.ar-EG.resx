@@ -984,4 +984,103 @@
   <data name="Your Score" xml:space="preserve">
     <value>درجاتك</value>
   </data>
+  <data name="Add Classified Ads" xml:space="preserve">
+    <value>اضافة منتج للاعلان عنه</value>
+  </data>
+  <data name="All Status" xml:space="preserve">
+    <value>كل الحالات</value>
+  </data>
+  <data name="All Types" xml:space="preserve">
+    <value>كل الانواع</value>
+  </data>
+  <data name="Back to Home Page" xml:space="preserve">
+    <value>العودة الي الصفحة الرئيسية</value>
+  </data>
+  <data name="Classified Ads Information" xml:space="preserve">
+    <value>معلومات عن المنتج المعلن</value>
+  </data>
+  <data name="Classified Ads Media" xml:space="preserve">
+    <value>وسائط المنتجات المعلنه</value>
+  </data>
+  <data name="Click here or drop Classified Main Photo" xml:space="preserve">
+    <value>اضغط لارفاق صورة رئيسية للمنتج الاعلاني</value>
+  </data>
+  <data name="Click here or drop More Media" xml:space="preserve">
+    <value>اضغط لارفاق المزيد من الوسائط</value>
+  </data>
+  <data name="Click here To Add More Media" xml:space="preserve">
+    <value>انقر هنا لاضافة وسائط اخري</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>انشاء</value>
+  </data>
+  <data name="Edit Classified Ads" xml:space="preserve">
+    <value>تعديل المنتجات المعلنة</value>
+  </data>
+  <data name="Enter Classified Ads Details" xml:space="preserve">
+    <value>ادخل تفاصيل المنتج المعلن</value>
+  </data>
+  <data name="Enter Location" xml:space="preserve">
+    <value>ادخل موقع</value>
+  </data>
+  <data name="Enter Price" xml:space="preserve">
+    <value>ادخل السعر</value>
+  </data>
+  <data name="MainPhoto" xml:space="preserve">
+    <value>الصورة الرئيسية</value>
+  </data>
+  <data name="Media" xml:space="preserve">
+    <value>وسائط</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>أو</value>
+  </data>
+  <data name="Search.." xml:space="preserve">
+    <value>بحث..</value>
+  </data>
+  <data name="Select Classified Ads Type" xml:space="preserve">
+    <value>اختر نوع المنتج للاعلان عنه </value>
+  </data>
+  <data name="Select Product Status" xml:space="preserve">
+    <value>اختر حالة المنتج</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>حالة المنتج</value>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>فيديوهات</value>
+  </data>
+  <data name="We're sorry, but the Page you were looking for, couldn't be found." xml:space="preserve">
+    <value>معذرة ، تعذر العثور على الصفحة التي تبحث عنها.</value>
+  </data>
+  <data name="Your Classified Ads" xml:space="preserve">
+    <value>منتجاتك المعلن عنها</value>
+  </data>
+  <data name="Filters" xml:space="preserve">
+    <value>مرشحات</value>
+  </data>
+  <data name="Grid View" xml:space="preserve">
+    <value>عرض شبكي</value>
+  </data>
+  <data name="List View" xml:space="preserve">
+    <value>عرض القائمة</value>
+  </data>
+  <data name="Popularity" xml:space="preserve">
+    <value>شعبية</value>
+  </data>
+  <data name="Price: high to low" xml:space="preserve">
+    <value>السعر:من الاعلي للارخص</value>
+  </data>
+  <data name="Price: low to high" xml:space="preserve">
+    <value>السعر:من الارخص للاعلي</value>
+  </data>
+  <data name="Sort   by:" xml:space="preserve">
+    <value>الترتيب :</value>
+  </data>
+  <data name="What are you looking for ?" xml:space="preserve">
+    <value>ما الذي تبحث عنه؟</value>
+  </data>
+  <data name="Where to look?" xml:space="preserve">
+    <value>أين تبحث؟</value>
+  </data>
 </root>

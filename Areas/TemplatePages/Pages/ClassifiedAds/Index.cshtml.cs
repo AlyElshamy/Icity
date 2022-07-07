@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 
 namespace Icity.Areas.TemplatePages.Pages.ClassifiedAds
@@ -32,7 +33,7 @@ namespace Icity.Areas.TemplatePages.Pages.ClassifiedAds
                 return Redirect("/identity/account/login");
 
             }
-            ClassifiedAds = _context.ClassifiedAds.Where(a => a.AddedBy == user.Email).ToList();
+            ClassifiedAds = _context.ClassifiedAds.Where(a => a.AddedBy == user.Email).Include(e=>e.ProductStatus).ToList();
             return Page();
         }
     }

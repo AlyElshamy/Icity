@@ -40,7 +40,7 @@ namespace Icity.Areas.TemplatePages.Pages
                 AddListing = await _context.AddListings.Include(a => a.Branches).FirstOrDefaultAsync(m => m.AddListingId == id);
                 if (AddListing == null)
                 {
-                    return Redirect("../Error");
+                    return RedirectToPage("PageNF");
                 }
                 BranchesList = AddListing.Branches.ToList();
 

@@ -1,0 +1,242 @@
+﻿@page
+@model Icity.Areas.TemplatePages.Pages.ClassifiedAds.DetailsModel
+@{
+}
+@inject IcityContext _context
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    Layout = "_DashBoard";
+    var classifiedAdsTypes = _context.ClassifiedAdsTypes.Select(e => new { e.ClassifiedAdsTypeID, e.TypeTitleEn });
+    var StatusProductList = _context.ProductStatuses.Select(e => new { e.ProductStatusID, e.StatusTitle });
+}
+
+<div class="col-md-9">
+    <form method="post" enctype="multipart/form-data" onsubmit="return validateMyForm();">
+        <div asp-validation-summary="ModelOnly" style="color:red;"></div>
+        <div class="dashboard-title   fl-wrap">
+            <h3>@sharedResource["Classified Ads Information"]</h3>
+        </div>
+        <input asp-for="classifiedAds.ClassifiedAdsID" hidden />
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>@sharedResource["Title"] <i class="fal fa-briefcase"></i></label>
+                        <input asp-for="classifiedAds.Title" type="text" placeholder="@sharedResource["Enter Title"]" readonly />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>@sharedResource["Price"] <i class="fal fa-briefcase"></i></label>
+                        <input asp-for="classifiedAds.Price" type="text" placeholder="@sharedResource["Enter Price"]" readonly />
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6" id="HrefType">
+                        <label>@sharedResource["Type"]</label>
+                        <div class="listsearch-input-item">
+                            <select disabled id="TypeId" asp-for="classifiedAds.ClassifiedAdsTypeID" data-placeholder="Apartments" class="chosen-select no-search-select">
+                                <option>@sharedResource["All Types"]</option>
+                                @foreach (var item in classifiedAdsTypes)
+                                {
+                                    <option value="@item.ClassifiedAdsTypeID">@item.TypeTitleEn</option>
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6" id="HrefStatus">
+                        <label>@sharedResource["Status"]</label>
+                        <div class="listsearch-input-item">
+                            <select disabled id="StatusId" asp-for="classifiedAds.ProductStatusID" data-placeholder="Apartments" class="chosen-select no-search-select">
+                                <option>@sharedResource["All Status"]</option>
+                                @foreach (var item in StatusProductList)
+                                {
+                                    <option value="@item.ProductStatusID">@item.StatusTitle</option>
+                                }
+                            </select>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- profile-edit-container end-->
+        <div class="dashboard-title  dt-inbox fl-wrap">
+            <h3>@sharedResource["Location"]</h3>
+        </div>
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+                <div class="row">
+
+                    <div class="">
+                        <label>@sharedResource["Location"] <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="classifiedAds.ClassifiedAdsLocation" type="text" placeholder="@sharedResource["Enter Location"]" id="lat" readonly />
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- profile-edit-container end-->
+        <!--col -->
+        @if (@Model.classifiedAds.ClassifiedAsdMedias.Count() != 0)
+        {
+            <div class="dashboard-title  dt-inbox fl-wrap">
+                <h3>@sharedResource["Classified Ads Media"]</h3>
+            </div>
+            <!-- profile-edit-container-->
+            <div class="profile-edit-container fl-wrap block_box">
+                <div class="custom-form">
+                    <div class="row">
+
+                        <div class="list-single-main-item fl-wrap block_box" id="sec3">
+                            <div class="list-single-main-item-title">
+                                <h3>@sharedResource["Gallery / Photos"]</h3>
+                            </div>
+                            <div class="list-single-main-item_content fl-wrap">
+                                <div class="single-carousel-wrap fl-wrap lightgallery">
+                                    <div class="sc-next sc-btn color2-bg"><i class="fas fa-caret-right"></i></div>
+                                    <div class="sc-prev sc-btn color2-bg"><i class="fas fa-caret-left"></i></div>
+                                    <div class="single-carousel fl-wrap full-height">
+                                        <div class="swiper-container">
+                                            <div class="swiper-wrapper">
+                                                <!-- swiper-slide-->
+                                                @foreach (var item in @Model.classifiedAds.ClassifiedAsdMedias)
+                                                {
+                                                    string str = item.MediaUrl.Substring(item.MediaUrl.LastIndexOf('.') + 1).ToUpper();
+                                                    <div class="swiper-slide">
+                                                        <div class="box-item">
+
+                                                            @{
+                                                                if (str.Contains("PNG") || str.Contains("GIF") || str.Contains("PNG") || str.Contains("JPG"))
+                                                                {
+                                                                    <img src="/@item.MediaUrl" alt="">
+                                                                    <a href="/@item.MediaUrl" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                                                                }
+                                                            }
+
+
+
+                                                        </div>
+                                                    </div>
+                                                }
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+        @*   <div class="custom-form">
+            <div class="dashboard-title  dt-inbox fl-wrap">
+            <h3>@sharedResource["Videos"]</h3>
+            </div>*@
+
+
+        <!--col -->
+        @if (@Model.classifiedAds.ClassifiedAsdMedias.Count() != 0)
+        {
+            <div class="dashboard-title  dt-inbox fl-wrap">
+                <h3>@sharedResource["Videos"]</h3>
+            </div>
+            <div class="profile-edit-container fl-wrap block_box">
+                <div class="custom-form">
+                    <div class="listing-item-grid_container fl-wrap">
+                        <div class="row">
+                            @foreach (var item in Model.classifiedAds.ClassifiedAsdMedias)
+                            {
+                                string str = item.MediaUrl.Substring(item.MediaUrl.LastIndexOf('.') + 1).ToUpper();
+
+
+
+
+
+                                if (str.Contains("MP4") || str.Contains("MOV") || str.Contains("FLV") || str.Contains("WMV"))
+
+                                {
+                                    <div id="@item.MediaId" class="col-sm-4">
+                                        <div class="listing-item-grid">
+                                            <video width="400" height="400" controls>
+                                                <source src="/@item.MediaUrl" type="video/mp4">
+                                                <source src="/@item.MediaUrl" type="video/ogg">
+                                                Your browser does not support HTML5 video.
+                                            </video>
+                                        </div>
+                                    </div>
+
+
+                                }
+
+
+
+
+
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+        <!-- profile-edit-container end-->
+        <div class="dashboard-title  dt-inbox fl-wrap">
+            <h3>@sharedResource["Details"]</h3>
+        </div>
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+                <label>@sharedResource["Description"]</label>
+                <textarea asp-for="classifiedAds.Details" cols="40" rows="3" readonly></textarea>
+            </div>
+        </div>
+
+
+        <a asp-area="TemplatePages" asp-page="Index" class="btn  color2-bg  float-btn">@sharedResource["Back"]<i class="fal fa-paper-plane"></i></a>
+
+    </form>
+    <!-- profile-edit-container end-->
+</div>
+@{
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+    //English
+    if (BrowserCulture == "en-US")
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places&callback=initAutocomplete"></script>
+        <script src="~/Template/js/map-add.js"></script>
+
+
+    }
+    //Arabic
+    else
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places&callback=initAutocomplete"></script>
+        <script src="~/Template/js/map-add.js"></script>
+
+
+
+    }
+}

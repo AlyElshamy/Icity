@@ -81,7 +81,7 @@ namespace Icity.Areas.Admin.Pages.ClassifiedAdsType
                     {
                         Response.HttpContext.Request.Form.Files[0].CopyTo(fileStream);
                     }
-                    model.TypePic = "Images/Category/" + uniqeFileName;
+                    model.TypePic = "Images/ClassifiedAdsMedia/Media/" + uniqeFileName;
                 }
                 model.TypeTitleAr = classifiedAdsType.TypeTitleAr;
                 model.TypeTitleEn = classifiedAdsType.TypeTitleEn;
