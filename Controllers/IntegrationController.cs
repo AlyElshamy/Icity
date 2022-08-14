@@ -803,7 +803,7 @@ namespace Icity.Controllers
                 user.Phone2 = userProfile.Phone2;
                 user.Folwers = userProfile.Folwers;
                 user.Website = userProfile.Website;
-
+                
                 if (Profilepic != null)
                 {
                     string folder = "Images/ProfileImages/";
@@ -1679,7 +1679,7 @@ namespace Icity.Controllers
         {
             try
             {
-                var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.ClassifiedAdsTypeID == ClassifiedAdsTypeId).ToListAsync();
+                var classifiedAds = await _context.ClassifiedAds.Include(e=>e.ClassifiedAsdMedias).Where(e=>e.ClassifiedAdsTypeID== ClassifiedAdsTypeId).ToListAsync();
                 var model = new
                 {
                     status = true,
@@ -1697,7 +1697,7 @@ namespace Icity.Controllers
         {
             try
             {
-                var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.ClassifiedAdsTypeID == ClassifiedAdsTypeId && e.ProductStatusID == productStatustId).ToListAsync();
+                var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.ClassifiedAdsTypeID == ClassifiedAdsTypeId&&e.ProductStatusID==productStatustId).ToListAsync();
                 var model = new
                 {
                     status = true,
@@ -1715,7 +1715,7 @@ namespace Icity.Controllers
         {
             try
             {
-
+               
                 var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.AddedBy == UserEmail).ToListAsync();
                 var model = new
                 {

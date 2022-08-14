@@ -615,4 +615,97 @@
   <data name="WhatsApp" xml:space="preserve">
     <value>WhatsApp</value>
   </data>
+  <data name="Add Classified Ads" xml:space="preserve">
+    <value>Add Classified Ads</value>
+  </data>
+  <data name="All Status" xml:space="preserve">
+    <value>All Status</value>
+  </data>
+  <data name="All Types" xml:space="preserve">
+    <value>All Types</value>
+  </data>
+  <data name="Back to Home Page" xml:space="preserve">
+    <value>Back to Home Page</value>
+  </data>
+  <data name="Classified Ads Information" xml:space="preserve">
+    <value>Classified Ads Information</value>
+  </data>
+  <data name="Classified Ads Media" xml:space="preserve">
+    <value>Classified Ads Media</value>
+  </data>
+  <data name="Click here or drop Classified Main Photo" xml:space="preserve">
+    <value>Click here or drop Classified Main Photo</value>
+  </data>
+  <data name="Click here or drop More Media" xml:space="preserve">
+    <value>Click here or drop More Media</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Edit Classified Ads" xml:space="preserve">
+    <value>Edit Classified Ads</value>
+  </data>
+  <data name="Enter Classified Ads Details" xml:space="preserve">
+    <value>Enter Classified Ads Details</value>
+  </data>
+  <data name="Enter Price" xml:space="preserve">
+    <value>Enter Price</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="MainPhoto" xml:space="preserve">
+    <value>Main Photo</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>Or</value>
+  </data>
+  <data name="Search.." xml:space="preserve">
+    <value>Search..</value>
+  </data>
+  <data name="Select Classified Ads Type" xml:space="preserve">
+    <value>Select Classified Ads Type</value>
+  </data>
+  <data name="Select Product Status" xml:space="preserve">
+    <value>Select Product Status</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>Videos</value>
+  </data>
+  <data name="We're sorry, but the Page you were looking for, couldn't be found." xml:space="preserve">
+    <value>We're sorry, but the Page you were looking for, couldn't be found.</value>
+  </data>
+  <data name="Your Classified Ads" xml:space="preserve">
+    <value>Your Classified Ads</value>
+  </data>
+  <data name="Filters" xml:space="preserve">
+    <value>Filters</value>
+  </data>
+  <data name="Grid View" xml:space="preserve">
+    <value>Grid View</value>
+  </data>
+  <data name="List View" xml:space="preserve">
+    <value>List View</value>
+  </data>
+  <data name="Popularity" xml:space="preserve">
+    <value>Popularity</value>
+  </data>
+  <data name="Price: high to low" xml:space="preserve">
+    <value>Price: high to low</value>
+  </data>
+  <data name="Price: low to high" xml:space="preserve">
+    <value>Price: low to high</value>
+  </data>
+  <data name="Sort   by:" xml:space="preserve">
+    <value>Sort   by:</value>
+  </data>
+  <data name="What are you looking for ?" xml:space="preserve">
+    <value>What are you looking for ?</value>
+  </data>
+  <data name="Where to look?" xml:space="preserve">
+    <value>Where to look?</value>
+  </data>
 </root>

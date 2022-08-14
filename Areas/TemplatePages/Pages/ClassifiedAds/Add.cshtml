@@ -15,7 +15,7 @@
     <form method="post" enctype="multipart/form-data" onsubmit="return validateMyForm();">
         <div asp-validation-summary="ModelOnly" style="color:red;"></div>
         <div class="dashboard-title   fl-wrap">
-            <h3>Add Classified Ads</h3>
+            <h3>@sharedResource["Add Classified Ads"]</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
@@ -48,7 +48,7 @@
                         </div>
                        <div class="row">
                        <div class="col-md-12">
-                            <span id="SpanTypeId"  style="color:red;display:none">Select Classified Ads Type</span>
+                            <span id="SpanTypeId"  style="color:red;display:none">@sharedResource["Select Classified Ads Type"]</span>
                            </div>
                    </div>
                     </div>
@@ -66,7 +66,7 @@
                         </div>
                        <div class="row">
                        <div class="col-md-12">
-                            <span id="SpanStatusId"  style="color:red;display:none">Select Status</span>
+                            <span id="SpanStatusId"  style="color:red;display:none">@sharedResource["Select Product Status"]</span>
                            </div>
                    </div>
 
@@ -97,7 +97,7 @@
         </div>
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Classified Ads Media</h3>
+            <h3>@sharedResource["Classified Ads Media"]</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
@@ -111,7 +111,7 @@
                                 <div class="listsearch-input-item fl-wrap">
                                     <div class="fuzone">
                                         <div class="fu-text">
-                                            <span><i class="fal fa-images"></i> Click here or drop Classified Main Photo</span>
+                                            <span><i class="fal fa-images"></i> @sharedResource["Click here or drop Classified Main Photo"]</span>
                                             <div class="photoUpload-files fl-wrap"></div>
                                         </div>
                                         <input type="file" accept="image/*" name="MainPhoto" class="upload">
@@ -127,7 +127,7 @@
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
                                     <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> Click here or drop More Media</span>
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here or drop More Media"]</span>
                                         <div class="photoUpload-files fl-wrap"></div>
                                     </div>
                                     <input type="file" accept="image/*,video/*" name="Medias" class="upload" multiple>
@@ -141,7 +141,7 @@
         </div>
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Details</h3>
+            <h3>@sharedResource["Details"]</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">

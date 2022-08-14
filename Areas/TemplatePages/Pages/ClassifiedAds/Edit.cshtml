@@ -15,37 +15,37 @@
     <form method="post" enctype="multipart/form-data" onsubmit="return validateMyForm();">
         <div asp-validation-summary="ModelOnly" style="color:red;"></div>
         <div class="dashboard-title   fl-wrap">
-            <h3>Edit Classified Ads</h3>
+            <h3>@sharedResource["Edit Classified Ads"]</h3>
         </div>
-        <input asp-for="classifiedAds.ClassifiedAdsID"  hidden />
-        <input asp-for="classifiedAds.AddedBy"  hidden />
-        <input asp-for="classifiedAds.AddedDate"  hidden />
-        <input asp-for="classifiedAds.PayedDate"  hidden />
-        <input asp-for="classifiedAds.Status"  hidden />
+        <input asp-for="classifiedAds.ClassifiedAdsID" hidden />
+        <input asp-for="classifiedAds.AddedBy" hidden />
+        <input asp-for="classifiedAds.AddedDate" hidden />
+        <input asp-for="classifiedAds.PayedDate" hidden />
+        <input asp-for="classifiedAds.Status" hidden />
 
 
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
                 <div class="row">
-                     <div class="col-md-6">
-                    <label>@sharedResource["Title"] <i class="fal fa-briefcase"></i></label>
-                    <input asp-for="classifiedAds.Title" type="text" placeholder="@sharedResource["Enter Title"]" />
-                    <span asp-validation-for="classifiedAds.Title" style="color:red;"></span>
+                    <div class="col-md-6">
+                        <label>@sharedResource["Title"] <i class="fal fa-briefcase"></i></label>
+                        <input asp-for="classifiedAds.Title" type="text" placeholder="@sharedResource["Enter Title"]" />
+                        <span asp-validation-for="classifiedAds.Title" style="color:red;"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>@sharedResource["Price"] <i class="fal fa-briefcase"></i></label>
+                        <input asp-for="classifiedAds.Price" type="text" placeholder="@sharedResource["Enter Price"]" />
+                        <span asp-validation-for="classifiedAds.Price" style="color:red;"></span>
+                    </div>
                 </div>
-               
-               <div class="col-md-6">
-                    <label>@sharedResource["Price"] <i class="fal fa-briefcase"></i></label>
-                    <input asp-for="classifiedAds.Price" type="text" placeholder="@sharedResource["Enter Price"]"  />
-                    <span asp-validation-for="classifiedAds.Price" style="color:red;"></span>
-                </div>
-                 </div>
                 <div class="row">
-                   
+
                     <div class="col-md-6" id="HrefType">
                         <label>@sharedResource["Type"]</label>
                         <div class="listsearch-input-item">
-                            <select   id="TypeId"  asp-for="classifiedAds.ClassifiedAdsTypeID" data-placeholder="Apartments" class="chosen-select no-search-select">
+                            <select id="TypeId" asp-for="classifiedAds.ClassifiedAdsTypeID" data-placeholder="Apartments" class="chosen-select no-search-select">
                                 <option>@sharedResource["All Types"]</option>
                                 @foreach (var item in classifiedAdsTypes)
                                 {
@@ -53,17 +53,17 @@
                                 }
                             </select>
                         </div>
-                       <div class="row">
-                       <div class="col-md-12">
-                            <span id="SpanTypeId"  style="color:red;display:none">Select Classified Ads Type</span>
-                           </div>
-                   </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span id="SpanTypeId" style="color:red;display:none">@sharedResource["elect Classified Ads Type"]S</span>
+                            </div>
+                        </div>
                     </div>
-                   
+
                     <div class="col-md-6" id="HrefStatus">
-                          <label>@sharedResource["Status"]</label>
+                        <label>@sharedResource["Status"]</label>
                         <div class="listsearch-input-item">
-                            <select   id="StatusId"  asp-for="classifiedAds.ProductStatusID" data-placeholder="Apartments" class="chosen-select no-search-select">
+                            <select id="StatusId" asp-for="classifiedAds.ProductStatusID" data-placeholder="Apartments" class="chosen-select no-search-select">
                                 <option>@sharedResource["All Status"]</option>
                                 @foreach (var item in StatusProductList)
                                 {
@@ -71,11 +71,11 @@
                                 }
                             </select>
                         </div>
-                       <div class="row">
-                       <div class="col-md-12">
-                            <span id="SpanStatusId"  style="color:red;display:none">Select Status</span>
-                           </div>
-                   </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span id="SpanStatusId" style="color:red;display:none">@sharedResource["Select Product Status"]</span>
+                            </div>
+                        </div>
 
                     </div>
 
@@ -90,21 +90,21 @@
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
                 <div class="row">
-                    
+
                     <div class="">
                         <label>@sharedResource["Location"] <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="classifiedAds.ClassifiedAdsLocation" type="text" placeholder="@sharedResource["Enter Location"]" id="lat"  />
+                        <input asp-for="classifiedAds.ClassifiedAdsLocation" type="text" placeholder="@sharedResource["Enter Location"]" id="lat" />
                         <span asp-validation-for="classifiedAds.ClassifiedAdsLocation" style="color:red;"></span>
 
                     </div>
 
                 </div>
-                
+
             </div>
         </div>
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Classified Ads Media</h3>
+            <h3>@sharedResource["Classified Ads Media"] </h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
@@ -112,13 +112,13 @@
                 <div class="row">
                     <!--col -->
                     <div class="col-md-6">
-                        
+
                         <div class="add-list-media-wrap">
                             <div class="add-list-media-wrap">
                                 <div class="listsearch-input-item fl-wrap">
                                     <div class="fuzone">
                                         <div class="fu-text">
-                                            <span><i class="fal fa-images"></i> Click here or drop Classified Main Photo</span>
+                                            <span><i class="fal fa-images"></i>@sharedResource["Click here or drop Classified Main Photo"] </span>
                                             <div class="photoUpload-files fl-wrap"></div>
                                         </div>
                                         <input type="file" accept="image/*" name="MainPhoto" class="upload">
@@ -129,73 +129,92 @@
                     </div>
                     <!--col end-->
                     <!--col -->
-                   <div class="col-md-6">
-                    <div class="listing-item-grid">
-                        <div class="bg" data-bg="/@Model.classifiedAds.MainPhoto"></div>
-                        <div class="d-gr-sec"></div>
-                        <div class="listing-item-grid_title">
-                            <h3><a href="listing.html">@sharedResource["MainPhoto"]</a></h3>
+                    <div class="col-md-6">
+                        <div class="listing-item-grid">
+                            <div class="bg" data-bg="/@Model.classifiedAds.MainPhoto"></div>
+                            <div class="d-gr-sec"></div>
+                            <div class="listing-item-grid_title">
+                                <h3><a href="listing.html">@sharedResource["MainPhoto"]</a></h3>
+                            </div>
                         </div>
                     </div>
-                </div>
-                   
+
                 </div>
             </div>
         </div>
-         <div class="dashboard-title  dt-inbox fl-wrap">
-                <h3>@sharedResource["Media"]</h3>
-            </div>
-            <div class="custom-form">
-                <div class="row">
-                    <div class="col-md-12">
-                        @*<div class="add-list-media-header" style="margin-bottom:20px">
-                                <label class="radio inline">
-                                    <input type="radio" name="gender">
-                                    <span>Carousel</span>
-                                </label>
-                            </div>*@
-                        <div class="add-list-media-wrap">
-                            <div class="listsearch-input-item fl-wrap">
-                                <div class="fuzone">
-                                    <div class="fu-text">
-                                        <span><i class="fal fa-images"></i> @sharedResource["Click here To Add More Media"] </span>
-                                        <div class="photoUpload-files fl-wrap"></div>
-                                    </div>
-                                    <input type="file" accept="image/*,video/*" name="Medias" class="upload" multiple>
+        <div class="dashboard-title  dt-inbox fl-wrap">
+            <h3>@sharedResource["Media"]</h3>
+        </div>
+        <div class="custom-form">
+            <div class="row">
+                <div class="col-md-12">
+                    @*<div class="add-list-media-header" style="margin-bottom:20px">
+                        <label class="radio inline">
+                        <input type="radio" name="gender">
+                        <span>Carousel</span>
+                        </label>
+                        </div>*@
+                    <div class="add-list-media-wrap">
+                        <div class="listsearch-input-item fl-wrap">
+                            <div class="fuzone">
+                                <div class="fu-text">
+                                    <span><i class="fal fa-images"></i> @sharedResource["Click here To Add More Media"] </span>
+                                    <div class="photoUpload-files fl-wrap"></div>
                                 </div>
+                                <input type="file" accept="image/*,video/*" name="Medias" class="upload" multiple>
                             </div>
                         </div>
                     </div>
-
                 </div>
+
             </div>
-            <div class="listing-item-grid_container fl-wrap">
-                <div class="row">
-                    @foreach (var item in Model.classifiedAds.ClassifiedAsdMedias)
-                    {
-                        <div id="@item.MediaId" class="col-sm-4">
-                    <div class="list-single-main-item_content fl-wrap">
-                        <div class="iframe-holder fl-wrap">
-                            <div class="resp-video">
+        </div>
+        <div class="listing-item-grid_container fl-wrap">
+            <div class="row">
+                @foreach (var item in Model.classifiedAds.ClassifiedAsdMedias)
+                {
 
-                                <iframe src="@Url.Content("/"+item.MediaUrl)?background=0" width="200" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    <div id="@item.MediaId" class="col-sm-4">
 
-                            </div>
-                             <div class="listing-item-grid_title">
-                                    <h3><a onclick="deletePhoto(@item.MediaId)">@sharedResource["Delete"]</a></h3>
+                        @{
+                            string str = item.MediaUrl.Substring(item.MediaUrl.LastIndexOf('.') + 1).ToUpper();
+
+
+                            if (str.Contains("PNG") || str.Contains("GIF") || str.Contains("PNG") || str.Contains("JPG"))
+                            {
+                                <div class="listing-item-grid">
+                                    <div class="bg" data-bg="/@item.MediaUrl"></div>
+                                    <div class="d-gr-sec" id=""></div>
                                 </div>
-                        </div>
-                    </div>
-                </div>
-                     
-                    }
 
-                </div>
+
+                            }
+                            else
+                            {
+                                <div class="listing-item-grid">
+                                <video width="400" controls>
+                                    <source src="/@item.MediaUrl" type="video/mp4">
+                                    <source src="/@item.MediaUrl" type="video/ogg">
+                                    Your browser does not support HTML5 video.
+                                </video>
+                               </div>
+                            }
+                            <div class="listing-item-grid_title">
+                                <h3><a onclick="deletePhoto(@item.MediaId)">@sharedResource["Delete"]</a></h3>
+                            </div>
+                        }
+
+                    </div>
+
+                }
+
             </div>
+
+        </div>
 
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Details</h3>
+            <h3>@sharedResource["Details"]</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
@@ -204,9 +223,9 @@
                 <textarea asp-for="classifiedAds.Details" cols="40" rows="3" placeholder="@sharedResource["Enter Classified Ads Details"]"></textarea>
             </div>
         </div>
-    
-      
-        <button type="submit"  class="btn  color2-bg  float-btn">@sharedResource["Save"]<i class="fal fa-paper-plane"></i></button>
+
+
+        <button type="submit" class="btn  color2-bg  float-btn">@sharedResource["Save"]<i class="fal fa-paper-plane"></i></button>
 
     </form>
     <!-- profile-edit-container end-->
@@ -239,82 +258,82 @@
 }
 
 <script>
-  
 
-   
-    function validateMyForm()
-    {
-        var TypeId = document.getElementById("TypeId");
-        var StatusId = document.getElementById("StatusId");
-        console.log(TypeId.value);
-        console.log(StatusId.value);
-        var SpanTypeId = document.getElementById("SpanTypeId")
-        var SpanStatusId = document.getElementById("SpanStatusId")
-        console.log(SpanTypeId);
-        console.log(SpanStatusId);
-        if(TypeId.value=="All Types")
-        {
-             console.log("entered");
-             SpanStatusId.style.display="flex";
-            window.location.href = "#HrefType";
 
-            return false;
-        }
-        if(TypeId.value!="All Types")
-        {
-             console.log("Not entered");
-            SpanTypeId.style.display="none";
-            return true;
-        }
-        if(StatusId.value=="All Status")
-        {
-             console.log("entered");
-             SpanStatusId.style.display="flex";
-            window.location.href = "#HrefStatus";
 
-            return false;
-        }
-        if(StatusId.value!="All Types")
-        {
-             console.log("Not entered");
-            SpanStatusId.style.display="none";
-            return true;
-        }
-       
+       function validateMyForm()
+       {
+           var TypeId = document.getElementById("TypeId");
+           var StatusId = document.getElementById("StatusId");
+           console.log(TypeId.value);
+           console.log(StatusId.value);
+           var SpanTypeId = document.getElementById("SpanTypeId")
+           var SpanStatusId = document.getElementById("SpanStatusId")
+           console.log(SpanTypeId);
+           console.log(SpanStatusId);
+           if(TypeId.value=="All Types")
+           {
+                console.log("entered");
+                SpanStatusId.style.display="flex";
+               window.location.href = "#HrefType";
 
-    }
-    
- function deletePhoto(id) {
-       
-        if (id != 0) {
-            $.ajax({
-                type: "POST",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("XSRF-TOKEN",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                }
-                ,
-                url: "/TemplatePages/ClassifiedAds/Edit?handler=DeletePhotoById",
-                async: false,
-                data: JSON.stringify(id),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
+               return false;
+           }
+           if(TypeId.value!="All Types")
+           {
+                console.log("Not entered");
+               SpanTypeId.style.display="none";
+               return true;
+           }
+           if(StatusId.value=="All Status")
+           {
+                console.log("entered");
+                SpanStatusId.style.display="flex";
+               window.location.href = "#HrefStatus";
 
-                success: function (response) {
-                    console.log("get selected rows successfully" + response)
-                    document.getElementById(id).style.display = 'none';
-                },
-                failure: function (response) {
-                    alert(response);
-                }
-            });
+               return false;
+           }
+           if(StatusId.value!="All Types")
+           {
+                console.log("Not entered");
+               SpanStatusId.style.display="none";
+               return true;
+           }
 
-        }
-        else {
-            console.log("Photo No Found")
-        }
-    }
+
+       }
+
+    function deletePhoto(id) {
+
+           if (id != 0) {
+               $.ajax({
+                   type: "POST",
+                   beforeSend: function (xhr) {
+                       xhr.setRequestHeader("XSRF-TOKEN",
+                           $('input:hidden[name="__RequestVerificationToken"]').val());
+                   }
+                   ,
+                   url: "/TemplatePages/ClassifiedAds/Edit?handler=DeletePhotoById",
+                   async: false,
+                   data: JSON.stringify(id),
+                   dataType: "json",
+                   contentType: "application/json; charset=utf-8",
+
+                   success: function (response) {
+                       console.log("get selected rows successfully" + response)
+                       document.getElementById(id).style.display = 'none';
+                   },
+                   failure: function (response) {
+                       alert(response);
+                   }
+               });
+
+           }
+           else {
+               console.log("Photo No Found")
+           }
+       }
 </script>
-   @section Scripts {
-            <partial name="_ValidationScriptsPartial" />
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
    }

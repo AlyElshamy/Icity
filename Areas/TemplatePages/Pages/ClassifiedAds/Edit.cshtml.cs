@@ -61,7 +61,7 @@ namespace Icity.Areas.TemplatePages.Pages.ClassifiedAds
                 classifiedAds = await _context.ClassifiedAds.Include(a => a.ClassifiedAsdMedias).FirstOrDefaultAsync(m => m.ClassifiedAdsID == id);
                 if (classifiedAds == null)
                 {
-                    return Redirect("../Error");
+                    return RedirectToPage("/PageNF");
                 }
                 
                 return Page();

@@ -14,17 +14,22 @@
         @foreach (var item in Model.ClassifiedAds)
         {
             string dateFormat = item.AddedDate.ToString("MM/dd/yyyy");
+            string priceConcat = item.Price.ToString() + " $";
             <div class="dashboard-list fl-wrap">
             <div class="dashboard-message">
                 <div class="booking-list-contr">
-                    <a asp-page="Edit" asp-area="ClassifiedAds" asp-route-id="@item.ClassifiedAdsID"class="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i class="fal fa-edit"></i></a>
-                    <a asp-page="Delete" asp-area="ClassifiedAds" asp-route-id="@item.ClassifiedAdsID" class="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i class="fal fa-trash"></i></a>
+                    <a asp-page="Edit" asp-area="TemplatePages" asp-route-id="@item.ClassifiedAdsID"class="color-bg tolt" data-microtip-position="left" data-tooltip=@sharedResource["Edit"]><i class="fal fa-edit"></i></a>
+                    <a asp-page="Delete" asp-area="TemplatePages" asp-route-id="@item.ClassifiedAdsID" class="red-bg tolt" data-microtip-position="left" data-tooltip=@sharedResource["Delete"]><i class="fal fa-trash"></i></a>
                 </div>
                 <div class="dashboard-message-text">
                     <img src="/@item.MainPhoto" alt="">
-                    <h4><a asp-page="Details" asp-area="ClassifiedAds" asp-route-id="@item.ClassifiedAdsID">@item.Title</a></h4>
+                    <h4><a asp-page="Details" asp-area="TemplatePages" asp-route-id="@item.ClassifiedAdsID">@item.Title</a></h4>
                     <div class="geodir-category-location clearfix">
-                        <a> @item.Price</a>
+                        <a> @item.ProductStatus.StatusTitle</a>
+                        <br>
+                        <a> @priceConcat</a>
+                        <br>
+                        <a> @item.ClassifiedAdsLocation</a>
                         </div>
                     <div class="geodir-category-location clearfix"><a> @dateFormat</a></div>
                 </div>
