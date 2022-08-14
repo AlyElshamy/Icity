@@ -354,7 +354,7 @@ namespace Icity.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> AddLifeEvent(LifeEvent lifeEvent,FormFile media, string userEmail)
+        public async Task<IActionResult> AddLifeEvent(LifeEvent lifeEvent,IFormFile media, string userEmail)
         {
             try
             {
@@ -648,8 +648,132 @@ namespace Icity.Controllers
             }
         }
 
+        //[HttpPut]
+        //public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, IFormFileCollection Images, IFormFileCollection VideosFiels, List<IFormFile> EventsMedia, UserProfile userProfile)
+        //{
+        //    try
+        //    {
+        //        var user = await _userManager.FindByEmailAsync(userProfile.Email);
+        //        if (user == null)
+        //            return BadRequest("Email Not Found..");
+        //        user.Gender = userProfile.Gender;
+        //        user.Bio = userProfile.Bio;
+        //        user.Nationality = userProfile.Nationality;
+        //        user.BirthDate = userProfile.BirthDate;
+        //        user.Job = userProfile.Job;
+        //        user.Qualification = userProfile.Qualification;
+        //        //user.Location = userProfile.Location;
+        //        user.FullName = userProfile.FullName;
+        //        user.PhoneNumber = userProfile.Phone;
+        //        user.FacebookLink = userProfile.FacebookLink;
+        //        user.TwitterLink = userProfile.TwitterLink;
+        //        user.InstagramLink = userProfile.InstagramLink;
+        //        user.LinkedInLink = userProfile.LinkedInLink;
+        //        user.LinkedInLink = userProfile.LinkedInLink;
+        //        user.NickName = userProfile.NickName;
+        //        user.MaritalStatus = userProfile.MaritalStatus;
+        //        user.City = userProfile.City;
+        //        user.MapLocation = userProfile.MapLocation;
+        //        user.Country = userProfile.Country;
+        //        user.Phone2 = userProfile.Phone2;
+        //        user.Folwers = userProfile.Folwers;
+        //        user.Website = userProfile.Website;
+        //        user.YoutubeLink = userProfile.YoutubeLink;
+        //        user.Photos = userProfile.Photos == null ? new List<Photo>() : userProfile.Photos;
+        //        user.Videos = userProfile.Videos == null ? new List<Video>() : userProfile.Videos;
+        //        var skillslist = _applicationDbContext.Skills.Where(a => a.Id == user.Id).ToList();
+        //        _applicationDbContext.Skills.RemoveRange(skillslist);
+        //        var Interistslist = _applicationDbContext.Interests.Where(a => a.Id == user.Id).ToList();
+        //        _applicationDbContext.Interests.RemoveRange(Interistslist);
+        //        var educationslist = _applicationDbContext.Educations.Where(a => a.Id == user.Id).ToList();
+        //        _applicationDbContext.Educations.RemoveRange(educationslist);
+        //        var languageslist = _applicationDbContext.Languages.Where(a => a.Id == user.Id).ToList();
+        //        _applicationDbContext.Languages.RemoveRange(languageslist);
+
+        //        user.Skills = userProfile.Skills == null ? new List<Skill>() : userProfile.Skills;
+        //        user.Interests = userProfile.Interests == null ? new List<Interest>() : userProfile.Interests;
+        //        user.Educations = userProfile.Skills == null ? new List<Education>() : userProfile.Educations;
+        //        user.Languages = userProfile.Languages == null ? new List<Language>() : userProfile.Languages;
+
+
+
+        //        int n = 0;
+        //        var eventlist = _applicationDbContext.LifeEvents.Where(a => a.Id == user.Id).ToList();
+        //        _applicationDbContext.RemoveRange(eventlist);
+
+        //        if (userProfile.LifeEvents != null)
+        //        {
+
+        //            for (int i = 0; i < userProfile.LifeEvents.Count(); i++)
+        //            {
+        //                if (userProfile.LifeEvents[i].Media == null)
+        //                {
+        //                    string folder = "Images/ProfileImages/";
+        //                    userProfile.LifeEvents[i].Media = UploadImage(folder, EventsMedia[n]);
+        //                    n++;
+        //                }
+        //            }
+        //            user.LifeEvents = userProfile.LifeEvents == null ? new List<LifeEvent>() : userProfile.LifeEvents;
+        //        }
+
+        //        if (Images.Count() > 0)
+        //        {
+        //            for (int i = 0; i < Images.Count(); i++)
+        //            {
+        //                Photo photo = new Photo();
+        //                if (Images[i] != null)
+        //                {
+        //                    string folder = "Images/ProfileImages/";
+        //                    photo.Image = UploadImage(folder, Images[i]);
+        //                    photo.PublishDate = DateTime.Now;
+        //                    //photo.Caption = userProfile.Photos[i].Caption;
+        //                    photo.Id = user.Id;
+        //                }
+        //                _applicationDbContext.Photos.Add(photo);
+        //            }
+        //        }
+        //        if (VideosFiels.Count() > 0)
+        //        {
+        //            for (int i = 0; i < VideosFiels.Count(); i++)
+        //            {
+        //                Video video = new Video();
+        //                if (VideosFiels[i] != null)
+        //                {
+        //                    string folder = "Videos/ProfileVideos/";
+        //                    video.VideoT = UploadImage(folder, VideosFiels[i]);
+        //                    //video.Caption = userProfile.Videos[i].Caption;
+        //                    video.PublishDate = DateTime.Now;
+        //                    video.Id = user.Id;
+        //                }
+        //                _applicationDbContext.Videos.Add(video);
+        //            }
+        //        }
+        //        _applicationDbContext.SaveChanges();
+
+        //        if (Profilepic != null)
+        //        {
+        //            string folder = "Images/ProfileImages/";
+        //            user.ProfilePicture = UploadImage(folder, Profilepic);
+        //        }
+        //        if (bannerpic != null)
+        //        {
+        //            string folder = "Images/BannerImages/";
+        //            user.Profilebanner = UploadImage(folder, bannerpic);
+        //        }
+        //        await _userManager.UpdateAsync(user);
+        //        return Ok("updated successfully.. ");
+        //    }
+        //    catch (Exception e)
+        //    {
+
+        //        return BadRequest(e.Message);
+        //    }
+        //}
+
+
+
         [HttpPut]
-        public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, IFormFileCollection Images, IFormFileCollection VideosFiels, List<IFormFile> EventsMedia, UserProfile userProfile)
+        public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, UserProfile userProfile)
         {
             try
             {
@@ -670,6 +794,7 @@ namespace Icity.Controllers
                 user.InstagramLink = userProfile.InstagramLink;
                 user.LinkedInLink = userProfile.LinkedInLink;
                 user.LinkedInLink = userProfile.LinkedInLink;
+                user.YoutubeLink = userProfile.YoutubeLink;
                 user.NickName = userProfile.NickName;
                 user.MaritalStatus = userProfile.MaritalStatus;
                 user.City = userProfile.City;
@@ -678,76 +803,6 @@ namespace Icity.Controllers
                 user.Phone2 = userProfile.Phone2;
                 user.Folwers = userProfile.Folwers;
                 user.Website = userProfile.Website;
-                user.Photos = userProfile.Photos == null ? new List<Photo>() : userProfile.Photos;
-                user.Videos = userProfile.Videos == null ? new List<Video>() : userProfile.Videos;
-                var skillslist = _applicationDbContext.Skills.Where(a => a.Id == user.Id).ToList();
-                _applicationDbContext.Skills.RemoveRange(skillslist);
-                var Interistslist = _applicationDbContext.Interests.Where(a => a.Id == user.Id).ToList();
-                _applicationDbContext.Interests.RemoveRange(Interistslist);
-                var educationslist = _applicationDbContext.Educations.Where(a => a.Id == user.Id).ToList();
-                _applicationDbContext.Educations.RemoveRange(educationslist);
-                var languageslist = _applicationDbContext.Languages.Where(a => a.Id == user.Id).ToList();
-                _applicationDbContext.Languages.RemoveRange(languageslist);
-
-                user.Skills = userProfile.Skills == null ? new List<Skill>() : userProfile.Skills;
-                user.Interests = userProfile.Interests == null ? new List<Interest>() : userProfile.Interests;
-                user.Educations = userProfile.Skills == null ? new List<Education>() : userProfile.Educations;
-                user.Languages = userProfile.Languages == null ? new List<Language>() : userProfile.Languages;
-
-
-
-                int n = 0;
-                var eventlist = _applicationDbContext.LifeEvents.Where(a => a.Id == user.Id).ToList();
-                _applicationDbContext.RemoveRange(eventlist);
-
-                if (userProfile.LifeEvents != null)
-                {
-
-                    for (int i = 0; i < userProfile.LifeEvents.Count(); i++)
-                    {
-                        if (userProfile.LifeEvents[i].Media == null)
-                        {
-                            string folder = "Images/ProfileImages/";
-                            userProfile.LifeEvents[i].Media = UploadImage(folder, EventsMedia[n]);
-                            n++;
-                        }
-                    }
-                    user.LifeEvents = userProfile.LifeEvents == null ? new List<LifeEvent>() : userProfile.LifeEvents;
-                }
-
-                if (Images.Count() > 0)
-                {
-                    for (int i = 0; i < Images.Count(); i++)
-                    {
-                        Photo photo = new Photo();
-                        if (Images[i] != null)
-                        {
-                            string folder = "Images/ProfileImages/";
-                            photo.Image = UploadImage(folder, Images[i]);
-                            photo.PublishDate = DateTime.Now;
-                            //photo.Caption = userProfile.Photos[i].Caption;
-                            photo.Id = user.Id;
-                        }
-                        _applicationDbContext.Photos.Add(photo);
-                    }
-                }
-                if (VideosFiels.Count() > 0)
-                {
-                    for (int i = 0; i < VideosFiels.Count(); i++)
-                    {
-                        Video video = new Video();
-                        if (VideosFiels[i] != null)
-                        {
-                            string folder = "Videos/ProfileVideos/";
-                            video.VideoT = UploadImage(folder, VideosFiels[i]);
-                            //video.Caption = userProfile.Videos[i].Caption;
-                            video.PublishDate = DateTime.Now;
-                            video.Id = user.Id;
-                        }
-                        _applicationDbContext.Videos.Add(video);
-                    }
-                }
-                _applicationDbContext.SaveChanges();
 
                 if (Profilepic != null)
                 {
@@ -768,6 +823,7 @@ namespace Icity.Controllers
                 return BadRequest(e.Message);
             }
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         private string UploadImage(string folderPath, IFormFile file)
         {
@@ -1623,7 +1679,7 @@ namespace Icity.Controllers
         {
             try
             {
-                var classifiedAds = await _context.ClassifiedAds.Where(e=>e.ClassifiedAdsTypeID== ClassifiedAdsTypeId).ToListAsync();
+                var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.ClassifiedAdsTypeID == ClassifiedAdsTypeId).ToListAsync();
                 var model = new
                 {
                     status = true,
@@ -1637,11 +1693,11 @@ namespace Icity.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllClassifiedAdsByType_Status(int ClassifiedAdsTypeId,int productStatustId)
+        public async Task<IActionResult> GetAllClassifiedAdsByType_Status(int ClassifiedAdsTypeId, int productStatustId)
         {
             try
             {
-                var classifiedAds = await _context.ClassifiedAds.Where(e => e.ClassifiedAdsTypeID == ClassifiedAdsTypeId&&e.ProductStatusID==productStatustId).ToListAsync();
+                var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.ClassifiedAdsTypeID == ClassifiedAdsTypeId && e.ProductStatusID == productStatustId).ToListAsync();
                 var model = new
                 {
                     status = true,
@@ -1659,8 +1715,8 @@ namespace Icity.Controllers
         {
             try
             {
-               
-                var classifiedAds = await _context.ClassifiedAds.Where(e => e.AddedBy == UserEmail).ToListAsync();
+
+                var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.AddedBy == UserEmail).ToListAsync();
                 var model = new
                 {
                     status = true,
@@ -1674,7 +1730,4 @@ namespace Icity.Controllers
             }
         }
     }
-
-
 }
-
