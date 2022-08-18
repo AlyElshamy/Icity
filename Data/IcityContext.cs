@@ -31,7 +31,8 @@ namespace Icity.Data
         public virtual DbSet<ProductStatus> ProductStatuses { get; set; }
         public virtual DbSet<ClassifiedAsdMedia> ClassifiedAsdMedias { get; set; }
         public virtual DbSet<ClassifiedAds> ClassifiedAds { get; set; }
-        
+        public virtual DbSet<Country> Countries { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

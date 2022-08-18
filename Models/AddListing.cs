@@ -15,8 +15,8 @@ namespace Icity.Models
         public int CategoryId { get; set; }
         [Required(ErrorMessage ="Reequired")]
         public string Title { get; set; }
-        [Required(ErrorMessage = "Reequired")]
-        public string Country { get; set; }
+        public int? CountryId { get; set; }
+        public virtual Country Country { get; set; }
         [Required(ErrorMessage = "Reequired")]
         public string City { get; set; }
         [Required(ErrorMessage = "Reequired")]

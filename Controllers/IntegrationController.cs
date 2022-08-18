@@ -18,7 +18,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-
 namespace Icity.Controllers
 {
     [Route("api/[controller]/[action]")]
@@ -106,9 +105,9 @@ namespace Icity.Controllers
             }
 
         }
-        
-            [HttpGet]
-        public async Task<IActionResult> GetAllEducation( string userEmail)
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllEducation(string userEmail)
         {
             try
             {
@@ -127,7 +126,7 @@ namespace Icity.Controllers
                 return Ok(new { Status = "false", Reason = e.Message });
             }
         }
-            [ApiExplorerSettings(IgnoreApi =true)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         private bool ValidateEducationModel(Education education)
         {
             if (education.Year == 0 || education.Provider == null)
@@ -137,30 +136,30 @@ namespace Icity.Controllers
             return true;
         }
         [HttpPost]
-        public async Task<IActionResult> AddEducation( Education education,string userEmail)
+        public async Task<IActionResult> AddEducation(Education education, string userEmail)
         {
             try
             {
                 var user = await _userManager.FindByEmailAsync(userEmail);
                 if (user == null)
                 {
-                    return Ok(new {Status="false",Reason="User Not Found"});
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
                 }
-                if(!ValidateEducationModel(education))
+                if (!ValidateEducationModel(education))
                 {
                     return Ok(new { Status = "false", Reason = "Enter All Required Faild" });
                 }
-                    education.Id = user.Id;
-                    _applicationDbContext.Educations.Add(education);
-                    _applicationDbContext.SaveChanges();
-                    return Ok(new { Status = "Success", Education = education });
-               
+                education.Id = user.Id;
+                _applicationDbContext.Educations.Add(education);
+                _applicationDbContext.SaveChanges();
+                return Ok(new { Status = "Success", Education = education });
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                return Ok(new { Status = "false", Reason = e.Message }); 
+                return Ok(new { Status = "false", Reason = e.Message });
             }
-            
+
         }
         [HttpDelete]
         public IActionResult DeleteEducation(int educationId)
@@ -265,7 +264,7 @@ namespace Icity.Controllers
                 return Ok(new { Status = "false", Reason = e.Message });
             }
         }
-        [ApiExplorerSettings(IgnoreApi =true)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         private bool ValidateLanguageModel(Language language)
         {
             if (language.LanguageTitle == null)
@@ -323,7 +322,7 @@ namespace Icity.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         private bool ValidateLifeEventModel(LifeEvent lifeEvent)
         {
-            if (lifeEvent.Caption==null||lifeEvent.EventType == null)
+            if (lifeEvent.Caption == null || lifeEvent.EventType == null)
             {
                 return false;
             }
@@ -354,7 +353,7 @@ namespace Icity.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> AddLifeEvent(LifeEvent lifeEvent,IFormFile media, string userEmail)
+        public async Task<IActionResult> AddLifeEvent(LifeEvent lifeEvent, IFormFile media, string userEmail)
         {
             try
             {
@@ -376,7 +375,7 @@ namespace Icity.Controllers
                     string folder = "Images/ProfileImages/";
                     lifeEvent.Media = UploadImage(folder, media);
                 }
-                
+
                 lifeEvent.Id = user.Id;
                 _applicationDbContext.LifeEvents.Add(lifeEvent);
                 _applicationDbContext.SaveChanges();
@@ -456,7 +455,7 @@ namespace Icity.Controllers
                 {
                     return Ok(new { Status = "false", Reason = "Enter Interest Title" });
                 }
-               
+
 
                 interest.Id = user.Id;
                 _applicationDbContext.Interests.Add(interest);
@@ -524,9 +523,9 @@ namespace Icity.Controllers
             }
             return true;
         }
-        
+
         [HttpPost]
-        public async Task<IActionResult> AddPhoto(Photo photo, IFormFile image,string userEmail)
+        public async Task<IActionResult> AddPhoto(Photo photo, IFormFile image, string userEmail)
         {
             try
             {
@@ -573,6 +572,7 @@ namespace Icity.Controllers
                 }
 
                 var photosList = _applicationDbContext.Photos.Where(e => e.Id == user.Id);
+
                 return Ok(new { Status = "Success", PhotosList = photosList });
 
             }
@@ -581,6 +581,7 @@ namespace Icity.Controllers
                 return Ok(new { Status = "false", Reason = e.Message });
             }
         }
+       
         [ApiExplorerSettings(IgnoreApi = true)]
         private bool ValidatevideoModel(Video video)
         {
@@ -615,7 +616,7 @@ namespace Icity.Controllers
                 }
 
                 video.Id = user.Id;
-                
+
                 _applicationDbContext.Videos.Add(video);
                 _applicationDbContext.SaveChanges();
                 return Ok(new { Status = "Success", Video = video });
@@ -803,7 +804,7 @@ namespace Icity.Controllers
                 user.Phone2 = userProfile.Phone2;
                 user.Folwers = userProfile.Folwers;
                 user.Website = userProfile.Website;
-                
+
                 if (Profilepic != null)
                 {
                     string folder = "Images/ProfileImages/";
@@ -872,11 +873,22 @@ namespace Icity.Controllers
             try
             {
                 var user = await _userManager.FindByIdAsync(userid);
+                //var listings = _context.AddListings.Where(a => a.CreatedByUser == userid).ToList();
+                //List<Datalist> listingmedia = new List<Datalist>();
 
                 if (user != null)
                 {
-                    user.Photos = _applicationDbContext.Photos.Where(e => e.Id == userid).ToList();
-                    user.Videos = _applicationDbContext.Videos.Where(e => e.Id == userid).ToList();
+                    user.Photos = _applicationDbContext.Photos.Where(e => e.Id == userid).OrderBy(a => a.PublishDate).ToList();
+                    user.Videos = _applicationDbContext.Videos.Where(e => e.Id == userid).OrderBy(a => a.PublishDate).ToList();
+                    //foreach (var item in user.Photos)
+                    //{
+                    //    listingmedia.Add(new Datalist(item.PhotoID, item.Image));
+                    //}
+                    //foreach (var item in user.Videos)
+                    //{
+                    //    listingmedia.Add(new Datalist(item.VideoID, item.VideoT));
+                    //}
+
                     user.Languages = _applicationDbContext.Languages.Where(e => e.Id == userid).ToList();
                     user.Interests = _applicationDbContext.Interests.Where(e => e.Id == userid).ToList();
                     user.Skills = _applicationDbContext.Skills.Where(e => e.Id == userid).ToList();
@@ -1185,7 +1197,7 @@ namespace Icity.Controllers
             var user = await _userManager.FindByEmailAsync(addListing.CreatedByUser);
             if (user == null)
             {
-                return Ok(new { status = "faild" });
+                return Ok(new { status = "false",message="User Not Found.." });
             }
 
 
@@ -1329,7 +1341,7 @@ namespace Icity.Controllers
                 model.MainLocataion = addListing.MainLocataion;
                 model.City = addListing.City;
                 model.ContactPeroson = addListing.ContactPeroson;
-                model.Country = addListing.Country;
+                model.CountryId = addListing.CountryId;
                 model.Branches = addListing.Branches;
                 model.CategoryId = addListing.CategoryId;
                 model.Discription = addListing.Discription;
@@ -1525,7 +1537,7 @@ namespace Icity.Controllers
         {
             try
             {
-                var productStatus = await _context.ProductStatuses.Where(e=>e.ProductStatusID==productStatusId).FirstOrDefaultAsync();
+                var productStatus = await _context.ProductStatuses.Where(e => e.ProductStatusID == productStatusId).FirstOrDefaultAsync();
                 var model = new
                 {
                     status = true,
@@ -1573,8 +1585,8 @@ namespace Icity.Controllers
             classifiedAds.Status = false;
             classifiedAds.AddedDate = DateTime.Now;
             classifiedAds.PayedDate = null;
-            
-            
+
+
             _context.ClassifiedAds.Add(classifiedAds);
             _context.SaveChanges();
             return Ok(new { status = "success", classifiedAds });
@@ -1638,7 +1650,7 @@ namespace Icity.Controllers
                     {
                         _context.ClassifiedAds.Remove(classifiedAds);
                         _context.SaveChanges();
-                        return Ok(new {status="Deleted", classifiedAds });
+                        return Ok(new { status = "Deleted", classifiedAds });
                     }
                     return BadRequest("classified Ads Not Found..");
                 }
@@ -1679,7 +1691,7 @@ namespace Icity.Controllers
         {
             try
             {
-                var classifiedAds = await _context.ClassifiedAds.Include(e=>e.ClassifiedAsdMedias).Where(e=>e.ClassifiedAdsTypeID== ClassifiedAdsTypeId).ToListAsync();
+                var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.ClassifiedAdsTypeID == ClassifiedAdsTypeId).ToListAsync();
                 var model = new
                 {
                     status = true,
@@ -1697,7 +1709,7 @@ namespace Icity.Controllers
         {
             try
             {
-                var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.ClassifiedAdsTypeID == ClassifiedAdsTypeId&&e.ProductStatusID==productStatustId).ToListAsync();
+                var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.ClassifiedAdsTypeID == ClassifiedAdsTypeId && e.ProductStatusID == productStatustId).ToListAsync();
                 var model = new
                 {
                     status = true,
@@ -1715,7 +1727,6 @@ namespace Icity.Controllers
         {
             try
             {
-               
                 var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.AddedBy == UserEmail).ToListAsync();
                 var model = new
                 {
@@ -1729,5 +1740,24 @@ namespace Icity.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllCountries()
+        {
+            try
+            {
+                var countries = await _context.Countries.ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    Countries = countries
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status=false,message=e.Message});
+            }
+        }
+       
     }
 }

@@ -81,22 +81,22 @@
 
                 </div>
                 <div class="map-container">
-                        <div id="singleMap" class="drag-map" data-latitude="40.7427837" data-longitude="-73.11445617675781"></div>
-                    </div>
+                    <div id="singleMap" class="drag-map" data-latitude="" data-longitude=""></div>
+                </div>
                 <label>City / Location</label>
-                    <div class="listsearch-input-item">
-                        <select data-placeholder="City" class="chosen-select no-search-select">
-                            <option>All Cities</option>
-                            <option>New York</option>
-                            <option>London</option>
-                            <option>Paris</option>
-                            <option>Kiev</option>
-                            <option>Moscow</option>
-                            <option>Dubai</option>
-                            <option>Rome</option>
-                            <option>Beijing</option>
-                        </select>
-                    </div>
+                <div class="listsearch-input-item">
+                    <select data-placeholder="City" class="chosen-select no-search-select">
+                        <option>All Cities</option>
+                        <option>New York</option>
+                        <option>London</option>
+                        <option>Paris</option>
+                        <option>Kiev</option>
+                        <option>Moscow</option>
+                        <option>Dubai</option>
+                        <option>Rome</option>
+                        <option>Beijing</option>
+                    </select>
+                </div>
 
                 <div class="row">
                     <div class="col-md-6">
@@ -697,6 +697,7 @@
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places&callback=initAutocomplete"></script>
         <script src="~/Template/js/map-add.js"></script>
 
@@ -706,7 +707,16 @@
 }
 
 <script>
-    google.maps.event.addListener(singleMap, 'click', function (event) {        alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());        var myLatlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());        var marker = new google.maps.Marker({            position: myLatlng,            map: map,            title: 'Hello World!'        });    });
+    //google.maps.event.addListener(singleMap, 'click', function (event) {
+    //    alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());
+
+    //    var myLatlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+    //    var marker = new google.maps.Marker({
+    //        position: myLatlng,
+    //        map: map,
+    //        title: 'Hello World!'
+    //    });
+    //});
 
 
 
@@ -785,6 +795,59 @@
         }
 
     }
+
+    window.addEventListener('load', (event) => {
+        console.log('The page has fully loaded');
+      
+        getLocation();
+
+    });
+    var logitude = 0;
+    var latitude = 0;
+
+
+    function getLocation() {
+        navigator.geolocation.getCurrentPosition(_fun_get_loc);
+    }
+    function _fun_get_loc(pos) {
+        longitude = pos.coords.longitude;
+        latitude = pos.coords.latitude;
+
+        initMap();
+        //var url="https://www.google.com/maps?q="+latitude+",+"+longitude;
+        //window.open(url,'_blank');
+        // location.replace(url);
+    }
+    //}
+    function initMap() {
+
+        console.log("lat= " + latitude)
+        console.log("long= " + longitude)
+        
+        // The location of Uluru
+        const uluru = { lat: latitude, lng: longitude };
+
+        // The map, centered at Uluru
+        const map = new google.maps.Map(document.getElementById("singleMap"), {
+            zoom: 4, center: uluru,
+        });
+        // The marker, positioned at Uluru
+        const marker = new google.maps.Marker({
+            position: uluru,
+            map: map,
+        });
+    }
+    singleMap.addListener('click', function (locationdata) {
+        //document.getElementById("latitude").value = locationdata.latLng.lat();
+        //document.getElementById("longitude").value = locationdata.latLng.lng();
+        var latetud = locationdata.latLng.lat();
+        var longetud = locationdata.latLng.lng();
+        console.log(latetud);
+        console.log(longetud);
+
+    });
+
+
 
 </script>
 @section Scripts {
