@@ -1083,4 +1083,13 @@
   <data name="Where to look?" xml:space="preserve">
     <value>أين تبحث؟</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Classified Ads Types" xml:space="preserve">
+    <value>أنواع الإعلانات</value>
+  </data>
+  <data name="Country Title" xml:space="preserve">
+    <value>عنوان المدينة</value>
+  </data>
 </root>

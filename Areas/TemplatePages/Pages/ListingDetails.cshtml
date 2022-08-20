@@ -5,6 +5,8 @@
 @using Microsoft.AspNetCore.Identity
 @using Icity.Data
 @using Icity.Models
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IcityContext _context
@@ -13,6 +15,8 @@
     var list = (AddListing)ViewData["listings"];
     var reviews = _context.Reviews.Where(a => a.AddListingId == list.AddListingId).ToList();
     //var user = await UserManager.FindByEmailAsync(curruntuser.CreatedByUser);
+    var branchlist = _context.Branches.Where(a => a.AddListingId == list.AddListingId).ToList();
+    //var Mylist = new JavaScriptSerializer().Serialize(branchlist);
 
 }
 <div id="wrapper">
@@ -678,7 +682,7 @@
                             </div>
                             <div class="box-widget">
                                 <div class="map-container">
-                                    <div id="singleMap" data-latitude="40.7427837" data-longitude="-73.11445617675781" data-mapTitle="Our Location"></div>
+                                    <div id="singleMap" class="drag-map" data-latitude="11201" data-longitude="12002"></div>
                                 </div>
                                 <div class="box-widget-content bwc-nopad">
                                     <div class="list-author-widget-contacts list-item-widget-contacts bwc-padside">
@@ -836,3 +840,80 @@
     </div>
     <!--content end-->
 </div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+<script src="~/Template/js/map-add.js"></script>
+<script>
+    var latlist
+    window.addEventListener('load', (event) => {
+        var sd = 0;
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            }
+            ,
+            url: "/TemplatePages/ListingDetails?handler=BranchesList",
+            async: false,
+            data: JSON.stringify(sd),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+
+            success: function (response) {
+                console.log("get selected rows successfully")
+                initMap();
+                for (var i in response) {
+                    console.log(response[i].Lat);
+                    //callintmap(response[i].Lat, response[i].Long)
+                    
+
+                }
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+
+
+        //  getLocation();
+
+    });
+
+    //var logitude = 0;
+    //var latitude = 0;
+
+
+    //function getLocation() {
+    //    navigator.geolocation.getCurrentPosition(_fun_get_loc);
+    //}
+    //function _fun_get_loc(pos) {
+    //    longitude = pos.coords.longitude;
+    //    latitude = pos.coords.latitude;
+
+    //    initMap();
+    //    //var url="https://www.google.com/maps?q="+latitude+",+"+longitude;
+    //    //window.open(url,'_blank');
+    //    // location.replace(url);
+    //}
+    ////}
+    /*function callintmap(lat, long) {*/
+        function initMap() {
+
+            //console.log("long= " + long)
+            //console.log("lat= " + lat)
+            // The location of Uluru
+            const uluru = { lat: 30.21022, lng: 30.1220 };
+
+            // The map, centered at Uluru
+            const map = new google.maps.Map(document.getElementById("singleMap"), {
+                zoom: 4, center: uluru,
+            });
+            console.log("uluru= " + uluru)
+            // The marker, positioned at Uluru
+            const marker = new google.maps.Marker({
+                position: uluru,
+                map: map,
+            });
+            console.log("marker= " + marker)
+        }
+</script>

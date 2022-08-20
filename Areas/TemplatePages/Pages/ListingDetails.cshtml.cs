@@ -33,7 +33,12 @@ namespace Icity.Areas.TemplatePages.Pages
        
         public ApplicationUser curruntuser { get; set; }
 
+        public IActionResult OnPostBranchesList(int sd)
+        {
 
+            var branches = _context.Branches.Where(a => a.AddListingId == listid).ToList();
+            return new JsonResult(branches);
+        }
         public async Task<IActionResult> OnGetAsync(int id)
         {
             try

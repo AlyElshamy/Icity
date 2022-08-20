@@ -1195,6 +1195,7 @@ namespace Icity.Controllers
         public async Task<IActionResult> AddListing(IFormFile Listinglogo, IFormFile PromoVideo, IFormFile listingbanner, IFormFileCollection Videos, IFormFileCollection Photos, AddListing addListing)
         {
             var user = await _userManager.FindByEmailAsync(addListing.CreatedByUser);
+
             if (user == null)
             {
                 return Ok(new { status = "false",message="User Not Found.." });
@@ -1251,12 +1252,6 @@ namespace Icity.Controllers
                 string folder = "Images/ListingMedia/Banners/";
                 addListing.ListingBanner = UploadImage(folder, listingbanner);
             }
-
-            if (!ModelState.IsValid)
-            {
-                return Ok(new { status = "false" });
-            }
-
 
             _context.AddListings.Add(addListing);
             _context.SaveChanges();

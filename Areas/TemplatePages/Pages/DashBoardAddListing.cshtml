@@ -81,7 +81,7 @@
 
                 </div>
                 <div class="map-container">
-                    <div id="singleMap" class="drag-map" data-latitude="" data-longitude=""></div>
+                    <div id="singleMap" class="drag-map" data-latitude="11151" data-longitude="51155"></div>
                 </div>
                 <label>City / Location</label>
                 <div class="listsearch-input-item">
@@ -359,9 +359,16 @@
                     <div class="add_room-item fl-wrap">
                         <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
                         <div class="row">
-                            <div class="col-md-12">
-                                <label>@sharedResource["Branch Title"]<i class="fal fa-briefcase"></i></label>
-                                <input class="titleinput" type="text" placeholder="Enter Branch Title" required value="" />
+                            <div class="col-md-4">
+                                <label>@sharedResource["Title"]<i class="fal fa-briefcase"></i></label>
+                                <input class="titleinput" name="Title" type="text" placeholder="Enter Title" required value="" />
+                            </div>
+                            <div class="col-md-4">
+                                <label>@sharedResource["Latetude"]<i class="fal fa-briefcase"></i></label>
+                                <input class="latinput" name="Lat" type="text" placeholder="Enter Latitude" required value="" />
+                            </div> <div class="col-md-4">
+                                <label>@sharedResource["Longtude"]<i class="fal fa-briefcase"></i></label>
+                                <input class="longinput" name="Long" type="text" placeholder="Enter Longtude" required value="" />
                             </div>
                         </div>
                     </div>
@@ -698,7 +705,7 @@
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
 
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places&callback=initAutocomplete"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
         <script src="~/Template/js/map-add.js"></script>
 
 
@@ -737,9 +744,12 @@
     function branchtitle() {
         var myList = new Array();
         var inputvalue = document.getElementsByClassName("titleinput");
+        var latvalue = document.getElementsByClassName("latinput");
+        var longvalue = document.getElementsByClassName("longinput");
         for (var i = 0; i < inputvalue.length; i++) {
-            if (document.getElementsByClassName("titleinput")[i].value != "") {
-                myList.push(document.getElementsByClassName("titleinput")[i].value)
+            var education = { Title: inputvalue[i].value, Lat: latvalue[i].value, Long: longvalue[i].value };
+            if (document.getElementsByClassName("titleinput")[i].value != "" && document.getElementsByClassName("latinput")[i].value != "" && document.getElementsByClassName("longinput")[i].value != "") {
+                myList.push(education)
             }
         }
         if (myList.length > 0) {
@@ -798,7 +808,7 @@
 
     window.addEventListener('load', (event) => {
         console.log('The page has fully loaded');
-      
+
         getLocation();
 
     });
@@ -823,7 +833,7 @@
 
         console.log("lat= " + latitude)
         console.log("long= " + longitude)
-        
+
         // The location of Uluru
         const uluru = { lat: latitude, lng: longitude };
 
