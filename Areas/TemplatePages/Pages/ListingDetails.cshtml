@@ -841,11 +841,11 @@
     <!--content end-->
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
-<script src="~/Template/js/map-add.js"></script>
 <script>
-    var latlist
+    var locatios = new Array();
     window.addEventListener('load', (event) => {
         var sd = 0;
+      
         $.ajax({
             type: "POST",
             beforeSend: function (xhr) {
@@ -861,13 +861,23 @@
 
             success: function (response) {
                 console.log("get selected rows successfully")
-                initMap();
+
                 for (var i in response) {
-                    console.log(response[i].Lat);
+                    var latetude = Number(response[i].Lat);
+                    var longtude = Number(response[i].Long);
+                    var title = response[i].Title;
+                    var url = { Lat: latetude, Long: longtude, Title:title };
+                    console.log(url);
+                    locatios.push(url);
+
+                    //console.log(response[i].Lat);
                     //callintmap(response[i].Lat, response[i].Long)
-                    
+
 
                 }
+                console.log(locatios.length);
+                console.log("get selected rows successfully")
+                initMap();
             },
             failure: function (response) {
                 alert(response);
@@ -875,45 +885,81 @@
         });
 
 
-        //  getLocation();
+
 
     });
 
-    //var logitude = 0;
-    //var latitude = 0;
+
+    function initMap() {
+
+        
+        //console.log(locatios.length);
+        //for (var i = 0; i < locatios.length; i++) {
+        //    console.log(locatios.length);
+
+        //    var uluru = { lat: locatios[i].Lat, lng: locatios[i].Long };
+        //    console.log(uluru);
+           
+        //    var map = new google.maps.Map(document.getElementById("singleMap"), {
+        //        zoom: 4, center: uluru,
+        //        mapTypeId: google.maps.MapTypeId.ROADMAP
+        //    });
+        //    console.log("uluru= " + uluru)
+           
+        //    var marker = new google.maps.Marker({
+        //        position: uluru,
+        //        map: map,
+        //    });
+        //    console.log("marker= " + marker)
+        //}
 
 
-    //function getLocation() {
-    //    navigator.geolocation.getCurrentPosition(_fun_get_loc);
-    //}
-    //function _fun_get_loc(pos) {
-    //    longitude = pos.coords.longitude;
-    //    latitude = pos.coords.latitude;
 
-    //    initMap();
-    //    //var url="https://www.google.com/maps?q="+latitude+",+"+longitude;
-    //    //window.open(url,'_blank');
-    //    // location.replace(url);
-    //}
-    ////}
-    /*function callintmap(lat, long) {*/
-        function initMap() {
 
-            //console.log("long= " + long)
-            //console.log("lat= " + lat)
-            // The location of Uluru
-            const uluru = { lat: 30.21022, lng: 30.1220 };
+        var myOptions = {
+            zoom: 2,
+            center: new google.maps.LatLng(51.9000, 8.4731),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
 
-            // The map, centered at Uluru
-            const map = new google.maps.Map(document.getElementById("singleMap"), {
-                zoom: 4, center: uluru,
-            });
-            console.log("uluru= " + uluru)
-            // The marker, positioned at Uluru
-            const marker = new google.maps.Marker({
-                position: uluru,
+        var map = new google.maps.Map(document.getElementById("singleMap"), myOptions);
+
+        var infowindow = new google.maps.InfoWindow({
+            content: ''
+        });
+
+        for (i = 0; i < locatios.length; i++) {
+            //size = 40;
+            //var img = new google.maps.MarkerImage('/285659_marker_map_icon.png',
+            //    new google.maps.Size(size, size),
+            //    new google.maps.Point(0, 0),
+            //    new google.maps.Point(size / 2, size / 2)
+            //);
+
+            var marker = new google.maps.Marker({
                 map: map,
+                title: locatios[i].Title,
+                position: new google.maps.LatLng(locatios[i].Lat, locatios[i].Long)
+                //,icon: img
             });
-            console.log("marker= " + marker)
+
+            bindInfoWindow(marker, map, infowindow, "<p>" + locatios[i].Title + "</p>", locatios[i].Title);
+
         }
+
+    }
+
+    function bindInfoWindow(marker, map, infowindow, html, Ltitle) {
+        google.maps.event.addListener(marker, 'mouseover', function () {
+            infowindow.setContent(html);
+            infowindow.open(map, marker);
+
+        });
+        google.maps.event.addListener(marker, 'mouseout', function () {
+            infowindow.close();
+
+        });
+    }
+  
+    
 </script>

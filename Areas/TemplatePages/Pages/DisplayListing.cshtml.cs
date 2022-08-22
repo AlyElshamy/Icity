@@ -35,15 +35,16 @@ namespace Icity.Areas.TemplatePages.Pages
         [BindProperty]
         public ClassifiedAdsFilterModel FilterModel { get; set; }
         public List<string> Cities = new List<string>();
+        public static List<AddListing> AddListingsloc = new List<AddListing>();
         public async Task<IActionResult> OnGetAsync()
         {
 
             try
             {
-                AddListingList = await _context.AddListings.Include(a=>a.Category).Include(a => a.ListingPhotos).Include(a => a.Reviews).ToListAsync();
-                var ListCities =  _context.AddListings.Select(a => a.City).Distinct();
-                
-               
+                AddListingList = await _context.AddListings.Include(a => a.Category).Include(a => a.ListingPhotos).Include(a => a.Reviews).ToListAsync();
+                var ListCities = _context.AddListings.Select(a => a.City).Distinct();
+                //AddListingsloc = AddListingList;
+
             }
             catch (Exception)
             {
@@ -60,6 +61,10 @@ namespace Icity.Areas.TemplatePages.Pages
 
             return Page();
         }
+        public async Task<IActionResult> OnPostBranchesList(int x)
+        {
+            return new JsonResult(AddListingsloc);
+        }
         public async Task<IActionResult> OnPostSortList([FromBody] List<string> SelectedValue)
         {
             AddListingListStatic = new List<Models.AddListing>();
@@ -69,14 +74,14 @@ namespace Icity.Areas.TemplatePages.Pages
             {
                 if (restult == 1)
                 {
-                    AddListingListStatic = await  _context.AddListings.Include(a => a.Category).Include(a => a.ListingPhotos).Include(a => a.Reviews).OrderBy(e => e.Rating).ToListAsync();
-
+                    AddListingListStatic = await _context.AddListings.Include(a => a.Category).Include(a => a.ListingPhotos).Include(a => a.Reviews).OrderBy(e => e.Rating).ToListAsync();
+                    AddListingsloc = AddListingListStatic;
                 }
                 if (restult == 2)
                 {
 
                     AddListingListStatic = await _context.AddListings.Include(a => a.Category).Include(a => a.ListingPhotos).Include(a => a.Reviews).OrderByDescending(e => e.Rating).ToListAsync();
-
+                    AddListingsloc = AddListingListStatic;
                 }
             }
 
@@ -91,20 +96,27 @@ namespace Icity.Areas.TemplatePages.Pages
                 if (FilterModel.CatId != 0)
                 {
                     AddListingList = await _context.AddListings.Include(a => a.Category).Where(e => e.CategoryId == FilterModel.CatId).Include(a => a.ListingPhotos).Include(a => a.Reviews).ToListAsync();
+                    AddListingsloc = AddListingList;
                 }
                 if (FilterModel.Target != null)
                 {
                     AddListingList = await _context.AddListings.Include(a => a.Category).Where(e => e.Title.ToUpper().Contains(FilterModel.Target.ToUpper())).Include(a => a.ListingPhotos).Include(a => a.Reviews).ToListAsync();
+                    AddListingsloc = AddListingList;
+
                 }
                 if (FilterModel.Location != null)
                 {
-                    AddListingList = await _context.AddListings.Include(a => a.Category).Where(e => e.MainLocataion.ToUpper().Contains(FilterModel.Location.ToUpper()) ).Include(a => a.ListingPhotos).Include(a => a.Reviews).ToListAsync();
+                    AddListingList = await _context.AddListings.Include(a => a.Category).Where(e => e.MainLocataion.ToUpper().Contains(FilterModel.Location.ToUpper())).Include(a => a.ListingPhotos).Include(a => a.Reviews).ToListAsync();
+                    AddListingsloc = AddListingList;
+
                 }
                 if (FilterModel.City != null)
                 {
                     AddListingList = await _context.AddListings.Include(a => a.Category).Where(e => e.City.ToUpper().Contains(FilterModel.City.ToUpper())).Include(a => a.ListingPhotos).Include(a => a.Reviews).ToListAsync();
+                    AddListingsloc = AddListingList;
+
                 }
-                if (FilterModel.Location == null && FilterModel.Target == null && FilterModel.CatId == 0&& FilterModel.City == null)
+                if (FilterModel.Location == null && FilterModel.Target == null && FilterModel.CatId == 0 && FilterModel.City == null)
                 {
                     AddListingList = new List<Models.AddListing>();
                 }

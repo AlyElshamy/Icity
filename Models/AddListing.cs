@@ -23,21 +23,21 @@ namespace Icity.Models
         public string MainLocataion { get; set; }
         [Required(ErrorMessage = "Reequired")]
         public string Address { get; set; }
-        [Required(ErrorMessage = "Reequired")]
+        //[Required(ErrorMessage = "Reequired")]
         public string ContactPeroson { get; set; }
         [Required(ErrorMessage = "Reequired")]
         public string Phone1 { get; set; }
-        [Required(ErrorMessage = "Reequired")]
+        //[Required(ErrorMessage = "Reequired")]
         public string Phone2 { get; set; }
-        [Required(ErrorMessage = "Reequired")]
+        //[Required(ErrorMessage = "Reequired")]
         public string Fax { get; set; }
         [Required(ErrorMessage ="Required"), RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Not Valid")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Reequired")]
+        //[Required(ErrorMessage = "Reequired")]
         public string Website { get; set; }
         [Required(ErrorMessage = "Reequired")]
         public string Discription { get; set; }
-        [Required(ErrorMessage = "Reequired")]
+        //[Required(ErrorMessage = "Reequired")]
         public string Tags { get; set; }
         public double Rating { get; set; }
         //[Required(ErrorMessage = "Reequired")]

@@ -8,8 +8,8 @@
 @Html.AntiForgeryToken()
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @{
-   var categoryList = _context.Categories;
-   var CitiesList = _context.AddListings.Select(a => a.City).Distinct();
+    var categoryList = _context.Categories;
+    var CitiesList = _context.AddListings.Select(a => a.City).Distinct();
     var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
     var BrowserCulture = locale.RequestCulture.UICulture.ToString();
 
@@ -19,7 +19,10 @@
     <div class="content">
         <!-- Map -->
         <div class="map-container column-map right-pos-map fix-map hid-mob-map">
-            <div id="map-main"></div>
+            <div id="map-main">
+                <div id="singleMap" style="height:100vh" class="drag-map" data-latitude="11201" data-longitude="12002"></div>
+
+            </div>
             <ul class="mapnavigation no-list-style">
                 <li><a href="#" class="prevmap-nav mapnavbtn"><span><i class="fas fa-caret-left"></i></span></a></li>
                 <li><a href="#" class="nextmap-nav mapnavbtn"><span><i class="fas fa-caret-right"></i></span></a></li>
@@ -110,7 +113,7 @@
                                                         <option>@sharedResource["All Categories"]</option>
                                                         @foreach (var item in categoryList)
                                                         {
-                                                            
+
                                                             if (BrowserCulture == "en-US")
                                                             {
                                                                 <option value="@item.CategoryId">@item.CategoryTitleEn</option>
@@ -129,15 +132,15 @@
                                             <!-- listsearch-input-item-->
                                             <div class="col-md-4">
                                                 <div class="listsearch-input-item">
-                                                    <select asp-for="@Model.FilterModel.City data-placeholder="City/Location" class="chosen-select no-search-select">
-                                                      <option>All Cities</option>
+                                                    <select asp-for="@Model.FilterModel.City data-placeholder=" City /Location" class="chosen-select no-search-select">
+                                                        <option>All Cities</option>
                                                         @foreach (var item in CitiesList)
                                                         {
-                                                           <option value="@item">@item</option>
-                                                            
+                                                            <option value="@item">@item</option>
+
                                                         }
-                                                        
-                                                        
+
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -297,40 +300,43 @@
                     <!-- listing-item  -->
                     @{
 
-                        foreach (var item in @Model.AddListingList)
+                        if (Model.AddListingList != null)
                         {
-                            var user = await UserManager.FindByEmailAsync(@item.CreatedByUser);
-                            //string DateFormat = @item.AddedDate.ToString("dddd, dd MMMM yyyy");
-                            var MediaList = item.ListingPhotos;
-                            var ReviewCount = _context.Reviews.Where(e=>e.AddListingId==item.AddListingId).Count();
-                            var AvgRatingList = _context.Reviews.Where(e=>e.AddListingId==item.AddListingId).ToList();
-                            double sum = 0;
-                            foreach (var ele in AvgRatingList)
-                            {
-                                sum += ele.Rating;
-                            }
-                            double AvgRating = 0;
-                            if (sum != 0.0)
-                            {
-                                AvgRating = sum / ReviewCount;
-                            }
-                            var addListingObj= _context.AddListings.Where(e => e.AddListingId == item.AddListingId).FirstOrDefault();
-                            addListingObj.Rating = AvgRating;
-                            _context.SaveChanges();
-                            var OneDecimalPlaces = Math.Round(AvgRating, 1);
-                            var AvgRatingValue = Math.Round(AvgRating);
-                            string strCon = "";
-                            string checkExte = "";
-                            foreach (var ele in MediaList)
-                            {
 
-                                strCon += "{'src':" + "'/" + ele.PhotoUrl + "'" + "},";
+                            foreach (var item in @Model.AddListingList)
+                            {
+                                var user = await UserManager.FindByEmailAsync(@item.CreatedByUser);
+                                //string DateFormat = @item.AddedDate.ToString("dddd, dd MMMM yyyy");
+                                var MediaList = item.ListingPhotos;
+                                var ReviewCount = _context.Reviews.Where(e => e.AddListingId == item.AddListingId).Count();
+                                var AvgRatingList = _context.Reviews.Where(e => e.AddListingId == item.AddListingId).ToList();
+                                double sum = 0;
+                                foreach (var ele in AvgRatingList)
+                                {
+                                    sum += ele.Rating;
+                                }
+                                double AvgRating = 0;
+                                if (sum != 0.0)
+                                {
+                                    AvgRating = sum / ReviewCount;
+                                }
+                                var addListingObj = _context.AddListings.Where(e => e.AddListingId == item.AddListingId).FirstOrDefault();
+                                addListingObj.Rating = AvgRating;
+                                _context.SaveChanges();
+                                var OneDecimalPlaces = Math.Round(AvgRating, 1);
+                                var AvgRatingValue = Math.Round(AvgRating);
+                                string strCon = "";
+                                string checkExte = "";
+                                foreach (var ele in MediaList)
+                                {
 
-                            }
+                                    strCon += "{'src':" + "'/" + ele.PhotoUrl + "'" + "},";
 
-                            int countMediaList = MediaList.Count;
-                            int count = 0;
-                            // src="~/Template/images/all/1.jpg"
+                                }
+
+                                int countMediaList = MediaList.Count;
+                                int count = 0;
+                                // src="~/Template/images/all/1.jpg"
                             <div class="listing-item">
                                 <article class="geodir-category-listing fl-wrap">
                                     <div class="geodir-category-img">
@@ -362,9 +368,10 @@
                                             </div>
                                         </div>
                                         <div class="geodir-category-text fl-wrap">
-                                        <div style="height:50px">
-                                            <p  class="small-text" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                            <a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId" style="text-decoration: none; color: inherit;">@item.Discription</a></p>
+                                            <div style="height:50px">
+                                                <p class="small-text" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                                    <a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId" style="text-decoration: none; color: inherit;">@item.Discription</a>
+                                                </p>
                                             </div>
                                             <div class="facilities-list fl-wrap">
                                                 <div class="facilities-list-title">Facilities : </div>
@@ -383,7 +390,7 @@
                                                 {
                                                     <span>@item.Category.CategoryTitleEn</span>
                                                 }
-                                                
+
                                             </a>
                                             <div class="geodir-opt-list">
                                                 <ul class="no-list-style">
@@ -413,6 +420,7 @@
                                     </div>
                                 </article>
                             </div>
+                            }
                         }
                     }
                     <!-- listing-item end -->
@@ -433,14 +441,14 @@
     </div>
     <!--content end-->
 </div>
+
 @{
 
     //English
     if (BrowserCulture == "en-US")
     {
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
-        <script src="~/Template/https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
-        <script src="~/Template/~/Template/js/map-add.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
 
 
     }
@@ -457,21 +465,21 @@
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
-        <script src="~/Template/https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places&callback=initAutocomplete"></script>
-        <script src="~/Template/~/Template/js/map-add.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
 
 
 
     }
 }
 <script>
-     function sortItem(value) {
-         console.log(value);
-         console.log(typeof(value));
+    function sortItem(value) {
+        console.log(value);
+        console.log(typeof (value));
 
         var myList = new Array();
         myList.push(value)
-        if (myList.length > 0||myList[0]!="0") {
+        if (myList.length > 0 || myList[0] != "0") {
             $.ajax({
                 type: "POST",
                 beforeSend: function (xhr) {
@@ -487,7 +495,7 @@
 
                 success: function (response) {
                     //document.getElementById("SelectedCity").value=response.
-                    
+
                     window.location.reload();
                 },
                 failure: function (response) {
@@ -500,5 +508,135 @@
             console.log("Nobody has been selected")
         }
     }
+
+
+
+
+    var locatios = new Array();
+    window.addEventListener('load', (event) => {
+        var x = 0;
+
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            }
+            ,
+            url: "/TemplatePages/DisplayListing?handler=BranchesList",
+            async: false,
+            data: JSON.stringify(x),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+
+            success: function (response) {
+                console.log("get selected rows successfully")
+
+                for (var i in response) {
+
+                    console.log(response);
+                    console.log(response[i].MainLocataion);
+                    console.log(typeof (response[i].MainLocataion));
+
+                    var myArray = response[i].MainLocataion.split(",");
+                    var latetude = Number(myArray[0]);
+                    var longtude = Number(myArray[1]);
+                    console.log(latetude);
+                    console.log(longtude);
+
+                    var title = response[i].Title;
+                    var url = { Lat: latetude, Long: longtude, Title: title };
+                    console.log(url);
+                    locatios.push(url);
+
+
+
+                }
+                console.log(locatios.length);
+                console.log("get selected rows successfully")
+                initMap();
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+
+
+
+
+    });
+
+
+    function initMap() {
+
+
+        //console.log(locatios.length);
+        //for (var i = 0; i < locatios.length; i++) {
+        //    console.log(locatios.length);
+
+        //    var uluru = { lat: locatios[i].Lat, lng: locatios[i].Long };
+        //    console.log(uluru);
+
+        //    var map = new google.maps.Map(document.getElementById("singleMap"), {
+        //        zoom: 4, center: uluru,
+        //        mapTypeId: google.maps.MapTypeId.ROADMAP
+        //    });
+        //    console.log("uluru= " + uluru)
+
+        //    var marker = new google.maps.Marker({
+        //        position: uluru,
+        //        map: map,
+        //    });
+        //    console.log("marker= " + marker)
+        //}
+
+
+
+
+        var myOptions = {
+            zoom: 2,
+            center: new google.maps.LatLng(51.9000, 8.4731),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById("singleMap"), myOptions);
+
+        var infowindow = new google.maps.InfoWindow({
+            content: ''
+        });
+
+        for (i = 0; i < locatios.length; i++) {
+            //size = 40;
+            //var img = new google.maps.MarkerImage('/285659_marker_map_icon.png',
+            //    new google.maps.Size(size, size),
+            //    new google.maps.Point(0, 0),
+            //    new google.maps.Point(size / 2, size / 2)
+            //);
+
+            var marker = new google.maps.Marker({
+                map: map,
+                title: locatios[i].Title,
+                position: new google.maps.LatLng(locatios[i].Lat, locatios[i].Long)
+                //,icon: img
+            });
+
+            bindInfoWindow(marker, map, infowindow, "<p>" + locatios[i].Title + "</p>", locatios[i].Title);
+
+        }
+
+    }
+
+    function bindInfoWindow(marker, map, infowindow, html, Ltitle) {
+        google.maps.event.addListener(marker, 'mouseover', function () {
+            infowindow.setContent(html);
+            infowindow.open(map, marker);
+
+        });
+        google.maps.event.addListener(marker, 'mouseout', function () {
+            infowindow.close();
+
+        });
+    }
+
 
 </script>

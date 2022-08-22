@@ -1424,22 +1424,30 @@ namespace Icity.Controllers
 
         }
         [HttpPost]
-        public IActionResult PostListingReview(Review review)
+        public IActionResult PostListingReview(ReviewVM review)
         {
             if (review.AddListingId != 0)
             {
+                var reviewobj = new Review() {
+                    AddListingId=review.AddListingId,
+                    Email= review.Email,
+                    Name= review.Name,
+                    Rating= review.Rating,
+                   Title= review.Title,
+                   ReviewDate= DateTime.Now
+                    };
                 try
                 {
-                    _context.Reviews.Add(review);
+                    _context.Reviews.Add(reviewobj);
                     _context.SaveChanges();
-                    return Ok(new { status = "success", review });
+                    return Ok(new { status = "success", reviewobj });
                 }
                 catch (Exception e)
                 {
-                    return BadRequest(e.Message);
+                    return Ok(new {status=false,message= e.Message });
                 }
             }
-            return BadRequest("Enter Valid AssetListing id..");
+            return Ok(new { status = false, message = "Enter Valid AssetListing id.." });
         }
         [HttpGet]
         public IActionResult GetAllReviews(int listingid)
