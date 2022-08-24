@@ -21,7 +21,9 @@ namespace Icity.Areas.TemplatePages.Pages
         private IcityContext _context;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IToastNotification _toastNotification;
-
+        public List<int> Pagenumbers = new List<int>();
+        public static bool first = true;
+        public static bool ajax = true;
         public DisplayListingModel(IcityContext context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
         {
             _context = context;
@@ -36,14 +38,35 @@ namespace Icity.Areas.TemplatePages.Pages
         public ClassifiedAdsFilterModel FilterModel { get; set; }
         public List<string> Cities = new List<string>();
         public static List<AddListing> AddListingsloc = new List<AddListing>();
-        public async Task<IActionResult> OnGetAsync()
+        public static List<AddListing> Listings2 = new List<AddListing>();
+
+        public int pages = 6;
+        public async Task<IActionResult> OnPostPagesList([FromBody] int num)
         {
 
+            //var alllistings = _context.AddListings.Include(a => a.Category).Include(a => a.ListingPhotos).Include(a => a.Reviews).ToList();
+            ajax = false;
+            var start = (num - 1) * pages;
+            AddListingList = AddListingsloc.Skip(start).Take(pages).ToList();
+            Listings2 = AddListingList;
+            return new JsonResult(num);
+        }
+        public async Task<IActionResult> OnGetAsync()
+        {
             try
             {
-                AddListingList = await _context.AddListings.Include(a => a.Category).Include(a => a.ListingPhotos).Include(a => a.Reviews).ToListAsync();
-                var ListCities = _context.AddListings.Select(a => a.City).Distinct();
-                //AddListingsloc = AddListingList;
+                var alllist = await _context.AddListings.Include(a => a.Category).Include(a => a.ListingPhotos).Include(a => a.Reviews).ToListAsync();
+                Pagenumbers = getpagescount(alllist);
+                if (first)
+                {
+
+                    AddListingsloc = alllist;
+                    AddListingList = alllist.Take(pages).ToList();
+                    var ListCities = _context.AddListings.Select(a => a.City).Distinct();
+                    first = false;
+                }
+                else
+                    AddListingList = Listings2;
 
             }
             catch (Exception)
@@ -84,12 +107,35 @@ namespace Icity.Areas.TemplatePages.Pages
                     AddListingsloc = AddListingListStatic;
                 }
             }
-
+            var alllistings = _context.AddListings.ToList();
+            float number = (float)alllistings.Count() / pages;
+            var pagenumber = Math.Ceiling(number);
+            for (int i = 1; i <= pagenumber; i++)
+            {
+                Pagenumbers.Add(i);
+            }
             return new JsonResult(SelectedValue);
+        }
+        public List<int> getpagescount(List<AddListing> addListings)
+        {
+
+            float number = (float)addListings.Count() / pages;
+            var pagenumber = Math.Ceiling(number);
+            for (int i = 1; i <= pagenumber; i++)
+            {
+                Pagenumbers.Add(i);
+            }
+            return Pagenumbers;
         }
         public async Task<IActionResult> OnPostAsync()
         {
-
+            if (ajax==false)
+            {
+                AddListingList = Listings2;
+                Pagenumbers = getpagescount(AddListingsloc);
+                ajax = true;
+                return Page();    
+            }
             try
             {
                 AddListingList = await _context.AddListings.Include(a => a.Category).Include(a => a.ListingPhotos).Include(a => a.Reviews).ToListAsync();
@@ -120,6 +166,8 @@ namespace Icity.Areas.TemplatePages.Pages
                 {
                     AddListingList = new List<Models.AddListing>();
                 }
+                Pagenumbers = getpagescount(AddListingList);
+                AddListingList = AddListingList.Take(pages).ToList();
 
             }
             catch (Exception)

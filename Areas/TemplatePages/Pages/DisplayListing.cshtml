@@ -20,7 +20,7 @@
         <!-- Map -->
         <div class="map-container column-map right-pos-map fix-map hid-mob-map">
             <div id="map-main">
-                <div id="singleMap" style="height:100vh" class="drag-map" data-latitude="11201" data-longitude="12002"></div>
+                <div id="singleMap" style="height:90vh" class="drag-map" data-latitude="11201" data-longitude="12002"></div>
 
             </div>
             <ul class="mapnavigation no-list-style">
@@ -132,7 +132,7 @@
                                             <!-- listsearch-input-item-->
                                             <div class="col-md-4">
                                                 <div class="listsearch-input-item">
-                                                    <select asp-for="@Model.FilterModel.City data-placeholder=" City /Location" class="chosen-select no-search-select">
+                                                    <select asp-for="@Model.FilterModel.City"  class="chosen-select no-search-select">
                                                         <option>All Cities</option>
                                                         @foreach (var item in CitiesList)
                                                         {
@@ -311,6 +311,7 @@
                                 var ReviewCount = _context.Reviews.Where(e => e.AddListingId == item.AddListingId).Count();
                                 var AvgRatingList = _context.Reviews.Where(e => e.AddListingId == item.AddListingId).ToList();
                                 double sum = 0;
+                                var branchCount = _context.Branches.Where(a=>a.AddListingId==item.AddListingId).Count();
                                 foreach (var ele in AvgRatingList)
                                 {
                                     sum += ele.Rating;
@@ -341,12 +342,12 @@
                                 <article class="geodir-category-listing fl-wrap">
                                     <div class="geodir-category-img">
                                         <div class="geodir-js-favorite_btn"><i class="fal fa-heart"></i><span>Save</span></div>
-                                        <a href="listing-single.html" class="geodir-category-img-wrap fl-wrap">
+                                        <a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId" class="geodir-category-img-wrap fl-wrap">
                                             <img src="/@item.ListingLogo" style="height: 400px;" alt="">
                                         </a>
                                         <div class="listing-avatar">
 
-                                            <a href="author-single.html"><img src="/@user.ProfilePicture" alt=""></a>
+                                            <a ><img src="/@user.ProfilePicture" alt=""></a>
                                             <span class="avatar-tooltip">Created By  <strong>@user.FullName</strong></span>
                                         </div>
 
@@ -363,8 +364,8 @@
                                     <div class="geodir-category-content fl-wrap">
                                         <div class="geodir-category-content-title fl-wrap">
                                             <div class="geodir-category-content-title-item">
-                                                <h3 class="title-sin_map"><a href="listing-single.html">@item.Title</a><span class="verified-badge"><i class="fal fa-check"></i></span></h3>
-                                                <div class="geodir-category-location fl-wrap"><a href="#5" class="map-item"><i class="fas fa-map-marker-alt"></i> @item.MainLocataion</a></div>
+                                                <h3 class="title-sin_map"><a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId">@item.Title</a><span class="verified-badge"><i class="fal fa-check"></i></span></h3>
+                                                <div class="geodir-category-location fl-wrap"><a  class="map-item"><i class="fas fa-map-marker-alt"></i> @item.City </a></div>
                                             </div>
                                         </div>
                                         <div class="geodir-category-text fl-wrap">
@@ -373,7 +374,7 @@
                                                     <a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId" style="text-decoration: none; color: inherit;">@item.Discription</a>
                                                 </p>
                                             </div>
-                                            <div class="facilities-list fl-wrap">
+                                            @*<div class="facilities-list fl-wrap">
                                                 <div class="facilities-list-title">Facilities : </div>
                                                 <ul class="no-list-style">
                                                     <li class="tolt" data-microtip-position="top" data-tooltip="Free WiFi"><i class="fal fa-wifi"></i></li>
@@ -381,7 +382,7 @@
                                                     <li class="tolt" data-microtip-position="top" data-tooltip="Non-smoking Rooms"><i class="fal fa-smoking-ban"></i></li>
                                                     <li class="tolt" data-microtip-position="top" data-tooltip="Pets Friendly"><i class="fal fa-dog-leashed"></i></li>
                                                 </ul>
-                                            </div>
+                                            </div>*@
                                         </div>
                                         <div class="geodir-category-footer fl-wrap">
                                             <a class="listing-item-category-wrap">
@@ -394,8 +395,8 @@
                                             </a>
                                             <div class="geodir-opt-list">
                                                 <ul class="no-list-style">
-                                                    <li><a href="#" class="show_gcc"><i class="fal fa-envelope"></i><span class="geodir-opt-tooltip">Contact Info</span></a></li>
-                                                    <li><a href="#1" class="map-item"><i class="fal fa-map-marker-alt"></i><span class="geodir-opt-tooltip">On the map <strong>1</strong></span> </a></li>
+                                                    <li><a class="show_gcc"><i class="fal fa-envelope"></i><span class="geodir-opt-tooltip">Contact Info</span></a></li>
+                                                    <li><a  class="map-item"><i class="fal fa-map-marker-alt"></i><span class="geodir-opt-tooltip">Branches <strong>@branchCount</strong></span> </a></li>
                                                     <li>
                                                         <div class="dynamic-gal gdop-list-link" data-dynamicPath="[@strCon]">
                                                             <i class="fal fa-search-plus"></i><span class="geodir-opt-tooltip">Gallery</span>
@@ -403,10 +404,10 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div class="price-level geodir-category_price">
+                                            @*<div class="price-level geodir-category_price">
                                                 <span class="price-level-item" data-pricerating="3"></span>
                                                 <span class="price-name-tooltip">@item.Rating</span>
-                                            </div>
+                                            </div>*@
                                             <div class="geodir-category_contacts">
                                                 <div class="close_gcc"><i class="fal fa-times-circle"></i></div>
                                                 <ul class="no-list-style">
@@ -424,15 +425,14 @@
                         }
                     }
                     <!-- listing-item end -->
-                    <div class="pagination">
-                        <a href="#" class="prevposts-link"><i class="fas fa-caret-right"></i><span>Prev</span></a>
-                        <a href="#">1</a>
-                        <a href="#" class="current-page">2</a>
-                        <a href="#">3</a>
-                        <a href="#">...</a>
-                        <a href="#">7</a>
-                        <a href="#" class="nextposts-link"><span>Next</span><i class="fas fa-caret-left"></i></a>
-                    </div>
+                <div class="pagination">
+                    @foreach (var item in Model.Pagenumbers)
+                    {
+                        var divid = item.ToString();
+
+                        <a onclick="nextlist(this.id)" id="@divid">@item</a>
+                    }
+                </div>
                 </div>
             </div>
             <!-- listing-item-container end -->
@@ -473,10 +473,12 @@
     }
 }
 <script>
+    //localStorage.setItem("pagenumber", '1');
+    //document.getElementById('1').classList.add('current-page');
+
     function sortItem(value) {
         console.log(value);
         console.log(typeof (value));
-
         var myList = new Array();
         myList.push(value)
         if (myList.length > 0 || myList[0] != "0") {
@@ -515,7 +517,14 @@
     var locatios = new Array();
     window.addEventListener('load', (event) => {
         var x = 0;
+        document.getElementById('1').classList.add('current-page');
 
+        if (localStorage.getItem("pagenumber") == "") {
+            document.getElementById('1').classList.add('current-page');
+        } else
+            document.getElementById(localStorage.getItem("pagenumber")).classList.add('current-page');
+
+        
         $.ajax({
             type: "POST",
             beforeSend: function (xhr) {
@@ -534,26 +543,19 @@
 
                 for (var i in response) {
 
-                    console.log(response);
-                    console.log(response[i].MainLocataion);
-                    console.log(typeof (response[i].MainLocataion));
 
                     var myArray = response[i].MainLocataion.split(",");
                     var latetude = Number(myArray[0]);
                     var longtude = Number(myArray[1]);
-                    console.log(latetude);
-                    console.log(longtude);
+                 
 
                     var title = response[i].Title;
                     var url = { Lat: latetude, Long: longtude, Title: title };
-                    console.log(url);
                     locatios.push(url);
 
 
 
                 }
-                console.log(locatios.length);
-                console.log("get selected rows successfully")
                 initMap();
             },
             failure: function (response) {
@@ -625,7 +627,7 @@
         }
 
     }
-
+    
     function bindInfoWindow(marker, map, infowindow, html, Ltitle) {
         google.maps.event.addListener(marker, 'mouseover', function () {
             infowindow.setContent(html);
@@ -637,6 +639,41 @@
 
         });
     }
+    window.onbeforeunload = function () {        console.log(localStorage.getItem("pagenumber"))        localStorage.setItem("pagenumber", '');        console.log(localStorage.getItem("pagenumber"))    };
+  
+    function nextlist(item) {
+        localStorage.setItem("pagenumber", item);
 
+      
+        var num = Number(item);
+
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            }
+            ,
+            url: "/TemplatePages/DisplayListing?handler=PagesList",
+            async: false,
+            data: JSON.stringify(num),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+
+            success: function (response) {
+                console.log('before'+response)
+                console.log('before' + document.getElementById(response))
+                document.getElementById('1').classList.remove('current-page');
+
+                location.reload();
+
+                console.log('after' +response)
+                console.log('after' + document.getElementById(response))
+
+            },
+            failure: function (response) {
+            }
+        });
+    }
 
 </script>
