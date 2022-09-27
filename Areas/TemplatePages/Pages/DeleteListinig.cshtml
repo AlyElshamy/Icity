@@ -12,13 +12,13 @@
         <input asp-for="@Model.AddListing.AddListingId" hidden />
 
         <div class="dashboard-title   fl-wrap">
-            <h3>Add Listing</h3>
+            <h3>@sharedResource["Add Listing"]</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
-                <label>Listing Title <i class="fal fa-briefcase"></i></label>
-                <input asp-for="@Model.AddListing.Title" type="text" placeholder="Enter Title" readonly />
+                <label>@sharedResource["Listing Title"] <i class="fal fa-briefcase"></i></label>
+                <input asp-for="@Model.AddListing.Title" type="text" placeholder="@sharedResource["Enter Title"]" readonly />
                 <div class="row">
                     <div class="col-md-6">
                         <label>@sharedResource["Type / Category"]</label>
@@ -33,95 +33,95 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label>Tags <i class="fal fa-key"></i></label>
-                        <input asp-for="@Model.AddListing.Tags" type="text" placeholder="Enter Tags" readonly />
+                        <label>@sharedResource["Tags"] <i class="fal fa-key"></i></label>
+                        <input asp-for="@Model.AddListing.Tags" type="text" placeholder="@sharedResource["Enter Tags"]" readonly />
                     </div>
                 </div>
             </div>
         </div>
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Location / Contacts</h3>
+            <h3>@sharedResource["Location / Contacts"]</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
                 <div class="row">
                     @*<div class="col-md-6">
-                        <label>Longitude (Drag marker on the map)<i class="fal fa-long-arrow-alt-right"></i>  </label>
-                        <input type="text" placeholder="Map Longitude" id="long" value="" />
-                    </div>
-                    <div class="col-md-6">
-                        <label>Latitude (Drag marker on the map) <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input type="text" placeholder="Map Latitude" id="lat" value="" />
-                    </div>*@
+                            <label>Longitude (Drag marker on the map)<i class="fal fa-long-arrow-alt-right"></i>  </label>
+                            <input type="text" placeholder="Map Longitude" id="long" value="" />
+                        </div>
+                        <div class="col-md-6">
+                            <label>Latitude (Drag marker on the map) <i class="fal fa-long-arrow-alt-down"></i> </label>
+                            <input type="text" placeholder="Map Latitude" id="lat" value="" />
+                        </div>*@
                     <div class="">
-                        <label>MainLocation <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="@Model.AddListing.MainLocataion" type="text" placeholder="Enter Main Location" id="lat" readonly />
+                        <label>@sharedResource["MainLocation"] <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.MainLocataion" type="text" placeholder="@sharedResource["Enter Main Location"]" id="lat" readonly />
                     </div>
 
                 </div>
                 @*<div class="map-container">
-                    <div id="singleMap" class="drag-map" data-latitude="40.7427837" data-longitude="-73.11445617675781"></div>
-                </div>*@
+                        <div id="singleMap" class="drag-map" data-latitude="40.7427837" data-longitude="-73.11445617675781"></div>
+                    </div>*@
                 @*<label>City / Location</label>
-                <div class="listsearch-input-item">
-                    <select data-placeholder="City" class="chosen-select no-search-select">
-                        <option>All Cities</option>
-                        <option>New York</option>
-                        <option>London</option>
-                        <option>Paris</option>
-                        <option>Kiev</option>
-                        <option>Moscow</option>
-                        <option>Dubai</option>
-                        <option>Rome</option>
-                        <option>Beijing</option>
-                    </select>
-                </div>*@
+                    <div class="listsearch-input-item">
+                        <select data-placeholder="City" class="chosen-select no-search-select">
+                            <option>All Cities</option>
+                            <option>New York</option>
+                            <option>London</option>
+                            <option>Paris</option>
+                            <option>Kiev</option>
+                            <option>Moscow</option>
+                            <option>Dubai</option>
+                            <option>Rome</option>
+                            <option>Beijing</option>
+                        </select>
+                    </div>*@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label>City <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="@Model.AddListing.City" type="text" placeholder="Enter City" id="lat" readonly />
+                        <label>@sharedResource["City"] <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.City" type="text" placeholder="@sharedResource["Enter City"]" id="lat" readonly />
                     </div>
                     <div class="col-md-6">
-                        <label>Country <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="@Model.AddListing.Country" type="text" placeholder="Enter Country" id="lat" readonly />
+                        <label>@sharedResource["Country"] <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.Country" type="text" placeholder="@sharedResource["Enter Country"]" id="lat" readonly />
                     </div>
                     <div class="col-md-6">
-                        <label>Contact Person <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="@Model.AddListing.ContactPeroson" type="text" placeholder="Enter Contact Person" id="lat" readonly />
+                        <label>@sharedResource["Contact Person"] <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.ContactPeroson" type="text" placeholder="@sharedResource["Enter Contact Person"]" id="lat" readonly />
                     </div>
                     <div class="col-sm-6">
-                        <label>Address<i class="fal fa-map-marker"></i></label>
-                        <input asp-for="@Model.AddListing.Address" type="text" placeholder="Enter Address" readonly />
+                        <label>@sharedResource["Address"]<i class="fal fa-map-marker"></i></label>
+                        <input asp-for="@Model.AddListing.Address" type="text" placeholder="@sharedResource["Enter Address"]" readonly />
                     </div>
                     <div class="col-sm-6">
-                        <label>Phone 1<i class="far fa-phone"></i>  </label>
-                        <input asp-for="@Model.AddListing.Phone1" type="text" placeholder="Enter Phone" readonly />
+                        <label>@sharedResource["Phone 1"]<i class="far fa-phone"></i>  </label>
+                        <input asp-for="@Model.AddListing.Phone1" type="text" placeholder="@sharedResource["Enter Phone"]" readonly />
                     </div>
                     <div class="col-sm-6">
-                        <label>Phone 2<i class="far fa-phone"></i>  </label>
-                        <input asp-for="@Model.AddListing.Phone2" type="text" placeholder="Enter another Phone" readonly />
+                        <label>@sharedResource["Phone 2"]<i class="far fa-phone"></i>  </label>
+                        <input asp-for="@Model.AddListing.Phone2" type="text" placeholder="@sharedResource["Enter another Phone"]" readonly />
                     </div>
                     <div class="col-sm-6">
-                        <label> Website <i class="far fa-globe"></i>  </label>
-                        <input asp-for="@Model.AddListing.Website" type="text" placeholder="Enter Website" readonly />
+                        <label>@sharedResource["Website"]  <i class="far fa-globe"></i>  </label>
+                        <input asp-for="@Model.AddListing.Website" type="text" placeholder="@sharedResource["Enter Website"]" readonly />
                     </div>
                     <div class="col-sm-6">
-                        <label> Fax <i class="fa fa-fax"></i>  </label>
-                        <input asp-for="@Model.AddListing.Fax" type="text" placeholder="Enter Fax" readonly />
+                        <label>@sharedResource["Fax"]  <i class="fa fa-fax"></i>  </label>
+                        <input asp-for="@Model.AddListing.Fax" type="text" placeholder="@sharedResource["Enter Fax"]" readonly />
                     </div>
                     <div class="col-sm-12">
-                        <label>Email Address<i class="far fa-envelope"></i>  </label>
-                        <input asp-for="@Model.AddListing.Email" type="text" placeholder="Enter Email" readonly />
+                        <label>@sharedResource["Email Address"]<i class="far fa-envelope"></i>  </label>
+                        <input asp-for="@Model.AddListing.Email" type="text" placeholder="@sharedResource["Enter Email"]" readonly />
                     </div>
                 </div>
             </div>
         </div>
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Header Media</h3>
+            <h3>@sharedResource["Header Media"]</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
@@ -132,7 +132,7 @@
                         <div class="add-list-media-header" style="margin-bottom:20px">
                             <label class="radio inline">
                                 <input type="radio" name="gender" checked>
-                                <span>Background image</span>
+                                <span>@sharedResource["Background image"]</span>
                             </label>
                         </div>
                         <div class="add-list-media-wrap">
@@ -140,12 +140,12 @@
                                 <div class="listsearch-input-item fl-wrap">
                                     <div class="fuzone">
                                         @*<form>
-                                            <div class="fu-text">
-                                                <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
-                                                <div class="photoUpload-files fl-wrap"></div>
-                                            </div>
-                                            <input type="file" class="upload" multiple>
-                                        </form>*@
+                                                <div class="fu-text">
+                                                    <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
+                                                    <div class="photoUpload-files fl-wrap"></div>
+                                                </div>
+                                                <input type="file" class="upload" multiple>
+                                            </form>*@
                                     </div>
                                 </div>
                             </div>
@@ -157,19 +157,19 @@
                         <div class="add-list-media-header" style="margin-bottom:20px">
                             <label class="radio inline">
                                 <input type="radio" name="gender">
-                                <span>Carousel</span>
+                                <span>@sharedResource["Carousel"]</span>
                             </label>
                         </div>
                         <div class="add-list-media-wrap">
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
                                     @*<form>
-                                        <div class="fu-text">
-                                            <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
-                                            <div class="photoUpload-files fl-wrap"></div>
-                                        </div>
-                                        <input type="file" class="upload" multiple>
-                                    </form>*@
+                                            <div class="fu-text">
+                                                <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
+                                                <div class="photoUpload-files fl-wrap"></div>
+                                            </div>
+                                            <input type="file" class="upload" multiple>
+                                        </form>*@
                                 </div>
                             </div>
                         </div>
@@ -180,14 +180,14 @@
                         <div class="add-list-media-header" style="margin-bottom:20px">
                             <label class="radio inline">
                                 <input type="radio" name="gender">
-                                <span>Video</span>
+                                <span>@sharedResource["Video"]</span>
                             </label>
                         </div>
                         <div class="add-list-media-wrap">
-                            <label>Youtube  <i class="fab fa-youtube"></i></label>
+                            <label>@sharedResource["Youtube"]  <i class="fab fa-youtube"></i></label>
                             <input type="text" placeholder="https://www.youtube.com/" value="" />
-                            <label>Vimeo <i class="fab fa-vimeo-v"></i></label>
-                            <input type="text" placeholder="https://vimeo.com/" value="" />
+                            @*<label>@sharedResource[""]Vimeo <i class="fab fa-vimeo-v"></i></label>
+                                <input type="text" placeholder="https://vimeo.com/" value="" />*@
                         </div>
                     </div>
                     <!--col end-->
@@ -196,18 +196,18 @@
         </div>
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Details</h3>
+            <h3>@sharedResource["Details"]</h3>
         </div>
         <!-- profile-edit-container-->
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
-                <label>Description</label>
-                <textarea asp-for="@Model.AddListing.Discription" cols="40" rows="3" placeholder="Enter Discription" readonly></textarea>
+                <label>@sharedResource["Description"]</label>
+                <textarea asp-for="@Model.AddListing.Discription" cols="40" rows="3" placeholder="@sharedResource["Enter Discription"]" readonly></textarea>
             </div>
         </div>
         <!-- profile-edit-container end-->
         <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Branches</h3>
+            <h3>@sharedResource["Branches"]</h3>
             <div class="onoffswitch">
                 <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch11" checked>
                 <label class="onoffswitch-label" for="myonoffswitch11">
@@ -218,49 +218,49 @@
         </div>
         <!-- profile-edit-container-->
         @*<div class="profile-edit-container fl-wrap  block_box">
-            <div class="custom-form add_room-item-wrap">
-                <div class="add_room-container fl-wrap">
-                    <div class="add_room-item fl-wrap">
-                        <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Item Title <i class="fal fa-briefcase"></i></label>
-                                <input type="text" placeholder="Title" value="" />
-                            </div>
-                            <div class="col-md-4">
-                                <label>Item Category<i class="fal fa-filter"></i></label>
-                                <input type="text" placeholder="Category" value="" />
-                            </div>
-                            <div class="col-md-4">
-                                <label>Item Price<i class="fal fa-dollar-sign"></i></label>
-                                <input type="text" placeholder="Price" value="" />
-                            </div>
-                            <div class="col-md-8">
-                                <label>Item Details</label>
-                                <textarea cols="40" rows="3" placeholder="Datails"></textarea>
-                            </div>
-                            <div class="col-md-4">
-                                <label>Item Image</label>
-                                <div class="add-list-media-wrap">
-                                    <div class="listsearch-input-item fl-wrap">
-                                        <div class="fuzone">
-                                            <form>
-                                                <div class="fu-text">
-                                                    <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
-                                                    <div class="photoUpload-files fl-wrap"></div>
-                                                </div>
-                                                <input type="file" class="upload">
-                                            </form>
+                <div class="custom-form add_room-item-wrap">
+                    <div class="add_room-container fl-wrap">
+                        <div class="add_room-item fl-wrap">
+                            <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Item Title <i class="fal fa-briefcase"></i></label>
+                                    <input type="text" placeholder="Title" value="" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Item Category<i class="fal fa-filter"></i></label>
+                                    <input type="text" placeholder="Category" value="" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Item Price<i class="fal fa-dollar-sign"></i></label>
+                                    <input type="text" placeholder="Price" value="" />
+                                </div>
+                                <div class="col-md-8">
+                                    <label>Item Details</label>
+                                    <textarea cols="40" rows="3" placeholder="Datails"></textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Item Image</label>
+                                    <div class="add-list-media-wrap">
+                                        <div class="listsearch-input-item fl-wrap">
+                                            <div class="fuzone">
+                                                <form>
+                                                    <div class="fu-text">
+                                                        <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
+                                                        <div class="photoUpload-files fl-wrap"></div>
+                                                    </div>
+                                                    <input type="file" class="upload">
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <a href="#" class="add-room-item">Add New <i class="fal fa-plus"></i> </a>
                 </div>
-                <a href="#" class="add-room-item">Add New <i class="fal fa-plus"></i> </a>
-            </div>
-        </div>*@
+            </div>*@
 
         <div class="profile-edit-container fl-wrap  block_box">
             <div class="custom-form add_room-item-wrap">
@@ -270,8 +270,8 @@
                         <div class="add_room-item fl-wrap">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Branch Title <i class="fal fa-briefcase"></i></label>
-                                    <input class="titleinput" type="text" placeholder="Enter Branch Title" readonly value="@item.Title" />
+                                    <label>@sharedResource["Branch Title"] <i class="fal fa-briefcase"></i></label>
+                                    <input class="titleinput" type="text" placeholder="@sharedResource["Enter Branch Title"]" readonly value="@item.Title" />
                                 </div>
                             </div>
                         </div>
@@ -281,300 +281,8 @@
 
             </div>
         </div>
-        <!-- profile-edit-container end-->
-        <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Details Item - Rooms</h3>
-            <div class="onoffswitch">
-                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch21">
-                <label class="onoffswitch-label" for="myonoffswitch11">
-                    <span class="onoffswitch-inner"></span>
-                    <span class="onoffswitch-switch"></span>
-                </label>
-            </div>
-        </div>
-        <!-- profile-edit-container-->
-        <div class="profile-edit-container fl-wrap  block_box">
-            <div class="custom-form add_room-item-wrap">
-                <div class="add_room-container fl-wrap">
-                    <!--add_room-item end  -->
-                    <div class="add_room-item fl-wrap">
-                        <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Item Title <i class="fal fa-briefcase"></i></label>
-                                <input type="text" placeholder="Title" readonly />
-                            </div>
-                            <div class="col-md-4">
-                                <label>Item Subtitle<i class="fal fa-filter"></i></label>
-                                <input type="text" placeholder="Subtitle" value="" />
-                            </div>
-                            <div class="col-md-4">
-                                <label>Item Price<i class="fal fa-dollar-sign"></i></label>
-                                <input type="text" placeholder="Price" value="" />
-                            </div>
-                            <div class="col-md-8">
-                                <label>Item Details</label>
-                                <textarea cols="40" rows="3" placeholder="Datails"></textarea>
-                            </div>
-                            <div class="col-md-4">
-                                <label>Item Image</label>
-                                <div class="add-list-media-wrap">
-                                    <div class="listsearch-input-item fl-wrap">
-                                        <div class="fuzone">
-                                            @*<form>
-                                                <div class="fu-text">
-                                                    <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
-                                                    <div class="photoUpload-files fl-wrap"></div>
-                                                </div>
-                                                <input type="file" class="upload">
-                                            </form>*@
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--add_room-item end  -->
-                </div>
-                <a href="#" class="add-room-item">Add New <i class="fal fa-plus"></i> </a>
-            </div>
-        </div>
-        <!-- profile-edit-container end-->
-        <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Facilities</h3>
-        </div>
-        <!-- profile-edit-container-->
-        <div class="profile-edit-container fl-wrap block_box">
-            <div class="custom-form">
-                <!-- Checkboxes -->
-                <ul class="fl-wrap filter-tags no-list-style ds-tg">
-                    <li>
-                        <input id="check-aaa5" type="checkbox" name="check" checked>
-                        <label for="check-aaa5">Free WiFi</label>
-                    </li>
-                    <li>
-                        <input id="check-bb5" type="checkbox" name="check" checked>
-                        <label for="check-bb5">Parking</label>
-                    </li>
-                    <li>
-                        <input id="check-dd5" type="checkbox" name="check">
-                        <label for="check-dd5">Fitness Center</label>
-                    </li>
-                    <li>
-                        <input id="check-cc5" type="checkbox" name="check">
-                        <label for="check-cc5">Non-smoking Rooms</label>
-                    </li>
-                    <li>
-                        <input id="check-ff5" type="checkbox" name="check" checked>
-                        <label for="check-ff5">Airport Shuttle</label>
-                    </li>
-                    <li>
-                        <input id="check-c4" type="checkbox" name="check">
-                        <label for="check-c4">Air Conditioning</label>
-                    </li>
-                </ul>
-                <!-- Checkboxes end -->
-            </div>
-        </div>
-        <!-- profile-edit-container end-->
-        <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Content Widgets</h3>
-        </div>
-        <!-- profile-edit-container-->
-        <div class="profile-edit-container fl-wrap block_box">
-            <div class="custom-form">
-                <div class="row">
-                    <div class="col-md-4">
-                        <!-- act-widget-->
-                        <div class="act-widget fl-wrap">
-                            <div class="act-widget-header">
-                                <h4>1. Promo video</h4>
-                                <div class="onoffswitch">
-                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch5" checked>
-                                    <label class="onoffswitch-label" for="myonoffswitch5">
-                                        <span class="onoffswitch-inner"></span>
-                                        <span class="onoffswitch-switch"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="add-list-media-wrap">
-                                <label>Video url :  <i class="fab fa-youtube"></i></label>
-                                <input type="text" placeholder="https://www.youtube.com/" value="" />
-                            </div>
-                        </div>
-                        <!-- act-widget end-->
-                    </div>
-                    <div class="col-md-4">
-                        <!-- act-widget-->
-                        <div class="act-widget fl-wrap">
-                            <div class="act-widget-header">
-                                <h4>2. Gallery Thumbnails</h4>
-                                <div class="onoffswitch">
-                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch6" checked>
-                                    <label class="onoffswitch-label" for="myonoffswitch6">
-                                        <span class="onoffswitch-inner"></span>
-                                        <span class="onoffswitch-switch"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="add-list-media-wrap">
-                                <div class="listsearch-input-item fl-wrap">
-                                    <div class="fuzone">
-                                        @*<form>
-                                            <div class="fu-text">
-                                                <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
-                                                <div class="photoUpload-files fl-wrap"></div>
-                                            </div>
-                                            <input type="file" class="upload" multiple>
-                                        </form>*@
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- act-widget end-->
-                    </div>
-                    <div class="col-md-4">
-                        <!-- act-widget-->
-                        <div class="act-widget fl-wrap">
-                            <div class="act-widget-header">
-                                <h4>3. Slider</h4>
-                                <div class="onoffswitch">
-                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch7">
-                                    <label class="onoffswitch-label" for="myonoffswitch7">
-                                        <span class="onoffswitch-inner"></span>
-                                        <span class="onoffswitch-switch"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="add-list-media-wrap">
-                                <div class="listsearch-input-item fl-wrap">
-                                    <div class="fuzone">
-                                        @*<form>
-                                            <div class="fu-text">
-                                                <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
-                                                <div class="photoUpload-files fl-wrap"></div>
-                                            </div>
-                                            <input type="file" class="upload" multiple>
-                                        </form>*@
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- act-widget end-->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- profile-edit-container end-->
-        <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Working Hours</h3>
-        </div>
-        <!-- profile-edit-container-->
-        <div class="profile-edit-container fl-wrap block_box">
-            <div class="custom-form">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label>Monday <i class="fal fa-clock"></i></label>
-                        <input type="text" placeholder="9 AM - 5 PM" value="" />
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Tuesday <i class="fal fa-clock"></i></label>
-                        <input type="text" placeholder="9 AM - 5 PM" value="" />
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Wednesday <i class="fal fa-clock"></i></label>
-                        <input type="text" placeholder="9 AM - 5 PM" value="" />
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Thursday <i class="fal fa-clock"></i></label>
-                        <input type="text" placeholder="9 AM - 5 PM" value="" />
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Friday <i class="fal fa-clock"></i></label>
-                        <input type="text" placeholder="9 AM - 5 PM" value="" />
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Saturday <i class="fal fa-clock"></i></label>
-                        <input type="text" placeholder="9 AM - 3 PM" value="" />
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Sunday <i class="fal fa-clock"></i></label>
-                        <input type="text" placeholder="Closed" value="" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- profile-edit-container end-->
-        <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Sidebar Widgets</h3>
-        </div>
-        <!-- profile-edit-container-->
-        <div class="profile-edit-container fl-wrap block_box">
-            <div class="custom-form">
-                <!-- act-widget-->
-                <div class="act-widget fl-wrap">
-                    <div class="act-widget-header">
-                        <h4>1. Booking Form</h4>
-                        <div class="onoffswitch">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-                            <label class="onoffswitch-label" for="myonoffswitch">
-                                <span class="onoffswitch-inner"></span>
-                                <span class="onoffswitch-switch"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <!-- act-widget end-->
-                <!-- act-widget-->
-                <div class="act-widget fl-wrap">
-                    <div class="act-widget-header">
-                        <h4>2. Price Range </h4>
-                        <div class="onoffswitch">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2">
-                            <label class="onoffswitch-label" for="myonoffswitch2">
-                                <span class="onoffswitch-inner"></span>
-                                <span class="onoffswitch-switch"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <!-- act-widget end-->
-                <!-- act-widget-->
-                <div class="act-widget fl-wrap">
-                    <div class="act-widget-header">
-                        <h4>3. instagram</h4>
-                        <div class="onoffswitch">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked>
-                            <label class="onoffswitch-label" for="myonoffswitch3">
-                                <span class="onoffswitch-inner"></span>
-                                <span class="onoffswitch-switch"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <label>Api key<i class="fab fa-mixcloud"></i></label>
-                    <input type="text" placeholder="Api key" value="" />
-                </div>
-                <!-- act-widget end-->
-            </div>
-        </div>
-        <!-- profile-edit-container end-->
-        <div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Your  Socials</h3>
-        </div>
-        <!-- profile-edit-container-->
-        <div class="profile-edit-container fl-wrap block_box">
-            <div class="custom-form">
-                <label>Facebook <i class="fab fa-facebook"></i></label>
-                <input type="text" placeholder="https://www.facebook.com/" value="" />
-                <label>Twitter<i class="fab fa-twitter"></i>  </label>
-                <input type="text" placeholder="https://twitter.com/" value="" />
-                <label>Vkontakte<i class="fab fa-vk"></i>  </label>
-                <input type="text" placeholder="https://vk.com" value="" />
-                <label> Instagram <i class="fab fa-instagram"></i>  </label>
-                <input type="text" placeholder="https://www.instagram.com/" value="" />
-            </div>
-        </div>
-        <button type="submit"  class="btn  color2-bg  float-btn">Delete Listining<i class="fal fa-paper-plane"></i></button>
+
+        <button type="submit" class="btn  color2-bg  float-btn"> @sharedResource["Delete Listining"] <i class="fal fa-paper-plane"></i></button>
 
     </form>
     <!-- profile-edit-container end-->
@@ -585,9 +293,9 @@
     //English
     if (BrowserCulture == "en-US")
     {
+
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places&callback=initAutocomplete"></script>
-        <script src="~/Template/js/map-add.js"></script>
 
 
     }
@@ -595,9 +303,17 @@
     else
     {
 
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places&callback=initAutocomplete"></script>
-        <script src="~/Template/js/map-add.js"></script>
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+
+        <script src="~/TemplateRTL/js/jquery.min.js"></script>
+        <script src="~/TemplateRTL/js/plugins.js"></script>
+        <script src="~/TemplateRTL/js/scripts.js"></script>
     }
 }

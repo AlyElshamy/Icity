@@ -1092,4 +1092,43 @@
   <data name="Country Title" xml:space="preserve">
     <value>عنوان المدينة</value>
   </data>
+  <data name="Add New Listing" xml:space="preserve">
+    <value>اضف عمل جديد</value>
+  </data>
+  <data name="Buisness List" xml:space="preserve">
+    <value>قائمة الأعمال</value>
+  </data>
+  <data name="Change Password" xml:space="preserve">
+    <value>تغيير كلمة المرور</value>
+  </data>
+  <data name="Classified Ads Listing" xml:space="preserve">
+    <value>قائمة الإعلانات المبوبة</value>
+  </data>
+  <data name="Edit profile" xml:space="preserve">
+    <value>تعديل الملف الشخصي</value>
+  </data>
+  <data name="Log Out" xml:space="preserve">
+    <value>تسجيل خروج</value>
+  </data>
+  <data name="My Listings" xml:space="preserve">
+    <value>قوائمي</value>
+  </data>
+  <data name="Background image" xml:space="preserve">
+    <value>صورة الخلفية</value>
+  </data>
+  <data name="Enter Branch Title" xml:space="preserve">
+    <value>أدخل عنوان الفرع</value>
+  </data>
+  <data name="Profile Listing Photos" xml:space="preserve">
+    <value>صور الملف الشخصي</value>
+  </data>
+  <data name="Profile Listing Videos" xml:space="preserve">
+    <value>فيديوهات الملف الشخصي</value>
+  </data>
+  <data name="Sort By" xml:space="preserve">
+    <value>الترتيب</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>فيديو</value>
+  </data>
 </root>

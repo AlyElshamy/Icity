@@ -1,12 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Icity.Data
+@using Microsoft.EntityFrameworkCore;
+
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IcityContext _context
 @{
     var currentuser = await UserManager.GetUserAsync(User);
     var nickname = "User";
-        var  TotalReview = _context.Reviews.Where(e => e.AddListing.CreatedByUser == currentuser.Email).ToList().Count();
+    var TotalReview = _context.Reviews.Where(e => e.AddListing.CreatedByUser == currentuser.Email).ToList().Count();
 }
 <!DOCTYPE HTML>
 <html id="masterPageId" dir="ltr" lang="en">
@@ -63,20 +65,20 @@
             <a asp-page="index" class="logo-holder"><img src="~/Template/images/logo.png" alt=""></a>
             <!-- logo end-->
             <!-- header-search_btn-->
-            <div class="header-search_btn show-search-button"><i class="fal fa-search"></i><span>Search</span></div>
+            <div class="header-search_btn show-search-button"><i class="fal fa-search"></i><span>@sharedResource["Search"]</span></div>
             <!-- header-search_btn end-->
             <!-- header opt -->
-            <a asp-area="TemplatePages" asp-page="DashBoardAddListing" class="add-list color-bg">Add Listing <span><i class="fal fa-layer-plus"></i></span></a>
+            <a asp-area="TemplatePages" asp-page="DashBoardAddListing" class="add-list color-bg">@sharedResource["Add Listing"] <span><i class="fal fa-layer-plus"></i></span></a>
             <div class="cart-btn   show-header-modal" data-microtip-position="bottom" role="tooltip" aria-label="Your Wishlist"><i class="fal fa-heart"></i><span class="cart-counter green-bg"></span> </div>
 
             @if (currentuser == null)
             {
-                <div class="show-reg-form modal-open avatar-img" data-srcav="images/avatar/3.jpg"><i class="fal fa-user"></i>Sign In</div>
+        <div class="show-reg-form modal-open avatar-img" data-srcav="images/avatar/3.jpg"><i class="fal fa-user"></i>@sharedResource["Sign In"]</div>
             }
             else
             {
                 <form id="form1" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                    <div class="show-reg-form modal-open avatar-img" onclick="document.getElementById('form1').submit();" data-srcav="/@currentuser.ProfilePicture"><i class="fal fa-user"></i>Log Out</div>
+                    <div class="show-reg-form modal-open avatar-img" onclick="document.getElementById('form1').submit();" data-srcav="/@currentuser.ProfilePicture"><i class="fal fa-user"></i>@sharedResource["Log Out"]</div>
                 </form>
 
                 <div class="header-user-menu">
@@ -93,10 +95,10 @@
 
                     </div>
                     <ul>
-                        <li><a asp-area="TemplatePages" asp-page="Profile"> Edit profile</a></li>
-                        <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing"> Add Listing</a></li>
-                        <li><a href="dashboard-bookings.html">  Bookings  </a></li>
-                        <li><a asp-area="TemplatePages" asp-page="ListingReviews"> Reviews </a></li>
+                        <li><a asp-area="TemplatePages" asp-page="Profile"> @sharedResource["Edit profile"]</a></li>
+                        <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing">@sharedResource[""] Add Listing</a></li>
+                        <li><a href="dashboard-bookings.html"> @sharedResource[""] Bookings  </a></li>
+                        <li><a asp-area="TemplatePages" asp-page="ListingReviews">@sharedResource[""] Reviews </a></li>
                     </ul>
                 </div>
             }
@@ -104,12 +106,12 @@
             <!-- header opt end-->
             <!-- lang-wrap-->
             <div class="lang-wrap">
-                <div  class="show-lang"><span><i class="fal fa-globe-europe"></i><strong id="LangSelec"></strong></span><i class="fa fa-caret-down arrlan"></i></div>
+                <div class="show-lang"><span><i class="fal fa-globe-europe"></i><strong id="LangSelec"></strong></span><i class="fa fa-caret-down arrlan"></i></div>
                 <ul class="lang-tooltip lang-action no-list-style">
                     <a onclick="ChangeLang('en')" id="ang1" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="en-US" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" class="current-lan" data-lantext="En">English</a>
                     <br />
                     <br />
-                    <a onclick="ChangeLang('ar')"  id="ang2" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="ar-EG" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" data-lantext="Fr">arabic</a>
+                    <a onclick="ChangeLang('ar')" id="ang2" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="ar-EG" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" data-lantext="Fr">اللغة العربية</a>
                 </ul>
             </div>
             <script>
@@ -132,7 +134,7 @@
                     if (localStorage.getItem("lang") != "") {
                         if (localStorage.getItem("lang") == "en") {
                             console.log(LangSelec.value);
-                            LangSelec.innerHTML ="En";
+                            LangSelec.innerHTML = "En";
 
                             masterPage.dir = "ltr";
 
@@ -143,7 +145,7 @@
                         }
                         else if (localStorage.getItem("lang") == "ar") {
                             masterPage.dir = "rtl"
-                            LangSelec.innerHTML ="AR";
+                            LangSelec.innerHTML = "AR";
 
                             var stylesheet1 = document.getElementById("stylear");
                             stylesheet1.setAttribute('href', '/TemplateRTL/css/rtl-style.css');
@@ -219,15 +221,16 @@
                                 </li>
                                 <li><a href="about.html">About</a></li>
                                 <li><a href="contacts.html">Contacts</a></li>
-                                <li><a href="author-single.html">User single</a></li>
-                                <li><a href="help.html">How it Works</a></li>
-                                <li><a href="booking.html">Booking</a></li>
-                                <li><a href="pricing-tables.html">Pricing</a></li>
-                                <li><a asp-area="TemplatePages" asp-page="DashBoard">User Dasboard</a></li>
-                                <li><a href="blog-single.html">Blog Single</a></li>
-                                <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing">Add Listing</a></li>
-                                <li><a href="invoice.html">Invoice</a></li>
-                                <li><a href="404.html">404</a></li>
+                                @*<li><a href="author-single.html">User single</a></li>
+                <li><a href="help.html">How it Works</a></li>
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="pricing-tables.html">Pricing</a></li>
+                <li><a asp-area="TemplatePages" asp-page="DashBoard">User Dasboard</a></li>
+                <li><a href="blog-single.html">Blog Single</a></li>*@
+                                <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing">@sharedResource["Add Listing"]</a></li>
+                                <li><a asp-area="TemplatePages" asp-page="DisplayListing">@sharedResource["Buisness List"]</a></li>
+                                <li><a asp-area="TemplatePages" asp-page="ClassifiedAds/Listing">@sharedResource["Classified Ads Listing"]</a></li>
+                                <li><a asp-area="TemplatePages" asp-page="PageNF">404</a></li>
                             </ul>
                             <!--second level end-->
                         </li>
@@ -272,70 +275,84 @@
             </div>
             <!-- header-search_container  end -->
             <!-- wishlist-wrap-->
-            <div class="header-modal novis_wishlist">
-                <!-- header-modal-container-->
-                <div class="header-modal-container scrollbar-inner fl-wrap" data-simplebar>
-                    <!--widget-posts-->
-                    <div class="widget-posts  fl-wrap">
-                        <ul class="no-list-style">
-                            <li>
-                                <div class="widget-posts-img">
-                                    <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
-                                </div>
-                                <div class="widget-posts-descr">
-                                    <h4><a href="listing-single.html">Iconic Cafe</a></h4>
-                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> 40 Journal Square Plaza, NJ, USA</a></div>
-                                    <div class="widget-posts-descr-link"><a href="listing.html">Restaurants </a>   <a href="listing.html">Cafe</a></div>
-                                    <div class="widget-posts-descr-score">4.1</div>
-                                    <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="widget-posts-img">
-                                    <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
-                                </div>
-                                <div class="widget-posts-descr">
-                                    <h4><a href="listing-single.html">MontePlaza Hotel</a></h4>
-                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> 70 Bright St New York, USA </a></div>
-                                    <div class="widget-posts-descr-link"><a href="listing.html">Hotels </a>  </div>
-                                    <div class="widget-posts-descr-score">5.0</div>
-                                    <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="widget-posts-img">
-                                    <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
-                                </div>
-                                <div class="widget-posts-descr">
-                                    <h4><a href="listing-single.html">Rocko Band in Marquee Club</a></h4>
-                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i>75 Prince St, NY, USA</a></div>
-                                    <div class="widget-posts-descr-link"><a href="listing.html">Events</a> </div>
-                                    <div class="widget-posts-descr-score">4.2</div>
-                                    <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="widget-posts-img">
-                                    <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
-                                </div>
-                                <div class="widget-posts-descr">
-                                    <h4><a href="listing-single.html">Premium Fitness Gym</a></h4>
-                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> W 85th St, New York, USA</a></div>
-                                    <div class="widget-posts-descr-link"><a href="listing.html">Fitness</a> <a href="listing.html">Gym</a> </div>
-                                    <div class="widget-posts-descr-score">5.0</div>
-                                    <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
-                                </div>
-                            </li>
-                        </ul>
+            @if (currentuser != null)
+            {
+                <div class="header-modal novis_wishlist">
+                    <!-- header-modal-container-->
+                    <div class="header-modal-container scrollbar-inner fl-wrap" data-simplebar>
+                        <!--widget-posts-->
+                        <div class="widget-posts  fl-wrap">
+                            <ul class="no-list-style">
+                                @{
+
+                                    var favourite = _context.Favourites.Include(a => a.AddListing).ThenInclude(a => a.Category).Where(a => a.UserId == currentuser.Id).ToList();
+                                }
+                                @foreach (var item in favourite)
+                                {
+
+                                    <li>
+
+                                        <div class="widget-posts-img">
+                                            <a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId"><img src="/@item.AddListing.ListingLogo" alt=""></a>
+                                        </div>
+                                        <div class="widget-posts-descr">
+                                            <h4><a href="listing-single.html">@item.AddListing.Title </a></h4>
+                                            <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> @item.AddListing.City</a></div>
+                                            <div class="widget-posts-descr-link"><a href="listing.html">@item.AddListing.Category.CategoryTitleEn </a></div>
+                                            <div class="widget-posts-descr-score">@item.AddListing.Rating</div>
+                                            <div onclick="addfavourite(@item.AddListingId)" class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
+                                        </div>
+                                    </li>
+                                }
+
+                                @*<li>
+                                        <div class="widget-posts-img">
+                                            <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
+                                        </div>
+                                        <div class="widget-posts-descr">
+                                            <h4><a href="listing-single.html">MontePlaza Hotel</a></h4>
+                                            <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> 70 Bright St New York, USA </a></div>
+                                            <div class="widget-posts-descr-link"><a href="listing.html">Hotels </a>  </div>
+                                            <div class="widget-posts-descr-score">5.0</div>
+                                            <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="widget-posts-img">
+                                            <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
+                                        </div>
+                                        <div class="widget-posts-descr">
+                                            <h4><a href="listing-single.html">Rocko Band in Marquee Club</a></h4>
+                                            <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i>75 Prince St, NY, USA</a></div>
+                                            <div class="widget-posts-descr-link"><a href="listing.html">Events</a> </div>
+                                            <div class="widget-posts-descr-score">4.2</div>
+                                            <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="widget-posts-img">
+                                            <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
+                                        </div>
+                                        <div class="widget-posts-descr">
+                                            <h4><a href="listing-single.html">Premium Fitness Gym</a></h4>
+                                            <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> W 85th St, New York, USA</a></div>
+                                            <div class="widget-posts-descr-link"><a href="listing.html">Fitness</a> <a href="listing.html">Gym</a> </div>
+                                            <div class="widget-posts-descr-score">5.0</div>
+                                            <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
+                                        </div>
+                                    </li>*@
+                            </ul>
+                        </div>
+                        <!-- widget-posts end-->
                     </div>
-                    <!-- widget-posts end-->
+                    <!-- header-modal-container end-->
+                    <div class="header-modal-top fl-wrap">
+                        <h4>Your Wishlist : <span><strong></strong> Listings</span></h4>
+                        @*<div class="close-header-modal"><i class="far fa-times"></i></div>*@
+                    </div>
                 </div>
-                <!-- header-modal-container end-->
-                <div class="header-modal-top fl-wrap">
-                    <h4>Your Wishlist : <span><strong></strong> Locations</span></h4>
-                    <div class="close-header-modal"><i class="far fa-times"></i></div>
-                </div>
-            </div>
+            }
+
             <!--wishlist-wrap end -->
         </header>
 
@@ -425,7 +442,7 @@
                                     </div>
                                 </div>
                                 <!--  dashboard-header-stats-wrap end -->
-                                <a asp-area="TemplatePages" asp-page="DashBoardAddListing" class="add_new-dashboard">Add Listing <i class="fal fa-layer-plus"></i></a>
+                                <a asp-area="TemplatePages" asp-page="DashBoardAddListing" class="add_new-dashboard">@sharedResource["Add Listing"] <i class="fal fa-layer-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -464,11 +481,11 @@
                                     <div class="user-profile-menu">
                                         <h3>Main</h3>
                                         <ul class="no-list-style">
-                                            <li><a asp-area="TemplatePages" asp-page="DashBoard" class="user-profile-act"><i class="fal fa-chart-line"></i>Dashboard</a></li>
+                                            <li><a asp-area="TemplatePages" asp-page="DashBoard" class="user-profile-act"><i class="fal fa-chart-line"></i>@sharedResource["Dashboard"]</a></li>
                                             <li><a href="dashboard-feed.html"><i class="fal fa-rss"></i>Your Feed <span>7</span></a></li>
-                                            <li><a asp-area="TemplatePages" asp-page="Profile"><i class="fal fa-user-edit"></i> Edit profile</a></li>
+                                            <li><a asp-area="TemplatePages" asp-page="Profile"><i class="fal fa-user-edit"></i>@sharedResource["Edit profile"] </a></li>
                                             <li><a href="dashboard-messages.html"><i class="fal fa-envelope"></i> Messages <span>3</span></a></li>
-                                            <li><a asp-area="TemplatePages" asp-page="DashboardChangePassword"><i class="fal fa-key"></i>Change Password</a></li>
+                                            <li><a asp-area="TemplatePages" asp-page="DashboardChangePassword"><i class="fal fa-key"></i>@sharedResource["Change Password"]</a></li>
                                             <li>
                                                 <a href="#" class="submenu-link"><i class="fal fa-plus"></i>Submenu</a>
                                                 <ul class="no-list-style">
@@ -486,16 +503,16 @@
                                     <div class="user-profile-menu">
                                         <h3>Listings</h3>
                                         <ul class="no-list-style">
-                                            <li><a asp-area="TemplatePages" asp-page="DashBoardListingTable"><i class="fal fa-th-list"></i> My listigs  </a></li>
-                                            <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing"><i class="fal fa-file-plus"></i> Add New Listing</a></li>
+                                            <li><a asp-area="TemplatePages" asp-page="/DashBoardListingTable"><i class="fal fa-th-list"></i>@sharedResource["My Buisness"]   </a></li>
+                                            <li><a asp-area="TemplatePages" asp-page="/DashBoardAddListing"><i class="fal fa-file-plus"></i> @sharedResource["Add New Listing"]</a></li>
 
-                                            <li><a asp-area="TemplatePages" asp-page="ClassifiedAds/index"><i class="fal fa-file-plus"></i> My Classified Ads</a></li>
-                                            <li><a asp-area="TemplatePages" asp-page="ClassifiedAds/Add"><i class="fal fa-file-plus"></i> Add New Classified Ads</a></li>
+                                            <li><a asp-area="TemplatePages" asp-page="/ClassifiedAds/index"><i class="fal fa-file-plus"></i> My Classified Ads</a></li>
+                                            <li><a asp-area="TemplatePages" asp-page="/ClassifiedAds/Add"><i class="fal fa-file-plus"></i> Add New Classified Ads</a></li>
 
 
 
                                             <li><a href="dashboard-bookings.html"> <i class=" fal fa-calendar-check"></i> Bookings <span>2</span></a></li>
-                                            <li><a asp-area="TemplatePages" asp-page="ListingReviews"><i class="fal fa-comments-alt"></i> Reviews </a></li>
+                                            <li><a asp-area="TemplatePages" asp-page="/ListingReviews"><i class="fal fa-comments-alt"></i> Reviews </a></li>
                                             <li>
                                                 <a href="#" class="submenu-link"><i class="fal fa-plus"></i>Submenu</a>
                                                 <ul class="no-list-style">
@@ -509,7 +526,7 @@
                                         </ul>
                                     </div>
                                     <form id="form1" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                                        <button class="logout_btn color2-bg">Log Out <i class="fas fa-sign-out"></i></button>
+                                        <button class="logout_btn color2-bg">@sharedResource["Log Out"] <i class="fas fa-sign-out"></i></button>
                                     </form>
 
                                 </div>
@@ -518,7 +535,7 @@
                         </div>
 
                         @RenderBody()
-
+                         
                     </div>
                 </section>
                 <div class="limit-box fl-wrap"></div>

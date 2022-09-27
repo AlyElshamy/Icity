@@ -605,6 +605,7 @@
         document.getElementById('selectcategory').innerText = "All Types";
         document.getElementById('selectcategory').textContent = "All Types";
     }
+    document.getElementById('1').classList.add("current-page");
 
 
     function nextlist(item) {
@@ -627,18 +628,31 @@
             contentType: "application/json; charset=utf-8",
 
             success: function (response) {
-                console.log('before' + response)
-                console.log('before' + document.getElementById(response))
-                document.getElementById('1').classList.remove('current-page');
-
+                sessionStorage.setItem("reloading", "true");
+                sessionStorage.setItem("anchorid", item);
                 location.reload();
-
-                console.log('after' + response)
-                console.log('after' + document.getElementById(response))
 
             },
             failure: function (response) {
             }
         });
+    }
+    function changestyle(hrefid) {
+        console.log("item in changestyle function");
+        console.log(hrefid);
+        console.log(typeof (hrefid));
+
+        document.getElementById(hrefid).classList.add("current-page");
+
+    }
+    window.onload = function () {
+        var reloading = sessionStorage.getItem("reloading");
+        var hrefid = sessionStorage.getItem("anchorid");
+        if (reloading) {
+            document.getElementById('1').classList.remove("current-page");
+
+            sessionStorage.removeItem("reloading");
+            changestyle(hrefid);
+        }
     }
 </script>

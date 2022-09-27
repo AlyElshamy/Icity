@@ -49,6 +49,7 @@ namespace Icity.Areas.TemplatePages.Pages
             if (first)
             {
                 Listings= _context.AddListings.Where(a => a.CreatedByUser == user.Email).Take(5).ToList();
+                Listings2 = Listings;
                 first = false;
             }else
             Listings = Listings2;

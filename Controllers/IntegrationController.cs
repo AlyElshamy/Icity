@@ -1254,7 +1254,7 @@ namespace Icity.Controllers
                 photoobj.PhotoUrl = UploadImage(folder, Photo);
                 _context.ListingPhotos.Add(photoobj);
                 _context.SaveChanges();
-                return Ok(new { status = true, message = "Listing photo Added successfully..", photo= photoobj });
+                return Ok(new { status = true, message = "Listing photo Added successfully..", photo = photoobj });
 
             }
             catch (Exception e)
@@ -1280,10 +1280,10 @@ namespace Icity.Controllers
                 }
                 var videoobj = new ListingVideos() { Caption = caption, PublishDate = DateTime.Now, AddListingId = listingId };
                 string folder = "Images/ListingMedia/Videos/";
-                videoobj.VideoUrl= UploadImage(folder, Video);
+                videoobj.VideoUrl = UploadImage(folder, Video);
                 _context.ListingVideos.Add(videoobj);
                 _context.SaveChanges();
-                return Ok(new { status = true, message = "Listing Video Added successfully..",Video= videoobj });
+                return Ok(new { status = true, message = "Listing Video Added successfully..", Video = videoobj });
 
             }
             catch (Exception e)
@@ -2029,5 +2029,176 @@ namespace Icity.Controllers
                 return Ok(new { Status = "false", Reason = e.Message });
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllBuisness()
+        {
+            try
+            {
+                var Buisness = await _context.AddListings.Include(a => a.Country).Include(a => a.Category).Include(a => a.Reviews).Include(a => a.Branches).Include(a => a.ListingPhotos).Include(a => a.ListingVideos).ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    Buisness = Buisness
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+        [HttpPost]
+        public IActionResult AddFavouriteBuisness(int buisnessid, string userid)
+        {
+            try
+            {
+
+                var buisness = _context.AddListings.Find(buisnessid);
+                var user = _applicationDbContext.Users.Find(userid);
+                if (buisness == null)
+                {
+                    return Ok(new { status = false, message = "Buisness Not Found." });
+
+                }
+                if (user == null)
+                {
+                    return Ok(new { status = false, message = "User Not Found." });
+
+                }
+                var favourite = _context.Favourites.Where(a => a.AddListingId == buisnessid && a.UserId == userid).FirstOrDefault();
+                if (favourite != null)
+                {
+                    return Ok(new { status = false, message = "Buisness already added in favourite.." });
+                }
+                var favouriteobj = new Favourite() { UserId = userid, AddListingId = buisnessid };
+                _context.Favourites.Add(favouriteobj);
+                _context.SaveChanges();
+                return Ok(new { status = true, message = "Buisness Added To Favourite.." });
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+        [HttpDelete]
+        public IActionResult DeleteFavouriteBuisness(int id)
+        {
+            try
+            {
+                var favourite = _context.Favourites.Find(id);
+                if (favourite == null)
+                {
+                    return Ok(new { status = false, message = "Favourite Buisness Not Found.." });
+                }
+                _context.Favourites.Remove(favourite);
+                _context.SaveChanges();
+                return Ok(new { status = true, message = "Buisness Deleted Successfully From Favourite.." });
+
+            }
+            catch (Exception e)
+            {
+
+                return Ok(new { status = false, message = e.Message });
+
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetFavouriteBuisnessByUser(string userid)
+        {
+            try
+            {
+                var user = _applicationDbContext.Users.Find(userid);
+                if (user == null)
+                {
+                    return Ok(new { status = false, message = "User Not Found." });
+                }
+                var Favourite = await _context.Favourites.Where(a => a.UserId == userid).Include(a => a.AddListing).ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    FavouriteBusness = Favourite
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+        [HttpGet]
+        public IActionResult GetFavouriteBuisnessCountByUser(string userid)
+        {
+            try
+            {
+                var user = _applicationDbContext.Users.Find(userid);
+                
+                if (user == null)
+                {
+                    return Ok(new { status = false, message = "User Not Found." });
+                }
+                var Favourite = _context.Favourites.Where(a => a.UserId == userid).Count();
+                var model = new
+                {
+                    status = true,
+                    FavouriteCount = Favourite
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetSearchResult(string Search)
+        {
+            if (Search == null)
+            {
+                return Ok(new { status = false, message = "Enter Any Text To search." });
+            }
+            try
+            {
+                var users = _applicationDbContext.Users.Where(a => a.UserName.ToUpper().Contains(Search.ToUpper())).ToList();
+                var buisness = _context.AddListings.Include(a => a.Country).Include(a => a.Category).Include(a => a.Reviews).Include(a => a.Branches).Include(a => a.ListingPhotos).Include(a => a.ListingVideos).Where(a => a.City.ToUpper().Contains(Search.ToUpper()) || a.Country.Title.ToUpper().Contains(Search.ToUpper()) || a.Category.CategoryTitleEn.ToUpper().Contains(Search.ToUpper()) || a.Category.CategoryTitleAr.ToUpper().Contains(Search.ToUpper())).ToList();
+                var classifiedads = _context.ClassifiedAds.Include(a => a.ClassifiedAdsType).Where(a => a.ClassifiedAdsType.TypeTitleEn.ToUpper().Contains(Search.ToUpper()) || a.ClassifiedAdsType.TypeTitleAr.ToUpper().Contains(Search.ToUpper()) || a.Title.ToUpper().Contains(Search.ToUpper())).ToList();
+                //var userssw = await _userManager.FindByEmailAsync(Search);
+                var Searchresult = new List<SearchVM>();
+                foreach (var item in users)
+                {
+                    var userssw = await _userManager.FindByEmailAsync(item.UserName);
+                    var searchobj = new SearchVM() { id = item.Id, Title = userssw.FullName, CategoryEn= userssw.Job, CategoryAr = userssw.Job, image = userssw.ProfilePicture, Type =  1};
+                    Searchresult.Add(searchobj);
+                }
+                foreach (var item in buisness)
+                {
+                    var searchobj = new SearchVM() { id = item.AddListingId.ToString(),CategoryEn=item.Category.CategoryTitleEn, CategoryAr = item.Category.CategoryTitleAr, Title = item.Title, image = item.ListingLogo, Type = 2 };
+                    Searchresult.Add(searchobj);
+                }
+                foreach (var item in classifiedads)
+                {
+                    var searchobj = new SearchVM() { id = item.ClassifiedAdsID.ToString(), CategoryEn = item.ClassifiedAdsType.TypeTitleEn, CategoryAr = item.ClassifiedAdsType.TypeTitleAr, Title = item.Title, image = item.MainPhoto, Type = 3 };
+                    Searchresult.Add(searchobj);
+                }
+                if (Searchresult.Count()==0)
+                {
+                    return Ok(new { status = false, message = "Not Matched Result.. " });
+                }
+                var rnd = new Random();
+                var RandomList = Searchresult.OrderBy(x => rnd.Next());
+
+                var model = new
+                {
+                    status = true,
+                    searchresult = RandomList
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+
     }
 }

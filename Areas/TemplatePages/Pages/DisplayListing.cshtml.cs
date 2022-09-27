@@ -24,9 +24,10 @@ namespace Icity.Areas.TemplatePages.Pages
         public List<int> Pagenumbers = new List<int>();
         public static bool first = true;
         public static bool ajax = true;
-        public DisplayListingModel(IcityContext context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
+        public DisplayListingModel(IcityContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
         {
             _context = context;
+            UserManager = userManager;
             _hostEnvironment = hostEnvironment;
             _toastNotification = toastNotification;
 
@@ -36,6 +37,8 @@ namespace Icity.Areas.TemplatePages.Pages
         public static List<Icity.Models.AddListing> AddListingListStatic { get; set; }
         [BindProperty]
         public ClassifiedAdsFilterModel FilterModel { get; set; }
+        public UserManager<ApplicationUser> UserManager { get; }
+
         public List<string> Cities = new List<string>();
         public static List<AddListing> AddListingsloc = new List<AddListing>();
         public static List<AddListing> Listings2 = new List<AddListing>();
@@ -51,6 +54,26 @@ namespace Icity.Areas.TemplatePages.Pages
             Listings2 = AddListingList;
             return new JsonResult(num);
         }
+         
+        public async Task<IActionResult> OnPostFavourite([FromBody] int listingid)
+        {
+            bool favouriteflag = false ;
+           var user = await UserManager.GetUserAsync(User);
+            var favourite = _context.Favourites.Where(a => a.UserId == user.Id && a.AddListingId == listingid).FirstOrDefault(); ;
+            if (favourite == null)
+            {
+                var favouriteobj = new Favourite() { AddListingId = listingid, UserId = user.Id };
+
+                _context.Favourites.Add(favouriteobj);
+                favouriteflag = true;
+            }
+            else
+                _context.Favourites.Remove(favourite);
+            _context.SaveChanges();
+            return new JsonResult(favouriteflag);
+        }
+
+
         public async Task<IActionResult> OnGetAsync()
         {
             try

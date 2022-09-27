@@ -32,6 +32,7 @@ namespace Icity.Data
         public virtual DbSet<ClassifiedAsdMedia> ClassifiedAsdMedias { get; set; }
         public virtual DbSet<ClassifiedAds> ClassifiedAds { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<Favourite> Favourites { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

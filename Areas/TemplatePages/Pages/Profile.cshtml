@@ -161,7 +161,7 @@
         <div class="dashboard-title  dt-inbox fl-wrap">
             @{ if (Model.userPhotos.Count() > 0)
                 {
-                    <h3>Profile Listing Photos</h3>
+                    <h3>@sharedResource["Profile Listing Photos"]</h3>
                 }
             }
         </div>
@@ -237,7 +237,7 @@
             @{
                 if (Model.userVideos.Count() > 0)
                 {
-                    <h3> Profile Listing Videos</h3>
+                    <h3>@sharedResource["Profile Listing Videos"] </h3>
 
                 }
             }
