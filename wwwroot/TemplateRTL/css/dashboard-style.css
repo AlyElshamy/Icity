@@ -404,7 +404,7 @@ section.main-dashboard-sec {
 }
 .dashboard-message-text {
 	position:relative;
- 	float:left;
+ 	float:right;
 	width:60%;
 }
 .dashboard-message-time {

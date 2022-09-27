@@ -8,7 +8,7 @@
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @{
     var classifiedAdsTypes = _context.ClassifiedAdsTypes;
-       var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
     var BrowserCulture = locale.RequestCulture.UICulture.ToString();
 
 }
@@ -17,7 +17,10 @@
     <div class="content">
         <!-- Map -->
         <div class="map-container column-map right-pos-map fix-map hid-mob-map">
-            <div id="map-main"></div>
+            <div id="map-main">
+                <div id="singleMap" style="height:100vh" class="drag-map" data-latitude="11201" data-longitude="12002"></div>
+
+            </div>
             <ul class="mapnavigation no-list-style">
                 <li><a href="#" class="prevmap-nav mapnavbtn"><span><i class="fas fa-caret-left"></i></span></a></li>
                 <li><a href="#" class="nextmap-nav mapnavbtn"><span><i class="fas fa-caret-right"></i></span></a></li>
@@ -44,7 +47,7 @@
                             <div class="listsearch-input-item">
                                 <select onchange="sortItem(this.value)" data-placeholder="Popularity" class="chosen-select no-search-select">
                                     <option>@sharedResource["Popularity"]</option>
-                                   @* <option value="1">Average rating</option>*@
+                                    @* <option value="1">Average rating</option>*@
                                     <option value="1">@sharedResource["Price: low to high"]</option>
                                     <option value="2">@sharedResource["Price: high to low"]</option>
                                 </select>
@@ -82,159 +85,159 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                
+
                 <div class="container">
                     <!--tabs -->
                     <div class="tabs-container fl-wrap">
                         <!--tab -->
-                        
+
                         <div class="tab">
                             <form method="post" enctype="multipart/form-data">
-                            <div id="filters-search" class="tab-content  first-tab ">
-                                <div class="fl-wrap">
-                                    <div class="row">
-                                        <!-- listsearch-input-item-->
-                                        <div class="col-md-4">
-                                            <div class="listsearch-input-item">
-                                                <span class="iconn-dec"><i class="far fa-bookmark"></i></span>
-                                                <input type="text" placeholder="@sharedResource["What are you looking for ?"]" asp-for="@Model.FilterModel.Target" />
+                                <div id="filters-search" class="tab-content  first-tab ">
+                                    <div class="fl-wrap">
+                                        <div class="row">
+                                            <!-- listsearch-input-item-->
+                                            <div class="col-md-6">
+                                                <div class="listsearch-input-item">
+                                                    <span class="iconn-dec"><i class="far fa-bookmark"></i></span>
+                                                    <input type="text" placeholder="@sharedResource["What are you looking for ?"]" asp-for="@Model.FilterModel.Target" />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <!-- listsearch-input-item end-->
-                                        <!-- listsearch-input-item-->
-                                        <div class="col-md-4">
-                                            <div class="listsearch-input-item">
-                                                <select asp-for="@Model.FilterModel.CatId data-placeholder="Location"  class="chosen-select no-search-select">
-                                                    <option>@sharedResource["All Types"]</option>
-                                                    @foreach (var item in classifiedAdsTypes)
-                                                      {
+                                            <!-- listsearch-input-item end-->
+                                            <!-- listsearch-input-item-->
+                                            <div class="col-md-6">
+                                                <div class="listsearch-input-item">
+                                                    <select  asp-for="@Model.FilterModel.CatId" data-placeholder=" Location" class="chosen-select no-search-select">
+                                                        <option >@sharedResource["All Types"]</option>
+                                                        @foreach (var item in classifiedAdsTypes)
+                                                        {
                                                             if (BrowserCulture == "en-US")
                                                             {
-                                                                <option value="@item.ClassifiedAdsTypeID">@item.TypeTitleEn</option>
+                                                                <option id="selectcategory"value="@item.ClassifiedAdsTypeID">@item.TypeTitleEn</option>
                                                             }
                                                             else
                                                             {
                                                                 <option value="@item.ClassifiedAdsTypeID">@item.TypeTitleAr</option>
-                                                                
+
                                                             }
                                                         }
-}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <!-- listsearch-input-item end-->
-                                        <!-- listsearch-input-item-->
-                                        <div class="col-md-4">
-                                            <div class="listsearch-input-item">
-                                                <select data-placeholder="City/Location" class="chosen-select no-search-select">
-                                                    <option>All Cities</option>
-                                                    <option>New York</option>
-                                                    <option>Chicago</option>
-                                                    <option>Los Angeles</option>
-                                                    <option>Washington</option>
-                                                    <option>Boston</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <!-- listsearch-input-item end-->
-                                        <!-- listsearch-input-item-->
-                                        <div class="col-md-9">
-                                            <div class="listsearch-input-item location autocomplete-container">
-                                                <span class="iconn-dec"><i class="far fa-map-marker"></i></span>
-                                                <input type="text" placeholder="@sharedResource["Where to look?"]" class="autocomplete-input" id="autocompleteid3" value=""  />
-                                                <a href="#"><i class="fal fa-location"></i></a>
-                                            </div>
-                                        </div>
-                                        <!-- listsearch-input-item end-->
-                                        <!-- listsearch-input-item-->
-                                        <div class="col-md-3">
-                                            <div class="listsearch-input-item">
-                                                <button type="submit" class="header-search-button color-bg" ><i class="far fa-search"></i><span>@sharedResource["Search"]</span></button>
-                                            </div>
-                                        </div>
-                                        <!-- listsearch-input-item end-->
-                                    </div>
-                                    <!-- hidden-listing-filter -->
-                                    <div class="hidden-listing-filter fl-wrap">
-                                        <div class="listsearch-input-wrap-header fl-wrap"><i class="fal fa-tasks"></i>More Filters</div>
-                                        <div class="fl-wrap mar-btoom">
-                                            <div class="row">
-                                                <!-- listsearch-input-item-->
-                                                <div class="col-md-3">
-                                                    <div class="listsearch-input-item">
-                                                        <button class="toggle-filter-btn tsb_act "><i class="fal fa-clock"></i> <span>Open Now</span></button>
-                                                    </div>
+                                                        }
+                                                    </select>
                                                 </div>
-                                                <!-- listsearch-input-end-->
-                                                <!-- listsearch-input-item-->
-                                                <div class="col-md-3">
-                                                    <div class="listsearch-input-item clact date-container">
-                                                        <span class="iconn-dec"><i class="fal fa-calendar"></i></span>
-                                                        <input type="text" placeholder="Event Date" name="datepicker-here" value=""  />
-                                                        <span class="clear-singleinput"><i class="fal fa-times"></i></span>
-                                                    </div>
+                                            </div>
+                                            <!-- listsearch-input-item end-->
+                                            <!-- listsearch-input-item-->
+                                            @*<div class="col-md-4">
+                                                <div class="listsearch-input-item">
+                                                    <select data-placeholder="City/Location" class="chosen-select no-search-select">
+                                                        <option>All Cities</option>
+                                                        <option>New York</option>
+                                                        <option>Chicago</option>
+                                                        <option>Los Angeles</option>
+                                                        <option>Washington</option>
+                                                        <option>Boston</option>
+                                                    </select>
                                                 </div>
-                                                <!-- listsearch-input-end-->
-                                                <!-- listsearch-input-item-->
-                                                <div class="col-md-6">
-                                                    <div class="listsearch-input-item">
-                                                        <div class="price-rage-wrap fl-wrap">
-                                                            <div class="price-rage-wrap-title"><i class="fal fa-hand-holding-usd"></i> Price :</div>
-                                                            <div class="price-rage-item fl-wrap">
-                                                                <input type="text" class="price-range" data-min="0" data-max="4" name="price-range1" data-step="1" value="$$">
+                                            </div>*@
+                                            <!-- listsearch-input-item end-->
+                                            <!-- listsearch-input-item-->
+                                            <div class="col-md-9">
+                                                <div class="listsearch-input-item location autocomplete-container">
+                                                    <span class="iconn-dec"><i class="far fa-map-marker"></i></span>
+                                                    <input type="text" placeholder="@sharedResource["Where to look?"]" class="autocomplete-input" id="autocompleteid3" value="" />
+                                                    <a href="#"><i class="fal fa-location"></i></a>
+                                                </div>
+                                            </div>
+                                            <!-- listsearch-input-item end-->
+                                            <!-- listsearch-input-item-->
+                                            <div class="col-md-3">
+                                                <div class="listsearch-input-item">
+                                                    <button type="submit" class="header-search-button color-bg"><i class="far fa-search"></i><span>@sharedResource["Search"]</span></button>
+                                                </div>
+                                            </div>
+                                            <!-- listsearch-input-item end-->
+                                        </div>
+                                        <!-- hidden-listing-filter -->
+                                        <div class="hidden-listing-filter fl-wrap">
+                                            <div class="listsearch-input-wrap-header fl-wrap"><i class="fal fa-tasks"></i>More Filters</div>
+                                            <div class="fl-wrap mar-btoom">
+                                                <div class="row">
+                                                    <!-- listsearch-input-item-->
+                                                    <div class="col-md-3">
+                                                        <div class="listsearch-input-item">
+                                                            <button class="toggle-filter-btn tsb_act "><i class="fal fa-clock"></i> <span>Open Now</span></button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- listsearch-input-end-->
+                                                    <!-- listsearch-input-item-->
+                                                    <div class="col-md-3">
+                                                        <div class="listsearch-input-item clact date-container">
+                                                            <span class="iconn-dec"><i class="fal fa-calendar"></i></span>
+                                                            <input type="text" placeholder="Event Date" name="datepicker-here" value="" />
+                                                            <span class="clear-singleinput"><i class="fal fa-times"></i></span>
+                                                        </div>
+                                                    </div>
+                                                    <!-- listsearch-input-end-->
+                                                    <!-- listsearch-input-item-->
+                                                    <div class="col-md-6">
+                                                        <div class="listsearch-input-item">
+                                                            <div class="price-rage-wrap fl-wrap">
+                                                                <div class="price-rage-wrap-title"><i class="fal fa-hand-holding-usd"></i> Price :</div>
+                                                                <div class="price-rage-item fl-wrap">
+                                                                    <input type="text" class="price-range" data-min="0" data-max="4" name="price-range1" data-step="1" value="$$">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <!-- listsearch-input-end-->
                                                 </div>
-                                                <!-- listsearch-input-end-->
                                             </div>
-                                        </div>
-                                        <div class="listsearch-input-wrap-header fl-wrap"><i class="fal fa-tags"></i>Facilities</div>
-                                        <!-- listsearch-input-item-->
-                                        <div class="listsearch-input-item">
-                                            <div class=" fl-wrap filter-tags">
-                                                <ul class="no-list-style">
-                                                    <li>
-                                                        <input id="check-aa" type="checkbox" name="check">
-                                                        <label for="check-aa">Elevator in building</label>
-                                                    </li>
-                                                    <li>
-                                                        <input id="check-b" type="checkbox" name="check">
-                                                        <label for="check-b">Friendly workspace</label>
-                                                    </li>
-                                                    <li>
-                                                        <input id="check-c" type="checkbox" name="check" checked>
-                                                        <label for="check-c">Instant Book</label>
-                                                    </li>
-                                                    <li>
-                                                        <input id="check-d" type="checkbox" name="check">
-                                                        <label for="check-d">Wireless Internet</label>
-                                                    </li>
-                                                    <li>
-                                                        <input id="check-d2" type="checkbox" name="check" checked>
-                                                        <label for="check-d2">Free WiFi</label>
-                                                    </li>
-                                                    <li>
-                                                        <input id="check-d3" type="checkbox" name="check" checked>
-                                                        <label for="check-d3">Free Parking</label>
-                                                    </li>
-                                                    <li>
-                                                        <input id="check-d4" type="checkbox" name="check">
-                                                        <label for="check-d4">Smoking Allowed</label>
-                                                    </li>
-                                                </ul>
+                                            <div class="listsearch-input-wrap-header fl-wrap"><i class="fal fa-tags"></i>Facilities</div>
+                                            <!-- listsearch-input-item-->
+                                            <div class="listsearch-input-item">
+                                                <div class=" fl-wrap filter-tags">
+                                                    <ul class="no-list-style">
+                                                        <li>
+                                                            <input id="check-aa" type="checkbox" name="check">
+                                                            <label for="check-aa">Elevator in building</label>
+                                                        </li>
+                                                        <li>
+                                                            <input id="check-b" type="checkbox" name="check">
+                                                            <label for="check-b">Friendly workspace</label>
+                                                        </li>
+                                                        <li>
+                                                            <input id="check-c" type="checkbox" name="check" checked>
+                                                            <label for="check-c">Instant Book</label>
+                                                        </li>
+                                                        <li>
+                                                            <input id="check-d" type="checkbox" name="check">
+                                                            <label for="check-d">Wireless Internet</label>
+                                                        </li>
+                                                        <li>
+                                                            <input id="check-d2" type="checkbox" name="check" checked>
+                                                            <label for="check-d2">Free WiFi</label>
+                                                        </li>
+                                                        <li>
+                                                            <input id="check-d3" type="checkbox" name="check" checked>
+                                                            <label for="check-d3">Free Parking</label>
+                                                        </li>
+                                                        <li>
+                                                            <input id="check-d4" type="checkbox" name="check">
+                                                            <label for="check-d4">Smoking Allowed</label>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
+                                            <!-- listsearch-input-item end-->
                                         </div>
-                                        <!-- listsearch-input-item end-->
-                                    </div>
-                                    <!-- hidden-listing-filter end -->
-                                    <div class="more-filter-option-wrap">
-                                        <div class="more-filter-option-btn act-hiddenpanel"><i class="far fa-plus"></i> <span>More Options</span></div>
-                                        <div class="clear-filter-btn color"><i class="far fa-redo"></i> Reset Filters</div>
+                                        <!-- hidden-listing-filter end -->
+                                        <div class="more-filter-option-wrap">
+                                            <div class="more-filter-option-btn act-hiddenpanel"><i class="far fa-plus"></i> <span>More Options</span></div>
+                                            <div onclick="Resetinputs()" class="clear-filter-btn color"><i class="far fa-redo"></i> Reset Filters</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                           </form>
+                            </form>
                         </div>
                         <!--tab end-->
                         <!--tab -->
@@ -247,21 +250,21 @@
                                             <div class="swiper-wrapper">
                                                 <!-- category-carousel-item -->
                                                 @{
-                                                     @foreach (var item in classifiedAdsTypes)
-                                                      {
+                                                    @foreach (var item in classifiedAdsTypes)
+                                                    {
                                                         var classifiedAdsCatCount = _context.ClassifiedAds.Where(c => c.ClassifiedAdsTypeID == item.ClassifiedAdsTypeID).Count();
-                                                        string countConcat=classifiedAdsCatCount.ToString()+" Classified";
+                                                        string countConcat = classifiedAdsCatCount.ToString() + " Classified";
                                                         <div class="swiper-slide">
-                                                    <a class="category-carousel-item fl-wrap full-height " href="#">
-                                                        <img src="/@item.TypePic" alt="">
-                                                        <div class="category-carousel-item-icon red-bg"><i class="fal fa-cheeseburger"></i></div>
-                                                        <div class="category-carousel-item-container">
-                                                            <div class="category-carousel-item-title">@item.TypeTitleEn</div>
-                                                            <div class="category-carousel-item-counter">@countConcat</div>
+                                                            <a class="category-carousel-item fl-wrap full-height " href="#">
+                                                                <img src="/@item.TypePic" alt="">
+                                                                <div class="category-carousel-item-icon red-bg"><i class="fal fa-cheeseburger"></i></div>
+                                                                <div class="category-carousel-item-container">
+                                                                    <div class="category-carousel-item-title">@item.TypeTitleEn</div>
+                                                                    <div class="category-carousel-item-counter">@countConcat</div>
+                                                                </div>
+                                                            </a>
                                                         </div>
-                                                    </a>
-                                                </div>
-                                                       }
+                                                    }
                                                 }
 
 
@@ -292,14 +295,14 @@
                     <!-- listing-item  -->
                     @{
 
-                        foreach(var item in @Model.ClassifiedAdsList)
+                        foreach (var item in @Model.ClassifiedAdsList)
                         {
                             var user = await UserManager.FindByEmailAsync(@item.AddedBy);
                             string DateFormat = @item.AddedDate.ToString("dddd, dd MMMM yyyy");
-                            var MediaList= item.ClassifiedAsdMedias;
+                            var MediaList = item.ClassifiedAsdMedias;
 
-                            string strCon="";
-                            string checkExte="";
+                            string strCon = "";
+                            string checkExte = "";
                             foreach (var ele in MediaList)
                             {
                                 checkExte = ele.MediaUrl.Substring(ele.MediaUrl.LastIndexOf('.') + 1).ToUpper();
@@ -308,93 +311,93 @@
                                     strCon += "{'src':" + "'/" + ele.MediaUrl + "'" + "},";
                                 }
                             }
-                            int countMediaList= MediaList.Count;
+                            int countMediaList = MediaList.Count;
                             int count = 0;
                             // src="~/Template/images/all/1.jpg"
                             <div class="listing-item">
-                        <article class="geodir-category-listing fl-wrap">
-                            <div class="geodir-category-img">
-                                <div class="geodir-js-favorite_btn"><i class="fal fa-heart"></i><span>Save</span></div>
-                                <a href="listing-single.html" class="geodir-category-img-wrap fl-wrap">
-                                    <img src="/@item.MainPhoto" style="height: 400px;" alt="">
-                                </a>
-                                <div class="listing-avatar">
-                                    
-                                    <a href="author-single.html"><img src="/@user.ProfilePicture" alt=""></a>
-                                    <span class="avatar-tooltip">Added By  <strong>@user.FullName</strong></span>
-                                </div>
-                                
-                                <div class="geodir_status_date color-bg"><i class="fal fa-clock"></i>@DateFormat </div>
-                                <div class="geodir-category-opt">
-                                    <div class="listing-rating-count-wrap">
-                                        <div class="review-score">@item.Price</div>
-                                        @*<div class="listing-rating card-popup-rainingvis" data-starrating2="5"></div>*@
-                                        <br>
-                                        <div class="reviews-count">@item.ProductStatus.StatusTitle</div>
+                                <article class="geodir-category-listing fl-wrap">
+                                    <div class="geodir-category-img">
+                                        <div class="geodir-js-favorite_btn"><i class="fal fa-heart"></i><span>Save</span></div>
+                                        <a href="listing-single.html" class="geodir-category-img-wrap fl-wrap">
+                                            <img src="/@item.MainPhoto" style="height: 400px;" alt="">
+                                        </a>
+                                        <div class="listing-avatar">
+
+                                            <a href="author-single.html"><img src="/@user.ProfilePicture" alt=""></a>
+                                            <span class="avatar-tooltip">Added By  <strong>@user.FullName</strong></span>
+                                        </div>
+
+                                        <div class="geodir_status_date color-bg"><i class="fal fa-clock"></i>@DateFormat </div>
+                                        <div class="geodir-category-opt">
+                                            <div class="listing-rating-count-wrap">
+                                                <div class="review-score">@item.Price</div>
+                                                @*<div class="listing-rating card-popup-rainingvis" data-starrating2="5"></div>*@
+                                                <br>
+                                                <div class="reviews-count">@item.ProductStatus.StatusTitle</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="geodir-category-content fl-wrap">
+                                        <div class="geodir-category-content-title fl-wrap">
+                                            <div class="geodir-category-content-title-item">
+                                                <h3 class="title-sin_map"><a href="listing-single.html">@item.Title</a><span class="verified-badge"><i class="fal fa-check"></i></span></h3>
+                                                <div class="geodir-category-location fl-wrap"><a href="#5" class="map-item"><i class="fas fa-map-marker-alt"></i> @item.ClassifiedAdsLocation</a></div>
+                                            </div>
+                                        </div>
+                                        <div class="geodir-category-text fl-wrap">
+                                            <p class="small-text">Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales.</p>
+                                            <div class="facilities-list fl-wrap">
+                                                <div class="facilities-list-title">Facilities : </div>
+                                                <ul class="no-list-style">
+                                                    <li class="tolt" data-microtip-position="top" data-tooltip="Free WiFi"><i class="fal fa-wifi"></i></li>
+                                                    <li class="tolt" data-microtip-position="top" data-tooltip="Parking"><i class="fal fa-parking"></i></li>
+                                                    <li class="tolt" data-microtip-position="top" data-tooltip="Non-smoking Rooms"><i class="fal fa-smoking-ban"></i></li>
+                                                    <li class="tolt" data-microtip-position="top" data-tooltip="Pets Friendly"><i class="fal fa-dog-leashed"></i></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="geodir-category-footer fl-wrap">
+                                            <a class="listing-item-category-wrap">
+                                                <div class="listing-item-category red-bg"><i class="fal fa-cheeseburger"></i></div>
+                                                <span>@item.ClassifiedAdsType.TypeTitleEn</span>
+                                            </a>
+                                            <div class="geodir-opt-list">
+                                                <ul class="no-list-style">
+                                                    <li><a href="#" class="show_gcc"><i class="fal fa-envelope"></i><span class="geodir-opt-tooltip">Contact Info</span></a></li>
+                                                    <li><a href="#1" class="map-item"><i class="fal fa-map-marker-alt"></i><span class="geodir-opt-tooltip">On the map <strong>1</strong></span> </a></li>
+                                                    <li>
+                                                        <div class="dynamic-gal gdop-list-link" data-dynamicPath="[@strCon]">
+                                                            <i class="fal fa-search-plus"></i><span class="geodir-opt-tooltip">Gallery</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="price-level geodir-category_price">
+                                                <span class="price-level-item" data-pricerating="3"></span>
+                                                <span class="price-name-tooltip">@item.Price</span>
+                                            </div>
+                                            <div class="geodir-category_contacts">
+                                                <div class="close_gcc"><i class="fal fa-times-circle"></i></div>
+                                                <ul class="no-list-style">
+                                                    <li><span><i class="fal fa-phone"></i> Call : </span><a href="#">@user.PhoneNumber</a></li>
+                                                    <li><span><i class="fal fa-envelope"></i> Write : </span><a href="#">@user.Email</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
                             </div>
-                            <div class="geodir-category-content fl-wrap">
-                                <div class="geodir-category-content-title fl-wrap">
-                                    <div class="geodir-category-content-title-item">
-                                        <h3 class="title-sin_map"><a href="listing-single.html">@item.Title</a><span class="verified-badge"><i class="fal fa-check"></i></span></h3>
-                                        <div class="geodir-category-location fl-wrap"><a href="#5" class="map-item"><i class="fas fa-map-marker-alt"></i> @item.ClassifiedAdsLocation</a></div>
-                                    </div>
-                                </div>
-                                <div   class="geodir-category-text fl-wrap">
-                                    <p class="small-text" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">@item.Details</p>
-                                    <div class="facilities-list fl-wrap">
-                                        <div class="facilities-list-title">Facilities : </div>
-                                        <ul class="no-list-style">
-                                            <li class="tolt" data-microtip-position="top" data-tooltip="Free WiFi"><i class="fal fa-wifi"></i></li>
-                                            <li class="tolt" data-microtip-position="top" data-tooltip="Parking"><i class="fal fa-parking"></i></li>
-                                            <li class="tolt" data-microtip-position="top" data-tooltip="Non-smoking Rooms"><i class="fal fa-smoking-ban"></i></li>
-                                            <li class="tolt" data-microtip-position="top" data-tooltip="Pets Friendly"><i class="fal fa-dog-leashed"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="geodir-category-footer fl-wrap">
-                                    <a class="listing-item-category-wrap">
-                                        <div class="listing-item-category red-bg"><i class="fal fa-cheeseburger"></i></div>
-                                        <span>@item.ClassifiedAdsType.TypeTitleEn</span>
-                                    </a>
-                                    <div class="geodir-opt-list">
-                                        <ul class="no-list-style">
-                                            <li><a href="#" class="show_gcc"><i class="fal fa-envelope"></i><span class="geodir-opt-tooltip">Contact Info</span></a></li>
-                                            <li><a href="#1" class="map-item"><i class="fal fa-map-marker-alt"></i><span class="geodir-opt-tooltip">On the map <strong>1</strong></span> </a></li>
-                                            <li>
-                                                <div class="dynamic-gal gdop-list-link" data-dynamicPath="[@strCon]">
-                                <i class="fal fa-search-plus"></i><span class="geodir-opt-tooltip">Gallery</span></div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="price-level geodir-category_price">
-                                        <span class="price-level-item" data-pricerating="3"></span>
-                                        <span class="price-name-tooltip">@item.Price</span>
-                                    </div>
-                                    <div class="geodir-category_contacts">
-                                        <div class="close_gcc"><i class="fal fa-times-circle"></i></div>
-                                        <ul class="no-list-style">
-                                            <li><span><i class="fal fa-phone"></i> Call : </span><a href="#">@user.PhoneNumber</a></li>
-                                            <li><span><i class="fal fa-envelope"></i> Write : </span><a href="#">@user.Email</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
                         }
                     }
                     <!-- listing-item end -->
-                                        <div class="pagination">
-                        <a href="#" class="prevposts-link"><i class="fas fa-caret-right"></i><span>Prev</span></a>
-                        <a href="#">1</a>
-                        <a href="#" class="current-page">2</a>
-                        <a href="#">3</a>
-                        <a href="#">...</a>
-                        <a href="#">7</a>
-                        <a href="#" class="nextposts-link"><span>Next</span><i class="fas fa-caret-left"></i></a>
-                    </div>
+                <div class="pagination">
+                    @foreach (var item in Model.Pagenumbers)
+                    {
+                        var divid = item.ToString();
+
+                        <a onclick="nextlist(this.id)" id="@divid">@item</a>
+                    }
+                </div>
                 </div>
             </div>
             <!-- listing-item-container end -->
@@ -404,13 +407,13 @@
     <!--content end-->
 </div>
 @{
- 
+
     //English
     if (BrowserCulture == "en-US")
     {
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
-        <script src="~/Template/https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
-        <script src="~/Template/~/Template/js/map-add.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
 
 
     }
@@ -427,21 +430,21 @@
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
-        <script src="~/Template/https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places&callback=initAutocomplete"></script>
-        <script src="~/Template/~/Template/js/map-add.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
 
 
 
     }
 }
 <script>
-     function sortItem(value) {
-         console.log(value);
-         console.log(typeof(value));
-         
+    function sortItem(value) {
+        console.log(value);
+        console.log(typeof (value));
+
         var myList = new Array();
         myList.push(value)
-        if (myList.length > 0||myList[0]!="0") {
+        if (myList.length > 0 || myList[0] != "0") {
             $.ajax({
                 type: "POST",
                 beforeSend: function (xhr) {
@@ -469,4 +472,187 @@
         }
     }
 
+    var locatios = new Array();
+    window.addEventListener('load', (event) => {
+        var x = 0;
+
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            }
+            ,
+            url: "/TemplatePages/ClassifiedAds/Listing?handler=BranchesList",
+            async: false,
+            data: JSON.stringify(x),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+
+            success: function (response) {
+                console.log("get selected rows successfully")
+
+                for (var i in response) {
+
+                    console.log(response);
+                    console.log(response[i].ClassifiedAdsLocation);
+                    console.log(typeof (response[i].ClassifiedAdsLocation));
+
+                    var myArray = response[i].ClassifiedAdsLocation.split(",");
+                    var latetude = Number(myArray[0]);
+                    var longtude = Number(myArray[1]);
+                    console.log(latetude);
+                    console.log(longtude);
+
+                    var title = response[i].Title;
+                    var url = { Lat: latetude, Long: longtude, Title: title };
+                    console.log(url);
+                    locatios.push(url);
+
+
+
+                }
+                console.log(locatios.length);
+                console.log("get selected rows successfully")
+                initMap();
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+
+
+
+
+    });
+
+
+    function initMap() {
+
+
+        //console.log(locatios.length);
+        //for (var i = 0; i < locatios.length; i++) {
+        //    console.log(locatios.length);
+
+        //    var uluru = { lat: locatios[i].Lat, lng: locatios[i].Long };
+        //    console.log(uluru);
+
+        //    var map = new google.maps.Map(document.getElementById("singleMap"), {
+        //        zoom: 4, center: uluru,
+        //        mapTypeId: google.maps.MapTypeId.ROADMAP
+        //    });
+        //    console.log("uluru= " + uluru)
+
+        //    var marker = new google.maps.Marker({
+        //        position: uluru,
+        //        map: map,
+        //    });
+        //    console.log("marker= " + marker)
+        //}
+
+
+
+
+        var myOptions = {
+            zoom: 2,
+            center: new google.maps.LatLng(51.9000, 8.4731),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById("singleMap"), myOptions);
+
+        var infowindow = new google.maps.InfoWindow({
+            content: ''
+        });
+
+        for (i = 0; i < locatios.length; i++) {
+            //size = 40;
+            //var img = new google.maps.MarkerImage('/285659_marker_map_icon.png',
+            //    new google.maps.Size(size, size),
+            //    new google.maps.Point(0, 0),
+            //    new google.maps.Point(size / 2, size / 2)
+            //);
+
+            var marker = new google.maps.Marker({
+                map: map,
+                title: locatios[i].Title,
+                position: new google.maps.LatLng(locatios[i].Lat, locatios[i].Long)
+                //,icon: img
+            });
+
+            bindInfoWindow(marker, map, infowindow, "<p>" + locatios[i].Title + "</p>", locatios[i].Title);
+
+        }
+
+    }
+
+    function bindInfoWindow(marker, map, infowindow, html, Ltitle) {
+        google.maps.event.addListener(marker, 'mouseover', function () {
+            infowindow.setContent(html);
+            infowindow.open(map, marker);
+
+        });
+        google.maps.event.addListener(marker, 'mouseout', function () {
+            infowindow.close();
+
+        });
+
+    }
+
+
+    function Resetinputs() {
+        document.getElementById('selectcategory').value = "All Types";
+        document.getElementById('selectcategory').innerText = "All Types";
+        document.getElementById('selectcategory').textContent = "All Types";
+    }
+    document.getElementById('1').classList.add("current-page");
+
+
+    function nextlist(item) {
+        localStorage.setItem("pagenumber", item);
+
+
+        var num = Number(item);
+
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            }
+            ,
+            url: "/TemplatePages/ClassifiedAds/Listing?handler=PagesList",
+            async: false,
+            data: JSON.stringify(num),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+
+            success: function (response) {
+                sessionStorage.setItem("reloading", "true");
+                sessionStorage.setItem("anchorid", item);
+                location.reload();
+
+            },
+            failure: function (response) {
+            }
+        });
+    }
+    function changestyle(hrefid) {
+        console.log("item in changestyle function");
+        console.log(hrefid);
+        console.log(typeof (hrefid));
+
+        document.getElementById(hrefid).classList.add("current-page");
+
+    }
+    window.onload = function () {
+        var reloading = sessionStorage.getItem("reloading");
+        var hrefid = sessionStorage.getItem("anchorid");
+        if (reloading) {
+            document.getElementById('1').classList.remove("current-page");
+
+            sessionStorage.removeItem("reloading");
+            changestyle(hrefid);
+        }
+    }
 </script>

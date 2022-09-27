@@ -361,3 +361,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/wwwroot/Images/ProfileImages/cc14d54a-d5d4-43d0-bc93-22551a66e3a1_vid.mp4
+/wwwroot/Images/ProfileImages
+/wwwroot/Images/ListingMedia/Videos
+/wwwroot/Videos/ProfileVideos
+/wwwroot/Images/ListingMedia/Photos
+/wwwroot/Images/ListingMedia
+/wwwroot/Images/BannerImages

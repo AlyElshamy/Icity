@@ -15,8 +15,8 @@ namespace Icity.Models
         public int CategoryId { get; set; }
         [Required(ErrorMessage ="Reequired")]
         public string Title { get; set; }
-        //[Required(ErrorMessage = "Reequired")]
-        //public string Country { get; set; }
+        public int? CountryId { get; set; }
+        public virtual Country Country { get; set; }
         [Required(ErrorMessage = "Reequired")]
         public string City { get; set; }
         [Required(ErrorMessage = "Reequired")]
@@ -29,7 +29,7 @@ namespace Icity.Models
         public string Phone1 { get; set; }
         //[Required(ErrorMessage = "Reequired")]
         public string Phone2 { get; set; }
-       // [Required(ErrorMessage = "Reequired")]
+        //[Required(ErrorMessage = "Reequired")]
         public string Fax { get; set; }
         [Required(ErrorMessage ="Required"), RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Not Valid")]
         public string Email { get; set; }
@@ -45,8 +45,6 @@ namespace Icity.Models
         //[Required(ErrorMessage = "Reequired")]
         public string ListingLogo { get; set; }
         public string PromoVideo { get; set; }
-        public int? CountryId { get; set; }
-        public virtual Country Country { get; set; }
         public ICollection<Branch> Branches { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<ListingPhotos> ListingPhotos { get; set; }

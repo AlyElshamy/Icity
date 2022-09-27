@@ -53,13 +53,13 @@ namespace Icity.Areas.TemplatePages.Pages
             }
             return Page();
         }
-        public IActionResult OnPostFillBranchesList([FromBody] List<string> branchTitle)
+        public IActionResult OnPostFillBranchesList([FromBody] List<Branch> branches)
         {
             Branches = new List<Branch>();
-            foreach (var item in branchTitle)
+            foreach (var item in branches)
             {
-                Branch branch = new Branch { Title = item };
-                Branches.Add(branch);
+                //Branch branch = new Branch { Title = item.Title };
+                Branches.Add(item);
             }
             return new JsonResult(Branches);
         }

@@ -1,9 +1,13 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Icity.Data
+@using Microsoft.EntityFrameworkCore;
+
+@inject IcityContext _context
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @{
     var currentuser = await UserManager.GetUserAsync(User);
+    
     var nickname = "User";
 }
 <!DOCTYPE HTML>
@@ -47,7 +51,7 @@
 
         <header class="main-header">
             <!-- logo-->
-            <a  asp-page="index" class="logo-holder"><img src="~/Template/images/logo.png" alt=""></a>
+            <a asp-page="index" class="logo-holder"><img src="~/Template/images/logo.png" alt=""></a>
             <!-- logo end-->
             <!-- header-search_btn-->
             <div class="header-search_btn show-search-button"><i class="fal fa-search"></i><span>Search</span></div>
@@ -57,7 +61,7 @@
             <div class="cart-btn   show-header-modal" data-microtip-position="bottom" role="tooltip" aria-label="Your Wishlist"><i class="fal fa-heart"></i><span class="cart-counter green-bg"></span> </div>
             @if (currentuser == null)
             {
-                <div class="show-reg-form modal-open avatar-img"  data-srcav="images/avatar/3.jpg"><i class="fal fa-user"></i>Sign In</div>
+                <div class="show-reg-form modal-open avatar-img" data-srcav="images/avatar/3.jpg"><i class="fal fa-user"></i>Sign In</div>
             }
             else
             {
@@ -88,12 +92,12 @@
             }            <!-- header opt end-->
             <!-- lang-wrap-->
             <div class="lang-wrap">
-                <div  class="show-lang"><span><i class="fal fa-globe-europe"></i><strong id="LangSelec"></strong></span><i class="fa fa-caret-down arrlan"></i></div>
+                <div class="show-lang"><span><i class="fal fa-globe-europe"></i><strong id="LangSelec"></strong></span><i class="fa fa-caret-down arrlan"></i></div>
                 <ul class="lang-tooltip lang-action no-list-style">
-                    <a onclick="ChangeLang('en')"  id="ang1" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="en-US" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" class="current-lan" data-lantext="En">English</a>
+                    <a onclick="ChangeLang('en')" id="ang1" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="en-US" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" class="current-lan" data-lantext="En">English</a>
                     <br />
                     <br />
-                    <a onclick="ChangeLang('ar')"  id="ang2" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="ar-EG" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" data-lantext="Fr">arabic</a>
+                    <a onclick="ChangeLang('ar')" id="ang2" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="ar-EG" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" data-lantext="Fr">arabic</a>
                 </ul>
             </div>
             <script>
@@ -116,7 +120,7 @@
                     if (localStorage.getItem("lang") != "") {
                         if (localStorage.getItem("lang") == "en") {
                             console.log(LangSelec.value);
-                            LangSelec.innerHTML ="En";
+                            LangSelec.innerHTML = "En";
 
                             masterPage.dir = "ltr";
 
@@ -127,14 +131,14 @@
                         }
                         else if (localStorage.getItem("lang") == "ar") {
                             masterPage.dir = "rtl"
-                            LangSelec.innerHTML ="AR";
+                            LangSelec.innerHTML = "AR";
 
                             var stylesheet1 = document.getElementById("stylear");
                             stylesheet1.setAttribute('href', '/TemplateRTL/css/rtl-style.css');
                         }
                     }
                 });
-                </script>
+            </script>
 
             <!-- lang-wrap end-->
             <!-- nav-button-wrap-->
@@ -203,15 +207,16 @@
                                 </li>
                                 <li><a href="about.html">About</a></li>
                                 <li><a href="contacts.html">Contacts</a></li>
-                                <li><a href="author-single.html">User single</a></li>
-                                <li><a href="help.html">How it Works</a></li>
-                                <li><a href="booking.html">Booking</a></li>
-                                <li><a href="pricing-tables.html">Pricing</a></li>
-                                <li><a asp-area="TemplatePages" asp-page="DashBoard">User Dasboard</a></li>
-                                <li><a href="blog-single.html">Blog Single</a></li>
-                                <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing">Add Listing</a></li>
-                                <li><a href="invoice.html">Invoice</a></li>
-                                <li><a href="404.html">404</a></li>
+                                @*<li><a href="author-single.html">User single</a></li>
+                                    <li><a href="help.html">How it Works</a></li>
+                                    <li><a href="booking.html">Booking</a></li>
+                                    <li><a href="pricing-tables.html">Pricing</a></li>
+                                    <li><a asp-area="TemplatePages" asp-page="DashBoard">User Dasboard</a></li>
+                                    <li><a href="blog-single.html">Blog Single</a></li>*@
+                                <li><a asp-area="TemplatePages" asp-page="/DashBoardAddListing">Add Listing</a></li>
+                                <li><a asp-area="TemplatePages" asp-page="/DisplayListing">Buisness List</a></li>
+                                <li><a asp-area="TemplatePages" asp-page="/ClassifiedAds/Listing">Classified Ads Listing</a></li>
+                                <li><a asp-area="TemplatePages" asp-page="/PageNF">404</a></li>
                             </ul>
                             <!--second level end-->
                         </li>
@@ -256,75 +261,89 @@
             </div>
             <!-- header-search_container  end -->
             <!-- wishlist-wrap-->
-            <div class="header-modal novis_wishlist">
-                <!-- header-modal-container-->
-                <div class="header-modal-container scrollbar-inner fl-wrap" data-simplebar>
-                    <!--widget-posts-->
-                    <div class="widget-posts  fl-wrap">
-                        <ul class="no-list-style">
-                            <li>
-                                <div class="widget-posts-img">
-                                    <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
-                                </div>
-                                <div class="widget-posts-descr">
-                                    <h4><a href="listing-single.html">Iconic Cafe</a></h4>
-                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> 40 Journal Square Plaza, NJ, USA</a></div>
-                                    <div class="widget-posts-descr-link"><a href="listing.html">Restaurants </a>   <a href="listing.html">Cafe</a></div>
-                                    <div class="widget-posts-descr-score">4.1</div>
-                                    <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="widget-posts-img">
-                                    <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
-                                </div>
-                                <div class="widget-posts-descr">
-                                    <h4><a href="listing-single.html">MontePlaza Hotel</a></h4>
-                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> 70 Bright St New York, USA </a></div>
-                                    <div class="widget-posts-descr-link"><a href="listing.html">Hotels </a>  </div>
-                                    <div class="widget-posts-descr-score">5.0</div>
-                                    <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="widget-posts-img">
-                                    <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
-                                </div>
-                                <div class="widget-posts-descr">
-                                    <h4><a href="listing-single.html">Rocko Band in Marquee Club</a></h4>
-                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i>75 Prince St, NY, USA</a></div>
-                                    <div class="widget-posts-descr-link"><a href="listing.html">Events</a> </div>
-                                    <div class="widget-posts-descr-score">4.2</div>
-                                    <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="widget-posts-img">
-                                    <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
-                                </div>
-                                <div class="widget-posts-descr">
-                                    <h4><a href="listing-single.html">Premium Fitness Gym</a></h4>
-                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> W 85th St, New York, USA</a></div>
-                                    <div class="widget-posts-descr-link"><a href="listing.html">Fitness</a> <a href="listing.html">Gym</a> </div>
-                                    <div class="widget-posts-descr-score">5.0</div>
-                                    <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
-                                </div>
-                            </li>
-                        </ul>
+            @if (currentuser != null)
+            {
+                <div class="header-modal novis_wishlist">
+                    <!-- header-modal-container-->
+                    <div class="header-modal-container scrollbar-inner fl-wrap" data-simplebar>
+                        <!--widget-posts-->
+                        <div class="widget-posts  fl-wrap">
+                            <ul class="no-list-style">
+                                @{
+
+                                    var favourite = _context.Favourites.Include(a => a.AddListing).ThenInclude(a => a.Category).Where(a => a.UserId == currentuser.Id).ToList();
+                                }
+                                @foreach (var item in favourite)
+                                {
+
+                                    <li>
+
+                                        <div class="widget-posts-img">
+                                            <a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId"><img src="/@item.AddListing.ListingLogo" alt=""></a>
+                                        </div>
+                                        <div class="widget-posts-descr">
+                                            <h4><a href="listing-single.html">@item.AddListing.Title </a></h4>
+                                            <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> @item.AddListing.City</a></div>
+                                            <div class="widget-posts-descr-link"><a href="listing.html">@item.AddListing.Category.CategoryTitleEn </a></div>
+                                            <div class="widget-posts-descr-score">@item.AddListing.Rating</div>
+                                            <div onclick="addfavourite(@item.AddListingId)" class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
+                                        </div>
+                                    </li>
+                                }
+
+                                @*<li>
+                                        <div class="widget-posts-img">
+                                            <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
+                                        </div>
+                                        <div class="widget-posts-descr">
+                                            <h4><a href="listing-single.html">MontePlaza Hotel</a></h4>
+                                            <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> 70 Bright St New York, USA </a></div>
+                                            <div class="widget-posts-descr-link"><a href="listing.html">Hotels </a>  </div>
+                                            <div class="widget-posts-descr-score">5.0</div>
+                                            <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="widget-posts-img">
+                                            <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
+                                        </div>
+                                        <div class="widget-posts-descr">
+                                            <h4><a href="listing-single.html">Rocko Band in Marquee Club</a></h4>
+                                            <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i>75 Prince St, NY, USA</a></div>
+                                            <div class="widget-posts-descr-link"><a href="listing.html">Events</a> </div>
+                                            <div class="widget-posts-descr-score">4.2</div>
+                                            <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="widget-posts-img">
+                                            <a href="listing-single.html"><img src="~/Template/images/gallery/thumbnail/1.png" alt=""></a>
+                                        </div>
+                                        <div class="widget-posts-descr">
+                                            <h4><a href="listing-single.html">Premium Fitness Gym</a></h4>
+                                            <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> W 85th St, New York, USA</a></div>
+                                            <div class="widget-posts-descr-link"><a href="listing.html">Fitness</a> <a href="listing.html">Gym</a> </div>
+                                            <div class="widget-posts-descr-score">5.0</div>
+                                            <div class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
+                                        </div>
+                                    </li>*@
+                            </ul>
+                        </div>
+                        <!-- widget-posts end-->
                     </div>
-                    <!-- widget-posts end-->
+                    <!-- header-modal-container end-->
+                    <div class="header-modal-top fl-wrap">
+                        <h4>Your Wishlist : <span><strong></strong> Listings</span></h4>
+                        @*<div class="close-header-modal"><i class="far fa-times"></i></div>*@
+                    </div>
                 </div>
-                <!-- header-modal-container end-->
-                <div class="header-modal-top fl-wrap">
-                    <h4>Your Wishlist : <span><strong></strong> Locations</span></h4>
-                    <div class="close-header-modal"><i class="far fa-times"></i></div>
-                </div>
-            </div>
+            }
+
             <!--wishlist-wrap end -->
         </header>
         <!-- header end-->
         @RenderBody()
-         <footer class="main-footer fl-wrap">
+        <footer class="main-footer fl-wrap">
             <!-- footer-header-->
             <div class="footer-header fl-wrap grad ient-dark">
                 <div class="container">
@@ -460,7 +479,7 @@
             <!--sub-footer end -->
         </footer>
     </div>
-   
+
     <!--=============== scripts  ===============-->
     <script src="~/Template/js/jquery.min.js"></script>
     <script src="~/Template/js/plugins.js"></script>
@@ -473,3 +492,31 @@
 </body>
 
 </html>
+<script>
+    function addfavourite(listingid) {
+
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            }
+            ,
+            url: "/TemplatePages/DisplayListing?handler=Favourite",
+            async: false,
+            data: JSON.stringify(listingid),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+
+            success: function (response) {
+                if (response == true) {
+                    document.getElementById('heart' + listingid).style.color = "red";
+                } else
+                    document.getElementById('heart' + listingid).style.color = "white";
+
+            },
+            failure: function (response) {
+            }
+        });
+    }
+</script>

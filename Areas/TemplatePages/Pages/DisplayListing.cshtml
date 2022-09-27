@@ -8,8 +8,8 @@
 @Html.AntiForgeryToken()
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @{
-   var categoryList = _context.Categories;
-   var CitiesList = _context.AddListings.Select(a => a.City).Distinct();
+    var categoryList = _context.Categories;
+    var CitiesList = _context.AddListings.Select(a => a.City).Distinct();
     var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
     var BrowserCulture = locale.RequestCulture.UICulture.ToString();
 
@@ -19,7 +19,10 @@
     <div class="content">
         <!-- Map -->
         <div class="map-container column-map right-pos-map fix-map hid-mob-map">
-            <div id="map-main"></div>
+            <div id="map-main">
+                <div id="singleMap" style="height:90vh" class="drag-map" data-latitude="11201" data-longitude="12002"></div>
+
+            </div>
             <ul class="mapnavigation no-list-style">
                 <li><a href="#" class="prevmap-nav mapnavbtn"><span><i class="fas fa-caret-left"></i></span></a></li>
                 <li><a href="#" class="nextmap-nav mapnavbtn"><span><i class="fas fa-caret-right"></i></span></a></li>
@@ -42,7 +45,7 @@
                     <div class="list-main-wrap-opt">
                         <!-- price-opt-->
                         <div class="price-opt">
-                            <span class="price-opt-title">@sharedResource["Sort   by:"]</span>
+                            <span class="price-opt-title">@sharedResource["Sort By"]:</span>
                             <div class="listsearch-input-item">
                                 <select onchange="sortItem(this.value)" data-placeholder="Popularity" class="chosen-select no-search-select">
                                     <option>@sharedResource["Popularity"]</option>
@@ -110,7 +113,7 @@
                                                         <option>@sharedResource["All Categories"]</option>
                                                         @foreach (var item in categoryList)
                                                         {
-                                                            
+
                                                             if (BrowserCulture == "en-US")
                                                             {
                                                                 <option value="@item.CategoryId">@item.CategoryTitleEn</option>
@@ -133,11 +136,11 @@
                                                       <option value="All Cities">All Cities</option>
                                                         @foreach (var item in CitiesList)
                                                         {
-                                                           <option value="@item">@item</option>
-                                                            
+                                                            <option value="@item">@item</option>
+
                                                         }
-                                                        
-                                                        
+
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -297,133 +300,152 @@
                     <!-- listing-item  -->
                     @{
 
-                        foreach (var item in @Model.AddListingList)
+                        if (Model.AddListingList != null)
                         {
-                            var user = await UserManager.FindByEmailAsync(@item.CreatedByUser);
-                            //string DateFormat = @item.AddedDate.ToString("dddd, dd MMMM yyyy");
-                            var MediaList = item.ListingPhotos;
-                            var ReviewCount = _context.Reviews.Where(e=>e.AddListingId==item.AddListingId).Count();
-                            var AvgRatingList = _context.Reviews.Where(e=>e.AddListingId==item.AddListingId).ToList();
-                            double sum = 0;
-                            foreach (var ele in AvgRatingList)
+
+                            foreach (var item in @Model.AddListingList)
                             {
-                                sum += ele.Rating;
-                            }
-                            double AvgRating = 0;
-                            if (sum != 0.0)
-                            {
-                                AvgRating = sum / ReviewCount;
-                            }
-                            var addListingObj= _context.AddListings.Where(e => e.AddListingId == item.AddListingId).FirstOrDefault();
-                            addListingObj.Rating = AvgRating;
-                            _context.SaveChanges();
-                            var OneDecimalPlaces = Math.Round(AvgRating, 1);
-                            var AvgRatingValue = Math.Round(AvgRating);
-                            string strCon = "";
-                            string checkExte = "";
-                            foreach (var ele in MediaList)
-                            {
+                                var user = await UserManager.FindByEmailAsync(@item.CreatedByUser);
+                                //string DateFormat = @item.AddedDate.ToString("dddd, dd MMMM yyyy");
+                                var MediaList = item.ListingPhotos;
+                                var ReviewCount = _context.Reviews.Where(e => e.AddListingId == item.AddListingId).Count();
+                                var AvgRatingList = _context.Reviews.Where(e => e.AddListingId == item.AddListingId).ToList();
+                                double sum = 0;
+                                var branchCount = _context.Branches.Where(a => a.AddListingId == item.AddListingId).Count();
+                                foreach (var ele in AvgRatingList)
+                                {
+                                    sum += ele.Rating;
+                                }
+                                double AvgRating = 0;
+                                if (sum != 0.0)
+                                {
+                                    AvgRating = sum / ReviewCount;
+                                }
+                                var addListingObj = _context.AddListings.Where(e => e.AddListingId == item.AddListingId).FirstOrDefault();
+                                addListingObj.Rating = AvgRating;
+                                _context.SaveChanges();
+                                var OneDecimalPlaces = Math.Round(AvgRating, 1);
+                                var AvgRatingValue = Math.Round(AvgRating);
+                                string strCon = "";
+                                string checkExte = "";
+                                foreach (var ele in MediaList)
+                                {
 
-                                strCon += "{'src':" + "'/" + ele.PhotoUrl + "'" + "},";
+                                    strCon += "{'src':" + "'/" + ele.PhotoUrl + "'" + "},";
 
-                            }
+                                }
 
-                            int countMediaList = MediaList.Count;
-                            int count = 0;
-                            // src="~/Template/images/all/1.jpg"
-                            <div class="listing-item">
-                                <article class="geodir-category-listing fl-wrap">
-                                    <div class="geodir-category-img">
-                                        <div class="geodir-js-favorite_btn"><i class="fal fa-heart"></i><span>Save</span></div>
-                                        <a href="listing-single.html" class="geodir-category-img-wrap fl-wrap">
-                                            <img src="/@item.ListingLogo" style="height: 400px;" alt="">
-                                        </a>
-                                        <div class="listing-avatar">
+                                int countMediaList = MediaList.Count;
+                                int count = 0;
+                                int listingid = item.AddListingId;
 
-                                            <a href="author-single.html"><img src="/@user.ProfilePicture" alt=""></a>
-                                            <span class="avatar-tooltip">Created By  <strong>@user.FullName</strong></span>
-                                        </div>
+                                var cuurentuser = await UserManager.GetUserAsync(User);
+                                var favourite = _context.Favourites.Where(a => a.UserId == user.Id && a.AddListingId == listingid).FirstOrDefault(); ;
+                                var iconid = "heart" + listingid.ToString();
+                                // src="~/Template/images/all/1.jpg"
+                                <div class="listing-item">
+                                    <article class="geodir-category-listing fl-wrap">
+                                        <div class="geodir-category-img">
+                                            @if (favourite == null)
+                                            {
+                                                <div onclick="addfavourite(this.id)" id="@listingid" class="geodir-js-favorite_btn"><i id="@iconid" class="fa fa-heart"></i><span>Save</span></div>
 
-                                        <div class="geodir_status_date gsd_open"><i class="fal fa-lock-open"></i>Open Now</div>
-                                        <div class="geodir-category-opt">
-                                            <div class="listing-rating-count-wrap">
-                                                <div class="review-score">@OneDecimalPlaces</div>
-                                                <div class="listing-rating card-popup-rainingvis" data-starrating2="@AvgRatingValue"></div>
-                                                <br>
-                                                <div class="reviews-count">@ReviewCount reviews</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="geodir-category-content fl-wrap">
-                                        <div class="geodir-category-content-title fl-wrap">
-                                            <div class="geodir-category-content-title-item">
-                                                <h3 class="title-sin_map"><a href="listing-single.html">@item.Title</a><span class="verified-badge"><i class="fal fa-check"></i></span></h3>
-                                                <div class="geodir-category-location fl-wrap"><a href="#5" class="map-item"><i class="fas fa-map-marker-alt"></i> @item.MainLocataion</a></div>
-                                            </div>
-                                        </div>
-                                        <div class="geodir-category-text fl-wrap">
-                                        <div style="height:50px">
-                                            <p  class="small-text" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                            <a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId" style="text-decoration: none; color: inherit;">@item.Discription</a></p>
-                                            </div>
-                                            <div class="facilities-list fl-wrap">
-                                                <div class="facilities-list-title">Facilities : </div>
-                                                <ul class="no-list-style">
-                                                    <li class="tolt" data-microtip-position="top" data-tooltip="Free WiFi"><i class="fal fa-wifi"></i></li>
-                                                    <li class="tolt" data-microtip-position="top" data-tooltip="Parking"><i class="fal fa-parking"></i></li>
-                                                    <li class="tolt" data-microtip-position="top" data-tooltip="Non-smoking Rooms"><i class="fal fa-smoking-ban"></i></li>
-                                                    <li class="tolt" data-microtip-position="top" data-tooltip="Pets Friendly"><i class="fal fa-dog-leashed"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="geodir-category-footer fl-wrap">
-                                            <a class="listing-item-category-wrap">
-                                                <div class="listing-item-category red-bg"><i class="fal fa-cheeseburger"></i></div>
-                                                @if (item.Category.CategoryTitleEn != null)
-                                                {
-                                                    <span>@item.Category.CategoryTitleEn</span>
-                                                }
-                                                
+                                            }
+                                            else
+                                            {
+                                                <div onclick="addfavourite(this.id)" id="@listingid" class="geodir-js-favorite_btn"><i id="@iconid" style="color:red" class="fa fa-heart"></i><span>Save</span></div>
+                                            }
+
+                                            <a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId" class="geodir-category-img-wrap fl-wrap">
+                                                <img src="/@item.ListingLogo" style="height: 400px;" alt="">
                                             </a>
-                                            <div class="geodir-opt-list">
-                                                <ul class="no-list-style">
-                                                    <li><a href="#" class="show_gcc"><i class="fal fa-envelope"></i><span class="geodir-opt-tooltip">Contact Info</span></a></li>
-                                                    <li><a href="#1" class="map-item"><i class="fal fa-map-marker-alt"></i><span class="geodir-opt-tooltip">On the map <strong>1</strong></span> </a></li>
-                                                    <li>
-                                                        <div class="dynamic-gal gdop-list-link" data-dynamicPath="[@strCon]">
-                                                            <i class="fal fa-search-plus"></i><span class="geodir-opt-tooltip">Gallery</span>
-                                                        </div>
-                                                    </li>
-                                                </ul>
+                                            <div class="listing-avatar">
+
+                                                <a><img src="/@user.ProfilePicture" alt=""></a>
+                                                <span class="avatar-tooltip">Created By  <strong>@user.FullName</strong></span>
                                             </div>
-                                            <div class="price-level geodir-category_price">
-                                                <span class="price-level-item" data-pricerating="3"></span>
-                                                <span class="price-name-tooltip">@item.Rating</span>
-                                            </div>
-                                            <div class="geodir-category_contacts">
-                                                <div class="close_gcc"><i class="fal fa-times-circle"></i></div>
-                                                <ul class="no-list-style">
-                                                    <li><span><i class="fal fa-phone"></i> Call : </span><a href="#">@item.Phone1</a></li>
-                                                    <li><span><i class="fal fa-phone"></i> Call : </span><a href="#">@item.Phone2</a></li>
-                                                    <li><span><i class="fal fa-envelope"></i> Write : </span><a href="#">@item.Fax</a></li>
-                                                    <li><span><i class="fal fa-envelope"></i> Visit : </span><a href="#">@item.Website</a></li>
-                                                </ul>
+
+                                            <div class="geodir_status_date gsd_open"><i class="fal fa-lock-open"></i>Open Now</div>
+                                            <div class="geodir-category-opt">
+                                                <div class="listing-rating-count-wrap">
+                                                    <div class="review-score">@OneDecimalPlaces</div>
+                                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="@AvgRatingValue"></div>
+                                                    <br>
+                                                    <div class="reviews-count">@ReviewCount reviews</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </article>
-                            </div>
+                                        <div class="geodir-category-content fl-wrap">
+                                            <div class="geodir-category-content-title fl-wrap">
+                                                <div class="geodir-category-content-title-item">
+                                                    <h3 class="title-sin_map"><a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId">@item.Title</a><span class="verified-badge"><i class="fal fa-check"></i></span></h3>
+                                                    <div class="geodir-category-location fl-wrap"><a class="map-item"><i class="fas fa-map-marker-alt"></i> @item.City </a></div>
+                                                </div>
+                                            </div>
+                                            <div class="geodir-category-text fl-wrap">
+                                                <div style="height:50px">
+                                                    <p class="small-text" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                                        <a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId" style="text-decoration: none; color: inherit;">@item.Discription</a>
+                                                    </p>
+                                                </div>
+                                                @*<div class="facilities-list fl-wrap">
+                                                        <div class="facilities-list-title">Facilities : </div>
+                                                        <ul class="no-list-style">
+                                                            <li class="tolt" data-microtip-position="top" data-tooltip="Free WiFi"><i class="fal fa-wifi"></i></li>
+                                                            <li class="tolt" data-microtip-position="top" data-tooltip="Parking"><i class="fal fa-parking"></i></li>
+                                                            <li class="tolt" data-microtip-position="top" data-tooltip="Non-smoking Rooms"><i class="fal fa-smoking-ban"></i></li>
+                                                            <li class="tolt" data-microtip-position="top" data-tooltip="Pets Friendly"><i class="fal fa-dog-leashed"></i></li>
+                                                        </ul>
+                                                    </div>*@
+                                            </div>
+                                            <div class="geodir-category-footer fl-wrap">
+                                                <a class="listing-item-category-wrap">
+                                                    <div class="listing-item-category red-bg"><i class="fal fa-cheeseburger"></i></div>
+                                                    @if (item.Category.CategoryTitleEn != null)
+                                                    {
+                                                        <span>@item.Category.CategoryTitleEn</span>
+                                                    }
+
+                                                </a>
+                                                <div class="geodir-opt-list">
+                                                    <ul class="no-list-style">
+                                                        <li><a class="show_gcc"><i class="fal fa-envelope"></i><span class="geodir-opt-tooltip">Contact Info</span></a></li>
+                                                        <li><a class="map-item"><i class="fal fa-map-marker-alt"></i><span class="geodir-opt-tooltip">Branches <strong>@branchCount</strong></span> </a></li>
+                                                        <li>
+                                                            <div class="dynamic-gal gdop-list-link" data-dynamicPath="[@strCon]">
+                                                                <i class="fal fa-search-plus"></i><span class="geodir-opt-tooltip">Gallery</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                @*<div class="price-level geodir-category_price">
+                                                        <span class="price-level-item" data-pricerating="3"></span>
+                                                        <span class="price-name-tooltip">@item.Rating</span>
+                                                    </div>*@
+                                                <div class="geodir-category_contacts">
+                                                    <div class="close_gcc"><i class="fal fa-times-circle"></i></div>
+                                                    <ul class="no-list-style">
+                                                        <li><span><i class="fal fa-phone"></i> Call : </span><a href="#">@item.Phone1</a></li>
+                                                        <li><span><i class="fal fa-phone"></i> Call : </span><a href="#">@item.Phone2</a></li>
+                                                        <li><span><i class="fal fa-envelope"></i> Write : </span><a href="#">@item.Fax</a></li>
+                                                        <li><span><i class="fal fa-envelope"></i> Visit : </span><a href="#">@item.Website</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            }
                         }
                     }
                     <!-- listing-item end -->
                     <div class="pagination">
-                        <a href="#" class="prevposts-link"><i class="fas fa-caret-right"></i><span>Prev</span></a>
-                        <a href="#">1</a>
-                        <a href="#" class="current-page">2</a>
-                        <a href="#">3</a>
-                        <a href="#">...</a>
-                        <a href="#">7</a>
-                        <a href="#" class="nextposts-link"><span>Next</span><i class="fas fa-caret-left"></i></a>
+                        @foreach (var item in Model.Pagenumbers)
+                        {
+                            var divid = item.ToString()+"id";
+
+                            <a onclick="nextlist(this.id)" class="" id="@divid">@item</a>
+                        }
                     </div>
                 </div>
             </div>
@@ -433,14 +455,14 @@
     </div>
     <!--content end-->
 </div>
+
 @{
 
     //English
     if (BrowserCulture == "en-US")
     {
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
-        <script src="~/Template/https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
-        <script src="~/Template/~/Template/js/map-add.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
 
 
     }
@@ -457,21 +479,23 @@
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
-        <script src="~/Template/https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places&callback=initAutocomplete"></script>
-        <script src="~/Template/~/Template/js/map-add.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
 
 
 
     }
 }
 <script>
-     function sortItem(value) {
-         console.log(value);
-         console.log(typeof(value));
+    //localStorage.setItem("pagenumber", '1');
+    //document.getElementById('1').classList.add('current-page');
 
+    function sortItem(value) {
+        console.log(value);
+        console.log(typeof (value));
         var myList = new Array();
         myList.push(value)
-        if (myList.length > 0||myList[0]!="0") {
+        if (myList.length > 0 || myList[0] != "0") {
             $.ajax({
                 type: "POST",
                 beforeSend: function (xhr) {
@@ -500,37 +524,188 @@
             console.log("Nobody has been selected")
         }
     }
-     function ResetFilterFunc() 
-     { 
-         console.log("Hello");
-         document.getElementById("autocompleteid3").value="";
-         document.getElementById("searchTargetInp").value="";
-         document.getElementById("AllCitiesDropMenu").selectedIndex="0";
-         var c=document.getElementById("AllCitiesDropMenu");
-         c.value=document.getElementById("AllCitiesDropMenu").value;
-         console.log(document.getElementsByClassName("chosen-select"))
-         
-         //document.getElementById("AllCitiesDropMenu").value="AllCities";
-         //console.log(document.getElementById("AllCitiesDropMenu").selectedIndex);
-         console.log(document.getElementById("AllCitiesDropMenu").value);
-         console.log(c.value);
-         //console.log(document.getElementById("AllCitiesDropMenu").selectedIndex);
-         // console.log(document.getElementById("AllCitiesDropMenu").selectedIndex);
-         //AllCitiesDropMenu
-        // console.log(AllCitiesDropMenu.selectedIndex);
-        // console.log(AllCitiesDropMenu);
-         //var AllCategoriesDropMenu= document.getElementById("AllCategoriesDropMenu");
-        // console.log(AllCitiesDropMenu.options[0])
-         //var AllCategoriesDropMenu=document.getElementById("AllCategoriesDropMenu");
-         //AllCategoriesDropMenu.options[AllCategoriesDropMenu.selectedIndex].value=0;
-
-         console.log("Hello2");
-         
-         
-         
-         
-     }
 
 
 
+
+    var locatios = new Array();
+    window.addEventListener('load', (event) => {
+        var x = 0;
+        //document.getElementById('1').classList.add('current-page');
+
+        //if (localStorage.getItem("pagenumber") == "") {
+        //    document.getElementById('1').classList.add('current-page');
+        //} else
+        //    document.getElementById(localStorage.getItem("pagenumber")).classList.add('current-page');
+
+
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            }
+            ,
+            url: "/TemplatePages/DisplayListing?handler=BranchesList",
+            async: false,
+            data: JSON.stringify(x),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+
+            success: function (response) {
+                console.log("get selected rows successfully")
+
+                for (var i in response) {
+
+
+                    var myArray = response[i].MainLocataion.split(",");
+                    var latetude = Number(myArray[0]);
+                    var longtude = Number(myArray[1]);
+
+
+                    var title = response[i].Title;
+                    var url = { Lat: latetude, Long: longtude, Title: title };
+                    locatios.push(url);
+
+
+
+                }
+                initMap();
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+
+
+
+
+    });
+
+
+    function initMap() {
+        var myOptions = {
+            zoom: 2,
+            center: new google.maps.LatLng(51.9000, 8.4731),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById("singleMap"), myOptions);
+
+        var infowindow = new google.maps.InfoWindow({
+            content: ''
+        });
+
+        for (i = 0; i < locatios.length; i++) {
+            //size = 40;
+            //var img = new google.maps.MarkerImage('/285659_marker_map_icon.png',
+            //    new google.maps.Size(size, size),
+            //    new google.maps.Point(0, 0),
+            //    new google.maps.Point(size / 2, size / 2)
+            //);
+
+            var marker = new google.maps.Marker({
+                map: map,
+                title: locatios[i].Title,
+                position: new google.maps.LatLng(locatios[i].Lat, locatios[i].Long)
+                //,icon: img
+            });
+
+            bindInfoWindow(marker, map, infowindow, "<p>" + locatios[i].Title + "</p>", locatios[i].Title);
+
+        }
+
+    }
+
+    function bindInfoWindow(marker, map, infowindow, html, Ltitle) {
+        google.maps.event.addListener(marker, 'mouseover', function () {
+            infowindow.setContent(html);
+            infowindow.open(map, marker);
+
+        });
+        google.maps.event.addListener(marker, 'mouseout', function () {
+            infowindow.close();
+
+        });
+    }
+    document.getElementById('1' + "id").classList.add("current-page");
+
+    function nextlist(item) {
+        
+
+
+        var num = Number(item);
+
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            }
+            ,
+            url: "/TemplatePages/DisplayListing?handler=PagesList",
+            async: false,
+            data: JSON.stringify(num),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+
+            success: function (response) {
+                sessionStorage.setItem("reloading", "true");
+                sessionStorage.setItem("anchorid", item);
+
+                location.reload();
+
+
+            },
+            failure: function (response) {
+            }
+        });
+    }
+
+
+    function addfavourite(listingid) {
+
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            }
+            ,
+            url: "/TemplatePages/DisplayListing?handler=Favourite",
+            async: false,
+            data: JSON.stringify(listingid),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+
+            success: function (response) {
+              
+                if (response == true) {
+                    document.getElementById('heart' + listingid).style.color = "red";
+                } else
+                    document.getElementById('heart' + listingid).style.color = "white";
+
+            },
+            failure: function (response) {
+            }
+        });
+    }
+    function changestyle(hrefid) {
+        console.log("item in changestyle function");
+        console.log(hrefid);
+        console.log(typeof (hrefid));
+
+        document.getElementById(hrefid).classList.add("current-page");
+
+    }
+    window.onload = function () {
+        var reloading = sessionStorage.getItem("reloading");
+        var hrefid = sessionStorage.getItem("anchorid");
+        if (reloading) {
+            document.getElementById('1'+"id").classList.remove("current-page");
+
+            sessionStorage.removeItem("reloading");
+            changestyle(hrefid);
+        }
+    }
 </script>

@@ -18,7 +18,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-
 namespace Icity.Controllers
 {
     [Route("api/[controller]/[action]")]
@@ -106,9 +105,9 @@ namespace Icity.Controllers
             }
 
         }
-        
-            [HttpGet]
-        public async Task<IActionResult> GetAllEducation( string userEmail)
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllEducation(string userEmail)
         {
             try
             {
@@ -127,7 +126,7 @@ namespace Icity.Controllers
                 return Ok(new { Status = "false", Reason = e.Message });
             }
         }
-            [ApiExplorerSettings(IgnoreApi =true)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         private bool ValidateEducationModel(Education education)
         {
             if (education.Year == 0 || education.Provider == null)
@@ -137,30 +136,30 @@ namespace Icity.Controllers
             return true;
         }
         [HttpPost]
-        public async Task<IActionResult> AddEducation( Education education,string userEmail)
+        public async Task<IActionResult> AddEducation(Education education, string userEmail)
         {
             try
             {
                 var user = await _userManager.FindByEmailAsync(userEmail);
                 if (user == null)
                 {
-                    return Ok(new {Status="false",Reason="User Not Found"});
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
                 }
-                if(!ValidateEducationModel(education))
+                if (!ValidateEducationModel(education))
                 {
                     return Ok(new { Status = "false", Reason = "Enter All Required Faild" });
                 }
-                    education.Id = user.Id;
-                    _applicationDbContext.Educations.Add(education);
-                    _applicationDbContext.SaveChanges();
-                    return Ok(new { Status = "Success", Education = education });
-               
+                education.Id = user.Id;
+                _applicationDbContext.Educations.Add(education);
+                _applicationDbContext.SaveChanges();
+                return Ok(new { Status = "Success", Education = education });
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                return Ok(new { Status = "false", Reason = e.Message }); 
+                return Ok(new { Status = "false", Reason = e.Message });
             }
-            
+
         }
         [HttpDelete]
         public IActionResult DeleteEducation(int educationId)
@@ -265,7 +264,7 @@ namespace Icity.Controllers
                 return Ok(new { Status = "false", Reason = e.Message });
             }
         }
-        [ApiExplorerSettings(IgnoreApi =true)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         private bool ValidateLanguageModel(Language language)
         {
             if (language.LanguageTitle == null)
@@ -323,7 +322,7 @@ namespace Icity.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         private bool ValidateLifeEventModel(LifeEvent lifeEvent)
         {
-            if (lifeEvent.Caption==null||lifeEvent.EventType == null)
+            if (lifeEvent.Caption == null || lifeEvent.EventType == null)
             {
                 return false;
             }
@@ -354,7 +353,7 @@ namespace Icity.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> AddLifeEvent(LifeEvent lifeEvent,IFormFile media, string userEmail)
+        public async Task<IActionResult> AddLifeEvent(LifeEvent lifeEvent, IFormFile media, string userEmail)
         {
             try
             {
@@ -376,7 +375,7 @@ namespace Icity.Controllers
                     string folder = "Images/ProfileImages/";
                     lifeEvent.Media = UploadImage(folder, media);
                 }
-                
+
                 lifeEvent.Id = user.Id;
                 _applicationDbContext.LifeEvents.Add(lifeEvent);
                 _applicationDbContext.SaveChanges();
@@ -456,7 +455,7 @@ namespace Icity.Controllers
                 {
                     return Ok(new { Status = "false", Reason = "Enter Interest Title" });
                 }
-               
+
 
                 interest.Id = user.Id;
                 _applicationDbContext.Interests.Add(interest);
@@ -524,9 +523,9 @@ namespace Icity.Controllers
             }
             return true;
         }
-        
+
         [HttpPost]
-        public async Task<IActionResult> AddPhoto(Photo photo, IFormFile image,string userEmail)
+        public async Task<IActionResult> AddPhoto(Photo photo, IFormFile image, string userEmail)
         {
             try
             {
@@ -573,6 +572,7 @@ namespace Icity.Controllers
                 }
 
                 var photosList = _applicationDbContext.Photos.Where(e => e.Id == user.Id);
+
                 return Ok(new { Status = "Success", PhotosList = photosList });
 
             }
@@ -658,7 +658,7 @@ namespace Icity.Controllers
                 }
 
                 video.Id = user.Id;
-                
+
                 _applicationDbContext.Videos.Add(video);
                 _applicationDbContext.SaveChanges();
                 return Ok(new { Status = "Success", Video = video });
@@ -691,6 +691,130 @@ namespace Icity.Controllers
             }
         }
 
+        //[HttpPut]
+        //public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, IFormFileCollection Images, IFormFileCollection VideosFiels, List<IFormFile> EventsMedia, UserProfile userProfile)
+        //{
+        //    try
+        //    {
+        //        var user = await _userManager.FindByEmailAsync(userProfile.Email);
+        //        if (user == null)
+        //            return BadRequest("Email Not Found..");
+        //        user.Gender = userProfile.Gender;
+        //        user.Bio = userProfile.Bio;
+        //        user.Nationality = userProfile.Nationality;
+        //        user.BirthDate = userProfile.BirthDate;
+        //        user.Job = userProfile.Job;
+        //        user.Qualification = userProfile.Qualification;
+        //        //user.Location = userProfile.Location;
+        //        user.FullName = userProfile.FullName;
+        //        user.PhoneNumber = userProfile.Phone;
+        //        user.FacebookLink = userProfile.FacebookLink;
+        //        user.TwitterLink = userProfile.TwitterLink;
+        //        user.InstagramLink = userProfile.InstagramLink;
+        //        user.LinkedInLink = userProfile.LinkedInLink;
+        //        user.LinkedInLink = userProfile.LinkedInLink;
+        //        user.NickName = userProfile.NickName;
+        //        user.MaritalStatus = userProfile.MaritalStatus;
+        //        user.City = userProfile.City;
+        //        user.MapLocation = userProfile.MapLocation;
+        //        user.Country = userProfile.Country;
+        //        user.Phone2 = userProfile.Phone2;
+        //        user.Folwers = userProfile.Folwers;
+        //        user.Website = userProfile.Website;
+        //        user.YoutubeLink = userProfile.YoutubeLink;
+        //        user.Photos = userProfile.Photos == null ? new List<Photo>() : userProfile.Photos;
+        //        user.Videos = userProfile.Videos == null ? new List<Video>() : userProfile.Videos;
+        //        var skillslist = _applicationDbContext.Skills.Where(a => a.Id == user.Id).ToList();
+        //        _applicationDbContext.Skills.RemoveRange(skillslist);
+        //        var Interistslist = _applicationDbContext.Interests.Where(a => a.Id == user.Id).ToList();
+        //        _applicationDbContext.Interests.RemoveRange(Interistslist);
+        //        var educationslist = _applicationDbContext.Educations.Where(a => a.Id == user.Id).ToList();
+        //        _applicationDbContext.Educations.RemoveRange(educationslist);
+        //        var languageslist = _applicationDbContext.Languages.Where(a => a.Id == user.Id).ToList();
+        //        _applicationDbContext.Languages.RemoveRange(languageslist);
+
+        //        user.Skills = userProfile.Skills == null ? new List<Skill>() : userProfile.Skills;
+        //        user.Interests = userProfile.Interests == null ? new List<Interest>() : userProfile.Interests;
+        //        user.Educations = userProfile.Skills == null ? new List<Education>() : userProfile.Educations;
+        //        user.Languages = userProfile.Languages == null ? new List<Language>() : userProfile.Languages;
+
+
+
+        //        int n = 0;
+        //        var eventlist = _applicationDbContext.LifeEvents.Where(a => a.Id == user.Id).ToList();
+        //        _applicationDbContext.RemoveRange(eventlist);
+
+        //        if (userProfile.LifeEvents != null)
+        //        {
+
+        //            for (int i = 0; i < userProfile.LifeEvents.Count(); i++)
+        //            {
+        //                if (userProfile.LifeEvents[i].Media == null)
+        //                {
+        //                    string folder = "Images/ProfileImages/";
+        //                    userProfile.LifeEvents[i].Media = UploadImage(folder, EventsMedia[n]);
+        //                    n++;
+        //                }
+        //            }
+        //            user.LifeEvents = userProfile.LifeEvents == null ? new List<LifeEvent>() : userProfile.LifeEvents;
+        //        }
+
+        //        if (Images.Count() > 0)
+        //        {
+        //            for (int i = 0; i < Images.Count(); i++)
+        //            {
+        //                Photo photo = new Photo();
+        //                if (Images[i] != null)
+        //                {
+        //                    string folder = "Images/ProfileImages/";
+        //                    photo.Image = UploadImage(folder, Images[i]);
+        //                    photo.PublishDate = DateTime.Now;
+        //                    //photo.Caption = userProfile.Photos[i].Caption;
+        //                    photo.Id = user.Id;
+        //                }
+        //                _applicationDbContext.Photos.Add(photo);
+        //            }
+        //        }
+        //        if (VideosFiels.Count() > 0)
+        //        {
+        //            for (int i = 0; i < VideosFiels.Count(); i++)
+        //            {
+        //                Video video = new Video();
+        //                if (VideosFiels[i] != null)
+        //                {
+        //                    string folder = "Videos/ProfileVideos/";
+        //                    video.VideoT = UploadImage(folder, VideosFiels[i]);
+        //                    //video.Caption = userProfile.Videos[i].Caption;
+        //                    video.PublishDate = DateTime.Now;
+        //                    video.Id = user.Id;
+        //                }
+        //                _applicationDbContext.Videos.Add(video);
+        //            }
+        //        }
+        //        _applicationDbContext.SaveChanges();
+
+        //        if (Profilepic != null)
+        //        {
+        //            string folder = "Images/ProfileImages/";
+        //            user.ProfilePicture = UploadImage(folder, Profilepic);
+        //        }
+        //        if (bannerpic != null)
+        //        {
+        //            string folder = "Images/BannerImages/";
+        //            user.Profilebanner = UploadImage(folder, bannerpic);
+        //        }
+        //        await _userManager.UpdateAsync(user);
+        //        return Ok("updated successfully.. ");
+        //    }
+        //    catch (Exception e)
+        //    {
+
+        //        return BadRequest(e.Message);
+        //    }
+        //}
+
+
+
         [HttpPut]
         public async Task<IActionResult> UpdateUserProfile(IFormFile Profilepic, IFormFile bannerpic, UserProfile userProfile)
         {
@@ -722,7 +846,7 @@ namespace Icity.Controllers
                 user.Phone2 = userProfile.Phone2;
                 user.Folwers = userProfile.Folwers;
                 user.Website = userProfile.Website;
-                
+
                 if (Profilepic != null)
                 {
                     string folder = "Images/ProfileImages/";
@@ -742,6 +866,7 @@ namespace Icity.Controllers
                 return BadRequest(e.Message);
             }
         }
+
         [ApiExplorerSettings(IgnoreApi = true)]
         private string UploadImage(string folderPath, IFormFile file)
         {
@@ -790,11 +915,22 @@ namespace Icity.Controllers
             try
             {
                 var user = await _userManager.FindByIdAsync(userid);
+                //var listings = _context.AddListings.Where(a => a.CreatedByUser == userid).ToList();
+                //List<Datalist> listingmedia = new List<Datalist>();
 
                 if (user != null)
                 {
-                    user.Photos = _applicationDbContext.Photos.Where(e => e.Id == userid).ToList();
-                    user.Videos = _applicationDbContext.Videos.Where(e => e.Id == userid).ToList();
+                    user.Photos = _applicationDbContext.Photos.Where(e => e.Id == userid).OrderBy(a => a.PublishDate).ToList();
+                    user.Videos = _applicationDbContext.Videos.Where(e => e.Id == userid).OrderBy(a => a.PublishDate).ToList();
+                    //foreach (var item in user.Photos)
+                    //{
+                    //    listingmedia.Add(new Datalist(item.PhotoID, item.Image));
+                    //}
+                    //foreach (var item in user.Videos)
+                    //{
+                    //    listingmedia.Add(new Datalist(item.VideoID, item.VideoT));
+                    //}
+
                     user.Languages = _applicationDbContext.Languages.Where(e => e.Id == userid).ToList();
                     user.Interests = _applicationDbContext.Interests.Where(e => e.Id == userid).ToList();
                     user.Skills = _applicationDbContext.Skills.Where(e => e.Id == userid).ToList();
@@ -1097,13 +1233,115 @@ namespace Icity.Controllers
             return BadRequest("Enter Valid ID..");
 
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllMedia(string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+                var media = new List<MediaVM>();
+
+                var photosList = _applicationDbContext.Photos.Where(e => e.Id == user.Id);
+                var VideosList = _applicationDbContext.Videos.Where(e => e.Id == user.Id);
+                if (photosList != null)
+                {
+                    foreach (var item in photosList)
+                    {
+                        var mediaobj = new MediaVM() { Caption = item.Caption, MediaURL = item.Image, PublishDate = item.PublishDate };
+                        media.Add(mediaobj);
+                    }
+                }
+                if (VideosList != null)
+                {
+                    foreach (var item in VideosList)
+                    {
+                        var mediaobj = new MediaVM() { Caption = item.Caption, MediaURL = item.VideoT, PublishDate = item.PublishDate };
+                        media.Add(mediaobj);
+                    }
+                }
+                if (media != null)
+                {
+                    media = media.OrderBy(a => a.PublishDate).ToList();
+                }
+
+                return Ok(new { Status = "Success", Media = media });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
+        [HttpPost]
+        public IActionResult AddBussinesPhotos(int listingId, IFormFile Photo, string caption)
+        {
+            try
+            {
+
+                var listing = _context.AddListings.Find(listingId);
+                if (listing == null)
+                {
+                    return Ok(new { status = "false", message = "Addlisting Not Found.." });
+                }
+                if (Photo == null)
+                {
+                    return Ok(new { status = "false", message = "Please Upload Photo.." });
+                }
+                var photoobj = new ListingPhotos() { Caption = caption, PublishDate = DateTime.Now, AddListingId = listingId };
+                string folder = "Images/ListingMedia/Photos/";
+                photoobj.PhotoUrl = UploadImage(folder, Photo);
+                _context.ListingPhotos.Add(photoobj);
+                _context.SaveChanges();
+                return Ok(new { status = true, message = "Listing photo Added successfully..", photo = photoobj });
+
+            }
+            catch (Exception e)
+            {
+
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+        [HttpPost]
+        public IActionResult AddBussinesVideo(int listingId, IFormFile Video, string caption)
+        {
+            try
+            {
+
+                var listing = _context.AddListings.Find(listingId);
+                if (listing == null)
+                {
+                    return Ok(new { status = "false", message = "Addlisting Not Found.." });
+                }
+                if (Video == null)
+                {
+                    return Ok(new { status = "false", message = "Please Upload Video.." });
+                }
+                var videoobj = new ListingVideos() { Caption = caption, PublishDate = DateTime.Now, AddListingId = listingId };
+                string folder = "Images/ListingMedia/Videos/";
+                videoobj.VideoUrl = UploadImage(folder, Video);
+                _context.ListingVideos.Add(videoobj);
+                _context.SaveChanges();
+                return Ok(new { status = true, message = "Listing Video Added successfully..", Video = videoobj });
+
+            }
+            catch (Exception e)
+            {
+
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> AddListing(IFormFile Listinglogo, IFormFile PromoVideo, IFormFile listingbanner, IFormFileCollection Videos, IFormFileCollection Photos, AddListing addListing)
         {
             var user = await _userManager.FindByEmailAsync(addListing.CreatedByUser);
+
             if (user == null)
             {
-                return Ok(new { status = "faild" });
+                return Ok(new { status = "false", message = "User Not Found.." });
             }
 
 
@@ -1157,12 +1395,6 @@ namespace Icity.Controllers
                 string folder = "Images/ListingMedia/Banners/";
                 addListing.ListingBanner = UploadImage(folder, listingbanner);
             }
-
-            if (!ModelState.IsValid)
-            {
-                return Ok(new { status = "false" });
-            }
-
 
             _context.AddListings.Add(addListing);
             _context.SaveChanges();
@@ -1335,22 +1567,31 @@ namespace Icity.Controllers
 
         }
         [HttpPost]
-        public IActionResult PostListingReview(Review review)
+        public IActionResult PostListingReview(ReviewVM review)
         {
             if (review.AddListingId != 0)
             {
+                var reviewobj = new Review()
+                {
+                    AddListingId = review.AddListingId,
+                    Email = review.Email,
+                    Name = review.Name,
+                    Rating = review.Rating,
+                    Title = review.Title,
+                    ReviewDate = DateTime.Now
+                };
                 try
                 {
-                    _context.Reviews.Add(review);
+                    _context.Reviews.Add(reviewobj);
                     _context.SaveChanges();
-                    return Ok(new { status = "success", review });
+                    return Ok(new { status = "success", reviewobj });
                 }
                 catch (Exception e)
                 {
-                    return BadRequest(e.Message);
+                    return Ok(new { status = false, message = e.Message });
                 }
             }
-            return BadRequest("Enter Valid AssetListing id..");
+            return Ok(new { status = false, message = "Enter Valid AssetListing id.." });
         }
         [HttpGet]
         public IActionResult GetAllReviews(int listingid)
@@ -1443,7 +1684,7 @@ namespace Icity.Controllers
         {
             try
             {
-                var productStatus = await _context.ProductStatuses.Where(e=>e.ProductStatusID==productStatusId).FirstOrDefaultAsync();
+                var productStatus = await _context.ProductStatuses.Where(e => e.ProductStatusID == productStatusId).FirstOrDefaultAsync();
                 var model = new
                 {
                     status = true,
@@ -1453,7 +1694,7 @@ namespace Icity.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return Ok(new { status = false, message = e.Message });
             }
         }
         [HttpPost]
@@ -1491,8 +1732,8 @@ namespace Icity.Controllers
             classifiedAds.Status = false;
             classifiedAds.AddedDate = DateTime.Now;
             classifiedAds.PayedDate = null;
-            
-            
+
+
             _context.ClassifiedAds.Add(classifiedAds);
             _context.SaveChanges();
             return Ok(new { status = "success", classifiedAds });
@@ -1505,7 +1746,7 @@ namespace Icity.Controllers
             var model = await _context.ClassifiedAds.Where(c => c.ClassifiedAdsID == classifiedAds.ClassifiedAdsID).FirstOrDefaultAsync();
             if (model == null)
             {
-                return BadRequest("Classified Ads Object Not Found");
+                return Ok(new { status = false, message = "Classified Ads Object Not Found" });
             }
             if (MainPhoto != null)
             {
@@ -1542,7 +1783,7 @@ namespace Icity.Controllers
             model.PayedDate = classifiedAds.PayedDate;
             _context.Attach(model).State = EntityState.Modified;
             _context.SaveChanges();
-            return Ok(new { status = "success", classifiedAds });
+            return Ok(new { status = true, ClassifiedAds = classifiedAds });
         }
         [HttpDelete]
         public IActionResult DeleteClassifiedAds(int classifiedAdsId)
@@ -1556,16 +1797,18 @@ namespace Icity.Controllers
                     {
                         _context.ClassifiedAds.Remove(classifiedAds);
                         _context.SaveChanges();
-                        return Ok(new {status="Deleted", classifiedAds });
+                        return Ok(new { status = "Deleted", classifiedAds });
                     }
-                    return BadRequest("classified Ads Not Found..");
+                    return Ok(new { status = false, message = "classified Ads Not Found.." });
+
                 }
                 catch (Exception e)
                 {
-                    return BadRequest(e.Message);
+                    return Ok(new { status = false, message = e.Message });
                 }
             }
-            return BadRequest("Enter Valid Classified Ads ID..");
+            return Ok(new { status = false, message = "Enter Valid Classified Ads ID.." });
+
 
         }
         [HttpDelete]
@@ -1582,22 +1825,21 @@ namespace Icity.Controllers
                         _context.SaveChanges();
                         return Ok(new { status = "Deleted", classifiedAdsMedia });
                     }
-                    return BadRequest("classified Ads Media Not Found..");
+                    return Ok(new { status = false, message = "classified Ads Media Not Found.." });
                 }
                 catch (Exception e)
                 {
-                    return BadRequest(e.Message);
+                    return Ok(new { status = false, message = e.Message });
                 }
             }
-            return BadRequest("Enter Valid Classified Ads Media ID..");
-
+            return Ok(new { status = false, message = "Enter Valid Classified Ads Media ID.." });
         }
         [HttpGet]
         public async Task<IActionResult> GetAllClassifiedAdsByTypeId(int ClassifiedAdsTypeId)
         {
             try
             {
-                var classifiedAds = await _context.ClassifiedAds.Include(e=>e.ClassifiedAsdMedias).Where(e=>e.ClassifiedAdsTypeID== ClassifiedAdsTypeId).ToListAsync();
+                var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.ClassifiedAdsTypeID == ClassifiedAdsTypeId).ToListAsync();
                 var model = new
                 {
                     status = true,
@@ -1607,15 +1849,16 @@ namespace Icity.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return Ok(new { status = false, message = e.Message });
+
             }
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllClassifiedAdsByType_Status(int ClassifiedAdsTypeId,int productStatustId)
+        public async Task<IActionResult> GetAllClassifiedAdsByType_Status(int ClassifiedAdsTypeId, int productStatustId)
         {
             try
             {
-                var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.ClassifiedAdsTypeID == ClassifiedAdsTypeId&&e.ProductStatusID==productStatustId).ToListAsync();
+                var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.ClassifiedAdsTypeID == ClassifiedAdsTypeId && e.ProductStatusID == productStatustId).ToListAsync();
                 var model = new
                 {
                     status = true,
@@ -1625,7 +1868,7 @@ namespace Icity.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return Ok(new { status = false, message = e.Message });
             }
         }
         [HttpGet]
@@ -1633,7 +1876,6 @@ namespace Icity.Controllers
         {
             try
             {
-               
                 var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.AddedBy == UserEmail).ToListAsync();
                 var classifiedAdsMedia = await _context.ClassifiedAsdMedias.Where(e => e.ClassifiedAds.AddedBy == UserEmail).OrderBy(e=>e.MediaDate).ToListAsync();
                 var model = new
@@ -1645,7 +1887,305 @@ namespace Icity.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllCountries()
+        {
+            try
+            {
+                var countries = await _context.Countries.ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    Countries = countries
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        private bool ValidateBranchModel(BranchVM branch)
+        {
+            if (branch.Lat == null || branch.Long == null || branch.Title == null)
+            {
+                return false;
+            }
+            return true;
+        }
+        [HttpPost]
+        public IActionResult AddBranch(BranchVM branch)
+        {
+            var lsting = _context.AddListings.Find(branch.AddListingId);
+            if (lsting == null)
+            {
+                return Ok(new { status = false, message = "AddListing Not Found..." });
+            }
+            if (!ValidateBranchModel(branch))
+            {
+                return Ok(new { status = false, message = "Enter Required Data..." });
+            }
+            try
+            {
+                var model = new Branch() { AddListingId = branch.AddListingId, Lat = branch.Lat, Long = branch.Long, Title = branch.Title };
+                _context.Branches.Add(model);
+                _context.SaveChanges();
+                return Ok(new { status = true, Branch = model });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+        [HttpPut]
+        public IActionResult EditBranch(BranchVM branch)
+        {
+
+            if (branch.BranchId == 0)
+            {
+                return Ok(new { status = false, message = "Enter BranchId..." });
+            }
+            var model = _context.Branches.Find(branch.BranchId);
+            if (model == null)
+            {
+                return Ok(new { status = false, message = "Branch Not Found..." });
+            }
+            try
+            {
+                model.Title = branch.Title;
+                model.Lat = branch.Lat;
+                model.Long = branch.Long;
+                _context.Attach(model).State = EntityState.Modified;
+                _context.SaveChanges();
+                return Ok(new { status = true, Branch = model });
+            }
+            catch (Exception e)
+            {
+
+                return Ok(new { status = false, message = e.Message });
+
+            }
+        }
+        [HttpDelete]
+        public IActionResult DeleteBranch(int BranchId)
+        {
+            var model = _context.Branches.Find(BranchId);
+            if (model == null)
+            {
+                return Ok(new { status = false, message = "Branch Not Found.." });
+            }
+            try
+            {
+                _context.Branches.Remove(model);
+                _context.SaveChanges();
+                return Ok(new { status = true, message = "Branch Deleted Successfully.." });
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+        [HttpGet]
+        public IActionResult GetBranchById(int branchid)
+        {
+
+            try
+            {
+                var Branch = _context.Branches.Find(branchid);
+                var model = new
+                {
+                    status = true,
+                    Branch = Branch
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllBranches()
+        {
+            try
+            {
+                var Branches = await _context.Branches.ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    Branches = Branches
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetBuisnessMedia(int buisnessid)
+        {
+            try
+            {
+                var listing = _context.AddListings.Find(buisnessid);
+                if (listing == null)
+                {
+                    return Ok(new { Status = "false", Reason = "Buisness Not Found" });
+                }
+                var media = new List<MediaVM>();
+
+                var photosList = _context.ListingPhotos.Where(e => e.AddListingId == buisnessid);
+                var VideosList = _context.ListingVideos.Where(e => e.AddListingId == buisnessid);
+                if (photosList != null)
+                {
+                    foreach (var item in photosList)
+                    {
+                        var mediaobj = new MediaVM() { Caption = item.Caption, MediaURL = item.PhotoUrl, PublishDate = item.PublishDate };
+                        media.Add(mediaobj);
+                    }
+                }
+                if (VideosList != null)
+                {
+                    foreach (var item in VideosList)
+                    {
+                        var mediaobj = new MediaVM() { Caption = item.Caption, MediaURL = item.VideoUrl, PublishDate = item.PublishDate };
+                        media.Add(mediaobj);
+                    }
+                }
+                if (media != null)
+                {
+                    media = media.OrderBy(a => a.PublishDate).ToList();
+                }
+
+                return Ok(new { Status = "Success", Media = media });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllBuisness()
+        {
+            try
+            {
+                var Buisness = await _context.AddListings.Include(a => a.Country).Include(a => a.Category).Include(a => a.Reviews).Include(a => a.Branches).Include(a => a.ListingPhotos).Include(a => a.ListingVideos).ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    Buisness = Buisness
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+        [HttpPost]
+        public IActionResult AddFavouriteBuisness(int buisnessid, string userid)
+        {
+            try
+            {
+
+                var buisness = _context.AddListings.Find(buisnessid);
+                var user = _applicationDbContext.Users.Find(userid);
+                if (buisness == null)
+                {
+                    return Ok(new { status = false, message = "Buisness Not Found." });
+
+                }
+                if (user == null)
+                {
+                    return Ok(new { status = false, message = "User Not Found." });
+
+                }
+                var favourite = _context.Favourites.Where(a => a.AddListingId == buisnessid && a.UserId == userid).FirstOrDefault();
+                if (favourite != null)
+                {
+                    return Ok(new { status = false, message = "Buisness already added in favourite.." });
+                }
+                var favouriteobj = new Favourite() { UserId = userid, AddListingId = buisnessid };
+                _context.Favourites.Add(favouriteobj);
+                _context.SaveChanges();
+                return Ok(new { status = true, message = "Buisness Added To Favourite.." });
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+        [HttpDelete]
+        public IActionResult DeleteFavouriteBuisness(int id)
+        {
+            try
+            {
+                var favourite = _context.Favourites.Find(id);
+                if (favourite == null)
+                {
+                    return Ok(new { status = false, message = "Favourite Buisness Not Found.." });
+                }
+                _context.Favourites.Remove(favourite);
+                _context.SaveChanges();
+                return Ok(new { status = true, message = "Buisness Deleted Successfully From Favourite.." });
+
+            }
+            catch (Exception e)
+            {
+
+                return Ok(new { status = false, message = e.Message });
+
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetFavouriteBuisnessByUser(string userid)
+        {
+            try
+            {
+                var user = _applicationDbContext.Users.Find(userid);
+                if (user == null)
+                {
+                    return Ok(new { status = false, message = "User Not Found." });
+                }
+                var Favourite = await _context.Favourites.Where(a => a.UserId == userid).Include(a => a.AddListing).ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    FavouriteBusness = Favourite
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+        [HttpGet]
+        public IActionResult GetFavouriteBuisnessCountByUser(string userid)
+        {
+            try
+            {
+                var user = _applicationDbContext.Users.Find(userid);
+                
+                if (user == null)
+                {
+                    return Ok(new { status = false, message = "User Not Found." });
+                }
+                var Favourite = _context.Favourites.Where(a => a.UserId == userid).Count();
+                var model = new
+                {
+                    status = true,
+                    FavouriteCount = Favourite
+                };
+                return Ok(model);
             }
         }
         [HttpGet]
@@ -1727,6 +2267,55 @@ namespace Icity.Controllers
         }
     }
 
+        [HttpGet]
+        public async Task<IActionResult> GetSearchResult(string Search)
+        {
+            if (Search == null)
+            {
+                return Ok(new { status = false, message = "Enter Any Text To search." });
+            }
+            try
+            {
+                var users = _applicationDbContext.Users.Where(a => a.UserName.ToUpper().Contains(Search.ToUpper())).ToList();
+                var buisness = _context.AddListings.Include(a => a.Country).Include(a => a.Category).Include(a => a.Reviews).Include(a => a.Branches).Include(a => a.ListingPhotos).Include(a => a.ListingVideos).Where(a => a.City.ToUpper().Contains(Search.ToUpper()) || a.Country.Title.ToUpper().Contains(Search.ToUpper()) || a.Category.CategoryTitleEn.ToUpper().Contains(Search.ToUpper()) || a.Category.CategoryTitleAr.ToUpper().Contains(Search.ToUpper())).ToList();
+                var classifiedads = _context.ClassifiedAds.Include(a => a.ClassifiedAdsType).Where(a => a.ClassifiedAdsType.TypeTitleEn.ToUpper().Contains(Search.ToUpper()) || a.ClassifiedAdsType.TypeTitleAr.ToUpper().Contains(Search.ToUpper()) || a.Title.ToUpper().Contains(Search.ToUpper())).ToList();
+                //var userssw = await _userManager.FindByEmailAsync(Search);
+                var Searchresult = new List<SearchVM>();
+                foreach (var item in users)
+                {
+                    var userssw = await _userManager.FindByEmailAsync(item.UserName);
+                    var searchobj = new SearchVM() { id = item.Id, Title = userssw.FullName, CategoryEn= userssw.Job, CategoryAr = userssw.Job, image = userssw.ProfilePicture, Type =  1};
+                    Searchresult.Add(searchobj);
+                }
+                foreach (var item in buisness)
+                {
+                    var searchobj = new SearchVM() { id = item.AddListingId.ToString(),CategoryEn=item.Category.CategoryTitleEn, CategoryAr = item.Category.CategoryTitleAr, Title = item.Title, image = item.ListingLogo, Type = 2 };
+                    Searchresult.Add(searchobj);
+                }
+                foreach (var item in classifiedads)
+                {
+                    var searchobj = new SearchVM() { id = item.ClassifiedAdsID.ToString(), CategoryEn = item.ClassifiedAdsType.TypeTitleEn, CategoryAr = item.ClassifiedAdsType.TypeTitleAr, Title = item.Title, image = item.MainPhoto, Type = 3 };
+                    Searchresult.Add(searchobj);
+                }
+                if (Searchresult.Count()==0)
+                {
+                    return Ok(new { status = false, message = "Not Matched Result.. " });
+                }
+                var rnd = new Random();
+                var RandomList = Searchresult.OrderBy(x => rnd.Next());
 
+                var model = new
+                {
+                    status = true,
+                    searchresult = RandomList
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+
+    }
 }
-

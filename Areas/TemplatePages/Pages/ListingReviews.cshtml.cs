@@ -20,7 +20,10 @@ namespace Icity.Areas.TemplatePages.Pages
         private readonly IToastNotification _toastNotification;
         public UserManager<ApplicationUser> UserManager { get; }
         public List<Review> reviewlist = new List<Review>();
-
+        public static List<Review> staticreviewlist = new List<Review>();
+        public static List<Review> Allreviwes = new List<Review>();
+        public List<int> Pagenumbers = new List<int>();
+        public static bool first = true;
         public ListingReviewsModel(UserManager<ApplicationUser> userManager, IcityContext context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
         {
             UserManager = userManager;
@@ -28,6 +31,20 @@ namespace Icity.Areas.TemplatePages.Pages
             _hostEnvironment = hostEnvironment;
             _toastNotification = toastNotification;
 
+        }
+        public async Task<IActionResult> OnPostBranchesList([FromBody] int num)
+        {
+            var user = await UserManager.GetUserAsync(User);
+            var listingid = _context.AddListings.Where(a => a.CreatedByUser == user.Email);
+            foreach (var item in listingid)
+            {
+                var rev = _context.Reviews.Where(a => a.AddListingId == item.AddListingId);
+                reviewlist.AddRange(rev);
+            }
+            var start = (num - 1) * 8;
+            staticreviewlist = reviewlist.Skip(start).Take(5).ToList();
+            reviewlist = staticreviewlist;
+            return new JsonResult(reviewlist);
         }
         public async Task<IActionResult> OnGet()
         {
@@ -39,10 +56,29 @@ namespace Icity.Areas.TemplatePages.Pages
             try
             {
                 var listingid = _context.AddListings.Where(a => a.CreatedByUser == user.Email);
-                foreach (var item in listingid)
+                if (first)
                 {
-                    var rev = _context.Reviews.Where(a => a.AddListingId == item.AddListingId);
-                    reviewlist.AddRange(rev);
+                    foreach (var item in listingid)
+                    {
+                        var rev = _context.Reviews.Where(a => a.AddListingId == item.AddListingId);
+                        reviewlist.AddRange(rev);
+                        Allreviwes.AddRange(rev);
+
+                    }
+                    first = false;
+                    staticreviewlist = reviewlist;
+                    reviewlist = reviewlist.Take(8).ToList();
+
+
+                }
+                else
+                    reviewlist = staticreviewlist;
+
+                float number = (float)Allreviwes.Count() / 8;
+                var pagenumber = Math.Ceiling(number);
+                for (int i = 1; i <= pagenumber; i++)
+                {
+                    Pagenumbers.Add(i);
                 }
                 return Page();
 

@@ -14,7 +14,6 @@ namespace Icity.Models
         public string VideoUrl { get; set; }
         public string Caption { get; set; }
         public DateTime PublishDate { get; set; }
-
         [JsonIgnore]
         public virtual AddListing AddListing { get; set; }
         public int AddListingId { get; set; }
