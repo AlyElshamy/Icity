@@ -7,6 +7,8 @@
     var currentuser = await UserManager.GetUserAsync(User);
     var nickname = "User";
         var  TotalReview = _context.Reviews.Where(e => e.AddListing.CreatedByUser == currentuser.Email).ToList().Count();
+        var  ActiveListing = _context.AddListings.Where(e => e.CreatedByUser == currentuser.Email).ToList().Count();
+        var  TotalClassifiedAds = _context.ClassifiedAds.Where(e => e.AddedBy == currentuser.Email).ToList().Count();
 }
 <!DOCTYPE HTML>
 <html id="masterPageId" dir="ltr" lang="en">
@@ -392,8 +394,8 @@
                                                 <div class="swiper-slide">
                                                     <div class="dashboard-header-stats-item">
                                                         <i class="fal fa-chart-bar"></i>
-                                                        Listing Views
-                                                        <span>1054</span>
+                                                        Total Listing 
+                                                        <span>@ActiveListing</span>
                                                     </div>
                                                 </div>
                                                 <!--  dashboard-header-stats-item end -->
@@ -410,8 +412,8 @@
                                                 <div class="swiper-slide">
                                                     <div class="dashboard-header-stats-item">
                                                         <i class="fal fa-heart"></i>
-                                                        Times Bookmarked
-                                                        <span>654</span>
+                                                        Total Classified Ads
+                                                        <span>@TotalClassifiedAds</span>
                                                     </div>
                                                 </div>
                                                 <!--  dashboard-header-stats-item end -->
@@ -486,7 +488,7 @@
                                     <div class="user-profile-menu">
                                         <h3>Listings</h3>
                                         <ul class="no-list-style">
-                                            <li><a asp-area="TemplatePages" asp-page="DashBoardListingTable"><i class="fal fa-th-list"></i> My listigs  </a></li>
+                                            <li><a asp-area="TemplatePages" asp-page="DashBoardListingTable"><i class="fal fa-th-list"></i> My listigs <span>@ActiveListing</span> </a></li>
                                             <li><a href="dashboard-bookings.html"> <i class=" fal fa-calendar-check"></i> Bookings <span>2</span></a></li>
                                             <li><a asp-area="TemplatePages" asp-page="ListingReviews"><i class="fal fa-comments-alt"></i> Reviews </a></li>
                                             <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing"><i class="fal fa-file-plus"></i> Add New</a></li>
@@ -744,5 +746,33 @@
     <script src="~/Template/js/dashboard.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
     @await Component.InvokeAsync("NToastNotify")
+   @* <script>
+ 
+         window.addEventListener('DOMContentLoaded', (event) => {
+         
+    <div id="map_canvas" style="width: 400px; height: 300px"></div> 
+
+    <script type="text/javascript"> 
+
+    var userLocation = 'London, UK';
+
+    if (GBrowserIsCompatible()) 
+{   
+    var map = new google.maps.Map2(document.getElementById("mapdiv"));
+
+    if (google.loader.ClientLocation) 
+    {        
+        var center = new google.maps.LatLng(
+            google.loader.ClientLocation.latitude,
+            google.loader.ClientLocation.longitude
+        );
+        var zoom = 8;
+
+        map.setCenter(center, zoom);
+    }
+}    </script> 
+*@
+     
+
 </body>
 </html>

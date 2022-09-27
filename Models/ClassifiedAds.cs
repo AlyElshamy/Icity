@@ -30,6 +30,7 @@ namespace Icity.Models
         public virtual ProductStatus ProductStatus { get; set; }
         public int ProductStatusID { get; set; }
         public virtual ICollection<ClassifiedAsdMedia> ClassifiedAsdMedias { get; set; }
+        public virtual ICollection<Quotation> Quotations { get; set; }
 
     }
 }

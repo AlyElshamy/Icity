@@ -6,6 +6,7 @@
 @{
     Layout = "_DashBoard";
     var Categories = _context.Categories.Select(e => new { e.CategoryId, e.CategoryTitleEn });
+    var Counties = _context.Countries.Select(e => new { e.CountryId, e.Title });
 
 }
 <div class="col-md-9">
@@ -93,11 +94,22 @@
                         <input asp-for="@Model.AddListing.City" type="text" placeholder="@sharedResource["Enter City"]" id="lat"  />
                         <span asp-validation-for="@Model.AddListing.City" style="color:red;"></span>
                     </div>
-                    <div class="col-md-6">
-                        <label>@sharedResource["Country"] <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="@Model.AddListing.Country" type="text" placeholder="@sharedResource["Enter Country"]" id="lat"  />
-                     <span asp-validation-for="@Model.AddListing.Country" style="color:red;"></span>
-                        
+                     <div class="col-md-6" id="HrefCou">
+                        <label>@sharedResource["Country"]</label>
+                        <div class="listsearch-input-item">
+                            <select id="CouId" asp-for="AddListing.CountryId" data-placeholder="@sharedResource["Select Country"]" class="chosen-select no-search-select">
+                                <option>@sharedResource["All Countries"]</option>
+                                @foreach (var item in Counties)
+                                {
+                                    <option value="@item.CountryId">@item.Title</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span id="SpanCouId" style="color:red;display:none">@sharedResource["Select Country"]</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label>@sharedResource["Contact Person"] <i class="fal fa-long-arrow-alt-down"></i> </label>
@@ -933,28 +945,34 @@
             console.log("Nobody has been selected")
         }
     }
-    function validateMyForm()
-    {
+    function validateMyForm() {
         var CatId = document.getElementById("CatId");
+        var CouId = document.getElementById("CouId");
         console.log(CatId.value);
         var SpanCatId = document.getElementById("SpanCatId")
+        var SpanCouId = document.getElementById("SpanCouId")
         console.log(SpanCatId);
-        if(CatId.value=="All Categories")
-        {
-             console.log("entered");
-             SpanCatId.style.display="flex";
+        if (CatId.value == "All Categories") {
+            console.log("entered");
+            SpanCatId.style.display = "flex";
             window.location.href = "#HrefCat";
 
             return false;
+        }else if(CouId.value == "All Countries"){
+            console.log("entered");
+            SpanCouId.style.display = "flex";
+            window.location.href = "#HrefCou";
+
+            return false;
         }
-        else{
-             console.log("Not entered");
-            SpanCatId.style.display="none";
+        else {
+            console.log("Not entered");
+            SpanCatId.style.display = "none";
+            SpanCouId.style.display = "none";
             return true;
         }
 
     }
-
 
 </script>
  @section Scripts {

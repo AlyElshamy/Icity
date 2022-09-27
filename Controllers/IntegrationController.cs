@@ -581,6 +581,49 @@ namespace Icity.Controllers
                 return Ok(new { Status = "false", Reason = e.Message });
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllMedia(string userEmail)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user == null)
+                {
+                    return Ok(new { Status = "false", Reason = "User Not Found" });
+                }
+                var media = new List<MediaVM>();
+
+                var photosList = _applicationDbContext.Photos.Where(e => e.Id == user.Id);
+                var VideosList = _applicationDbContext.Videos.Where(e => e.Id == user.Id);
+                if (photosList != null)
+                {
+                    foreach (var item in photosList)
+                    {
+                        var mediaobj = new MediaVM() { Caption = item.Caption, MediaURL = item.Image, PublishDate = item.PublishDate };
+                        media.Add(mediaobj);
+                    }
+                }
+                if (VideosList != null)
+                {
+                    foreach (var item in VideosList)
+                    {
+                        var mediaobj = new MediaVM() { Caption = item.Caption, MediaURL = item.VideoT, PublishDate = item.PublishDate };
+                        media.Add(mediaobj);
+                    }
+                }
+                if (media != null)
+                {
+                    media = media.OrderBy(a => a.PublishDate).ToList();
+                }
+
+                return Ok(new { Status = "Success", Media = media });
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Status = "false", Reason = e.Message });
+            }
+        }
         [ApiExplorerSettings(IgnoreApi = true)]
         private bool ValidatevideoModel(Video video)
         {
@@ -1204,7 +1247,7 @@ namespace Icity.Controllers
                 model.MainLocataion = addListing.MainLocataion;
                 model.City = addListing.City;
                 model.ContactPeroson = addListing.ContactPeroson;
-                model.Country = addListing.Country;
+                model.CountryId = addListing.CountryId;
                 model.Branches = addListing.Branches;
                 model.CategoryId = addListing.CategoryId;
                 model.Discription = addListing.Discription;
@@ -1255,7 +1298,7 @@ namespace Icity.Controllers
             {
                 try
                 {
-                    var Listing = _context.AddListings.Include(a => a.Branches).Include(a => a.ListingPhotos).Include(a => a.ListingVideos).Where(a => a.AddListingId == ListingId).FirstOrDefault();
+                    var Listing = _context.AddListings.Include(a => a.Branches).Include(a => a.ListingPhotos).Include(a => a.ListingVideos).Include(a => a.Country).Where(a => a.AddListingId == ListingId).FirstOrDefault();
                     if (Listing != null)
                     {
                         return Ok(Listing);
@@ -1592,6 +1635,7 @@ namespace Icity.Controllers
             {
                
                 var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.AddedBy == UserEmail).ToListAsync();
+                var classifiedAdsMedia = await _context.ClassifiedAsdMedias.Where(e => e.ClassifiedAds.AddedBy == UserEmail).OrderBy(e=>e.MediaDate).ToListAsync();
                 var model = new
                 {
                     status = true,
@@ -1602,6 +1646,83 @@ namespace Icity.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllClassifiedAdsMediaByUser(string UserEmail)
+        {
+            try
+            {
+
+                var classifiedAdsMedia = await _context.ClassifiedAsdMedias.Include(e=>e.ClassifiedAds).Where(e => e.ClassifiedAds.AddedBy == UserEmail).OrderBy(e => e.MediaDate).ToListAsync();
+                var model = new
+                {
+                    status = true,
+                    classifiedAdsMedia = classifiedAdsMedia
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetCountClassifiedAdsByUser(string UserEmail)
+        {
+            try
+            {
+
+                int classifiedAdsCount =  _context.ClassifiedAds.Where(e => e.AddedBy == UserEmail).Count();
+                var model = new
+                {
+                    status = true,
+                    Count = classifiedAdsCount
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new {status=true,Reason=e.Message });
+            }
+        }
+        [HttpGet]
+        public IActionResult GetCountAddListingByUser(string UserEmail)
+        {
+            try
+            {
+
+                int addListingCount = _context.AddListings.Where(e => e.CreatedByUser == UserEmail).Count();
+                var model = new
+                {
+                    status = true,
+                    Count = addListingCount
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = true, Reason = e.Message });
+            }
+        }
+        [HttpGet]
+        public IActionResult GetAddListingByCountry(int CountryId)
+        {
+            try
+            {
+                var rnd = new Random();
+                var addListingList = _context.AddListings.Where(e => e.CountryId == CountryId).ToList();
+                var RandomaddListingList = addListingList.OrderBy(x => rnd.Next());
+                var model = new
+                {
+                    status = true,
+                    AddListingList = RandomaddListingList
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = true, Reason = e.Message });
             }
         }
     }

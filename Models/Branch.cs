@@ -12,6 +12,8 @@ namespace Icity.Models
         public int BranchId { get; set; }
         [Required(ErrorMessage = "Reequired")]
         public string Title { get; set; }
+        public string Lat { get; set; }
+        public string Long { get; set; }
         [JsonIgnore]
         public virtual AddListing AddListing { get; set; }
         public int AddListingId { get; set; }

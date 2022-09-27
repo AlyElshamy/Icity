@@ -4,14 +4,16 @@ using Icity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Icity.Migrations.Icity
 {
     [DbContext(typeof(IcityContext))]
-    partial class IcityContextModelSnapshot : ModelSnapshot
+    [Migration("20220821101521_RemoveRequired")]
+    partial class RemoveRequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -416,26 +418,6 @@ namespace Icity.Migrations.Icity
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("Icity.Models.Favourite", b =>
-                {
-                    b.Property<int>("FavouriteId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AddListingId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("FavouriteId");
-
-                    b.HasIndex("AddListingId");
-
-                    b.ToTable("Favourites");
-                });
-
             modelBuilder.Entity("Icity.Models.ListingPhotos", b =>
                 {
                     b.Property<int>("Id")
@@ -446,14 +428,8 @@ namespace Icity.Migrations.Icity
                     b.Property<int>("AddListingId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Caption")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PhotoUrl")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PublishDate")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -471,12 +447,6 @@ namespace Icity.Migrations.Icity
 
                     b.Property<int>("AddListingId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Caption")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PublishDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("VideoUrl")
                         .HasColumnType("nvarchar(max)");
@@ -1314,17 +1284,6 @@ namespace Icity.Migrations.Icity
                         .IsRequired();
 
                     b.Navigation("ClassifiedAds");
-                });
-
-            modelBuilder.Entity("Icity.Models.Favourite", b =>
-                {
-                    b.HasOne("Icity.Models.AddListing", "AddListing")
-                        .WithMany()
-                        .HasForeignKey("AddListingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AddListing");
                 });
 
             modelBuilder.Entity("Icity.Models.ListingPhotos", b =>

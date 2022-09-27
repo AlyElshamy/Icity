@@ -6,6 +6,7 @@
 @{
     Layout = "_DashBoard";
     var Categories = _context.Categories.Select(e => new { e.CategoryId, e.CategoryTitleEn });
+    var Counties = _context.Countries.Select(e => new { e.CountryId, e.Title });
 }
 
 <div class="col-md-9">
@@ -105,11 +106,22 @@
                         <span asp-validation-for="AddListing.City" style="color:red;"></span>
 
                     </div>
-                    <div class="col-md-6">
-                        <label>@sharedResource["Country"] <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input asp-for="AddListing.Country" type="text" placeholder="@sharedResource["Country"]Enter Country" id="lat" value="" required />
-                        <span asp-validation-for="AddListing.Country" style="color:red;"></span>
-
+                     <div class="col-md-6" id="HrefCou">
+                        <label>@sharedResource["Country"]</label>
+                        <div class="listsearch-input-item">
+                            <select id="CouId" asp-for="AddListing.CountryId" data-placeholder="@sharedResource["Select Country"]" class="chosen-select no-search-select">
+                                <option>@sharedResource["All Countries"]</option>
+                                @foreach (var item in Counties)
+                                {
+                                    <option value="@item.CountryId">@item.Title</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span id="SpanCouId" style="color:red;display:none">@sharedResource["Select Country"]</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label>@sharedResource["Contact Person"] <i class="fal fa-long-arrow-alt-down"></i> </label>
@@ -697,6 +709,7 @@
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwJSRi0zFjDemECmFl9JtRj1FY7TiTRRo&libraries=places&callback=initAutocomplete"></script>
         <script src="~/Template/js/map-add.js"></script>
 
@@ -706,7 +719,16 @@
 }
 
 <script>
-    google.maps.event.addListener(singleMap, 'click', function (event) {        alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());        var myLatlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());        var marker = new google.maps.Marker({            position: myLatlng,            map: map,            title: 'Hello World!'        });    });
+    //google.maps.event.addListener(singleMap, 'click', function (event) {
+    //    alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());
+
+    //    var myLatlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+    //    var marker = new google.maps.Marker({
+    //        position: myLatlng,
+    //        map: map,
+    //        title: 'Hello World!'
+    //    });
+    //});
 
 
 
@@ -768,8 +790,10 @@
     }
     function validateMyForm() {
         var CatId = document.getElementById("CatId");
+        var CouId = document.getElementById("CouId");
         console.log(CatId.value);
         var SpanCatId = document.getElementById("SpanCatId")
+        var SpanCouId = document.getElementById("SpanCouId")
         console.log(SpanCatId);
         if (CatId.value == "All Categories") {
             console.log("entered");
@@ -777,14 +801,66 @@
             window.location.href = "#HrefCat";
 
             return false;
+        }else if(CouId.value == "All Countries"){
+            console.log("entered");
+            SpanCouId.style.display = "flex";
+            window.location.href = "#HrefCou";
+
+            return false;
         }
         else {
             console.log("Not entered");
             SpanCatId.style.display = "none";
+            SpanCouId.style.display = "none";
             return true;
         }
 
     }
+   
+    window.addEventListener('load', (event) => {
+        console.log('The page has fully loaded');
+       getLocation();
+       
+   });
+    
+    var logitude = 0;
+    var latitude = 0;
+   
+
+    function getLocation() {
+        navigator.geolocation.getCurrentPosition(_fun_get_loc);
+    }
+    function _fun_get_loc(pos) {
+        longitude = pos.coords.longitude;
+        latitude = pos.coords.latitude;
+
+        initMap();
+        //var url="https://www.google.com/maps?q="+latitude+",+"+longitude;
+        //window.open(url,'_blank');
+        // location.replace(url);
+    }
+    //}
+    function initMap() {
+     
+        console.log("long= "+longitude)
+        console.log("lat= "+latitude)
+        // The location of Uluru
+        const uluru = { lat:latitude , lng:logitude };
+       
+        // The map, centered at Uluru
+        const map = new google.maps.Map(document.getElementById("singleMap"), {
+            zoom: 4, center: uluru,
+        });
+        console.log("uluru= "+uluru)
+        // The marker, positioned at Uluru
+        const marker = new google.maps.Marker({
+            position: uluru,
+            map: map,
+        });
+         console.log("marker= "+marker)
+    }
+
+
 
 </script>
 @section Scripts {

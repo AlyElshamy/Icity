@@ -12,6 +12,9 @@ namespace Icity.Models
         [Key]
         public int Id { get; set; }
         public string VideoUrl { get; set; }
+        public string Caption { get; set; }
+        public DateTime PublishDate { get; set; }
+
         [JsonIgnore]
         public virtual AddListing AddListing { get; set; }
         public int AddListingId { get; set; }

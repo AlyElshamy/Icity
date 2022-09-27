@@ -99,13 +99,13 @@
                                             <div class="col-md-4">
                                                 <div class="listsearch-input-item">
                                                     <span class="iconn-dec"><i class="far fa-bookmark"></i></span>
-                                                    <input type="text" placeholder="@sharedResource["What are you looking for ?"]" asp-for="@Model.FilterModel.Target" />
+                                                    <input id="searchTargetInp" type="text" placeholder="@sharedResource["What are you looking for ?"]" asp-for="@Model.FilterModel.Target" />
                                                 </div>
                                             </div>
                                             <!-- listsearch-input-item end-->
                                             <!-- listsearch-input-item-->
                                             <div class="col-md-4">
-                                                <div class="listsearch-input-item">
+                                                <div id="AllCategoriesDropMenu" class="listsearch-input-item">
                                                     <select asp-for="@Model.FilterModel.CatId data-placeholder=" Location" class="chosen-select no-search-select">
                                                         <option>@sharedResource["All Categories"]</option>
                                                         @foreach (var item in categoryList)
@@ -129,8 +129,8 @@
                                             <!-- listsearch-input-item-->
                                             <div class="col-md-4">
                                                 <div class="listsearch-input-item">
-                                                    <select asp-for="@Model.FilterModel.City data-placeholder="City/Location" class="chosen-select no-search-select">
-                                                      <option>All Cities</option>
+                                                    <select id="AllCitiesDropMenu" asp-for="@Model.FilterModel.City" data-placeholder="City/Location" class="chosen-select no-search-select">
+                                                      <option value="All Cities">All Cities</option>
                                                         @foreach (var item in CitiesList)
                                                         {
                                                            <option value="@item">@item</option>
@@ -146,7 +146,7 @@
                                             <div class="col-md-9">
                                                 <div class="listsearch-input-item location autocomplete-container">
                                                     <span class="iconn-dec"><i class="far fa-map-marker"></i></span>
-                                                    <input type="text" placeholder="@sharedResource["Where to look?"]" class="autocomplete-input" id="autocompleteid3" value="" />
+                                                    <input  type="text" placeholder="@sharedResource["Where to look?"]" class="autocomplete-input" id="autocompleteid3"  />
                                                     <a href="#"><i class="fal fa-location"></i></a>
                                                 </div>
                                             </div>
@@ -235,7 +235,7 @@
                                         <!-- hidden-listing-filter end -->
                                         <div class="more-filter-option-wrap">
                                             <div class="more-filter-option-btn act-hiddenpanel"><i class="far fa-plus"></i> <span>More Options</span></div>
-                                            <div class="clear-filter-btn color"><i class="far fa-redo"></i> Reset Filters</div>
+                                            <div onclick="ResetFilterFunc()" class="clear-filter-btn color"><i class="far fa-redo"></i> Reset Filters</div>
                                         </div>
                                     </div>
                                 </div>
@@ -500,5 +500,37 @@
             console.log("Nobody has been selected")
         }
     }
+     function ResetFilterFunc() 
+     { 
+         console.log("Hello");
+         document.getElementById("autocompleteid3").value="";
+         document.getElementById("searchTargetInp").value="";
+         document.getElementById("AllCitiesDropMenu").selectedIndex="0";
+         var c=document.getElementById("AllCitiesDropMenu");
+         c.value=document.getElementById("AllCitiesDropMenu").value;
+         console.log(document.getElementsByClassName("chosen-select"))
+         
+         //document.getElementById("AllCitiesDropMenu").value="AllCities";
+         //console.log(document.getElementById("AllCitiesDropMenu").selectedIndex);
+         console.log(document.getElementById("AllCitiesDropMenu").value);
+         console.log(c.value);
+         //console.log(document.getElementById("AllCitiesDropMenu").selectedIndex);
+         // console.log(document.getElementById("AllCitiesDropMenu").selectedIndex);
+         //AllCitiesDropMenu
+        // console.log(AllCitiesDropMenu.selectedIndex);
+        // console.log(AllCitiesDropMenu);
+         //var AllCategoriesDropMenu= document.getElementById("AllCategoriesDropMenu");
+        // console.log(AllCitiesDropMenu.options[0])
+         //var AllCategoriesDropMenu=document.getElementById("AllCategoriesDropMenu");
+         //AllCategoriesDropMenu.options[AllCategoriesDropMenu.selectedIndex].value=0;
+
+         console.log("Hello2");
+         
+         
+         
+         
+     }
+
+
 
 </script>
