@@ -1,8 +1,15 @@
 ﻿@page
 @model IndexModel
+@inject IcityContext _context
+@inject ApplicationDbContext _db
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @{
     //ViewData["Title"] = "Home page";
     Layout = "_TemplateLayout";
+
 }
 
     <!-- wrapper-->
@@ -51,12 +58,17 @@
                                             </div>
                                             <div class="main-search-input-item">
                                                 <select data-placeholder="All Categories" class="chosen-select">
-                                                    <option>All Categories</option>
-                                                    <option>Shops</option>
-                                                    <option>Hotels</option>
-                                                    <option>Restaurants</option>
-                                                    <option>Fitness</option>
-                                                    <option>Events</option>
+                                                <option>All Categories</option>
+                                                    @{
+                                                    foreach(var item in @Model.Categories)
+                                                    {
+                                                        
+                                                        <option>@item.CategoryTitleEn</option>
+                                                    }
+                                                }
+                                                    
+                                                    
+                                                    
                                                 </select>
                                             </div>
                                             <button class="main-search-button color2-bg" onclick="window.location.href='listing.html'"><i class="far fa-search"></i>Search  </button>
@@ -178,39 +190,74 @@
                     <div class="listing-slider fl-wrap">
                         <div class="swiper-container" dir="rtl">
                             <div class="swiper-wrapper">
-                                <!--  swiper-slide  -->
+                            @{
+                                if (@Model.addListings != null)
+                                {
+                                    foreach (var item in @Model.addListings)
+                                    {
+                                        var reviewCount = _context.Reviews.Where(e => e.AddListingId == item.AddListingId).Count();
+                                        var user = await UserManager.FindByEmailAsync(@item.CreatedByUser);
+                                        var AvgRatingList = _context.Reviews.Where(e => e.AddListingId == item.AddListingId).ToList();
+                                double sum = 0;
+                                var branchCount = _context.Branches.Where(a => a.AddListingId == item.AddListingId).Count();
+                                var favourite = _context.Favourites.Where(a => a.UserId == user.Id && a.AddListingId == item.AddListingId).FirstOrDefault(); ;
+                               
+                                foreach (var ele in AvgRatingList)
+                                {
+                                    sum += ele.Rating;
+                                }
+                                double AvgRating = 0;
+                                if (sum != 0.0)
+                                {
+                                    AvgRating = sum / reviewCount;
+                                }
+                                var addListingObj = _context.AddListings.Where(e => e.AddListingId == item.AddListingId).FirstOrDefault();
+                                addListingObj.Rating = AvgRating;
+                                _context.SaveChanges();
+                                var OneDecimalPlaces = Math.Round(AvgRating, 1);
+                                var AvgRatingValue = Math.Round(AvgRating);
+                                var iconid = "heart" + item.AddListingId.ToString();
+                                
+                                        <!--  swiper-slide  -->
                                 <div class="swiper-slide">
                                     <div class="listing-slider-item fl-wrap">
                                         <!-- listing-item  -->
                                         <div class="listing-item listing_carditem">
                                             <article class="geodir-category-listing fl-wrap">
                                                 <div class="geodir-category-img">
-                                                    <div class="geodir-js-favorite_btn"><i class="fal fa-heart"></i><span>Save</span></div>
-                                                    <a href="listing-single.html" class="geodir-category-img-wrap fl-wrap">
-                                                        <img src="~/Template/images/all/1.jpg" alt="">
+                                                @if (favourite == null)
+                                            {
+                                                <div onclick="addTofavourite(this.id)" id="@item.AddListingId" class="geodir-js-favorite_btn"><i id="@iconid" class="fa fa-heart"></i><span>Save</span></div>
+
+                                            }
+                                            else
+                                            {
+                                                <div onclick="addTofavourite(this.id)" id="@item.AddListingId" class="geodir-js-favorite_btn"><i id="@iconid" style="color:red" class="fa fa-heart"></i><span>Save</span></div>
+                                            }
+                                                    
+
+                                                    <a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId" class="geodir-category-img-wrap fl-wrap">
+                                                        <img src="/@item.ListingLogo"  style="height: 400px;" alt="">
                                                     </a>
                                                     <div class="geodir_status_date gsd_open"><i class="fal fa-lock-open"></i>Open Now</div>
                                                     <div class="geodir-category-opt">
                                                         <div class="geodir-category-opt_title">
-                                                            <h4><a href="listing-single.html">The Goggi Restaurant</a></h4>
-                                                            <div class="geodir-category-location"><a href="#"><i class="fas fa-map-marker-alt"></i>  34-42 Montgomery St , NY, USA</a></div>
+                                                            <h4><a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId">@item.Title</a></h4>
+                                                            <div class="geodir-category-location"><a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId"><i class="fas fa-map-marker-alt"></i>  @item.Address</a></div>
                                                         </div>
                                                         <div class="listing-rating-count-wrap">
-                                                            <div class="review-score">4.1</div>
-                                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="4"></div>
+                                                            <div class="review-score">@OneDecimalPlaces</div>
+                                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="@AvgRatingValue"></div>
                                                             <br>
-                                                            <div class="reviews-count">26 reviews</div>
+                                                            <div class="reviews-count">@reviewCount reviews</div>
                                                         </div>
                                                         <div class="listing_carditem_footer fl-wrap">
                                                             <a class="listing-item-category-wrap" href="#">
                                                                 <div class="listing-item-category red-bg"><i class="fal fa-cheeseburger"></i></div>
-                                                                <span>Restaurants</span>
+                                                                <span>@item.Category.CategoryTitleEn</span>
                                                             </a>
-                                                            <div class="price-level geodir-category_price">
-                                                                <span class="price-level-item" data-pricerating="2"></span>
-                                                                <span class="price-name-tooltip">Pricey</span>
-                                                            </div>
-                                                            <div class="post-author"><a href="#"><img src="~/Template/images/avatar/1.jpg" alt=""><span>By , Alisa Noory</span></a></div>
+                                                         
+                                                            <div class="post-author"><a href="#"><img src="/@user.ProfilePicture" alt=""><span>@user.FullName</span></a></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -220,132 +267,12 @@
                                     </div>
                                 </div>
                                 <!--  swiper-slide end  -->
-                                <!--  swiper-slide  -->
-                                <div class="swiper-slide">
-                                    <div class="listing-slider-item fl-wrap">
-                                        <!-- listing-item  -->
-                                        <div class="listing-item listing_carditem">
-                                            <article class="geodir-category-listing fl-wrap">
-                                                <div class="geodir-category-img">
-                                                    <div class="geodir-js-favorite_btn"><i class="fal fa-heart"></i><span>Save</span></div>
-                                                    <a href="listing-single.html" class="geodir-category-img-wrap fl-wrap">
-                                                        <img src="~/Template/images/all/1.jpg" alt="">
-                                                    </a>
-                                                    <div class="geodir_status_date gsd_close"><i class="fal fa-lock"></i>Close Now</div>
-                                                    <div class="geodir-category-opt">
-                                                        <div class="geodir-category-opt_title">
-                                                            <h4><a href="listing-single.html">Gym in the Center</a></h4>
-                                                            <div class="geodir-category-location"><a href="#"><i class="fas fa-map-marker-alt"></i>  70 Bright St New York, USA</a></div>
-                                                        </div>
-                                                        <div class="listing-rating-count-wrap">
-                                                            <div class="review-score">5.0</div>
-                                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="5"></div>
-                                                            <br>
-                                                            <div class="reviews-count">7 reviews</div>
-                                                        </div>
-                                                        <div class="listing_carditem_footer fl-wrap">
-                                                            <a class="listing-item-category-wrap" href="#">
-                                                                <div class="listing-item-category blue-bg"><i class="fal fa-dumbbell"></i></div>
-                                                                <span>Fitness / Gym</span>
-                                                            </a>
-                                                            <div class="price-level geodir-category_price">
-                                                                <span class="price-level-item" data-pricerating="3"></span>
-                                                                <span class="price-name-tooltip">Moderate</span>
-                                                            </div>
-                                                            <div class="post-author"><a href="#"><img src="~/Template/images/avatar/1.jpg" alt=""><span>By , Mark Rose</span></a></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                        </div>
-                                        <!-- listing-item end -->
-                                    </div>
-                                </div>
-                                <!--  swiper-slide end  -->
-                                <!--  swiper-slide  -->
-                                <div class="swiper-slide">
-                                    <div class="listing-slider-item fl-wrap">
-                                        <!-- listing-item  -->
-                                        <div class="listing-item listing_carditem">
-                                            <article class="geodir-category-listing fl-wrap">
-                                                <div class="geodir-category-img">
-                                                    <div class="geodir-js-favorite_btn"><i class="fal fa-heart"></i><span>Save</span></div>
-                                                    <a href="listing-single.html" class="geodir-category-img-wrap fl-wrap">
-                                                        <img src="~/Template/images/all/1.jpg" alt="">
-                                                    </a>
-                                                    <div class="geodir_status_date gsd_open"><i class="fal fa-lock-open"></i>Open Now</div>
-                                                    <div class="geodir-category-opt">
-                                                        <div class="geodir-category-opt_title">
-                                                            <h4><a href="listing-single.html">Moonlight Hotel</a></h4>
-                                                            <div class="geodir-category-location"><a href="#"><i class="fas fa-map-marker-alt"></i> 34-42 Montgomery St , NY, USA</a></div>
-                                                        </div>
-                                                        <div class="listing-rating-count-wrap">
-                                                            <div class="review-score">4.2</div>
-                                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="4"></div>
-                                                            <br>
-                                                            <div class="reviews-count">3 reviews</div>
-                                                        </div>
-                                                        <div class="listing_carditem_footer fl-wrap">
-                                                            <a class="listing-item-category-wrap" href="#">
-                                                                <div class="listing-item-category  yellow-bg"><i class="fal fa-bed"></i></div>
-                                                                <span>Hotels</span>
-                                                            </a>
-                                                            <div class="price-level geodir-category_price">
-                                                                <span class="price-level-item" data-pricerating="4"></span>
-                                                                <span class="price-name-tooltip">Ultra Hight</span>
-                                                            </div>
-                                                            <div class="post-author"><a href="#"><img src="~/Template/images/avatar/1.jpg" alt=""><span>By , Nasty Wood</span></a></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                        </div>
-                                        <!-- listing-item end -->
-                                    </div>
-                                </div>
-                                <!--  swiper-slide end  -->
-                                <!--  swiper-slide  -->
-                                <div class="swiper-slide">
-                                    <div class="listing-slider-item fl-wrap">
-                                        <!-- listing-item  -->
-                                        <div class="listing-item listing_carditem">
-                                            <article class="geodir-category-listing fl-wrap">
-                                                <div class="geodir-category-img">
-                                                    <div class="geodir-js-favorite_btn"><i class="fal fa-heart"></i><span>Save</span></div>
-                                                    <a href="listing-single.html" class="geodir-category-img-wrap fl-wrap">
-                                                        <img src="~/Template/images/all/1.jpg" alt="">
-                                                    </a>
-                                                    <div class="geodir_status_date gsd_open"><i class="fal fa-lock-open"></i>Open Now</div>
-                                                    <div class="geodir-category-opt">
-                                                        <div class="geodir-category-opt_title">
-                                                            <h4><a href="listing-single.html">Shop in Aurora Center</a></h4>
-                                                            <div class="geodir-category-location"><a href="#"><i class="fas fa-map-marker-alt"></i> 40 Journal Square Plaza, NJ,  USA</a></div>
-                                                        </div>
-                                                        <div class="listing-rating-count-wrap">
-                                                            <div class="review-score">5.0</div>
-                                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="5"></div>
-                                                            <br>
-                                                            <div class="reviews-count">2 reviews</div>
-                                                        </div>
-                                                        <div class="listing_carditem_footer fl-wrap">
-                                                            <a class="listing-item-category-wrap" href="#">
-                                                                <div class="listing-item-category green-bg"><i class="fal fa-cart-arrow-down"></i></div>
-                                                                <span>Shopping</span>
-                                                            </a>
-                                                            <div class="price-level geodir-category_price">
-                                                                <span class="price-level-item" data-pricerating="4"></span>
-                                                                <span class="price-name-tooltip">Ultra Hight</span>
-                                                            </div>
-                                                            <div class="post-author"><a href="#"><img src="~/Template/images/avatar/1.jpg" alt=""><span>By , Kliff Antony</span></a></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                        </div>
-                                        <!-- listing-item end -->
-                                    </div>
-                                </div>
-                                <!--  swiper-slide end  -->
+                                    }
+                                }
+                                
+                                }
+                            
+                                
                             </div>
                             <div class="tc-pagination_wrap">
                                 <div class="tc-pagination2"></div>
@@ -1605,777 +1532,60 @@
 
 
 
+    <script>
+    function addTofavourite(listingid) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<style>
-            .footer-wrapper {
-                position: relative;
-                padding-bottom: 2rem;
-                padding-top: 15rem;
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
             }
-        </style>
+            ,
+            url: "/Index?handler=AddTFavourite",
+            async: false,
+            data: JSON.stringify(listingid),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            success: function (response) {
+              
+                if (response == true) {
+                    document.getElementById('heart' + listingid).style.color = "red";
+                } else
+                    document.getElementById('heart' + listingid).style.color = "white";
 
-        <title>Mosto - Software and App Landing Pages HTML Template</title>
-     <link rel="stylesheet" href="./Public/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./Public/css/all.min.css">
-    <link rel="stylesheet" href="./Public/css/animate.css">
-    <link rel="stylesheet" href="./Public/css/nice-select.css">
-    <link rel="stylesheet" href="./Public/css/owl.min.css">
-    <link rel="stylesheet" href="./Public/css/jquery-ui.min.css">
-    <link rel="stylesheet" href="./Public/css/magnific-popup.css">
-    <link rel="stylesheet" href="./Public/css/flaticon.css">
-    <link rel="stylesheet" href="./Public/css/main.css">
-    <link rel="stylesheet" href="Public/css/minified.css">
+            },
+            failure: function (response) {
+            }
+        });
+    }
+    </script>
 
-        <link rel="shortcut icon" href="Public/images/favicon.png" type="image/x-icon">
-    </head>
 
-    <body>
-        <div class="reverse-gear">
-    <header class="header-section inner-header">
-        <div class="container">
-            <div class="header-wrapper">
-                <div class="logo">
-                    <a href="index.html">
-                        <img src="~/Template/Public/images/logo/logo.png" alt="logo">
-                    </a>
-                </div>
-                <ul class="menu">
-                    <li>
-                        <a href="#0">Home</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="#0">Home Apps</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="index.html">Mobile App 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="index-2.html">Mobile App 2</a>
-                                    </li>
-                                    <li>
-                                        <a href="index-3.html">Mobile App 3</a>
-                                    </li>
-                                    <li>
-                                        <a href="index-4.html">Mobile App 4</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#0">Home Messenger</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="index-5.html">Messenger 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="index-6.html">Messenger 2</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#0">Home Web</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="index-7.html">Web 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="index-8.html">Web 2</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#0">Home Dextop</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="index-9.html">Dextop 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="index-10.html">Dextop 2</a>
-                                    </li>
-                                    <li>
-                                        <a href="index-11.html">Dextop 3</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#0">Home Watchapp</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="index-12.html">Watchapp 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="index-13.html">Watchapp 2</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#0">Home Hero Video</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="index-14.html">Hero Video 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="index-15.html">Hero Video 2</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="index-16.html">Home 16</a>
-                            </li>
-                            <li>
-                                <a href="index-17.html">Home 17 <span class="badge badge-primary align-self-center">New</span></a>
-                            </li>
-                            <li>
-                                <a href="index-18.html">Home 18 <span class="badge badge-primary align-self-center">New</span></a>
-                            </li>
-                            <li>
-                                <a href="index-19.html">Home 19 <span class="badge badge-primary align-self-center">New</span></a>
-                            </li>
-                            <li>
-                                <a href="index-20.html">Home 20 <span class="badge badge-primary align-self-center">New</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#0">Feature</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="feature.html">Feature 1</a>
-                            </li>
-                            <li>
-                                <a href="feature-2.html">Feature 2</a>
-                            </li>
-                            <li>
-                                <a href="feature-3.html">Feature 3</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="pricing-plan.html">Pricing</a>
-                    </li>
-                    <li>
-                        <a href="#0">Pages</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="about.html">about</a>
-                            </li>
-                            <li>
-                                <a href="app-download.html">app download</a>
-                            </li>
-                            <li>
-                                <a href="#0">Team</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="team.html">Team</a>
-                                    </li>
-                                    <li>
-                                        <a href="team-single.html">Team Single</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#0">Account</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="sign-up.html">Sign Up</a>
-                                    </li>
-                                    <li>
-                                        <a href="sign-in.html">Sign In</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="faqs.html">FAQs</a>
-                            </li>
-                            <li>
-                                <a href="partners.html">Partners</a>
-                            </li>
-                            <li>
-                                <a href="privacy-policy.html">Privacy Policy</a>
-                            </li>
-                            <li>
-                                <a href="coming-soon.html">Coming Soon</a>
-                            </li>
-                            <li>
-                                <a href="change-password.html">Change Password</a>
-                            </li>
-                            <li>
-                                <a href="reset-password.html">Password Reset</a>
-                            </li>
-                            <li>
-                                <a href="reviews.html">review</a>
-                            </li>
-                            <li>
-                                <a href="404.html">404</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#0">Blog</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="blog.html">blog style 1</a>
-                            </li>
-                            <li>
-                                <a href="blog-type-two.html">blog style 1</a>
-                            </li>
-                            <li>
-                                <a href="blog-single-1.html">blog Single 1</a>
-                            </li>
-                            <li>
-                                <a href="blog-single-2.html">blog Single 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="contact.html">contact</a>
-                    </li>
-                    <li class="d-sm-none">
-                        <a href="#0" class="m-0 header-button">Get Mosto</a>
-                    </li>
-                </ul>
-                <div class="header-bar d-lg-none">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <div class="header-right cl-xl-black">
-                    <select class="select-bar">
-                        <option value="en">En</option>
-                        <option value="Bn">Bn</option>
-                        <option value="pk">Pk</option>
-                        <option value="Fr">Fr</option>
-                    </select>
-                    <a href="#0" class="header-button d-none d-sm-inline-block cl-xl-black">Get Mosto</a>
-                </div>
-            </div>
-        </div>
-    </header>
-    <section class="banner-17 bg_img oh bottom_center" data-background="Public/images/extra-2/banner/banner-bg-17.png">
-        <div class="container">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-lg-6">
-                    <div class="banner-content-18 cl-white">
-                        <h1 class="title">The Most Intuitive App For Your Needs</h1>
-                        <p>
-                            A simple, yet effective way to be more productive
-                        </p>
-                        <div class="banner-button-group">
-                            <a href="#0" class="button-4">Get Started</a>
-                            <a href="https://www.youtube.com/watch?v=ObZwFExwzOo" class="video-button popup">
-                                <i class="flaticon-play"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="banner-thumb">
-                        <img src="~/Template/Public/images/extra-2/banner/banner17.png" alt="banner">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="logo-slider-section padding-bottom-2 padding-top">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="section-header mw-100">
-                        <h3 class="title">Used by over 1,000,000 people worldwide</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="logo-slider owl-theme owl-carousel">
-                <div class="item">
-                    <img src="~/Template/Public/images/banner/banner16/01.png" alt="banner">
-                </div>
-                <div class="item">
-                    <img src="~/Template/Public/images/banner/banner16/02.png" alt="banner">
-                </div>
-                <div class="item">
-                    <img src="~/Template/Public/images/banner/banner16/03.png" alt="banner">
-                </div>
-                <div class="item">
-                    <img src="~/Template/Public/images/banner/banner16/04.png" alt="banner">
-                </div>
-                <div class="item">
-                    <img src="~/Template/Public/images/banner/banner16/05.png" alt="banner">
-                </div>
-                <div class="item">
-                    <img src="~/Template/Public/images/banner/banner16/06.png" alt="banner">
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="amazing-section padding-top-2 padding-bottom-2">
-        <div class="container">
-            <div class="section-header mw-725">
-                <h5 class="cate">Cool & Amazing Design</h5>
-                <h2 class="title">Amazing Mobile App</h2>
-                <p>
-                    We built it from ground up to give you an amazing experience
-                </p>
-            </div>
-            <div class="amazing-slider pl-md-3 pl-2 owl-theme owl-carousel">
-                <div class="amazing-thumb">
-                    <img src="~/Template/Public/images/extra-2/amazing/01.png" alt="extra-2/amazing">
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="feature-section padding-top-2 padding-bottom-2">
-        <div class="container">
-            <div class="feature--wrapper-17">
-                <div class="row align-items-center flex-wrap-reverse position-relative">
-                    <div class="col-lg-6">
-                        <div class="row mb-30-none">
-                            <div class="col-md-6">
-                                <div class="am-item">
-                                    <div class="am-thumb">
-                                        <img src="~/Template/Public/images/feature/am-fea1.png" alt="feature">
-                                    </div>
-                                    <div class="am-content">
-                                        <h5 class="title">Free Trial</h5>
-                                    </div>
-                                </div>
-                                <div class="am-item active">
-                                    <div class="am-thumb">
-                                        <img src="~/Template/Public/images/feature/am-fea2.png" alt="feature">
-                                    </div>
-                                    <div class="am-content">
-                                        <h5 class="title">Secure Data</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mt-md-120">
-                                <div class="am-item">
-                                    <div class="am-thumb">
-                                        <img src="~/Template/Public/images/feature/am-fea3.png" alt="feature">
-                                    </div>
-                                    <div class="am-content">
-                                        <h5 class="title">Quick Access</h5>
-                                    </div>
-                                </div>
-                                <div class="am-item">
-                                    <div class="am-thumb">
-                                        <img src="~/Template/Public/images/feature/am-fea4.png" alt="feature">
-                                    </div>
-                                    <div class="am-content">
-                                        <h5 class="title">24h Support</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="section-header left-style mb-lg-0">
-                            <h5 class="cate">An Exhaustive list of Amazing Features</h5>
-                            <h2 class="title">
-                                Make Your Own
-                                Success As Simple
-                                You Clap
-                            </h2>
-                            <p>
-                                Numerous features make it possible to customize the system in accordance with all your needs.
-                            </p>
-                            <a href="#0" class="hightlight-link">Show all features <i class="flaticon-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="pricing-section oh padding-top padding-bottom pb-max-lg-0 pt-max-lg-half">
-        <div class="container">
-            <div class="section-header pb-30">
-                <h5 class="cate">Choose a plan that's right for you</h5>
-                <h2 class="title">Simple Pricing Plans</h2>
-                <p>
-                    Mosto has plans, from free to paid, that scale with your needs. Subscribe to a plan that fits the size of your business.
-                </p>
-            </div>
-            <div class="tab-up">
-                <ul class="tab-menu pricing-menu cl-black">
-                    <li class="active">Monthly</li>
-                    <li>Yearly</li>
-                </ul>
-                <div class="tab-area">
-                    <div class="tab-item active">
-                        <div class="pricing-slider-wrapper">
-                            <div class="pricing-slider owl-theme owl-carousel">
-                                <div class="pricing-item-2">
-                                    <h5 class="cate">Startup</h5>
-                                    <div class="thumb">
-                                        <img src="~/Template/Public/images/pricing/pricing1.png" alt="pricing">
-                                    </div>
-                                    <h2 class="title"><sup>$</sup>5.0</h2>
-                                    <span class="info">Per Month</span>
-                                    <ul class="pricing-content-3">
-                                        <li>3 Users 10 GB Storage</li>
-                                        <li>Monthly Updates</li>
-                                        <li>eCommerce Integration</li>
-                                        <li>Interface Customization</li>
-                                        <li>24/7 Support</li>
-                                    </ul>
-                                    <a href="#0" class="get-button">Select Plan<i class="flaticon-right"></i></a>
-                                </div>
-                                <div class="pricing-item-2">
-                                    <h5 class="cate">Standard</h5>
-                                    <div class="thumb">
-                                        <img src="~/Template/Public/images/pricing/pricing2.png" alt="pricing">
-                                    </div>
-                                    <h2 class="title"><sup>$</sup>10</h2>
-                                    <span class="info">Per Month</span>
-                                    <ul class="pricing-content-3">
-                                        <li>5 Users 20 GB Storage </li>
-                                        <li>Weekly Updates</li>
-                                        <li>eCommerce Integration</li>
-                                        <li>Interface Customization</li>
-                                        <li>24/7 Support</li>
-                                    </ul>
-                                    <a href="#0" class="get-button">Select Plan<i class="flaticon-right"></i></a>
-                                </div>
-                                <div class="pricing-item-2">
-                                    <h5 class="cate">Business</h5>
-                                    <div class="thumb">
-                                        <img src="~/Template/Public/images/pricing/pricing3.png" alt="pricing">
-                                    </div>
-                                    <h2 class="title"><sup>$</sup>20</h2>
-                                    <span class="info">Per Month</span>
-                                    <ul class="pricing-content-3">
-                                        <li>10 Users 40 GB Storage </li>
-                                        <li>Daily Updates</li>
-                                        <li>eCommerce Integration</li>
-                                        <li>Interface Customization</li>
-                                        <li>24/7 Support</li>
-                                    </ul>
-                                    <a href="#0" class="get-button">Select Plan<i class="flaticon-right"></i></a>
-                                </div>
-                                <div class="pricing-item-2">
-                                    <h5 class="cate">Premium</h5>
-                                    <div class="thumb">
-                                        <img src="~/Template/Public/images/pricing/pricing4.png" alt="pricing">
-                                    </div>
-                                    <h2 class="title"><sup>$</sup>30</h2>
-                                    <span class="info">Per Month</span>
-                                    <ul class="pricing-content-3">
-                                        <li>15 Users 60 GB Storage </li>
-                                        <li>Free Updates</li>
-                                        <li>eCommerce Integration</li>
-                                        <li>Interface Customization</li>
-                                        <li>24/7 Support</li>
-                                    </ul>
-                                    <a href="#0" class="get-button">Select Plan<i class="flaticon-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-item">
-                        <div class="pricing-slider-wrapper">
-                            <div class="pricing-slider owl-theme owl-carousel">
-                                <div class="pricing-item-2">
-                                    <h5 class="cate">Startup</h5>
-                                    <div class="thumb">
-                                        <img src="~/Template/Public/images/pricing/pricing1.png" alt="pricing">
-                                    </div>
-                                    <h2 class="title"><sup>$</sup>60</h2>
-                                    <span class="info">Per Month</span>
-                                    <ul class="pricing-content-3">
-                                        <li>3 Users 10 GB Storage</li>
-                                        <li>Monthly Updates</li>
-                                        <li>eCommerce Integration</li>
-                                        <li>Interface Customization</li>
-                                        <li>24/7 Support</li>
-                                    </ul>
-                                    <a href="#0" class="get-button">Select Plan<i class="flaticon-right"></i></a>
-                                </div>
-                                <div class="pricing-item-2">
-                                    <h5 class="cate">Standard</h5>
-                                    <div class="thumb">
-                                        <img src="~/Template/Public/images/pricing/pricing2.png" alt="pricing">
-                                    </div>
-                                    <h2 class="title"><sup>$</sup>120</h2>
-                                    <span class="info">Per Month</span>
-                                    <ul class="pricing-content-3">
-                                        <li>5 Users 20 GB Storage </li>
-                                        <li>Weekly Updates</li>
-                                        <li>eCommerce Integration</li>
-                                        <li>Interface Customization</li>
-                                        <li>24/7 Support</li>
-                                    </ul>
-                                    <a href="#0" class="get-button">Select Plan<i class="flaticon-right"></i></a>
-                                </div>
-                                <div class="pricing-item-2">
-                                    <h5 class="cate">Business</h5>
-                                    <div class="thumb">
-                                        <img src="~/Template/Public/images/pricing/pricing3.png" alt="pricing">
-                                    </div>
-                                    <h2 class="title"><sup>$</sup>180</h2>
-                                    <span class="info">Per Month</span>
-                                    <ul class="pricing-content-3">
-                                        <li>10 Users 40 GB Storage </li>
-                                        <li>Daily Updates</li>
-                                        <li>eCommerce Integration</li>
-                                        <li>Interface Customization</li>
-                                        <li>24/7 Support</li>
-                                    </ul>
-                                    <a href="#0" class="get-button">Select Plan<i class="flaticon-right"></i></a>
-                                </div>
-                                <div class="pricing-item-2">
-                                    <h5 class="cate">Premium</h5>
-                                    <div class="thumb">
-                                        <img src="~/Template/Public/images/pricing/pricing4.png" alt="pricing">
-                                    </div>
-                                    <h2 class="title"><sup>$</sup>270</h2>
-                                    <span class="info">Per Month</span>
-                                    <ul class="pricing-content-3">
-                                        <li>15 Users 60 GB Storage </li>
-                                        <li>Free Updates</li>
-                                        <li>eCommerce Integration</li>
-                                        <li>Interface Customization</li>
-                                        <li>24/7 Support</li>
-                                    </ul>
-                                    <a href="#0" class="get-button">Select Plan<i class="flaticon-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="amazing-platform-section oh">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 d-none d-lg-block">
-                    <div class="rtl amazing-flatform-thumb">
-                        <img src="~/Template/Public/images/extra-2/platform.png" alt="amazing">
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="amazing-platform-content padding-bottom padding-top pb-max-lg-0 pt-max-lg-half">
-                        <div class="section-header left-style">
-                            <h5 class="cate">Choose your device platform</h5>
-                            <h2 class="title">Download Now</h2>
-                            <p>
-                                Get the latest resources for downloading, installing, and updating  mosto app.Select your device platform andUse Our app and Enjoy Your Life.
-                            </p>
-                        </div>
-                        <h4 class="subtitle">Get Mosto Now!</h4>
-                        <div class="amazing-platform-area">
-                            <div class="amazing-platform-item">
-                                <div class="amazing-platform-thumb">
-                                    <a href="#0" class="active"><i class="fab fa-apple"></i></a>
-                                </div>
-                                IOS
-                            </div>
-                            <div class="amazing-platform-item">
-                                <div class="amazing-platform-thumb">
-                                    <a href="#0"><i class="fab fa-android"></i></a>
-                                </div>
-                                Android
-                            </div>
-                            <div class="amazing-platform-item">
-                                <div class="amazing-platform-thumb">
-                                    <a href="#0"><i class="fab fa-windows"></i></a>
-                                </div>
-                                Windows
-                            </div>
-                            <div class="amazing-platform-item">
-                                <div class="amazing-platform-thumb">
-                                    <a href="#0"><i class="fas fa-desktop"></i></a>
-                                </div>
-                                Mac OS
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="video-tour-section padding-top padding-bottom-2">
-        <div class="container">
-            <div class="section-header">
-                <h5 class="cate">AMAZING TUTORIAL</h5>
-                <h2 class="title">Video Tour</h2>
-                <p>
-                    Let's See how it work
-                </p>
-            </div>
-            <div class="video-tour-wrapper bg_img" data-background="Public/images/extra-2/video/video-bg.png">
-                <div class="ball-7" data-paroller-factor="-0.30" data-paroller-factor-lg="0.60"
-                     data-paroller-type="foreground" data-paroller-direction="vertical">
-                    <img src="~/Template/Public/images/extra-2/video/video.png" alt="extra-2/video">
-                </div>
-                <a href="https://www.youtube.com/watch?v=ObZwFExwzOo" class="video-tour-item popup">
-                    <div class="icon">
-                        <i class="fas fa-play"></i>
-                    </div>
-                    <div class="cont">
-                        <h6 class="title">Watch Video Now</h6>
-                        <span class="duration">02:32 minutes</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-    <section class="clients-say padding-bottom padding-top">
-        <div class="container">
-            <div class="client-slider-2 owl-theme owl-carousel">
-                <div class="client-item-2">
-                    <div class="client-thumb">
-                        <div class="thumb">
-                            <img src="~/Template/Public/images/extra-2/client/client1.png" alt="extra-2/client">
-                        </div>
-                        <h3 class="title">Martha Vargas</h3>
-                        <span class="info">Founder of Pinterest</span>
-                    </div>
-                    <div class="client-content">
-                        <div class="quote">
-                            <img src="~/Template/Public/images/extra-2/client/quote.png" alt="extra-2/client">
-                        </div>
-                        <div class="ratings">
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="fas fa-star"></i></span>
-                        </div>
-                        <h4 class="name">Awesome App!</h4>
-                        <p>“Always think outside the box and embrace opportunities that appear, wherever they might be.”</p>
-                    </div>
-                </div>
-                <div class="client-item-2">
-                    <div class="client-thumb">
-                        <div class="thumb">
-                            <img src="~/Template/Public/images/extra-2/client/client1.png" alt="extra-2/client">
-                        </div>
-                        <h3 class="title">Martha Vargas</h3>
-                        <span class="info">Founder of Pinterest</span>
-                    </div>
-                    <div class="client-content">
-                        <div class="quote">
-                            <img src="~/Template/Public/images/extra-2/client/quote.png" alt="extra-2/client">
-                        </div>
-                        <div class="ratings">
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="fas fa-star"></i></span>
-                        </div>
-                        <h4 class="name">Awesome App!</h4>
-                        <p>“Always think outside the box and embrace opportunities that appear, wherever they might be.”</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <footer>
-        <div class="container">
-            <div class="footer-section-16 bg_img padding-top" data-background="Public/images/extra/footer/footer-bg.png">
-                <div class="row justify-content-center">
-                    <div class="col-md-7 col-xl-6">
-                        <div class="section-header cl-white">
-                            <h2 class="title">Get Started Instantly</h2>
-                        </div>
-                    </div>
-                </div>
-                <ul class="app-download-16">
-                    <li>
-                        <a href="#0"><img src="~/Template/Public/images/extra/footer/play.png" alt="extra/footer"></a>
-                    </li>
-                    <li>
-                        <a href="#0"><img src="~/Template/Public/images/extra/footer/app.png" alt="extra/footer"></a>
-                    </li>
-                </ul>
-                <div class="footer-bottom padding-top">
-                    <ul class="footer-link">
-                        <li>
-                            <a href="#0">About</a>
-                        </li>
-                        <li>
-                            <a href="#0">FAQs</a>
-                        </li>
-                        <li>
-                            <a href="#0">Contact</a>
-                        </li>
-                        <li>
-                            <a href="#0">Terms of Service</a>
-                        </li>
-                        <li>
-                            <a href="#0">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="copyright border-ash">
-                    <p>
-                        Copyright © 2022.All Rights Reserved By <a href="#0">Mosto</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-    </div>
-    <div class="swap-area active">
-        <div class="chorka">
-            <img src="~/Template/Public/images/gear.png" alt="img">
-        </div>
-        <div class="swap-item">
-            <a href="../dark/index-17.html">Dark</a>
-        </div>
-        <div class="swap-item">
-            <a href="../../ltr/light/index-17.html">LTR</a>
-        </div>
-    </div>
-     <script src="~/Template/./Public/js/jquery-3.3.1.min.js"></script>
-    <script src="~/Template/./Public/js/modernizr-3.6.0.min.js"></script>
-    <script src="~/Template/./Public/js/plugins.js"></script>
-    <script src="~/Template/./Public/js/bootstrap.min.js"></script>
-    <script src="~/Template/./Public/js/magnific-popup.min.js"></script>
-    <script src="~/Template/./Public/js/jquery-ui.min.js"></script>
-    <script src="~/Template/./Public/js/wow.min.js"></script>
-    <script src="~/Template/./Public/js/waypoints.js"></script>
-    <script src="~/Template/./Public/js/nice-select.js"></script>
-    <script src="~/Template/./Public/js/owl.min.js"></script>
-    <script src="~/Template/./Public/js/counterup.min.js"></script>
-    <script src="~/Template/./Public/js/paroller.js"></script>
-    <script src="~/Template/Public/js/minified.js"></script>
-        <script src="~/Template/Public/js/main.js"></script>
-    </body>
-    </html>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

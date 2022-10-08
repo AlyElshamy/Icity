@@ -20,17 +20,21 @@ namespace Icity.Areas.TemplatePages.Pages
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IToastNotification _toastNotification;
         public static List<Branch> Branches;
+        public List<City>Cities=new List<City>(); 
+        public static List<City>staticCitiesList;
+
 
         [BindProperty]
         public AddListing AddListing { get; set; }
         public UserManager<ApplicationUser> UserManager { get; }
-
+  
         public DashBoardAddListingModel(UserManager<ApplicationUser> userManager, IcityContext context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
         {
             UserManager = userManager;
             _context = context;
             _hostEnvironment = hostEnvironment;
             _toastNotification = toastNotification;
+            //Cities = new List<City>();
 
         }
         private string UploadImage(string folderPath, IFormFile file)
@@ -46,6 +50,11 @@ namespace Icity.Areas.TemplatePages.Pages
         }
         public async Task<IActionResult> OnGet()
         {
+            if (staticCitiesList != null)
+            {
+                Cities = staticCitiesList;
+            }
+            
             var user = await UserManager.GetUserAsync(User);
             if (user == null)
             {
@@ -62,6 +71,13 @@ namespace Icity.Areas.TemplatePages.Pages
                 Branches.Add(item);
             }
             return new JsonResult(Branches);
+        }
+        public IActionResult OnPostFillCountryList([FromBody] int val)
+        {
+            staticCitiesList = new List<City>();
+            Cities = _context.Cities.Where(e => e.CountryId == val).ToList();
+            staticCitiesList = Cities;
+            return new JsonResult(Cities);
         }
         public async Task<IActionResult> OnPost(IFormFile Listinglogo, IFormFile PromoVideo, IFormFile listingbanner, IFormFileCollection Videos, IFormFileCollection Photos)
         {

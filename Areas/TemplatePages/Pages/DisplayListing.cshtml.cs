@@ -85,7 +85,7 @@ namespace Icity.Areas.TemplatePages.Pages
 
                     AddListingsloc = alllist;
                     AddListingList = alllist.Take(pages).ToList();
-                    var ListCities = _context.AddListings.Select(a => a.City).Distinct();
+                    //var ListCities = _context.AddListings.Select(a => a.City).Distinct();
                     first = false;
                 }
                 else
@@ -181,7 +181,7 @@ namespace Icity.Areas.TemplatePages.Pages
                 }
                 if (FilterModel.City != null)
                 {
-                    AddListingList = await _context.AddListings.Include(a => a.Category).Where(e => e.City.ToUpper().Contains(FilterModel.City.ToUpper())).Include(a => a.ListingPhotos).Include(a => a.Reviews).ToListAsync();
+                    AddListingList = await _context.AddListings.Include(a => a.Category)/*Where(e => e.City.ToUpper().Contains(FilterModel.City.ToUpper()))*/.Include(a => a.ListingPhotos).Include(a => a.Reviews).ToListAsync();
                     AddListingsloc = AddListingList;
 
                 }

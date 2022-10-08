@@ -8,16 +8,31 @@ using Icity.Data;
 
 namespace Icity.Areas.Admin.Pages
 {
+   
     public class IndexModel : PageModel
     {
         private readonly IcityContext _context;
-
-        public IndexModel(IcityContext context)
+        public int AddListingCount { get; set; }
+        public int ClassifiedAdsCount { get; set; }
+        public int UsersCount { get; set; }
+        public ApplicationDbContext _applicationDbContext { get; set; }
+        public IndexModel(IcityContext context,ApplicationDbContext applicationDbContext)
         {
             _context = context;
+            _applicationDbContext = applicationDbContext;
         }
         public void OnGet()
         {
+            try
+            {
+                AddListingCount= _context.AddListings.Count();
+                ClassifiedAdsCount = _context.ClassifiedAds.Count();
+                UsersCount = _applicationDbContext.Users.Count();
+            }
+            catch (Exception )
+            {
+
+            }
         }
     }
 }

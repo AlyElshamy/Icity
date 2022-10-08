@@ -32,6 +32,8 @@ namespace Icity.Areas.TemplatePages.Pages
         public Review Review { get; set; }
        
         public ApplicationUser curruntuser { get; set; }
+        public List<AddListing> SimilarRandomList { get; set; }
+        public int countUserListing { get; set; }
 
         public IActionResult OnPostBranchesList(int sd)
         {
@@ -47,7 +49,10 @@ namespace Icity.Areas.TemplatePages.Pages
                 listid = id;
                  var Listing = await _context.AddListings.Include(e=>e.Category).Include(a=>a.ListingPhotos).Include(a=>a.ListingVideos).FirstOrDefaultAsync(m => m.AddListingId == id);
                 curruntuser = await userManager.FindByEmailAsync(Listing.CreatedByUser);
-
+                countUserListing = _context.AddListings.Where(e => e.CreatedByUser==curruntuser.Email).Count();
+                var SimilarListing = await _context.AddListings.Include(e=>e.Category).Where(e => e.CategoryId == Listing.CategoryId&&e.AddListingId!= Listing.AddListingId).ToListAsync();
+                var rnd = new Random();
+                SimilarRandomList = SimilarListing.Take(5).ToList();
                 ViewData["listings"] = Listing;
                 if (Listing == null)
                 {

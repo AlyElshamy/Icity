@@ -21,6 +21,9 @@
     <Compile Remove="Controllers\PharmacyAPIs.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="Areas\TemplatePages\Pages\contacts.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Remove="Resources\SharedResource.resx" />
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +65,7 @@
     <None Include="Areas\Admin\Pages\Categories\Details.cshtml" />
     <None Include="Areas\Admin\Pages\Categories\Edit.cshtml" />
     <None Include="Areas\Admin\Pages\Categories\Index.cshtml" />
+    <None Include="Areas\TemplatePages\Pages\contacts.cshtml" />
     <None Include="wwwroot\Images\Slider\p1.jpg" />
     <None Include="wwwroot\Images\Slider\p2.jpg" />
     <None Include="wwwroot\Images\Slider\p3.jpg" />
@@ -163,5 +167,11 @@
     <None Include="wwwroot\vendor\isotope-layout\isotope.pkgd.min.js" />
     <None Include="wwwroot\vendor\php-email-form\validate.js" />
     <None Include="wwwroot\vendor\swiper\swiper-bundle.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\TemplatePages\Pages\contacts.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\TemplatePages\Pages\contacts.cshtml" />
   </ItemGroup>
 </Project>

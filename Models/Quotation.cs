@@ -13,6 +13,7 @@ namespace Icity.Models
        
         public string UserId { get; set; }
         public int ClassifiedAdsID { get; set; }
+        [JsonIgnore]
         public virtual ClassifiedAds ClassifiedAds { get; set; }
 
 

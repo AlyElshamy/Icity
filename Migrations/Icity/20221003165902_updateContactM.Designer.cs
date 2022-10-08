@@ -4,14 +4,16 @@ using Icity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Icity.Migrations.Icity
 {
     [DbContext(typeof(IcityContext))]
-    partial class IcityContextModelSnapshot : ModelSnapshot
+    [Migration("20221003165902_updateContactM")]
+    partial class updateContactM
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,8 +35,9 @@ namespace Icity.Migrations.Icity
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactPeroson")
                         .HasColumnType("nvarchar(max)");
@@ -235,29 +238,6 @@ namespace Icity.Migrations.Icity
                             CategoryId = 16,
                             CategoryTitleEn = "Travel & Transportation"
                         });
-                });
-
-            modelBuilder.Entity("Icity.Models.City", b =>
-                {
-                    b.Property<int>("CityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CityTlAr")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CityTlEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CityId");
-
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("Icity.Models.ClassifiedAds", b =>
@@ -1353,17 +1333,6 @@ namespace Icity.Migrations.Icity
                         .IsRequired();
 
                     b.Navigation("AddListing");
-                });
-
-            modelBuilder.Entity("Icity.Models.City", b =>
-                {
-                    b.HasOne("Icity.Models.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("Icity.Models.ClassifiedAds", b =>

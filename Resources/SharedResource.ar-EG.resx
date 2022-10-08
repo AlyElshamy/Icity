@@ -976,7 +976,7 @@
     <value>الاسم *</value>
   </data>
   <data name="Your Review:" xml:space="preserve">
-    <value>مراجعتك:</value>
+    <value>:مراجعتك</value>
   </data>
   <data name="Your Reviews" xml:space="preserve">
     <value>تعليقاتك</value>
@@ -1130,5 +1130,98 @@
   </data>
   <data name="Video" xml:space="preserve">
     <value>فيديو</value>
+  </data>
+  <data name="Active Listings" xml:space="preserve">
+    <value>الاعمال النشطة</value>
+  </data>
+  <data name="Branches" xml:space="preserve">
+    <value>الفروع</value>
+  </data>
+  <data name="Enter Fax" xml:space="preserve">
+    <value>ادخل رقم الفاكس</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>فاكس</value>
+  </data>
+  <data name="Listing Views" xml:space="preserve">
+    <value>مجموعة الاعمال</value>
+  </data>
+  <data name="Total Classified Ads" xml:space="preserve">
+    <value>مجموع الاعلانات المضافة</value>
+  </data>
+  <data name="Total Listing" xml:space="preserve">
+    <value>مجموع الاعمال المضافة</value>
+  </data>
+  <data name="Total Reviews" xml:space="preserve">
+    <value>مجموعة التعليقات</value>
+  </data>
+  <data name="Welcome  :" xml:space="preserve">
+    <value>مرحبا:</value>
+  </data>
+  <data name="Total Listining" xml:space="preserve">
+    <value>مجموع الاعمال</value>
+  </data>
+  <data name="Total Users" xml:space="preserve">
+    <value>مجموع المستخدمين</value>
+  </data>
+  <data name="About Our Company" xml:space="preserve">
+    <value>عن شركتنا</value>
+  </data>
+  <data name="About us" xml:space="preserve">
+    <value>من نحن</value>
+  </data>
+  <data name="Add New Classified Ads" xml:space="preserve">
+    <value>اضافة اعلان جديد</value>
+  </data>
+  <data name="Back to Menu" xml:space="preserve">
+    <value>العودة الي القائمة</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>جهات الاتصال</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>الرئيسية</value>
+  </data>
+  <data name="Listings" xml:space="preserve">
+    <value>القوائم</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>الرئيسية</value>
+  </data>
+  <data name="Main page" xml:space="preserve">
+    <value>ألصفحة الرئيسية</value>
+  </data>
+  <data name="My Buisness" xml:space="preserve">
+    <value>اعمالي</value>
+  </data>
+  <data name="My Classified Ads" xml:space="preserve">
+    <value>اعلاناتي</value>
+  </data>
+  <data name="Our Contacts" xml:space="preserve">
+    <value>جهات اتصالنا</value>
+  </data>
+  <data name="Pages" xml:space="preserve">
+    <value>الصفحات</value>
+  </data>
+  <data name="Reviews" xml:space="preserve">
+    <value>تعليقات</value>
+  </data>
+  <data name="Send Message" xml:space="preserve">
+    <value>ارسال الرسالة</value>
+  </data>
+  <data name="Your Message:" xml:space="preserve">
+    <value> رسالتك :</value>
+  </data>
+  <data name="Clients Messages" xml:space="preserve">
+    <value>رسائل العملاء</value>
+  </data>
+  <data name="Messaging Date" xml:space="preserve">
+    <value>تاريخ الارسال</value>
+  </data>
+  <data name="Sending Date" xml:space="preserve">
+    <value>تاريخ الارسال</value>
+  </data>
+  <data name="Users Messages" xml:space="preserve">
+    <value>رسائل المستخدمين</value>
   </data>
 </root>

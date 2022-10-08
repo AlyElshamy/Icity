@@ -1,6 +1,7 @@
 ﻿@page
 @model Icity.Areas.Admin.Pages.IndexModel
 @{
+    
 }
 @inject Icity.Data.IcityContext _context
 <link href="~/Admin/assets/libs/c3/c3.min.css" rel="stylesheet" type="text/css">
@@ -15,7 +16,9 @@
                         <div class="mini-stat">
                             <span class="mini-stat-icon bg-purple me-0 float-end"><i class="mdi mdi-basket"></i></span>
                             <div class="mini-stat-info">
-                                @sharedResource["All_Orders"]
+                                <span class="counter text-purple">@Model.AddListingCount</span>
+
+                                @sharedResource["Total Listining"]
                             </div>
                         </div>
                     </div>
@@ -27,7 +30,9 @@
                         <div class="mini-stat">
                             <span class="mini-stat-icon bg-blue-grey me-0 float-end"><i class="mdi mdi-black-mesa"></i></span>
                             <div class="mini-stat-info">
-                                @sharedResource["TotalOrdersRevenue"]
+                                <span class="counter text-blue-grey">@Model.ClassifiedAdsCount</span>
+
+                                @sharedResource["Total Classified Ads"]
                             </div>
                         </div>
                     </div>
@@ -39,7 +44,8 @@
                         <div class="mini-stat">
                             <span class="mini-stat-icon bg-brown me-0 float-end"><i class="fas fa-male"></i></span>
                             <div class="mini-stat-info">
-                                @sharedResource["All_Customers"]
+                                <span class="counter text-blue-grey">@Model.UsersCount</span>
+                                @sharedResource["Total Users"]
                             </div>
                         </div>
                     </div>

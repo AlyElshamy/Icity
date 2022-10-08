@@ -4,14 +4,16 @@ using Icity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Icity.Migrations.Icity
 {
     [DbContext(typeof(IcityContext))]
-    partial class IcityContextModelSnapshot : ModelSnapshot
+    [Migration("20220928185724_addFolowersModel")]
+    partial class addFolowersModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,8 +35,9 @@ namespace Icity.Migrations.Icity
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactPeroson")
                         .HasColumnType("nvarchar(max)");
@@ -237,29 +240,6 @@ namespace Icity.Migrations.Icity
                         });
                 });
 
-            modelBuilder.Entity("Icity.Models.City", b =>
-                {
-                    b.Property<int>("CityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CityTlAr")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CityTlEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CityId");
-
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("Cities");
-                });
-
             modelBuilder.Entity("Icity.Models.ClassifiedAds", b =>
                 {
                     b.Property<int>("ClassifiedAdsID")
@@ -423,33 +403,6 @@ namespace Icity.Migrations.Icity
                     b.ToTable("ClassifiedAsdMedias");
                 });
 
-            modelBuilder.Entity("Icity.Models.Contact", b =>
-                {
-                    b.Property<int>("ContactId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("SendingDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ContactId");
-
-                    b.ToTable("Contacts");
-                });
-
             modelBuilder.Entity("Icity.Models.Country", b =>
                 {
                     b.Property<int>("CountryId")
@@ -492,15 +445,13 @@ namespace Icity.Migrations.Icity
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddListingId")
-                        .HasColumnType("int");
+                    b.Property<string>("BussinessId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FolwersId");
-
-                    b.HasIndex("AddListingId");
 
                     b.ToTable("Folwers");
                 });
@@ -1355,17 +1306,6 @@ namespace Icity.Migrations.Icity
                     b.Navigation("AddListing");
                 });
 
-            modelBuilder.Entity("Icity.Models.City", b =>
-                {
-                    b.HasOne("Icity.Models.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Country");
-                });
-
             modelBuilder.Entity("Icity.Models.ClassifiedAds", b =>
                 {
                     b.HasOne("Icity.Models.ClassifiedAdsType", "ClassifiedAdsType")
@@ -1397,17 +1337,6 @@ namespace Icity.Migrations.Icity
                 });
 
             modelBuilder.Entity("Icity.Models.Favourite", b =>
-                {
-                    b.HasOne("Icity.Models.AddListing", "AddListing")
-                        .WithMany()
-                        .HasForeignKey("AddListingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AddListing");
-                });
-
-            modelBuilder.Entity("Icity.Models.Folwers", b =>
                 {
                     b.HasOne("Icity.Models.AddListing", "AddListing")
                         .WithMany()

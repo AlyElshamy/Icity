@@ -34,6 +34,9 @@ namespace Icity.Data
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Quotation> Quotations { get; set; }
         public virtual DbSet<Favourite> Favourites { get; set; }
+        public virtual DbSet<Folwers> Folwers { get; set; }
+        public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

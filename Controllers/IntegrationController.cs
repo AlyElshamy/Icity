@@ -582,48 +582,48 @@ namespace Icity.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllMedia(string userEmail)
-        {
-            try
-            {
-                var user = await _userManager.FindByEmailAsync(userEmail);
-                if (user == null)
-                {
-                    return Ok(new { Status = "false", Reason = "User Not Found" });
-                }
-                var media = new List<MediaVM>();
+        //public async Task<IActionResult> GetAllMedia(string userEmail)
+        //{
+        //    try
+        //    {
+        //        var user = await _userManager.FindByEmailAsync(userEmail);
+        //        if (user == null)
+        //        {
+        //            return Ok(new { Status = "false", Reason = "User Not Found" });
+        //        }
+        //        var media = new List<MediaVM>();
 
-                var photosList = _applicationDbContext.Photos.Where(e => e.Id == user.Id);
-                var VideosList = _applicationDbContext.Videos.Where(e => e.Id == user.Id);
-                if (photosList != null)
-                {
-                    foreach (var item in photosList)
-                    {
-                        var mediaobj = new MediaVM() { Caption = item.Caption, MediaURL = item.Image, PublishDate = item.PublishDate };
-                        media.Add(mediaobj);
-                    }
-                }
-                if (VideosList != null)
-                {
-                    foreach (var item in VideosList)
-                    {
-                        var mediaobj = new MediaVM() { Caption = item.Caption, MediaURL = item.VideoT, PublishDate = item.PublishDate };
-                        media.Add(mediaobj);
-                    }
-                }
-                if (media != null)
-                {
-                    media = media.OrderBy(a => a.PublishDate).ToList();
-                }
+        //        var photosList = _applicationDbContext.Photos.Where(e => e.Id == user.Id);
+        //        var VideosList = _applicationDbContext.Videos.Where(e => e.Id == user.Id);
+        //        if (photosList != null)
+        //        {
+        //            foreach (var item in photosList)
+        //            {
+        //                var mediaobj = new MediaVM() { Caption = item.Caption, MediaURL = item.Image, PublishDate = item.PublishDate };
+        //                media.Add(mediaobj);
+        //            }
+        //        }
+        //        if (VideosList != null)
+        //        {
+        //            foreach (var item in VideosList)
+        //            {
+        //                var mediaobj = new MediaVM() { Caption = item.Caption, MediaURL = item.VideoT, PublishDate = item.PublishDate };
+        //                media.Add(mediaobj);
+        //            }
+        //        }
+        //        if (media != null)
+        //        {
+        //            media = media.OrderBy(a => a.PublishDate).ToList();
+        //        }
 
-                return Ok(new { Status = "Success", Media = media });
+        //        return Ok(new { Status = "Success", Media = media });
 
-            }
-            catch (Exception e)
-            {
-                return Ok(new { Status = "false", Reason = e.Message });
-            }
-        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return Ok(new { Status = "false", Reason = e.Message });
+        //    }
+        //}
         [ApiExplorerSettings(IgnoreApi = true)]
         private bool ValidatevideoModel(Video video)
         {
@@ -1477,7 +1477,7 @@ namespace Icity.Controllers
                 model.Reviews = addListing.Reviews;
                 model.Rating = addListing.Rating;
                 model.MainLocataion = addListing.MainLocataion;
-                model.City = addListing.City;
+                model.CityId = addListing.CityId;
                 model.ContactPeroson = addListing.ContactPeroson;
                 model.CountryId = addListing.CountryId;
                 model.Branches = addListing.Branches;
@@ -1877,7 +1877,7 @@ namespace Icity.Controllers
             try
             {
                 var classifiedAds = await _context.ClassifiedAds.Include(e => e.ClassifiedAsdMedias).Where(e => e.AddedBy == UserEmail).ToListAsync();
-                var classifiedAdsMedia = await _context.ClassifiedAsdMedias.Where(e => e.ClassifiedAds.AddedBy == UserEmail).OrderBy(e=>e.MediaDate).ToListAsync();
+                var classifiedAdsMedia = await _context.ClassifiedAsdMedias.Where(e => e.ClassifiedAds.AddedBy == UserEmail).OrderBy(e => e.MediaDate).ToListAsync();
                 var model = new
                 {
                     status = true,
@@ -2174,7 +2174,7 @@ namespace Icity.Controllers
             try
             {
                 var user = _applicationDbContext.Users.Find(userid);
-                
+
                 if (user == null)
                 {
                     return Ok(new { status = false, message = "User Not Found." });
@@ -2187,6 +2187,10 @@ namespace Icity.Controllers
                 };
                 return Ok(model);
             }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
         }
         [HttpGet]
         public async Task<IActionResult> GetAllClassifiedAdsMediaByUser(string UserEmail)
@@ -2194,7 +2198,7 @@ namespace Icity.Controllers
             try
             {
 
-                var classifiedAdsMedia = await _context.ClassifiedAsdMedias.Include(e=>e.ClassifiedAds).Where(e => e.ClassifiedAds.AddedBy == UserEmail).OrderBy(e => e.MediaDate).ToListAsync();
+                var classifiedAdsMedia = await _context.ClassifiedAsdMedias.Include(e => e.ClassifiedAds).Where(e => e.ClassifiedAds.AddedBy == UserEmail).OrderBy(e => e.MediaDate).ToListAsync();
                 var model = new
                 {
                     status = true,
@@ -2204,7 +2208,7 @@ namespace Icity.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return Ok(new { status = false, message = e.Message });
             }
         }
         [HttpGet]
@@ -2213,7 +2217,7 @@ namespace Icity.Controllers
             try
             {
 
-                int classifiedAdsCount =  _context.ClassifiedAds.Where(e => e.AddedBy == UserEmail).Count();
+                int classifiedAdsCount = _context.ClassifiedAds.Where(e => e.AddedBy == UserEmail).Count();
                 var model = new
                 {
                     status = true,
@@ -2223,7 +2227,7 @@ namespace Icity.Controllers
             }
             catch (Exception e)
             {
-                return Ok(new {status=true,Reason=e.Message });
+                return Ok(new { status = true, Reason = e.Message });
             }
         }
         [HttpGet]
@@ -2265,7 +2269,7 @@ namespace Icity.Controllers
                 return Ok(new { status = true, Reason = e.Message });
             }
         }
-    }
+
 
         [HttpGet]
         public async Task<IActionResult> GetSearchResult(string Search)
@@ -2277,19 +2281,19 @@ namespace Icity.Controllers
             try
             {
                 var users = _applicationDbContext.Users.Where(a => a.UserName.ToUpper().Contains(Search.ToUpper())).ToList();
-                var buisness = _context.AddListings.Include(a => a.Country).Include(a => a.Category).Include(a => a.Reviews).Include(a => a.Branches).Include(a => a.ListingPhotos).Include(a => a.ListingVideos).Where(a => a.City.ToUpper().Contains(Search.ToUpper()) || a.Country.Title.ToUpper().Contains(Search.ToUpper()) || a.Category.CategoryTitleEn.ToUpper().Contains(Search.ToUpper()) || a.Category.CategoryTitleAr.ToUpper().Contains(Search.ToUpper())).ToList();
+                var buisness = _context.AddListings.Include(a => a.Country).Include(a => a.Category).Include(a => a.Reviews).Include(a => a.Branches).Include(a => a.ListingPhotos).Include(a => a.ListingVideos).Where(a => a.Country.Title.ToUpper().Contains(Search.ToUpper()) || a.Category.CategoryTitleEn.ToUpper().Contains(Search.ToUpper()) || a.Category.CategoryTitleAr.ToUpper().Contains(Search.ToUpper())).ToList();
                 var classifiedads = _context.ClassifiedAds.Include(a => a.ClassifiedAdsType).Where(a => a.ClassifiedAdsType.TypeTitleEn.ToUpper().Contains(Search.ToUpper()) || a.ClassifiedAdsType.TypeTitleAr.ToUpper().Contains(Search.ToUpper()) || a.Title.ToUpper().Contains(Search.ToUpper())).ToList();
                 //var userssw = await _userManager.FindByEmailAsync(Search);
                 var Searchresult = new List<SearchVM>();
                 foreach (var item in users)
                 {
                     var userssw = await _userManager.FindByEmailAsync(item.UserName);
-                    var searchobj = new SearchVM() { id = item.Id, Title = userssw.FullName, CategoryEn= userssw.Job, CategoryAr = userssw.Job, image = userssw.ProfilePicture, Type =  1};
+                    var searchobj = new SearchVM() { id = item.Id, Title = userssw.FullName, CategoryEn = userssw.Job, CategoryAr = userssw.Job, image = userssw.ProfilePicture, Type = 1 };
                     Searchresult.Add(searchobj);
                 }
                 foreach (var item in buisness)
                 {
-                    var searchobj = new SearchVM() { id = item.AddListingId.ToString(),CategoryEn=item.Category.CategoryTitleEn, CategoryAr = item.Category.CategoryTitleAr, Title = item.Title, image = item.ListingLogo, Type = 2 };
+                    var searchobj = new SearchVM() { id = item.AddListingId.ToString(), CategoryEn = item.Category.CategoryTitleEn, CategoryAr = item.Category.CategoryTitleAr, Title = item.Title, image = item.ListingLogo, Type = 2 };
                     Searchresult.Add(searchobj);
                 }
                 foreach (var item in classifiedads)
@@ -2297,7 +2301,7 @@ namespace Icity.Controllers
                     var searchobj = new SearchVM() { id = item.ClassifiedAdsID.ToString(), CategoryEn = item.ClassifiedAdsType.TypeTitleEn, CategoryAr = item.ClassifiedAdsType.TypeTitleAr, Title = item.Title, image = item.MainPhoto, Type = 3 };
                     Searchresult.Add(searchobj);
                 }
-                if (Searchresult.Count()==0)
+                if (Searchresult.Count() == 0)
                 {
                     return Ok(new { status = false, message = "Not Matched Result.. " });
                 }
@@ -2316,6 +2320,212 @@ namespace Icity.Controllers
                 return Ok(new { status = false, message = e.Message });
             }
         }
+        [HttpPost]
+        public IActionResult AddQuotation(QuotationVM quotationVM)
+        {
+
+            try
+            {
+                var user = _applicationDbContext.Users.Where(a => a.Id == quotationVM.UserId).FirstOrDefault();
+                if (user == null)
+                {
+                    return Ok(new { status = false, message = "User Not Found" });
+                }
+                var classifiedAdsObj = _context.ClassifiedAds.Where(e => e.ClassifiedAdsID == quotationVM.ClassifiedAdsID).FirstOrDefault();
+                if (classifiedAdsObj == null)
+                {
+                    return Ok(new { status = false, message = "Classified Not Found" });
+                }
+                var quotation = new Quotation()
+                {
+                    ClassifiedAdsID = quotationVM.ClassifiedAdsID,
+                    UserId = quotationVM.UserId,
+                    QuotationDate = DateTime.Now,
+                    Description = quotationVM.Description,
+                };
+
+                _context.Quotations.Add(quotation);
+                _context.SaveChanges();
+                return Ok(new { status = true, message = "Quotation Added Successfully.." });
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+        [HttpPost]
+        public IActionResult FlowerToBussiness(Folwers folwers)
+        {
+
+            try
+            {
+                var user = _applicationDbContext.Users.Where(a => a.Id == folwers.UserId).FirstOrDefault();
+                if (user == null)
+                {
+                    return Ok(new { status = false, message = "User Not Found" });
+                }
+                var addListingObj = _context.AddListings.Where(e => e.AddListingId == folwers.AddListingId).FirstOrDefault();
+                if (addListingObj == null)
+                {
+                    return Ok(new { status = false, message = "Bussiness Not Found" });
+                }
+                var folwerObj = new Folwers()
+                {
+                    UserId = folwers.UserId,
+                    AddListingId = folwers.AddListingId
+
+                };
+
+                _context.Folwers.Add(folwerObj);
+                _context.SaveChanges();
+                return Ok(new { status = true, message = "Folwer Added Successfully.." });
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+        [HttpDelete]
+        public IActionResult UnFlowerToBussiness(Folwers folwers)
+        {
+
+            try
+            {
+                var user = _applicationDbContext.Users.Where(a => a.Id == folwers.UserId).FirstOrDefault();
+                if (user == null)
+                {
+                    return Ok(new { status = false, message = "User Not Found" });
+                }
+                var addListingObj = _context.AddListings.Where(e => e.AddListingId == folwers.AddListingId).FirstOrDefault();
+                if (addListingObj == null)
+                {
+                    return Ok(new { status = false, message = "Bussiness Not Found" });
+                }
+                var folwerObj = _context.Folwers.Where(e => e.AddListingId == folwers.AddListingId && e.UserId == folwers.UserId).FirstOrDefault();
+
+                _context.Folwers.Remove(folwerObj);
+                _context.SaveChanges();
+                return Ok(new { status = true, message = "Folwer Deleted Successfully.." });
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+        [HttpGet]
+        public IActionResult GetBussinessFolwerCount(int bussinessId)
+        {
+
+            try
+            {
+
+                int FolwersCount = _context.Folwers.Where(e => e.AddListingId == bussinessId).Count();
+                var model = new
+                {
+                    Status = true,
+                    Count = FolwersCount
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = true, Reason = e.Message });
+            }
+
+        }
+        [HttpGet]
+        public IActionResult GetAllQuotation()
+        {
+            try
+            {
+
+                var Quotations = _context.Quotations.ToList();
+                var model = new
+                {
+                    status = true,
+                    QuotationsList = Quotations
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = true, Reason = e.Message });
+            }
+        }
+        [HttpGet]
+        public IActionResult GetQuotationByUserId(string userId)
+        {
+
+            try
+            {
+
+                var Quotation = _context.Quotations.Where(e => e.UserId == userId).ToList();
+                var model = new
+                {
+                    Status = true,
+                    QuotationList = Quotation
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = true, Reason = e.Message });
+            }
+
+        }
+        [HttpGet]
+        public IActionResult GetAllCitesByCountry(int countryId)
+        {
+
+            try
+            {
+
+                var Cites = _context.Cities.Where(e => e.CountryId == countryId).ToList();
+                var model = new
+                {
+                    Status = true,
+                    CitesList = Cites
+                };
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = true, Reason = e.Message });
+            }
+
+        }
+        [HttpPost]
+        public IActionResult AddMessage(Contact contact)
+        {
+
+            try
+            {
+                var user = _applicationDbContext.Users.Where(a => a.Email == contact.Email).FirstOrDefault();
+                if (user == null)
+                {
+                    return Ok(new { status = false, message = "User Not Found" });
+                }
+                if (contact.Message == null)
+                {
+                    return Ok(new { status = false, message = "Message Is Required" });
+
+                }
+                if (contact.FullName == null)
+                {
+                    return Ok(new { status = false, message = "FullName Is Required" });
+
+                }
+                contact.SendingDate = DateTime.Now;
+                _context.Contacts.Add(contact);
+                _context.SaveChanges();
+                return Ok(new { status = true, message = "Message Send Successfully.." });
+            }
+            catch (Exception e)
+            {
+                return Ok(new { status = false, message = e.Message });
+            }
+        }
+
 
     }
 }

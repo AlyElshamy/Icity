@@ -194,7 +194,7 @@ namespace Icity.Areas.TemplatePages.Pages
                 model.Reviews = AddListing.Reviews;
                 model.Rating = AddListing.Rating;
                 model.MainLocataion = AddListing.MainLocataion;
-                model.City = AddListing.City;
+                model.CityId = AddListing.CityId;
                 model.ContactPeroson = AddListing.ContactPeroson;
                 model.Country = AddListing.Country;
                 model.Branches = Branches;

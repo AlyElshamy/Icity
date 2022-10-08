@@ -80,7 +80,7 @@ namespace Icity.Areas.TemplatePages.Pages.ClassifiedAds
                     classifiedaddsloc = alllist;
                     ClassifiedAdsList = alllist.Take(pages).ToList();
                     Listings2 = ClassifiedAdsList;
-                    var ListCities = _context.AddListings.Select(a => a.City).Distinct();
+                    //var ListCities = _context.AddListings.Select(a => a.City).Distinct();
                     first = false;
                 }
                 else

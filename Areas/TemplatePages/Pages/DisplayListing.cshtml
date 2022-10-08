@@ -9,7 +9,7 @@
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @{
     var categoryList = _context.Categories;
-    var CitiesList = _context.AddListings.Select(a => a.City).Distinct();
+    //var CitiesList = _context.AddListings.Select(a => a.City).Distinct();
     var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
     var BrowserCulture = locale.RequestCulture.UICulture.ToString();
 
@@ -134,11 +134,11 @@
                                                 <div class="listsearch-input-item">
                                                     <select id="AllCitiesDropMenu" asp-for="@Model.FilterModel.City" data-placeholder="City/Location" class="chosen-select no-search-select">
                                                       <option value="All Cities">All Cities</option>
-                                                        @foreach (var item in CitiesList)
+                                                       @* @foreach (var item in CitiesList)
                                                         {
                                                             <option value="@item">@item</option>
 
-                                                        }
+                                                        }*@
 
 
                                                     </select>
@@ -379,7 +379,7 @@
                                             <div class="geodir-category-content-title fl-wrap">
                                                 <div class="geodir-category-content-title-item">
                                                     <h3 class="title-sin_map"><a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId">@item.Title</a><span class="verified-badge"><i class="fal fa-check"></i></span></h3>
-                                                    <div class="geodir-category-location fl-wrap"><a class="map-item"><i class="fas fa-map-marker-alt"></i> @item.City </a></div>
+                                                    <div class="geodir-category-location fl-wrap"><a class="map-item"><i class="fas fa-map-marker-alt"></i>@* @item.City *@</a></div>
                                                 </div>
                                             </div>
                                             <div class="geodir-category-text fl-wrap">

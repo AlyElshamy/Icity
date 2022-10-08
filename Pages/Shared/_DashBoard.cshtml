@@ -64,7 +64,7 @@
 
         <header class="main-header">
             <!-- logo-->
-            <a asp-page="index" class="logo-holder"><img src="~/Template/images/logo.png" alt=""></a>
+            <a asp-page="index" class="logo-holder"><img src="/images/IcityLogo.jpg" style="height:3rem;width:7rem;" alt=""></a>
             <!-- logo end-->
             <!-- header-search_btn-->
             <div class="header-search_btn show-search-button"><i class="fal fa-search"></i><span>@sharedResource["Search"]</span></div>
@@ -98,9 +98,9 @@
                     </div>
                     <ul>
                         <li><a asp-area="TemplatePages" asp-page="Profile"> @sharedResource["Edit profile"]</a></li>
-                        <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing">@sharedResource[""] Add Listing</a></li>
-                        <li><a href="dashboard-bookings.html"> @sharedResource[""] Bookings  </a></li>
-                        <li><a asp-area="TemplatePages" asp-page="ListingReviews">@sharedResource[""] Reviews </a></li>
+                        <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing">@sharedResource["Add Listing"] </a></li>
+                        <li><a href="dashboard-bookings.html"> @sharedResource["Bookings"]   </a></li>
+                        <li><a asp-area="TemplatePages" asp-page="ListingReviews">@sharedResource["Reviews"]  </a></li>
                     </ul>
                 </div>
             }
@@ -169,7 +169,7 @@
                 <nav>
                     <ul class="no-list-style">
                         <li>
-                            <a href="#" class="act-link">Home <i class="fa fa-caret-down"></i></a>
+                            <a href="#" class="act-link">@sharedResource["Home"] <i class="fa fa-caret-down"></i></a>
                             <!--second level -->
                             <ul>
                                 <li><a href="index.html">Parallax Image</a></li>
@@ -181,7 +181,7 @@
                             <!--second level end-->
                         </li>
                         <li>
-                            <a href="#">Listings <i class="fa fa-caret-down"></i></a>
+                            <a href="#">@sharedResource["Listings"] <i class="fa fa-caret-down"></i></a>
                             <!--second level -->
                             <ul>
                                 <li><a href="listing.html">Column map</a></li>
@@ -205,24 +205,24 @@
                             <!--second level end-->
                         </li>
                         <li>
-                            <a href="blog.html">News</a>
+                            <a href="blog.html">@sharedResource["News"]</a>
                         </li>
                         <li>
-                            <a href="#">Pages <i class="fa fa-caret-down"></i></a>
+                            <a href="#">@sharedResource["Pages"] <i class="fa fa-caret-down"></i></a>
                             <!--second level -->
                             <ul>
                                 <li>
-                                    <a href="#">Shop<i class="fa fa-caret-down"></i></a>
+                                    <a href="#">@sharedResource["Shop"]<i class="fa fa-caret-down"></i></a>
                                     <!--third  level  -->
                                     <ul>
-                                        <li><a href="shop.html">Products</a></li>
+                                        <li><a href="shop.html">@sharedResource["Products"]</a></li>
                                         <li><a href="product-single.html">Product single</a></li>
                                         <li><a href="cart.html">Cart</a></li>
                                     </ul>
                                     <!--third  level end-->
                                 </li>
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="contacts.html">Contacts</a></li>
+                                <li><a href="about.html">@sharedResource["About"]</a></li>
+                                <li><a href="contacts.html">@sharedResource["Contacts"]</a></li>
                                 @*<li><a href="author-single.html">User single</a></li>
                 <li><a href="help.html">How it Works</a></li>
                 <li><a href="booking.html">Booking</a></li>
@@ -299,7 +299,7 @@
                                         </div>
                                         <div class="widget-posts-descr">
                                             <h4><a href="listing-single.html">@item.AddListing.Title </a></h4>
-                                            <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> @item.AddListing.City</a></div>
+                                            <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i>@* @item.AddListing.City*@</a></div>
                                             <div class="widget-posts-descr-link"><a href="listing.html">@item.AddListing.Category.CategoryTitleEn </a></div>
                                             <div class="widget-posts-descr-score">@item.AddListing.Rating</div>
                                             <div onclick="addfavourite(@item.AddListingId)" class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
@@ -349,7 +349,7 @@
                     </div>
                     <!-- header-modal-container end-->
                     <div class="header-modal-top fl-wrap">
-                        <h4>Your Wishlist : <span><strong></strong> Listings</span></h4>
+                        <h4>Your Wishlist : <span><strong></strong> @sharedResource["Listings"]</span></h4>
                         @*<div class="close-header-modal"><i class="far fa-times"></i></div>*@
                     </div>
                 </div>
@@ -368,7 +368,7 @@
                 <!--  section  -->
                 <section class="parallax-section dashboard-header-sec gradient-bg" data-scrollax-parent="true">
                     <div class="container">
-                        <div class="dashboard-breadcrumbs breadcrumbs"><a href="#">Home</a><a href="#">Dashboard</a><span>Main page</span></div>
+                        <div class="dashboard-breadcrumbs breadcrumbs"><a href="#">@sharedResource["Home"]</a><a href="#">@sharedResource["Dashboard"]</a><span>@sharedResource["Main page"]</span></div>
                         <!--Tariff Plan menu-->
                         <div class="tfp-btn"><span>Tariff Plan : </span> <strong>Extended</strong></div>
                         <div class="tfp-det">
@@ -377,7 +377,7 @@
                         </div>
                         <!--Tariff Plan menu end-->
                         <div class="dashboard-header_conatiner fl-wrap dashboard-header_title">
-                            <h1>Welcome  : <span>@currentuser.NickName</span></h1>
+                            <h1>@sharedResource["Welcome  :"] <span>@currentuser.NickName</span></h1>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -402,7 +402,7 @@
                                                 <div class="swiper-slide">
                                                     <div class="dashboard-header-stats-item">
                                                         <i class="fal fa-map-marked"></i>
-                                                        Active Listings
+                                                        @sharedResource["Active Listings"]
                                                         <span>21</span>
                                                     </div>
                                                 </div>
@@ -411,7 +411,7 @@
                                                 <div class="swiper-slide">
                                                     <div class="dashboard-header-stats-item">
                                                         <i class="fal fa-chart-bar"></i>
-                                                        Total Listing 
+                                                       @sharedResource["Total Listing"] 
                                                         <span>@ActiveListing</span>
                                                     </div>
                                                 </div>
@@ -420,7 +420,7 @@
                                                 <div class="swiper-slide">
                                                     <div class="dashboard-header-stats-item">
                                                         <i class="fal fa-comments-alt"></i>
-                                                        Total Reviews
+                                                        @sharedResource["Total Reviews"] 
                                                         <span>@TotalReview</span>
                                                     </div>
                                                 </div>
@@ -429,7 +429,7 @@
                                                 <div class="swiper-slide">
                                                     <div class="dashboard-header-stats-item">
                                                         <i class="fal fa-heart"></i>
-                                                        Total Classified Ads
+                                                        @sharedResource["Total Classified Ads"] 
                                                         <span>@TotalClassifiedAds</span>
                                                     </div>
                                                 </div>
@@ -481,14 +481,14 @@
                                 <div class="user-profile-menu-wrap fl-wrap block_box">
                                     <!-- user-profile-menu-->
                                     <div class="user-profile-menu">
-                                        <h3>Main</h3>
+                                        <h3>@sharedResource["Main"]</h3>
                                         <ul class="no-list-style">
                                             <li><a asp-area="TemplatePages" asp-page="DashBoard" class="user-profile-act"><i class="fal fa-chart-line"></i>@sharedResource["Dashboard"]</a></li>
-                                            <li><a href="dashboard-feed.html"><i class="fal fa-rss"></i>Your Feed <span>7</span></a></li>
+                                            @*<li><a href="dashboard-feed.html"><i class="fal fa-rss"></i>Your Feed <span>7</span></a></li>*@
                                             <li><a asp-area="TemplatePages" asp-page="Profile"><i class="fal fa-user-edit"></i>@sharedResource["Edit profile"] </a></li>
-                                            <li><a href="dashboard-messages.html"><i class="fal fa-envelope"></i> Messages <span>3</span></a></li>
+                                            @*<li><a href="dashboard-messages.html"><i class="fal fa-envelope"></i> Messages <span>3</span></a></li>*@
                                             <li><a asp-area="TemplatePages" asp-page="DashboardChangePassword"><i class="fal fa-key"></i>@sharedResource["Change Password"]</a></li>
-                                            <li>
+                                       @*     <li>
                                                 <a href="#" class="submenu-link"><i class="fal fa-plus"></i>Submenu</a>
                                                 <ul class="no-list-style">
                                                     <li><a href="#"><i class="fal fa-th-list"></i> Submenu 2 </a></li>
@@ -497,25 +497,25 @@
                                                     <li><a href="#"><i class="fal fa-file-plus"></i> Submenu 2</a></li>
                                                 </ul>
 
-                                            </li>
+                                            </li>*@
                                         </ul>
                                     </div>
                                     <!-- user-profile-menu end-->
                                     <!-- user-profile-menu-->
                                     <div class="user-profile-menu">
-                                        <h3>Listings</h3>
+                                        <h3>@sharedResource["Listings"]</h3>
                                         <ul class="no-list-style">
                                             <li><a asp-area="TemplatePages" asp-page="/DashBoardListingTable"><i class="fal fa-th-list"></i>@sharedResource["My Buisness"]   </a></li>
                                             <li><a asp-area="TemplatePages" asp-page="/DashBoardAddListing"><i class="fal fa-file-plus"></i> @sharedResource["Add New Listing"]</a></li>
 
-                                            <li><a asp-area="TemplatePages" asp-page="/ClassifiedAds/index"><i class="fal fa-file-plus"></i> My Classified Ads</a></li>
-                                            <li><a asp-area="TemplatePages" asp-page="/ClassifiedAds/Add"><i class="fal fa-file-plus"></i> Add New Classified Ads</a></li>
+                                            <li><a asp-area="TemplatePages" asp-page="/ClassifiedAds/index"><i class="fal fa-file-plus"></i> @sharedResource["My Classified Ads"]</a></li>
+                                            <li><a asp-area="TemplatePages" asp-page="/ClassifiedAds/Add"><i class="fal fa-file-plus"></i> @sharedResource["Add New Classified Ads"]</a></li>
 
 
 
-                                            <li><a href="dashboard-bookings.html"> <i class=" fal fa-calendar-check"></i> Bookings <span>2</span></a></li>
-                                            <li><a asp-area="TemplatePages" asp-page="/ListingReviews"><i class="fal fa-comments-alt"></i> Reviews </a></li>
-                                            <li>
+                                            @*<li><a href="dashboard-bookings.html"> <i class=" fal fa-calendar-check"></i> Bookings <span>2</span></a></li>*@
+                                            <li><a asp-area="TemplatePages" asp-page="/ListingReviews"><i class="fal fa-comments-alt"></i>@sharedResource["Reviews"] <span>@TotalReview</span>  </a></li>
+@*                                            <li>
                                                 <a href="#" class="submenu-link"><i class="fal fa-plus"></i>Submenu</a>
                                                 <ul class="no-list-style">
                                                     <li><a href="#"><i class="fal fa-th-list"></i> Submenu 2 </a></li>
@@ -524,7 +524,7 @@
                                                     <li><a href="#"><i class="fal fa-file-plus"></i> Submenu 2</a></li>
                                                 </ul>
 
-                                            </li>
+                                            </li>*@
                                         </ul>
                                     </div>
                                     <form id="form1" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
@@ -533,7 +533,7 @@
 
                                 </div>
                             </div>
-                            <a class="back-tofilters color2-bg custom-scroll-link fl-wrap" href="#dash_menu">Back to Menu<i class="fas fa-caret-up"></i></a>
+                            <a class="back-tofilters color2-bg custom-scroll-link fl-wrap" href="#dash_menu">@sharedResource["Back to Menu"]<i class="fas fa-caret-up"></i></a>
                         </div>
 
                         @RenderBody()

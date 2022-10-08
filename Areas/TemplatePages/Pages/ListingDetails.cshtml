@@ -14,6 +14,7 @@
 @{
     var list = (AddListing)ViewData["listings"];
     var reviews = _context.Reviews.Where(a => a.AddListingId == list.AddListingId).ToList();
+    var reviewCount = reviews.Count();
     //var user = await UserManager.FindByEmailAsync(curruntuser.CreatedByUser);
     var branchlist = _context.Branches.Where(a => a.AddListingId == list.AddListingId).ToList();
     //var Mylist = new JavaScriptSerializer().Serialize(branchlist);
@@ -37,10 +38,10 @@
                         <div class="col-md-3">
                             <a class="fl-wrap list-single-header-column custom-scroll-link " href="#sec5">
                                 <div class="listing-rating-count-wrap single-list-count">
-                                    <div class="review-score">4.1</div>
-                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="4"></div>
+                                    <div class="review-score">@list.Rating</div>
+                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="@list.Rating"></div>
                                     <br>
-                                    <div class="reviews-count">2 reviews</div>
+                                    <div class="reviews-count">@reviewCount</div>
                                 </div>
                             </a>
                         </div>
@@ -691,8 +692,7 @@
                                             <li><span><i class="fal fa-phone"></i> @sharedResource["Phone"] :</span> <a href="#">@list.Phone1</a></li>
                                             <li><span><i class="fal fa-envelope"></i>@sharedResource["Mail"]  :</span> <a href="#">@list.Email</a></li>
                                             <li><span><i class="fal fa-browser"></i>@sharedResource["Website"]  :</span> <a href="#">@list.Website</a></li>
-                                            <li><span><i class="fal fa-location"></i>@sharedResource["Mainlocation"]  :</span> <a href="#">@list.MainLocataion</a></li>
-                                            <li><span><i class="fal fa-city"></i>@sharedResource["City"]  :</span> <a href="#">@list.City</a></li>
+                                            @*<li><span><i class="fal fa-location"></i>@sharedResource["Mainlocation"]  :</span> <a href="#">@list.MainLocataion</a></li>*@                                            <li><span><i class="fal fa-city"></i>@sharedResource["City"]  :</span> <a href="#">@*@list.City*@</a></li>
                                             <li><span><i class="fal fa-globe"></i> @sharedResource["Country"] :</span> <a href="#">@list.Country</a></li>
                                             <li><span><i class="fal fa-fax"></i>@sharedResource["Fax"]  :</span> <a href="#">@list.Fax</a></li>
                                         </ul>
@@ -736,11 +736,11 @@
                                 <div class="box-widget-author fl-wrap">
                                     <div class="box-widget-author-title">
                                         <div class="box-widget-author-title-img">
-                                            <img src="images/avatar/1.jpg" alt="">
+                                            <img src="/@Model.curruntuser.ProfilePicture" alt="">
                                         </div>
                                         <div class="box-widget-author-title_content">
-                                            <a href="user-single.html">Alisa Noory</a>
-                                            <span>4 Places Hosted</span>
+                                            <a href="user-single.html">@Model.curruntuser.FullName</a>
+                                            <span>@Model.countUserListing Places Hosted</span>
                                         </div>
                                         <div class="box-widget-author-title_opt">
                                             <a href="user-single.html" class="tolt green-bg" data-microtip-position="top" data-tooltip="View Profile"><i class="fas fa-user"></i></a>
@@ -761,50 +761,27 @@
                                     <!--widget-posts-->
                                     <div class="widget-posts  fl-wrap">
                                         <ul class="no-list-style">
-                                            <li>
+                                            @{
+                                                if (@Model.SimilarRandomList!=null)
+                                                {
+                                                   foreach(var item in @Model.SimilarRandomList) 
+                                                   {
+                                                        <li>
                                                 <div class="widget-posts-img">
-                                                    <a href="listing-single.html"><img src="images/gallery/thumbnail/1.png" alt=""></a>
+                                                    <a href="listing-single.html"><img src="/@item.ListingLogo" alt=""></a>
                                                 </div>
                                                 <div class="widget-posts-descr">
-                                                    <h4><a href="listing-single.html">Iconic Cafe</a></h4>
-                                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> 40 Journal Square Plaza, NJ, USA</a></div>
-                                                    <div class="widget-posts-descr-link"><a href="listing.html">Restaurants </a>   <a href="listing.html">Cafe</a></div>
-                                                    <div class="widget-posts-descr-score">4.1</div>
+                                                    <h4><a href="listing-single.html">@item.Title</a></h4>
+                                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> @item.Address</a></div>
+                                                    <div class="widget-posts-descr-link"><a href="listing.html">@item.Category.CategoryTitleEn </a>   <a href="listing.html">@item.Title</a></div>
+                                                    <div class="widget-posts-descr-score">@item.Rating</div>
                                                 </div>
                                             </li>
-                                            <li>
-                                                <div class="widget-posts-img">
-                                                    <a href="listing-single.html"><img src="images/gallery/thumbnail/1.png" alt=""></a>
-                                                </div>
-                                                <div class="widget-posts-descr">
-                                                    <h4><a href="listing-single.html">MontePlaza Hotel</a></h4>
-                                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> 70 Bright St New York, USA </a></div>
-                                                    <div class="widget-posts-descr-link"><a href="listing.html">Hotels </a>  </div>
-                                                    <div class="widget-posts-descr-score">5.0</div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="widget-posts-img">
-                                                    <a href="listing-single.html"><img src="images/gallery/thumbnail/1.png" alt=""></a>
-                                                </div>
-                                                <div class="widget-posts-descr">
-                                                    <h4><a href="listing-single.html">Rocko Band in Marquee Club</a></h4>
-                                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i>75 Prince St, NY, USA</a></div>
-                                                    <div class="widget-posts-descr-link"><a href="listing.html">Events</a> </div>
-                                                    <div class="widget-posts-descr-score">4.2</div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="widget-posts-img">
-                                                    <a href="listing-single.html"><img src="images/gallery/thumbnail/1.png" alt=""></a>
-                                                </div>
-                                                <div class="widget-posts-descr">
-                                                    <h4><a href="listing-single.html">Premium Fitness Gym</a></h4>
-                                                    <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i> W 85th St, New York, USA</a></div>
-                                                    <div class="widget-posts-descr-link"><a href="listing.html">Fitness</a> <a href="listing.html">Gym</a> </div>
-                                                    <div class="widget-posts-descr-score">5.0</div>
-                                                </div>
-                                            </li>
+                                                   }
+                                                }
+                                            }
+                                           
+                                          
                                         </ul>
                                     </div>
                                     <!-- widget-posts end-->
@@ -840,7 +817,7 @@
     </div>
     <!--content end-->
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=init"></script>
 <script>
     var locatios = new Array();
     window.addEventListener('load', (event) => {
