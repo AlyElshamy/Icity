@@ -57,7 +57,8 @@
                         <div class="mini-stat">
                             <span class="mini-stat-icon bg-teal me-0 float-end"><i class="mdi mdi-coffee"></i></span>
                             <div class="mini-stat-info">
-                                @sharedResource["All_Items"]
+                                 <span class="counter text-blue-grey">@Model.PaidClassifiedAdsCount</span>
+                                @sharedResource["Total Paid Classified Ads"]
                             </div>
                         </div>
                     </div>
@@ -75,9 +76,9 @@
                                     <div class="row">
                                         <div class="col-xl-6">
                                             @(Html.DevExtreme().Chart()
-                                            .ID("DailyOrdersCount")
+                                            .ID("DailyClassifiedAds")
                                             .Rotated(true)
-                                            .DataSource("https://" + @HttpContext.Request.Host.Value.ToString() + "/api/statistics/GetDailyOrder")
+                                            .DataSource(Model.url + "/api/statistics/GetDailyClassifiedAds")
                                             .Series(s => s.Add()
                                             .Label(l => l
                                             .Visible(true)
@@ -87,9 +88,9 @@
                                             .Color("#79cac4")
                                             .Type(SeriesType.Bar)
                                             .ArgumentField("day")
-                                            .ValueField("sales")
+                                            .ValueField("count")
                                             )
-                                            .Title(sharedResource["DailyOrdersCount"])
+                                            .Title(sharedResource["Daily Classified Ads"])
                                             .ArgumentAxis(a => a
                                             .Label(l => l
                                             .CustomizeText(@<text>
@@ -113,9 +114,9 @@
 
                                         <div class="col-xl-6">
                                             @(Html.DevExtreme().Chart()
-                                            .ID("MonthlyOrderCount")
+                                            .ID("DailyAddListining")
                                             .Rotated(true)
-                                            .DataSource("https://" + @HttpContext.Request.Host.Value.ToString() + "/api/statistics/GetMonthlyOrder")
+                                            .DataSource(Model.url  + "/api/statistics/GetDailyAddListining")
                                             .Series(s => s.Add()
                                             .Label(l => l
                                             .Visible(true)
@@ -124,14 +125,14 @@
                                             .Color("#79cac4")
                                             .Type(SeriesType.Bar)
                                             .ArgumentField("day")
-                                            .ValueField("sales")
+                                            .ValueField("count")
                                             )
-                                            .Title(sharedResource["MonthlyOrderCount"])
+                                            .Title(sharedResource["Daily Bussiness"])
                                             .ArgumentAxis(a => a
                                             .Label(l => l
                                             .CustomizeText(@<text>
                                                     function() {
-                                                    return "Month " + this.valueText;
+                                                    return this.valueText;
                                                     }
                                                 </text>)
                                             )
@@ -172,9 +173,9 @@
                                     <div class="row">
                                         <div class="col-xl-6">
                                             @(Html.DevExtreme().Chart()
-                                            .ID("DailyOrdersRevenue")
+                                            .ID("ClassifiedAdsCost")
                                             .Rotated(true)
-                                            .DataSource("https://" + @HttpContext.Request.Host.Value.ToString() + "/api/statistics/GetDailyOrdersRevenue")
+                                            .DataSource(Model.url+ "/api/statistics/GetClassifiedAdsCost")
                                             .Series(s => s.Add()
                                             .Label(l => l
                                             .Visible(true)
@@ -184,9 +185,9 @@
                                             .Color("#79cac4")
                                             .Type(SeriesType.Bar)
                                             .ArgumentField("day")
-                                            .ValueField("sales")
+                                            .ValueField("cost")
                                             )
-                                            .Title(sharedResource["DailyOrdersRevenue"] )
+                                            .Title(sharedResource["Sell ClassifiedAds Cost"] )
                                             .ArgumentAxis(a => a
                                             .Label(l => l
                                             .CustomizeText(@<text>

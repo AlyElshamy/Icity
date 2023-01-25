@@ -1,14 +1,17 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Icity.Data;
-using Icity.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using NToastNotify;
+using Icity.Data;
+using Icity.Models;
 
 namespace Icity.Areas.Admin.Pages.Countries
 {
@@ -17,7 +20,8 @@ namespace Icity.Areas.Admin.Pages.Countries
         private IcityContext _context;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IToastNotification _toastNotification;
-
+        [BindProperty]
+        public Country country { get; set; }
         public DeleteModel(IcityContext context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
         {
             _context = context;
@@ -25,18 +29,13 @@ namespace Icity.Areas.Admin.Pages.Countries
             _toastNotification = toastNotification;
 
         }
-        [BindProperty]
-        public Country country { get; set; }
-
-
-
+       
         public async Task<IActionResult> OnGetAsync(int id)
         {
-
+           
             try
             {
                 country = await _context.Countries.FirstOrDefaultAsync(m => m.CountryId == id);
-
                 if (country == null)
                 {
                     return Redirect("../Error");
@@ -46,36 +45,46 @@ namespace Icity.Areas.Admin.Pages.Countries
             {
 
                 _toastNotification.AddErrorToastMessage("Something went wrong");
+                
             }
-
-
 
             return Page();
         }
-
-
-
         public async Task<IActionResult> OnPostAsync(int id)
         {
+          
+
             try
             {
+                country = await _context.Countries.FirstOrDefaultAsync(m => m.CountryId == id);
+                if (_context.Cities.Any(c => c.CountryId == id))
+                                   {
+                    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+                    if (BrowserCulture == "en-US")
+
+                        _toastNotification.AddErrorToastMessage("You cannot delete this Country");
+
+                    else
+                        _toastNotification.AddErrorToastMessage("لا يمكنك مسح هذه البلد");
+
+                    
+                    return Page();
+                }
                 country = await _context.Countries.FindAsync(id);
                 if (country != null)
                 {
-
                     _context.Countries.Remove(country);
                     await _context.SaveChangesAsync();
-                    _toastNotification.AddSuccessToastMessage("Country Deleted successfully");
                     
+                    _toastNotification.AddSuccessToastMessage("country Deleted successfully");
+
                 }
-                else
-                    return Redirect("../Error");
             }
             catch (Exception)
 
             {
                 _toastNotification.AddErrorToastMessage("Something went wrong");
-
                 return Page();
 
             }

@@ -45,6 +45,7 @@ namespace Icity.Models
         //[Required(ErrorMessage = "Reequired")]
         public string ListingLogo { get; set; }
         public string PromoVideo { get; set; }
+        public DateTime? AddedDate { get; set; }
         public ICollection<Branch> Branches { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<ListingPhotos> ListingPhotos { get; set; }

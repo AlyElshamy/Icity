@@ -37,10 +37,21 @@ namespace Icity.Data
         public virtual DbSet<Folwers> Folwers { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<PageContent> PageContents { get; set; }
+        public virtual DbSet<SoicialMidiaLink> SoicialMidiaLinks { get; set; }
+        public virtual DbSet<FAQ> FAQ { get; set; }
+        public virtual DbSet<EntityType> EntityTypes { get; set; }
+        public virtual DbSet<FavouriteClassified> FavouriteClassifieds { get; set; }
+        public virtual DbSet<FavouriteProfile> FavouriteProfiles { get; set; }
+        public virtual DbSet<FolowClassified> FolowClassifieds { get; set; }
+        public virtual DbSet<FolowProfile> FolowProfile { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<PageContent>().HasData(new PageContent { PageContentId = 1, PageTitleAr = "من نحن", PageTitleEn = "About", ContentAr = "من نحن", ContentEn = "About Page" });
+            modelBuilder.Entity<PageContent>().HasData(new PageContent { PageContentId = 2, PageTitleAr = "الشروط والاحكام", PageTitleEn = "Condition and Terms", ContentAr = "الشروط والاحكام", ContentEn = "Condition and Terms Page" });
+            modelBuilder.Entity<PageContent>().HasData(new PageContent { PageContentId = 3, PageTitleAr = "سياسة الخصوصية", PageTitleEn = "Privacy Policy", ContentAr = "سياسة الخصوصية", ContentEn = "Privacy Policy Page" });
             modelBuilder.Entity<Category>().HasData(new Category {CategoryId= 1, CategoryTitleEn = "Business Support & Supplies" });
             modelBuilder.Entity<Category>().HasData(new Category {CategoryId=2 , CategoryTitleEn = "Automotive"});
             modelBuilder.Entity<Category>().HasData(new Category {CategoryId= 3, CategoryTitleEn = "Computers & Electronics" });
@@ -180,6 +191,9 @@ namespace Icity.Data
             modelBuilder.Entity<ClassifiedAdsType>().HasData(new ClassifiedAdsType { ClassifiedAdsTypeID = 13, TypeTitleEn = "Accessories"});
             modelBuilder.Entity<ProductStatus>().HasData(new ProductStatus { ProductStatusID = 1, StatusTitle = "New"});
             modelBuilder.Entity<ProductStatus>().HasData(new ProductStatus { ProductStatusID = 2, StatusTitle = "Used"});
+            modelBuilder.Entity<EntityType>().HasData(new EntityType { EntityTypeId = 1, EntityTitle = "Profile"});
+            modelBuilder.Entity<EntityType>().HasData(new EntityType { EntityTypeId = 2, EntityTitle = "Bussiness"});
+            modelBuilder.Entity<EntityType>().HasData(new EntityType { EntityTypeId = 3, EntityTitle = "Classified"});
 
 
 

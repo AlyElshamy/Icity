@@ -7,8 +7,8 @@
 <!-- Mirrored from themesbrand.com/admiria/layouts/vertical/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 02 Dec 2021 13:08:54 GMT -->
 <head>
 
-    @*@RenderSection("ExternalDependencies", false)
-    @{
+    @RenderSection("ExternalDependencies", false)
+    @*@{
         if (!(User.Identity.IsAuthenticated && User.IsInRole("Admin")))
         {
 

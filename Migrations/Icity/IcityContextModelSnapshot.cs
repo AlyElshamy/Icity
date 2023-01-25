@@ -26,6 +26,9 @@ namespace Icity.Migrations.Icity
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime?>("AddedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -457,12 +460,75 @@ namespace Icity.Migrations.Icity
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Title")
+                    b.Property<string>("CountryTlAr")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountryTlEn")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CountryId");
 
                     b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("Icity.Models.EntityType", b =>
+                {
+                    b.Property<int>("EntityTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("EntityTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EntityTypeId");
+
+                    b.ToTable("EntityTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            EntityTypeId = 1,
+                            EntityTitle = "Profile"
+                        },
+                        new
+                        {
+                            EntityTypeId = 2,
+                            EntityTitle = "Bussiness"
+                        },
+                        new
+                        {
+                            EntityTypeId = 3,
+                            EntityTitle = "Classified"
+                        });
+                });
+
+            modelBuilder.Entity("Icity.Models.FAQ", b =>
+                {
+                    b.Property<int>("FAQId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AnswerAr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnswerEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QuestionAr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QuestionEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FAQId");
+
+                    b.ToTable("FAQ");
                 });
 
             modelBuilder.Entity("Icity.Models.Favourite", b =>
@@ -483,6 +549,82 @@ namespace Icity.Migrations.Icity
                     b.HasIndex("AddListingId");
 
                     b.ToTable("Favourites");
+                });
+
+            modelBuilder.Entity("Icity.Models.FavouriteClassified", b =>
+                {
+                    b.Property<int>("FavouriteClassifiedId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClassifiedAdsID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FavouriteClassifiedId");
+
+                    b.HasIndex("ClassifiedAdsID");
+
+                    b.ToTable("FavouriteClassifieds");
+                });
+
+            modelBuilder.Entity("Icity.Models.FavouriteProfile", b =>
+                {
+                    b.Property<int>("FavouriteProfileId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FavouriteProfileId");
+
+                    b.ToTable("FavouriteProfiles");
+                });
+
+            modelBuilder.Entity("Icity.Models.FolowClassified", b =>
+                {
+                    b.Property<int>("FolowClassifiedId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClassifiedAdsID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FolowClassifiedId");
+
+                    b.HasIndex("ClassifiedAdsID");
+
+                    b.ToTable("FolowClassifieds");
+                });
+
+            modelBuilder.Entity("Icity.Models.FolowProfile", b =>
+                {
+                    b.Property<int>("FolowProfileId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FolowProfileId");
+
+                    b.ToTable("FolowProfile");
                 });
 
             modelBuilder.Entity("Icity.Models.Folwers", b =>
@@ -555,6 +697,60 @@ namespace Icity.Migrations.Icity
                     b.HasIndex("AddListingId");
 
                     b.ToTable("ListingVideos");
+                });
+
+            modelBuilder.Entity("Icity.Models.PageContent", b =>
+                {
+                    b.Property<int>("PageContentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ContentAr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContentEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PageTitleAr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PageTitleEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PageContentId");
+
+                    b.ToTable("PageContents");
+
+                    b.HasData(
+                        new
+                        {
+                            PageContentId = 1,
+                            ContentAr = "من نحن",
+                            ContentEn = "About Page",
+                            PageTitleAr = "من نحن",
+                            PageTitleEn = "About"
+                        },
+                        new
+                        {
+                            PageContentId = 2,
+                            ContentAr = "الشروط والاحكام",
+                            ContentEn = "Condition and Terms Page",
+                            PageTitleAr = "الشروط والاحكام",
+                            PageTitleEn = "Condition and Terms"
+                        },
+                        new
+                        {
+                            PageContentId = 3,
+                            ContentAr = "سياسة الخصوصية",
+                            ContentEn = "Privacy Policy Page",
+                            PageTitleAr = "سياسة الخصوصية",
+                            PageTitleEn = "Privacy Policy"
+                        });
                 });
 
             modelBuilder.Entity("Icity.Models.ProductStatus", b =>
@@ -640,6 +836,36 @@ namespace Icity.Migrations.Icity
                     b.HasIndex("AddListingId");
 
                     b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("Icity.Models.SoicialMidiaLink", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Instgramlink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkedInlink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TwitterLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WhatsApplink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("YoutubeLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("facebooklink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("SoicialMidiaLinks");
                 });
 
             modelBuilder.Entity("Icity.Models.SubCategory", b =>
@@ -1358,7 +1584,7 @@ namespace Icity.Migrations.Icity
             modelBuilder.Entity("Icity.Models.City", b =>
                 {
                     b.HasOne("Icity.Models.Country", "Country")
-                        .WithMany()
+                        .WithMany("City")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1405,6 +1631,28 @@ namespace Icity.Migrations.Icity
                         .IsRequired();
 
                     b.Navigation("AddListing");
+                });
+
+            modelBuilder.Entity("Icity.Models.FavouriteClassified", b =>
+                {
+                    b.HasOne("Icity.Models.ClassifiedAds", "ClassifiedAds")
+                        .WithMany()
+                        .HasForeignKey("ClassifiedAdsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClassifiedAds");
+                });
+
+            modelBuilder.Entity("Icity.Models.FolowClassified", b =>
+                {
+                    b.HasOne("Icity.Models.ClassifiedAds", "ClassifiedAds")
+                        .WithMany()
+                        .HasForeignKey("ClassifiedAdsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClassifiedAds");
                 });
 
             modelBuilder.Entity("Icity.Models.Folwers", b =>
@@ -1494,6 +1742,11 @@ namespace Icity.Migrations.Icity
                     b.Navigation("ClassifiedAsdMedias");
 
                     b.Navigation("Quotations");
+                });
+
+            modelBuilder.Entity("Icity.Models.Country", b =>
+                {
+                    b.Navigation("City");
                 });
 #pragma warning restore 612, 618
         }

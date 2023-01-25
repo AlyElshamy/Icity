@@ -29,7 +29,8 @@ namespace Icity.Controllers
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions) {
             var countries = _context.Countries.Select(i => new {
                 i.CountryId,
-                i.Title
+                i.CountryTlAr,
+                i.CountryTlEn
             });
 
             // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.
@@ -83,14 +84,19 @@ namespace Icity.Controllers
 
         private void PopulateModel(Country model, IDictionary values) {
             string COUNTRY_ID = nameof(Country.CountryId);
-            string TITLE = nameof(Country.Title);
+            string COUNTRY_TL_AR = nameof(Country.CountryTlAr);
+            string COUNTRY_TL_EN = nameof(Country.CountryTlEn);
 
             if(values.Contains(COUNTRY_ID)) {
                 model.CountryId = Convert.ToInt32(values[COUNTRY_ID]);
             }
 
-            if(values.Contains(TITLE)) {
-                model.Title = Convert.ToString(values[TITLE]);
+            if(values.Contains(COUNTRY_TL_AR)) {
+                model.CountryTlAr = Convert.ToString(values[COUNTRY_TL_AR]);
+            }
+
+            if(values.Contains(COUNTRY_TL_EN)) {
+                model.CountryTlEn = Convert.ToString(values[COUNTRY_TL_EN]);
             }
         }
 

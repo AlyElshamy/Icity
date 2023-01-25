@@ -6,7 +6,7 @@
 @{
     Layout = "_DashBoard";
     var Categories = _context.Categories.Select(e => new { e.CategoryId, e.CategoryTitleEn });
-    var Counties = _context.Countries.Select(e => new { e.CountryId, e.Title });
+    var Counties = _context.Countries.Select(e => new { e.CountryId, e.CountryTlEn });
    
 
     
@@ -107,18 +107,9 @@
         <div class="profile-edit-container fl-wrap block_box">
             <div class="custom-form">
                 <div class="row">
-                    @*<div class="col-md-6">
-                        <label>Longitude (Drag marker on the map)<i class="fal fa-long-arrow-alt-right"></i>  </label>
-                        <input type="text" placeholder="Map Longitude" id="long" value="" />
-                        </div>
-                        <div class="col-md-6">
-                        <label>Latitude (Drag marker on the map) <i class="fal fa-long-arrow-alt-down"></i> </label>
-                        <input type="text" placeholder="Map Latitude" id="lat" value="" />
-                        </div>*@
-                    <div class="">
-                        @*<label>@sharedResource["Main Location"] <i class="fal fa-long-arrow-alt-down"></i> </label>*@
-                        <input asp-for="AddListing.MainLocataion" type="text" placeholder="@sharedResource["ex(30.650497500522217, 31.593647596564512)"]" id="LatId" value="" hidden />
-                        @*<span asp-validation-for="AddListing.MainLocataion" style="color:red;"></span>*@
+                   
+                    <div >
+                        <input asp-for="AddListing.MainLocataion" type="text"  id="LatId" value="" hidden />
 
                     </div>
 
@@ -127,16 +118,8 @@
                     <div id="map" style="height:400px;"></div>
                                         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&callback=initMap&v=weekly" defer></script>
                                         
-                    @*<div id="singleMap" class="drag-map" data-latitude="11151" data-longitude="51155"></div>*@
                 </div>
-               @* <label>@sharedResource["City"]</label>
-                <div class="listsearch-input-item">
-                    <select data-placeholder="City"  class="chosen-select no-search-select" id="CityDdId">
-                         @*<option>@sharedResource["All Cites"]</option>
-                       
-                          
-                    </select>
-                </div>*@
+              
 
                 <div class="row">
                     <div class="col-md-6">
@@ -157,7 +140,7 @@
                                 <option>@sharedResource["All Countries"]</option>
                                 @foreach (var item in Counties)
                                 {
-                                    <option value="@item.CountryId">@item.Title</option>
+                                    <option value="@item.CountryId">@item.CountryTlEn</option>
                                 }
                             </select>
                         </div>
@@ -229,12 +212,7 @@
                 <div class="row">
                     <!--col -->
                     <div class="col-md-2">
-                        @*<div class="add-list-media-header" style="margin-bottom:20px">
-                            <label class="radio inline">
-                            <input type="radio" name="gender" checked>
-                            <span>Background image</span>
-                            </label>
-                            </div>*@
+                        
                         <div class="add-list-media-wrap">
                             <div class="add-list-media-wrap">
                                 <div class="listsearch-input-item fl-wrap">
@@ -252,12 +230,7 @@
                     <!--col end-->
                     <!--col -->
                     <div class="col-md-2">
-                        @*<div class="add-list-media-header" style="margin-bottom:20px">
-                            <label class="radio inline">
-                            <input type="radio" name="gender">
-                            <span>Carousel</span>
-                            </label>
-                            </div>*@
+                      
                         <div class="add-list-media-wrap">
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
@@ -271,12 +244,7 @@
                         </div>
                     </div>
                     <div class="col-md-2">
-                        @*<div class="add-list-media-header" style="margin-bottom:20px">
-                            <label class="radio inline">
-                            <input type="radio" name="gender">
-                            <span>Carousel</span>
-                            </label>
-                            </div>*@
+                       
                         <div class="add-list-media-wrap">
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
@@ -290,12 +258,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        @*<div class="add-list-media-header" style="margin-bottom:20px">
-                            <label class="radio inline">
-                            <input type="radio" name="gender">
-                            <span>Carousel</span>
-                            </label>
-                            </div>*@
+                       
                         <div class="add-list-media-wrap">
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
@@ -309,12 +272,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        @*<div class="add-list-media-header" style="margin-bottom:20px">
-                            <label class="radio inline">
-                            <input type="radio" name="gender">
-                            <span>Carousel</span>
-                            </label>
-                            </div>*@
+                       
                         <div class="add-list-media-wrap">
                             <div class="listsearch-input-item fl-wrap">
                                 <div class="fuzone">
@@ -328,23 +286,7 @@
                         </div>
                     </div>
                     <!--col end-->
-                    <!--col -->
-                    @*<div class="col-md-4">
-                        <div class="add-list-media-header" style="margin-bottom:20px">
-                        <label class="radio inline">
-                        <input type="radio" name="gender">
-                        <span>Video</span>
-                        </label>
-                        </div>
-                        <div class="add-list-media-wrap">
-                        <label>Youtube  <i class="fab fa-youtube"></i></label>
-                        <input type="text" placeholder="https://www.youtube.com/" value="" />
-                        <label>Vimeo <i class="fab fa-vimeo-v"></i></label>
-                        <input type="text" placeholder="https://vimeo.com/" value="" />
-                        </div>
-                        </div>*@
-                    <!--col end-->
-                </div>
+                  </div>
             </div>
         </div>
         <!-- profile-edit-container end-->
@@ -369,58 +311,8 @@
     <div id="mapCanvas2" class="map-item"> </div>
     </div>
 </div>
-                 @*    <div id="mapLocation" style="height:400px;"></div>
-                    <script src="http://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false&key=AIzaSyBSsKUzYG_Wz7u2qL6unHqfBOmvaZ0H1Mg&callback=initMap"></script>
-                                       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&callback=initMap&v=weekly" defer></script>*@
-                                        
-                    @*<div id="singleMap" class="drag-map" data-latitude="11151" data-longitude="51155"></div>*@
-                </div>
-        <!-- profile-edit-container-->
-        @*<div class="profile-edit-container fl-wrap  block_box">
-            <div class="custom-form add_room-item-wrap">
-            <div class="add_room-container fl-wrap">
-            <div class="add_room-item fl-wrap">
-            <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
-            <div class="row">
-            <div class="col-md-4">
-            <label>Item Title <i class="fal fa-briefcase"></i></label>
-            <input type="text" placeholder="Title" value="" />
-            </div>
-            <div class="col-md-4">
-            <label>Item Category<i class="fal fa-filter"></i></label>
-            <input type="text" placeholder="Category" value="" />
-            </div>
-            <div class="col-md-4">
-            <label>Item Price<i class="fal fa-dollar-sign"></i></label>
-            <input type="text" placeholder="Price" value="" />
-            </div>
-            <div class="col-md-8">
-            <label>Item Details</label>
-            <textarea cols="40" rows="3" placeholder="Datails"></textarea>
-            </div>
-            <div class="col-md-4">
-            <label>Item Image</label>
-            <div class="add-list-media-wrap">
-            <div class="listsearch-input-item fl-wrap">
-            <div class="fuzone">
-            <form>
-            <div class="fu-text">
-            <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
-            <div class="photoUpload-files fl-wrap"></div>
-            </div>
-            <input type="file" class="upload">
-            </form>
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-            <a href="#" class="add-room-item">Add New <i class="fal fa-plus"></i> </a>
-            </div>
-            </div>*@
-
+                    </div>
+       
         <div class="profile-edit-container fl-wrap  block_box">
             <div class="custom-form add_room-item-wrap">
                 <div class="add_room-container fl-wrap">
@@ -442,306 +334,13 @@
                     </div>
                 </div>
                 <a class="add-room-item" onclick="changeStylebutton('Branchbtnstyle')">@sharedResource["Add New"] <i class="fal fa-plus"></i> </a>
-                @*<a class="btn btn-success" onclick="branchtitle()">Save All<i class="fal fa-plus"></i></a>*@
 
             </div>
             <div class="row">
                 <a onclick="branchtitle()" id="Branchbtnstyle" class="btn  color2-bg  float-btn">@sharedResource["Save All"]</a>
             </div>
         </div>
-        <!-- profile-edit-container end-->
-        <!--<div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Details Item - Rooms</h3>
-            <div class="onoffswitch">
-                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch21">
-                <label class="onoffswitch-label" for="myonoffswitch11">
-                    <span class="onoffswitch-inner"></span>
-                    <span class="onoffswitch-switch"></span>
-                </label>
-            </div>
-        </div>-->
-        <!-- profile-edit-container-->
-        <!--<div class="profile-edit-container fl-wrap  block_box">
-            <div class="custom-form add_room-item-wrap">
-                <div class="add_room-container fl-wrap">-->
-        <!--add_room-item end  -->
-        <!--<div class="add_room-item fl-wrap">
-            <span class="remove-rp tolt" data-microtip-position="left" data-tooltip="Remove"><i class="fal fa-times-circle"></i></span>
-            <div class="row">
-                <div class="col-md-4">
-                    <label>Item Title <i class="fal fa-briefcase"></i></label>
-                    <input type="text" placeholder="Title" value="" />
-                </div>
-                <div class="col-md-4">
-                    <label>Item Subtitle<i class="fal fa-filter"></i></label>
-                    <input type="text" placeholder="Subtitle" value="" />
-                </div>
-                <div class="col-md-4">
-                    <label>Item Price<i class="fal fa-dollar-sign"></i></label>
-                    <input type="text" placeholder="Price" value="" />
-                </div>
-                <div class="col-md-8">
-                    <label>Item Details</label>
-                    <textarea cols="40" rows="3" placeholder="Datails"></textarea>
-                </div>
-                <div class="col-md-4">
-                    <label>Item Image</label>
-                    <div class="add-list-media-wrap">
-                        <div class="listsearch-input-item fl-wrap">
-                            <div class="fuzone">
-                                <form>
-                                        <div class="fu-text">
-                                            <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
-                                            <div class="photoUpload-files fl-wrap"></div>
-                                        </div>
-                                        <input type="file" class="upload">
-                                    </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-        <!--add_room-item end  -->
-        <!--</div>
-                <a href="#" class="add-room-item">Add New <i class="fal fa-plus"></i> </a>
-            </div>
-        </div>-->
-        <!-- profile-edit-container end-->
-        <!--<div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Facilities</h3>
-        </div>-->
-        <!-- profile-edit-container-->
-        <!--<div class="profile-edit-container fl-wrap block_box">
-            <div class="custom-form">-->
-        <!-- Checkboxes -->
-        <!--<ul class="fl-wrap filter-tags no-list-style ds-tg">
-            <li>
-                <input id="check-aaa5" type="checkbox" name="check" checked>
-                <label for="check-aaa5">Free WiFi</label>
-            </li>
-            <li>
-                <input id="check-bb5" type="checkbox" name="check" checked>
-                <label for="check-bb5">Parking</label>
-            </li>
-            <li>
-                <input id="check-dd5" type="checkbox" name="check">
-                <label for="check-dd5">Fitness Center</label>
-            </li>
-            <li>
-                <input id="check-cc5" type="checkbox" name="check">
-                <label for="check-cc5">Non-smoking Rooms</label>
-            </li>
-            <li>
-                <input id="check-ff5" type="checkbox" name="check" checked>
-                <label for="check-ff5">Airport Shuttle</label>
-            </li>
-            <li>
-                <input id="check-c4" type="checkbox" name="check">
-                <label for="check-c4">Air Conditioning</label>
-            </li>
-        </ul>-->
-        <!-- Checkboxes end -->
-        <!--</div>
-        </div>-->
-        <!-- profile-edit-container end-->
-        <!--<div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Content Widgets</h3>
-        </div>-->
-        <!-- profile-edit-container-->
-        <!--<div class="profile-edit-container fl-wrap block_box">
-            <div class="custom-form">
-                <div class="row">
-                    <div class="col-md-4">-->
-        <!-- act-widget-->
-        <!--<div class="act-widget fl-wrap">
-            <div class="act-widget-header">
-                <h4>1. Promo video</h4>
-                <div class="onoffswitch">
-                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch5" checked>
-                    <label class="onoffswitch-label" for="myonoffswitch5">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
-                    </label>
-                </div>
-            </div>
-            <div class="add-list-media-wrap">
-                <label>Video url :  <i class="fab fa-youtube"></i></label>
-                <input type="text" placeholder="https://www.youtube.com/" value="" />
-            </div>
-        </div>-->
-        <!-- act-widget end-->
-        <!--</div>
-        <div class="col-md-4">-->
-        <!-- act-widget-->
-        <!--<div class="act-widget fl-wrap">
-            <div class="act-widget-header">
-                <h4>2. Gallery Thumbnails</h4>
-                <div class="onoffswitch">
-                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch6" checked>
-                    <label class="onoffswitch-label" for="myonoffswitch6">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
-                    </label>
-                </div>
-            </div>
-            <div class="add-list-media-wrap">
-                <div class="listsearch-input-item fl-wrap">
-                    <div class="fuzone">
-                        <form>
-                                <div class="fu-text">
-                                    <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
-                                    <div class="photoUpload-files fl-wrap"></div>
-                                </div>
-                                <input type="file" class="upload" multiple>
-                            </form>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-        <!-- act-widget end-->
-        <!--</div>
-        <div class="col-md-4">-->
-        <!-- act-widget-->
-        <!--<div class="act-widget fl-wrap">
-            <div class="act-widget-header">
-                <h4>3. Slider</h4>
-                <div class="onoffswitch">
-                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch7">
-                    <label class="onoffswitch-label" for="myonoffswitch7">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
-                    </label>
-                </div>
-            </div>
-            <div class="add-list-media-wrap">
-                <div class="listsearch-input-item fl-wrap">
-                    <div class="fuzone">
-                        <form>
-                                <div class="fu-text">
-                                    <span><i class="fal fa-images"></i> Click here or drop files to upload</span>
-                                    <div class="photoUpload-files fl-wrap"></div>
-                                </div>
-                                <input type="file" class="upload" multiple>
-                            </form>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-        <!-- act-widget end-->
-        <!--</div>
-                </div>
-            </div>
-        </div>-->
-        <!-- profile-edit-container end-->
-        <!--<div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Working Hours</h3>
-        </div>-->
-        <!-- profile-edit-container-->
-        <!--<div class="profile-edit-container fl-wrap block_box">
-            <div class="custom-form">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label>Monday <i class="fal fa-clock"></i></label>
-                        <input type="text" placeholder="9 AM - 5 PM" value="" />
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Tuesday <i class="fal fa-clock"></i></label>
-                        <input type="text" placeholder="9 AM - 5 PM" value="" />
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Wednesday <i class="fal fa-clock"></i></label>
-                        <input type="text" placeholder="9 AM - 5 PM" value="" />
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Thursday <i class="fal fa-clock"></i></label>
-                        <input type="text" placeholder="9 AM - 5 PM" value="" />
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Friday <i class="fal fa-clock"></i></label>
-                        <input type="text" placeholder="9 AM - 5 PM" value="" />
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Saturday <i class="fal fa-clock"></i></label>
-                        <input type="text" placeholder="9 AM - 3 PM" value="" />
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Sunday <i class="fal fa-clock"></i></label>
-                        <input type="text" placeholder="Closed" value="" />
-                    </div>
-                </div>
-            </div>
-        </div>-->
-        <!-- profile-edit-container end-->
-        <!--<div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Sidebar Widgets</h3>
-        </div>-->
-        <!-- profile-edit-container-->
-        <!--<div class="profile-edit-container fl-wrap block_box">
-            <div class="custom-form">-->
-        <!-- act-widget-->
-        <!--<div class="act-widget fl-wrap">
-            <div class="act-widget-header">
-                <h4>1. Booking Form</h4>
-                <div class="onoffswitch">
-                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-                    <label class="onoffswitch-label" for="myonoffswitch">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
-                    </label>
-                </div>
-            </div>
-        </div>-->
-        <!-- act-widget end-->
-        <!-- act-widget-->
-        <!--<div class="act-widget fl-wrap">
-            <div class="act-widget-header">
-                <h4>2. Price Range </h4>
-                <div class="onoffswitch">
-                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2">
-                    <label class="onoffswitch-label" for="myonoffswitch2">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
-                    </label>
-                </div>
-            </div>
-        </div>-->
-        <!-- act-widget end-->
-        <!-- act-widget-->
-        <!--<div class="act-widget fl-wrap">
-            <div class="act-widget-header">
-                <h4>3. instagram</h4>
-                <div class="onoffswitch">
-                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked>
-                    <label class="onoffswitch-label" for="myonoffswitch3">
-                        <span class="onoffswitch-inner"></span>
-                        <span class="onoffswitch-switch"></span>
-                    </label>
-                </div>
-            </div>
-            <label>Api key<i class="fab fa-mixcloud"></i></label>
-            <input type="text" placeholder="Api key" value="" />
-        </div>-->
-        <!-- act-widget end-->
-        <!--</div>
-        </div>-->
-        <!-- profile-edit-container end-->
-        <!--<div class="dashboard-title  dt-inbox fl-wrap">
-            <h3>Your  Socials</h3>
-        </div>-->
-        <!-- profile-edit-container-->
-        <!--<div class="profile-edit-container fl-wrap block_box">
-            <div class="custom-form">
-                <label>Facebook <i class="fab fa-facebook"></i></label>
-                <input type="text" placeholder="https://www.facebook.com/" value="" />
-                <label>Twitter<i class="fab fa-twitter"></i>  </label>
-                <input type="text" placeholder="https://twitter.com/" value="" />
-                <label>Vkontakte<i class="fab fa-vk"></i>  </label>
-                <input type="text" placeholder="https://vk.com" value="" />
-                <label> Instagram <i class="fab fa-instagram"></i>  </label>
-                <input type="text" placeholder="https://www.instagram.com/" value="" />
-            </div>
-        </div>-->
+       
         <button type="submit" class="btn  color2-bg  float-btn">@sharedResource["Add Listing"]<i class="fal fa-paper-plane"></i></button>
 
     </form>
@@ -755,7 +354,6 @@
     {
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
-        @*<script src="~/Template/js/map-add.js"></script>*@
 
 
     }
@@ -763,51 +361,38 @@
     else
     {
         
+        //<link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        //<link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
 
-        @*<link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
-            <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
-            <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
-        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        //<link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+
+        //<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+        //<style>
+        // .dashboard-title h3 {
+        //        text-align: right;
+        //        font-weight: 600;
+        //        font-size: 21px;
+        //        color: #566985;
+        //        padding-right: 2rem;
+        //    }
+        //</style>
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
-        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
-        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">*@
-                <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
-        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
 
-        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
-
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
-        @*<script src="~/Template/js/map-add.js"></script>*@
-        <style>
-         .dashboard-title h3 {
-                text-align: right;
-                font-weight: 600;
-                font-size: 21px;
-                color: #566985;
-                padding-right: 2rem;
-            }
-        </style>
+       
 
 
     }
 }
 
 <script>
-     //google.maps.event.addListener(singleMap, 'click', function (event) {
-     //    alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());
-
-     //    var myLatlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
-     //    var marker = new google.maps.Marker({
-     //        position: myLatlng,
-     //        map: map,
-     //        title: 'Hello World!'
-     //    });
-     //});
-
-
+     
+    var flag=false;
      function selectedVal(val)
      {
          console.log(val);
@@ -913,7 +498,10 @@
          var SpanCatId = document.getElementById("SpanCatId")
          var SpanCouId = document.getElementById("SpanCouId")
          console.log(SpanCatId);
-         if (CatId.value == "All Categories") {
+         if(flag==false){
+             alert("You Must Select Location");
+         }
+         else if (CatId.value == "All Categories") {
              console.log("entered");
              SpanCatId.style.display = "flex";
              window.location.href = "#HrefCat";

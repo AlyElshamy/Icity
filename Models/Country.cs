@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Icity.Models
@@ -8,6 +9,9 @@ namespace Icity.Models
     public class Country
     {
         public int CountryId { get; set; }
-        public string Title { get; set; }
+        public string CountryTlAr { get; set; }
+        public string CountryTlEn { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<City> City { get; set; }
     }
 }

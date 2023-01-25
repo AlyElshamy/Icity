@@ -1224,4 +1224,37 @@
   <data name="Users Messages" xml:space="preserve">
     <value>رسائل المستخدمين</value>
   </data>
+  <data name="by TechTime" xml:space="preserve">
+    <value>بواسطة تيك تايم</value>
+  </data>
+  <data name="Icity Site" xml:space="preserve">
+    <value>موقع الباحث</value>
+  </data>
+  <data name="Cites" xml:space="preserve">
+    <value>المدن</value>
+  </data>
+  <data name="Cities" xml:space="preserve">
+    <value>المدن</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>الإعدادات</value>
+  </data>
+  <data name="Edit Contact Us" xml:space="preserve">
+    <value>تعديل معلومات الاتصال</value>
+  </data>
+  <data name="Total Paid Classified Ads" xml:space="preserve">
+    <value>مجموع الاعلانات المباعة</value>
+  </data>
+  <data name="Daily Bussiness" xml:space="preserve">
+    <value>الاعمال اليومية</value>
+  </data>
+  <data name="Daily Classified Ads" xml:space="preserve">
+    <value>الإعلانات اليومية</value>
+  </data>
+  <data name="Sell ClassifiedAds Cost" xml:space="preserve">
+    <value>تكلفة الإعلانات المباعة</value>
+  </data>
+  <data name="Edit Listing" xml:space="preserve">
+    <value>تعديل العمل</value>
+  </data>
 </root>

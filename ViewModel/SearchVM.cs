@@ -8,6 +8,7 @@ namespace Icity.ViewModel
     public class SearchVM
     {
         public string id { get; set; }
+        public string Email { get; set; }
         public string Title { get; set; }
         public string image { get; set; }
         public string CategoryEn { get; set; }

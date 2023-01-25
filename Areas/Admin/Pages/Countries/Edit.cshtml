@@ -4,7 +4,6 @@
 }
 
 
-
 <div class="page-content">
     <div class="container-fluid">
         <div class="row">
@@ -20,17 +19,21 @@
                         <br />
                         <form id="form" method="post" enctype="multipart/form-data">
                             @(Html.DevExtreme().Form<Icity.Models.Country>()
-                                 .FormData(Model.country)
+        .FormData(Model.country)
         .Items(items =>
         {
-        items.AddSimpleFor(m => m.CountryId).Visible(false);
-        items.AddSimpleFor(m => m.Title).Label(k => k.Text(sharedResource["Country Title"])).IsRequired(true);
-                            items.AddButton()
-                                    .ColSpan(3)
-                                    .ButtonOptions(b => b.Text(sharedResource["Save"])
-                                    .Type(ButtonType.Success)
-                                    .UseSubmitBehavior(true)).CssClass("invers");
-                        })
+            
+            items.AddSimpleFor(m => m.CountryTlAr).IsRequired(true).Label(k => k.Text(sharedResource["TlAr"])).ColSpan(1);
+            items.AddSimpleFor(m => m.CountryTlEn).IsRequired(true).Label(k => k.Text(sharedResource["TlEn"]));
+            
+
+            items.AddButton()
+                        .ColSpan(3)
+                        .HorizontalAlignment(HorizontalAlignment.Right)
+                        .ButtonOptions(b => b.Text(sharedResource["Save"])
+                        .Type(ButtonType.Success)
+                        .UseSubmitBehavior(true)).CssClass("invers");
+        })
 )
                         </form>
                     </div>
@@ -39,3 +42,10 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+

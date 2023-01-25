@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>aspnet-Optics-08598207-6256-448E-B750-A46599A0C125</UserSecretsId>
+	 <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
   </PropertyGroup>
@@ -65,6 +66,17 @@
     <None Include="Areas\Admin\Pages\Categories\Details.cshtml" />
     <None Include="Areas\Admin\Pages\Categories\Edit.cshtml" />
     <None Include="Areas\Admin\Pages\Categories\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\Cities\Add.cshtml" />
+    <None Include="Areas\Admin\Pages\Cities\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\Cities\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\Cities\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\Cities\Index.cshtml" />
+    <None Include="Areas\Admin\Pages\Countries\Add.cshtml" />
+    <None Include="Areas\Admin\Pages\Countries\Create.cshtml" />
+    <None Include="Areas\Admin\Pages\Countries\Delete.cshtml" />
+    <None Include="Areas\Admin\Pages\Countries\Details.cshtml" />
+    <None Include="Areas\Admin\Pages\Countries\Edit.cshtml" />
+    <None Include="Areas\Admin\Pages\Countries\Index.cshtml" />
     <None Include="Areas\TemplatePages\Pages\contacts.cshtml" />
     <None Include="wwwroot\Images\Slider\p1.jpg" />
     <None Include="wwwroot\Images\Slider\p2.jpg" />

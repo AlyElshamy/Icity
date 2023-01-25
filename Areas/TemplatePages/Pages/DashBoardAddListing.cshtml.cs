@@ -150,6 +150,7 @@ namespace Icity.Areas.TemplatePages.Pages
 
             AddListing.CreatedByUser = user.Email;
             AddListing.Branches = Branches;
+            AddListing.AddedDate = DateTime.Now;
             _context.AddListings.Add(AddListing);
             _context.SaveChanges();
             _toastNotification.AddSuccessToastMessage("Listing Added successfully");

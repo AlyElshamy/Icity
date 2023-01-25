@@ -14,7 +14,9 @@ namespace Icity.Areas.Admin.Pages
         private readonly IcityContext _context;
         public int AddListingCount { get; set; }
         public int ClassifiedAdsCount { get; set; }
+        public int PaidClassifiedAdsCount { get; set; }
         public int UsersCount { get; set; }
+        public string url { get; set; }
         public ApplicationDbContext _applicationDbContext { get; set; }
         public IndexModel(IcityContext context,ApplicationDbContext applicationDbContext)
         {
@@ -25,8 +27,10 @@ namespace Icity.Areas.Admin.Pages
         {
             try
             {
-                AddListingCount= _context.AddListings.Count();
+                url = $"{this.Request.Scheme}://{this.Request.Host}";
+                AddListingCount = _context.AddListings.Count();
                 ClassifiedAdsCount = _context.ClassifiedAds.Count();
+                PaidClassifiedAdsCount = _context.ClassifiedAds.Where(e=>e.Status==true).Count();
                 UsersCount = _applicationDbContext.Users.Count();
             }
             catch (Exception )

@@ -2,6 +2,7 @@
 @model Icity.Areas.Admin.Pages.Countries.DetailsModel
 @{
 }
+
 <div class="page-content">
     <div class="container-fluid">
 
@@ -10,7 +11,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h2 class="card-header d-flex justify-content-between align-items-center">
-                            @sharedResource["Details"]
+                              @sharedResource["Details"]
                             <a asp-page="Index" class="btn btn-primary"> @sharedResource["Back"]</a>
                         </h2>
                     </div>
@@ -23,16 +24,23 @@
                                     <hr />
 
                                     <div class="d-flex justify-content-between">
-                                        <div> @sharedResource["Country Title"] </div>
-                                        <div> @Model.country.Title </div>
+                                        <div> @sharedResource["TlAr"] </div>
+                                        <div> @Model.country.CountryTlAr </div>
                                     </div>
-                                </div>
+                                    <div class="d-flex justify-content-between">
+                                        <div>@sharedResource["TlEn"]  </div>
+                                        <div> @Model.country.CountryTlEn </div>
+                                    </div>
+                                  
+                                    </div>
+
+
 
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
